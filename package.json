@@ -21,13 +21,7 @@
     "type": "git",
     "url": "git+https://github.com/TagoDR/MangaOnlineViewer.git"
   },
-  "keywords": [
-    "manga",
-    "reader",
-    "viewer",
-    "online",
-    "loader"
-  ],
+  "keywords": ["manga", "reader", "viewer", "online", "loader"],
   "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
   "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
   "devDependencies": {
@@ -69,10 +63,7 @@
     "nprogress": "^0.2.0",
     "toolcool-range-slider": "^4.0.28"
   },
-  "browserslist": [
-    "defaults and fully supports es6-module",
-    "maintained node versions"
-  ],
+  "browserslist": ["defaults and fully supports es6-module", "maintained node versions"],
   "prettier": {
     "overrides": [
       {

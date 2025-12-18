@@ -46,6 +46,15 @@ export type NavbarMode = 'disabled' | 'bottom' | 'left' | 'right';
 export type ZoomMode = 'percent' | 'height' | 'width';
 
 /**
+ * Defines the pagination behavior.
+ * - `disabled`: Pagination is disabled.
+ * - `side-arrows`: shows left and right arrows on the sides of the screen.
+ * - `slider`: shows a slider with buttons at the bottom of the screen.
+ * - `both`: shows both the side arrows and the slider.
+ */
+export type PaginationMode = 'disabled' | 'side-arrows' | 'slider' | 'both';
+
+/**
  * Defines the structure for the user's configurable settings.
  */
 export type ISettings = {
@@ -79,8 +88,8 @@ export type ISettings = {
   minZoom: number;
   /** The position and behavior of the thumbnail navigation bar. */
   navbar: NavbarMode;
-  /** Whether to show the thumbnail navigation bar. */
-  pagination: boolean;
+  /** The type of pagination to use. */
+  pagination: PaginationMode;
   /** The speed (in pixels) for automatic scrolling. */
   scrollHeight: number;
   /** The primary theme color for the UI, in hex format. */

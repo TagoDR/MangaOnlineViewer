@@ -140,6 +140,9 @@ const styledIcons: Record<string, string> = Object.fromEntries(
  * @example svgToUrl(IconFileDownload)
  */
 export const {
+  IconAdjustmentsHorizontal,
+  IconArrowsHorizontal,
+  IconArrowsLeftRight,
   IconArrowAutofitDown,
   IconArrowAutofitHeight,
   IconArrowAutofitLeft,
@@ -159,6 +162,7 @@ export const {
   IconBoxAlignTop,
   IconCategory,
   IconCheck,
+  IconChevronLeft,
   IconChevronRight,
   IconAlertCircle,
   IconCircleCheck,

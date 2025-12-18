@@ -1,13 +1,10 @@
 /**
- * Defines the structure for a localization object, containing all the translatable strings
- * used throughout the application's user interface.
+ * Defines the structure for a localization object, mapping string keys to their translated values.
+ * This type is generated from the `en_US.ts` file to ensure all locales have the same keys.
  */
 export type ILocale = {
-  /** The unique identifier for the locale, e.g., 'en_US'. */
   ID: string;
-  /** The human-readable name of the language, e.g., 'English (US)'. */
   NAME: string;
-
   STARTING: string;
   RESUME: string;
   WAITING: string;
@@ -115,7 +112,11 @@ export type ILocale = {
   NAVBAR_LEFT: string;
   NAVBAR_RIGHT: string;
   NAVBAR_DISABLED: string;
-  ENABLE_PAGINATION: string;
+  PAGINATION_TYPE: string;
+  PAGINATION_DISABLED: string;
+  PAGINATION_SLIDER: string;
+  PAGINATION_ARROWS: string;
+  PAGINATION_BOTH: string;
   FILE_MENU: string;
   VIEW_MENU: string;
   ZOOM_MENU: string;

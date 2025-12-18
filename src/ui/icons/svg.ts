@@ -1,6 +1,7 @@
 // Icons from https://tabler-icons.io/
 // Icons from https://www.flaticon.com/
 
+export { default as IconAdjustmentsHorizontal } from './adjustments-horizontal.svg';
 export { default as IconAlertCircle } from './alert-circle.svg';
 export { default as IconArrowAutofitDown } from './arrow-autofit-down.svg';
 export { default as IconArrowAutofitHeight } from './arrow-autofit-height.svg';
@@ -9,6 +10,8 @@ export { default as IconArrowAutofitRight } from './arrow-autofit-right.svg';
 export { default as IconArrowAutofitWidth } from './arrow-autofit-width.svg';
 export { default as IconArrowBigLeft } from './arrow-big-left.svg';
 export { default as IconArrowBigRight } from './arrow-big-right.svg';
+export { default as IconArrowsHorizontal } from './arrows-horizontal.svg';
+export { default as IconArrowsLeftRight } from './arrows-left-right.svg';
 export { default as IconArrowsMove } from './arrows-move.svg';
 export { default as IconArrowsMoveVertical } from './arrows-move-vertical.svg';
 export { default as IconArrowsVertical } from './arrows-vertical.svg';
@@ -27,6 +30,7 @@ export { default as IconComic3Flat } from './Comic3-SpecialFlat.svg';
 export { default as IconComic3 } from './Comic3-SpecialLinealColor.svg';
 export { default as IconCategory } from './category.svg';
 export { default as IconCheck } from './check.svg';
+export { default as IconChevronLeft } from './chevron-left.svg';
 export { default as IconChevronRight } from './chevron-right.svg';
 export { default as IconCircleCheck } from './circle-check.svg';
 export { default as IconCircleX } from './circle-x.svg';

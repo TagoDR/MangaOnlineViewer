@@ -24,6 +24,9 @@ const styledIconsSVG: Record<
  * @example html`${IconFileDownload}`
  */
 export const {
+  IconAdjustmentsHorizontal,
+  IconArrowsHorizontal,
+  IconArrowsLeftRight,
   IconArrowAutofitDown,
   IconArrowAutofitHeight,
   IconArrowAutofitLeft,
@@ -43,6 +46,7 @@ export const {
   IconBoxAlignTop,
   IconCategory,
   IconCheck,
+  IconChevronLeft,
   IconChevronRight,
   IconAlertCircle,
   IconCircleCheck,

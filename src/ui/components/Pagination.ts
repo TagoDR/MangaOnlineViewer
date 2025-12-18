@@ -1,14 +1,25 @@
 import { css, html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { setAppStateValue } from '../../core/settings.ts';
+import type { PaginationMode } from '../../types';
 import { isNothing } from '../../utils/checks.ts';
 import { buttonRedirectURL } from '../events/globals.ts';
 import { selectGoToPage } from '../events/navigation.ts';
+import './Icon.ts';
+import { redirectUrl } from '../events/keybindings.ts';
 
 @customElement('manga-pagination')
 export class Pagination extends LitElement {
   static readonly styles = css`
     :host {
+      display: contents; /* Use contents to not interfere with layout */
+      font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
+    }
+
+    .slider-pagination {
       display: flex;
       position: fixed;
       bottom: 30px;
@@ -19,11 +30,8 @@ export class Pagination extends LitElement {
       align-items: center;
       gap: 3px;
       width: 100%;
-      font-family:
-        system-ui,
-        -apple-system,
-        sans-serif;
       max-width: 100%;
+      z-index: 100;
     }
 
     .pagination-button {
@@ -52,7 +60,7 @@ export class Pagination extends LitElement {
       cursor: not-allowed;
     }
 
-    .pagination-button svg {
+    .pagination-button mov-icon {
       width: 16px;
       height: 16px;
       fill: currentColor;
@@ -139,10 +147,54 @@ export class Pagination extends LitElement {
     .pagination-button:hover .tooltip {
       opacity: 1;
     }
+
+    .side-arrow {
+      position: fixed;
+      top: var(--header-height, 50px);
+      bottom: 0;
+      width: 10vw;
+      height: calc(100vh - var(--header-height, 50px));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 99;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .side-arrow:hover {
+      background-color: var(--mov-color-primary-alpha-10);
+      opacity: 1;
+    }
+
+    .side-arrow.left {
+      left: 0;
+    }
+
+    .side-arrow.right {
+      right: 0;
+    }
+
+    .side-arrow:active {
+      background-color: var(--mov-color-primary-alpha-20);
+    }
+
+    .side-arrow mov-icon {
+      width: 48px;
+      height: 48px;
+      fill: var(--mov-color-on-primary);
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .side-arrow:disabled {
+      display: none;
+    }
   `;
 
-  @property({ type: Boolean })
-  mode: boolean = false;
+  @property({ type: String })
+  mode: PaginationMode = 'disabled';
 
   @property({ type: Number })
   currentPage = 1;
@@ -158,67 +210,114 @@ export class Pagination extends LitElement {
   @property({ type: String })
   prev?: string;
 
-  render() {
-    if (!this.mode) return nothing;
+  private get isFirstPage() {
+    return this.currentPage <= this.startPage;
+  }
+
+  private get isLastPage() {
+    return this.currentPage >= this.totalPages - (1 - this.startPage);
+  }
+
+  private renderSlider() {
     return html`
-      <button
-        class="pagination-button"
-        @click=${buttonRedirectURL}
-        value="${this.prev}"
-        ?disabled=${isNothing(this.prev) || this.prev === '#'}
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" />
-        </svg>
-        <div class="tooltip">Previous Chapter</div>
-      </button>
+      <div class="slider-pagination">
+        <button
+          class="pagination-button"
+          @click=${buttonRedirectURL}
+          value="${this.prev}"
+          ?disabled=${isNothing(this.prev) || this.prev === '#'}
+        >
+          <mov-icon name="arrow-big-left"></mov-icon>
+          <div class="tooltip">Previous Chapter</div>
+        </button>
 
-      <button
-        class="pagination-button"
-        @click=${this.goToPreviousPage}
-        ?disabled=${this.currentPage <= this.startPage}
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-        </svg>
-        <div class="tooltip">Previous Page</div>
-      </button>
+        <button
+          class="pagination-button"
+          @click=${this.goToPreviousPage}
+          ?disabled=${this.isFirstPage}
+        >
+          <mov-icon name="chevron-left"></mov-icon>
+          <div class="tooltip">Previous Page</div>
+        </button>
 
-      <div class="slider-container">
-        <input
-          type="range"
-          class="pagination-slider"
-          min="${this.startPage}"
-          max="${this.totalPages}"
-          .value="${this.currentPage.toString()}"
-          @input="${selectGoToPage}"
-        />
-        <div class="slider-tooltip">${this.currentPage} / ${this.totalPages}</div>
+        <div class="slider-container">
+          <input
+            type="range"
+            class="pagination-slider"
+            min="${this.startPage}"
+            max="${this.totalPages}"
+            .value="${this.currentPage.toString()}"
+            @input="${selectGoToPage}"
+          />
+          <div class="slider-tooltip">${this.currentPage} / ${this.totalPages}</div>
+        </div>
+
+        <button class="pagination-button" @click=${this.goToNextPage} ?disabled=${this.isLastPage}>
+          <mov-icon name="chevron-right"></mov-icon>
+          <div class="tooltip">Next Page</div>
+        </button>
+
+        <button
+          class="pagination-button"
+          @click=${buttonRedirectURL}
+          value="${this.next}"
+          ?disabled=${isNothing(this.next) || this.next === '#'}
+        >
+          <mov-icon name="arrow-big-right"></mov-icon>
+          <div class="tooltip">Next Chapter</div>
+        </button>
       </div>
-
-      <button
-        class="pagination-button"
-        @click=${this.goToNextPage}
-        ?disabled="${this.currentPage === this.totalPages - (this.startPage - 1)}"
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-        </svg>
-        <div class="tooltip">Next Page</div>
-      </button>
-
-      <button
-        class="pagination-button"
-        @click=${buttonRedirectURL}
-        value="${this.next}"
-        ?disabled=${isNothing(this.next) || this.next === '#'}
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" />
-        </svg>
-        <div class="tooltip">Next Chapter</div>
-      </button>
     `;
+  }
+
+  private renderSideArrows() {
+    return html`
+      <div class="arrows-pagination">
+        <button
+          class="side-arrow left"
+          @click=${this.handleLeftArrowClick}
+          ?disabled=${this.isFirstPage && (isNothing(this.prev) || this.prev === '#')}
+        >
+          <mov-icon name="chevron-left"></mov-icon>
+        </button>
+        <button
+          class="side-arrow right"
+          @click=${this.handleRightArrowClick}
+          ?disabled=${this.isLastPage && (isNothing(this.next) || this.next === '#')}
+        >
+          <mov-icon name="chevron-right"></mov-icon>
+        </button>
+      </div>
+    `;
+  }
+
+  render() {
+    if (this.mode === 'disabled') {
+      return nothing;
+    }
+
+    const showSlider = this.mode === 'slider' || this.mode === 'both';
+    const showArrows = this.mode === 'side-arrows' || this.mode === 'both';
+
+    return html`
+      ${showSlider ? this.renderSlider() : nothing} ${showArrows ? this.renderSideArrows() : nothing}
+    `;
+  }
+
+  private handleLeftArrowClick() {
+    if (this.isFirstPage) {
+      redirectUrl('prev');
+    } else {
+      this.goToPreviousPage();
+    }
+  }
+
+  private handleRightArrowClick() {
+    if (this.isLastPage) {
+      redirectUrl('next');
+    } else {
+      this.goToNextPage();
+    }
   }
 
   private goToPreviousPage() {

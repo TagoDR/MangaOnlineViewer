@@ -5,13 +5,7 @@ import type { IManga } from './IManga';
 /**
  * Defines the possible states for the slide-out panels in the UI.
  */
-export type Panel =
-  | 'all'
-  | 'settings'
-  | 'keybindings'
-  | 'keybindingsEditor'
-  | 'bookmarks'
-  | 'none';
+export type Panel = 'all' | 'settings' | 'keybindings' | 'keybindingsEditor' | 'bookmarks' | 'none';
 
 /**
  * Defines the possible states for the download process.

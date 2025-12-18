@@ -49,7 +49,7 @@ export const defaultSettings: ISettings = {
   maxReload: 5,
   minZoom: 30,
   navbar: 'bottom',
-  pagination: false,
+  pagination: 'disabled',
   scrollHeight: 25,
   theme: '#29487D',
   throttlePageLoad: 1000,
@@ -90,7 +90,7 @@ const mobileSettings: Partial<ISettings> = {
   viewMode: 'WebComic',
   header: 'scroll',
   hidePageControls: true,
-  pagination: false,
+  pagination: 'disabled',
 };
 
 /**

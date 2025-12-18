@@ -4,7 +4,7 @@ import {
   saveSettingsValue,
   toggleLocalSettings,
 } from '../../core/settings';
-import type { HeaderMode, LoadMode, NavbarMode } from '../../types';
+import type { HeaderMode, LoadMode, NavbarMode, PaginationMode } from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
 
 import { showInfoDialog } from '../components/Dialog.ts';
@@ -55,12 +55,12 @@ export function changeNavbarType(event: Event) {
 }
 
 /**
- * Event handler to toggle and save the 'enable pagination' setting.
- * @param {Event} event - The change event from the checkbox.
+ * Event handler to change and save the pagination mode.
+ * @param {Event} event - The change event from the pagination mode selector.
  */
-export function checkPagination(event: CustomEvent) {
-  const checked = event.detail.checked;
-  saveSettingsValue('pagination', checked);
+export function changePagination(event: Event) {
+  const pagination = (event.currentTarget as HTMLInputElement).value as PaginationMode;
+  saveSettingsValue('pagination', pagination);
 }
 
 /**

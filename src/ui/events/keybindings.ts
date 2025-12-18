@@ -65,7 +65,7 @@ function doScrolling(sign: 1 | -1) {
  * If the URL is null, undefined, or '#', it navigates back in the browser history.
  * @param type
  */
-function redirectUrl(type: 'next' | 'prev' | 'series') {
+export function redirectUrl(type: 'next' | 'prev' | 'series') {
   const url = getAppStateValue('manga')?.[type];
   if (url && url !== '#') {
     location.href = sanitizeUrl(url);

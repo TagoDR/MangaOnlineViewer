@@ -100,7 +100,7 @@ export default class App extends LitElement {
                       .mode=${getSettingsValue('navbar')}
                     ></navbar-thumbnails>
               <manga-pagination
-                        .mode="${getSettingsValue('pagination')}"
+                      .mode="${getSettingsValue('pagination')}"
                       .startPage=${manga.begin}
                       .totalPages=${manga.pages}
                       .currentPage=${getAppStateValue('currentPage')}

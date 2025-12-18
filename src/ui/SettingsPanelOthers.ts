@@ -5,12 +5,12 @@ import {
   changeHeaderType,
   changeLazyStart,
   changeNavbarType,
+  changePagination,
   changeScrollHeight,
   checkAutoDownload,
   checkFitWidthOversize,
   checkHideImageControls,
   checkLazyLoad,
-  checkPagination,
 } from './events/options.ts';
 
 function checkboxOptions() {
@@ -21,14 +21,6 @@ function checkboxOptions() {
         name="fitIfOversize"
         ?checked=${getSettingsValue('fitWidthIfOversize')}
         @change=${checkFitWidthOversize}
-      ></toggle-switch>
-    </div>
-    <div class="ControlLabel pagination">
-      ${getLocaleString('ENABLE_PAGINATION')}
-      <toggle-switch
-        name="pagination"
-        ?checked=${getSettingsValue('pagination')}
-        @change=${checkPagination}
       ></toggle-switch>
     </div>
     <div class="ControlLabel downloadZip">
@@ -131,6 +123,40 @@ function headerType() {
   `;
 }
 
+function pagination() {
+  return html`
+    <div class="ControlLabel pagination">
+      ${getLocaleString('PAGINATION_TYPE')}
+      <segmented-control
+        .value=${getSettingsValue('pagination')}
+        @change=${changePagination}
+        labelPosition="side"
+      >
+        <segmented-control-option
+          value="disabled"
+          label=${getLocaleString('PAGINATION_DISABLED')}
+          icon="x"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="slider"
+          label=${getLocaleString('PAGINATION_SLIDER')}
+          icon="adjustments-horizontal"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="side-arrows"
+          label=${getLocaleString('PAGINATION_ARROWS')}
+          icon="arrows-left-right"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="both"
+          label=${getLocaleString('PAGINATION_BOTH')}
+          icon="arrows-horizontal"
+        ></segmented-control-option>
+      </segmented-control>
+    </div>
+  `;
+}
+
 function navbarType() {
   return html`
     <div class="ControlLabel navbarType">
@@ -192,4 +218,4 @@ function autoScroll() {
 }
 
 export default () =>
-  html`${checkboxOptions()} ${lazyLoad()} ${headerType()} ${navbarType()} ${autoScroll()}`;
+  html`${checkboxOptions()} ${pagination()} ${lazyLoad()} ${headerType()} ${navbarType()} ${autoScroll()}`;
