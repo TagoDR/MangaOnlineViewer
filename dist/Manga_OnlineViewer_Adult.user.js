@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2025.12.01.build-2218
+// @version       2025.12.18.build-2154
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -1732,7 +1732,11 @@
     NAVBAR_LEFT: "Links",
     NAVBAR_RIGHT: "Rechts",
     NAVBAR_DISABLED: "Deaktiviert",
-    ENABLE_PAGINATION: "Paginierung aktivieren",
+    PAGINATION_TYPE: "Paginierungstyp",
+    PAGINATION_DISABLED: "Deaktiviert",
+    PAGINATION_SLIDER: "Schieberegler",
+    PAGINATION_ARROWS: "Seitenpfeile",
+    PAGINATION_BOTH: "Beides",
     FILE_MENU: "Hauptmenü",
     VIEW_MENU: "Menü „Ansicht“",
     ZOOM_MENU: "Zoom-Menü"
@@ -1853,7 +1857,11 @@
     NAVBAR_LEFT: "Left",
     NAVBAR_RIGHT: "Right",
     NAVBAR_DISABLED: "Disabled",
-    ENABLE_PAGINATION: "Enable Pagination",
+    PAGINATION_TYPE: "Pagination Type",
+    PAGINATION_DISABLED: "Disabled",
+    PAGINATION_SLIDER: "Slider",
+    PAGINATION_ARROWS: "Side Arrows",
+    PAGINATION_BOTH: "Both",
     FILE_MENU: "Main Menu",
     VIEW_MENU: "View Menu",
     ZOOM_MENU: "Zoom Menu"
@@ -1974,7 +1982,11 @@
     NAVBAR_LEFT: "Izquierda",
     NAVBAR_RIGHT: "Derecha",
     NAVBAR_DISABLED: "Desactivado",
-    ENABLE_PAGINATION: "Habilitar paginación",
+    PAGINATION_TYPE: "Tipo de paginación",
+    PAGINATION_DISABLED: "Desactivado",
+    PAGINATION_SLIDER: "Control deslizante",
+    PAGINATION_ARROWS: "Flechas laterales",
+    PAGINATION_BOTH: "Ambos",
     FILE_MENU: "Menú principal",
     VIEW_MENU: "Ver menú",
     ZOOM_MENU: "Menú Zoom"
@@ -2095,7 +2107,11 @@
     NAVBAR_LEFT: "Gauche",
     NAVBAR_RIGHT: "Droite",
     NAVBAR_DISABLED: "Désactivé",
-    ENABLE_PAGINATION: "Activer la pagination",
+    PAGINATION_TYPE: "Type de pagination",
+    PAGINATION_DISABLED: "Désactivé",
+    PAGINATION_SLIDER: "Curseur",
+    PAGINATION_ARROWS: "Flèches latérales",
+    PAGINATION_BOTH: "Les deux",
     FILE_MENU: "Menu principal",
     VIEW_MENU: "Menu Affichage",
     ZOOM_MENU: "Menu Zoom"
@@ -2216,7 +2232,11 @@
     NAVBAR_LEFT: "Esquerda",
     NAVBAR_RIGHT: "Direita",
     NAVBAR_DISABLED: "Desativado",
-    ENABLE_PAGINATION: "Ligar Paginação",
+    PAGINATION_TYPE: "Tipo de Paginação",
+    PAGINATION_DISABLED: "Desativado",
+    PAGINATION_SLIDER: "Controle deslizante",
+    PAGINATION_ARROWS: "Setas Laterais",
+    PAGINATION_BOTH: "Ambos",
     FILE_MENU: "Menu Principal",
     VIEW_MENU: "Menu de Visualizações",
     ZOOM_MENU: "Menu de Zoom"
@@ -2337,7 +2357,11 @@
     NAVBAR_LEFT: "左边",
     NAVBAR_RIGHT: "正确的",
     NAVBAR_DISABLED: "已禁用",
-    ENABLE_PAGINATION: "启用分页",
+    PAGINATION_TYPE: "分页类型",
+    PAGINATION_DISABLED: "已禁用",
+    PAGINATION_SLIDER: "滑块",
+    PAGINATION_ARROWS: "侧边箭头",
+    PAGINATION_BOTH: "两者",
     FILE_MENU: "主菜单",
     VIEW_MENU: "查看菜单",
     ZOOM_MENU: "缩放菜单"
@@ -2377,7 +2401,7 @@
     maxReload: 5,
     minZoom: 30,
     navbar: "bottom",
-    pagination: false,
+    pagination: "disabled",
     scrollHeight: 25,
     theme: "#29487D",
     throttlePageLoad: 1e3,
@@ -2413,7 +2437,7 @@
     viewMode: "WebComic",
     header: "scroll",
     hidePageControls: true,
-    pagination: false
+    pagination: "disabled"
   };
   function getDefault(global = true) {
     return isMobile() ? _.defaultsDeep(mobileSettings, {
@@ -3280,6 +3304,8 @@
 
   const iconsCSS = ".icon-tabler-file-download > :nth-child(n + 4) {\n  color: gold;\n}\n\n.icon-tabler-arrow-autofit-width > :nth-child(n + 3) {\n  color: yellow;\n}\n\n.icon-tabler-arrow-autofit-height > :nth-child(n + 3) {\n  color: yellow;\n}\n\n.icon-tabler-zoom-in-area > :nth-child(2),\n.icon-tabler-zoom-in-area > :nth-child(3) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out-area > :nth-child(2) {\n  color: red;\n}\n\n.icon-tabler-zoom-pan > :nth-child(n + 4) {\n  color: #9966ff;\n}\n\n.icon-tabler-arrow-autofit-down > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-left > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-arrow-autofit-right > :nth-child(n + 3) {\n  color: #28ffbf;\n}\n\n.icon-tabler-spacing-vertical > :nth-child(4) {\n  color: fuchsia;\n}\n\n.icon-tabler-list-numbers > :nth-child(n + 5) {\n  color: #e48900;\n}\n\n.icon-tabler-bookmarks > :nth-child(n + 2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark > :nth-child(2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(2) {\n  color: orange;\n}\n\n.icon-tabler-bookmark-off > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-eye-off > :nth-child(4) {\n  color: red;\n}\n\n.icon-tabler-zoom-cancel > :nth-child(3),\n.icon-tabler-zoom-cancel > :nth-child(4) {\n  color: #9966ff;\n}\n\n.icon-tabler-zoom-in > :nth-child(3),\n.icon-tabler-zoom-in > :nth-child(4) {\n  color: lime;\n}\n\n.icon-tabler-zoom-out > :nth-child(3) {\n  color: red;\n}\n\n.icon-tabler-refresh > :nth-child(n + 2) {\n  color: cyan;\n}\n\n.icon-tabler-photo > :nth-child(n + 2) {\n  color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(n + 2) {\n  color: silver;\n}\n\n.icon-tabler-photo-off > :nth-child(6) {\n  color: orange;\n}\n\n.icon-tabler-message > :nth-child(2),\n.icon-tabler-message > :nth-child(3) {\n  color: greenyellow;\n}\n\n.icon-tabler-book-return > g {\n  color: greenyellow;\n}\n\n.icon-tabler-file-percent > :nth-child(2),\n.icon-tabler-file-percent > :nth-child(5),\n.icon-tabler-file-percent > :nth-child(6) {\n  color: yellow;\n}\n\n.icon-tabler-settings-off > :nth-child(4) {\n  color: red;\n}\n";
 
+  const adjustmentsHorizontal = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-adjustments-horizontal\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M14 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0\" /><path d=\"M4 6l8 0\" /><path d=\"M16 6l4 0\" /><path d=\"M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0\" /><path d=\"M4 12l2 0\" /><path d=\"M10 12l10 0\" /><path d=\"M17 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0\" /><path d=\"M4 18l11 0\" /><path d=\"M19 18l1 0\" /></svg>";
+
   const alertCircle = "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n  class=\"icon icon-tabler icons-tabler-outline icon-tabler-alert-circle\"\n>\n  <path\n    stroke=\"none\"\n    d=\"M0 0h24v24H0z\"\n    fill=\"none\"\n  />\n  <path d=\"M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0\" />\n  <path d=\"M12 8v4\" />\n  <path d=\"M12 16h.01\" />\n</svg>\n";
 
   const arrowAutofitDown = "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  class=\"icon icon-tabler icon-tabler-arrow-autofit-down\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  stroke-width=\"2\"\n  stroke=\"currentColor\"\n  fill=\"none\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path\n    stroke=\"none\"\n    d=\"M0 0h24v24H0z\"\n    fill=\"none\"\n  />\n  <path d=\"M12 20h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8\" />\n  <path d=\"M18 4v17\" />\n  <path d=\"M15 18l3 3l3 -3\" />\n</svg>\n";
@@ -3295,6 +3321,10 @@
   const arrowBigLeft = "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  class=\"icon icon-tabler icon-tabler-arrow-big-left\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  stroke-width=\"2\"\n  stroke=\"currentColor\"\n  fill=\"none\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path\n    stroke=\"none\"\n    d=\"M0 0h24v24H0z\"\n    fill=\"none\"\n  />\n  <path\n    d=\"M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z\"\n  />\n</svg>\n";
 
   const arrowBigRight = "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  class=\"icon icon-tabler icon-tabler-arrow-big-right\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  stroke-width=\"2\"\n  stroke=\"currentColor\"\n  fill=\"none\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path\n    stroke=\"none\"\n    d=\"M0 0h24v24H0z\"\n    fill=\"none\"\n  />\n  <path\n    d=\"M4 9h8v-3.586a1 1 0 0 1 1.707 -.707l6.586 6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1z\"\n  />\n</svg>\n";
+
+  const arrowsHorizontal = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-arrows-horizontal\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M7 8l-4 4l4 4\" /><path d=\"M17 8l4 4l-4 4\" /><path d=\"M3 12l18 0\" /></svg>";
+
+  const arrowsLeftRight = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-arrows-left-right\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M21 17l-18 0\" /><path d=\"M6 10l-3 -3l3 -3\" /><path d=\"M3 7l18 0\" /><path d=\"M18 20l3 -3l-3 -3\" /></svg>";
 
   const arrowsMove = "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n  class=\"icon icon-tabler icons-tabler-outline icon-tabler-arrows-move\"\n>\n  <path\n    stroke=\"none\"\n    d=\"M0 0h24v24H0z\"\n    fill=\"none\"\n  />\n  <path d=\"M18 9l3 3l-3 3\" />\n  <path d=\"M15 12h6\" />\n  <path d=\"M6 9l-3 3l3 3\" />\n  <path d=\"M3 12h6\" />\n  <path d=\"M9 18l3 3l3 -3\" />\n  <path d=\"M12 15v6\" />\n  <path d=\"M15 6l-3 -3l-3 3\" />\n  <path d=\"M12 3v6\" />\n</svg>\n";
 
@@ -3331,6 +3361,8 @@
   const category = "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  class=\"icon icon-tabler icon-tabler-category\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  stroke-width=\"2\"\n  stroke=\"currentColor\"\n  fill=\"none\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path\n    stroke=\"none\"\n    d=\"M0 0h24v24H0z\"\n    fill=\"none\"\n  />\n  <path d=\"M4 4h6v6h-6z\" />\n  <path d=\"M14 4h6v6h-6z\" />\n  <path d=\"M4 14h6v6h-6z\" />\n  <path d=\"M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0\" />\n</svg>\n";
 
   const check = "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  class=\"icon icon-tabler icon-tabler-check\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  stroke-width=\"2\"\n  stroke=\"currentColor\"\n  fill=\"none\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path\n    stroke=\"none\"\n    d=\"M0 0h24v24H0z\"\n    fill=\"none\"\n  />\n  <path d=\"M5 12l5 5l10 -10\" />\n</svg>\n";
+
+  const chevronLeft = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-chevron-left\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M15 6l-6 6l6 6\" /></svg>";
 
   const chevronRight = "<svg\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n  class=\"icon icon-tabler icons-tabler-outline icon-tabler-chevron-right\"\n>\n  <path\n    stroke=\"none\"\n    d=\"M0 0h24v24H0z\"\n    fill=\"none\"\n  />\n  <path d=\"M9 6l6 6l-6 6\" />\n</svg>\n";
 
@@ -3446,6 +3478,7 @@
 
   const rawIcons = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,
+    IconAdjustmentsHorizontal: adjustmentsHorizontal,
     IconAlertCircle: alertCircle,
     IconArrowAutofitDown: arrowAutofitDown,
     IconArrowAutofitHeight: arrowAutofitHeight,
@@ -3454,6 +3487,8 @@
     IconArrowAutofitWidth: arrowAutofitWidth,
     IconArrowBigLeft: arrowBigLeft,
     IconArrowBigRight: arrowBigRight,
+    IconArrowsHorizontal: arrowsHorizontal,
+    IconArrowsLeftRight: arrowsLeftRight,
     IconArrowsMove: arrowsMove,
     IconArrowsMoveVertical: arrowsMoveVertical,
     IconArrowsVertical: arrowsVertical,
@@ -3466,6 +3501,7 @@
     IconBoxAlignTop: boxAlignTop,
     IconCategory: category,
     IconCheck: check,
+    IconChevronLeft: chevronLeft,
     IconChevronRight: chevronRight,
     IconCircleCheck: circleCheck,
     IconCircleX: circleX,
@@ -3601,6 +3637,9 @@
     })
   );
   const {
+    IconAdjustmentsHorizontal: IconAdjustmentsHorizontal$1,
+    IconArrowsHorizontal: IconArrowsHorizontal$1,
+    IconArrowsLeftRight: IconArrowsLeftRight$1,
     IconArrowAutofitDown: IconArrowAutofitDown$1,
     IconArrowAutofitHeight: IconArrowAutofitHeight$1,
     IconArrowAutofitLeft: IconArrowAutofitLeft$1,
@@ -3620,6 +3659,7 @@
     IconBoxAlignTop: IconBoxAlignTop$1,
     IconCategory: IconCategory$1,
     IconCheck: IconCheck$1,
+    IconChevronLeft: IconChevronLeft$1,
     IconChevronRight: IconChevronRight$1,
     IconAlertCircle: IconAlertCircle$1,
     IconCircleCheck: IconCircleCheck$1,
@@ -3687,6 +3727,7 @@
 
   const styledIcons$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
     __proto__: null,
+    IconAdjustmentsHorizontal: IconAdjustmentsHorizontal$1,
     IconAlertCircle: IconAlertCircle$1,
     IconArrowAutofitDown: IconArrowAutofitDown$1,
     IconArrowAutofitHeight: IconArrowAutofitHeight$1,
@@ -3695,6 +3736,8 @@
     IconArrowAutofitWidth: IconArrowAutofitWidth$1,
     IconArrowBigLeft: IconArrowBigLeft$1,
     IconArrowBigRight: IconArrowBigRight$1,
+    IconArrowsHorizontal: IconArrowsHorizontal$1,
+    IconArrowsLeftRight: IconArrowsLeftRight$1,
     IconArrowsMove: IconArrowsMove$1,
     IconArrowsMoveVertical: IconArrowsMoveVertical$1,
     IconArrowsVertical: IconArrowsVertical$1,
@@ -3707,6 +3750,7 @@
     IconBoxAlignTop: IconBoxAlignTop$1,
     IconCategory: IconCategory$1,
     IconCheck: IconCheck$1,
+    IconChevronLeft: IconChevronLeft$1,
     IconChevronRight: IconChevronRight$1,
     IconCircleCheck: IconCircleCheck$1,
     IconCircleX: IconCircleX$1,
@@ -4353,6 +4397,9 @@
     Object.entries(styledIcons$1).map(([iconKey, icon]) => [iconKey, o$4(icon)])
   );
   const {
+    IconAdjustmentsHorizontal,
+    IconArrowsHorizontal,
+    IconArrowsLeftRight,
     IconArrowAutofitDown,
     IconArrowAutofitHeight,
     IconArrowAutofitLeft,
@@ -4372,6 +4419,7 @@
     IconBoxAlignTop,
     IconCategory,
     IconCheck,
+    IconChevronLeft,
     IconChevronRight,
     IconAlertCircle,
     IconCircleCheck,
@@ -6247,6 +6295,91 @@
     setAppStateValue("scrollToPage", target);
   }
 
+  function scroll() {
+    const chapterElement = getAppStateValue("chapter").value;
+    if (getSettingsValue("viewMode").startsWith("Fluid")) {
+      const scrollDirection = getSettingsValue("viewMode") === "FluidRTL" ? -1 : 1;
+      chapterElement?.scrollBy({
+        top: 0,
+        left: getSettingsValue("scrollHeight") * scrollDirection,
+        behavior: "smooth"
+      });
+      if (chapterElement && chapterElement.scrollLeft + chapterElement.clientWidth >= chapterElement.scrollWidth - 2) {
+        setAppStateValue("autoScroll", false);
+        logScript("Finished auto scroll");
+      }
+    } else {
+      window.scrollBy({
+        top: getSettingsValue("scrollHeight"),
+        left: 0,
+        behavior: "smooth"
+      });
+      if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
+        setAppStateValue("autoScroll", false);
+        logScript("Finished auto scroll");
+      }
+    }
+    if (getAppStateValue("autoScroll")) {
+      requestAnimationFrame(scroll);
+    }
+  }
+  function toggleAutoScroll() {
+    if (getAppStateValue("autoScroll")) {
+      setAppStateValue("autoScroll", false);
+      logScript("Stopped auto scroll");
+    } else {
+      setAppStateValue("autoScroll", true);
+      requestAnimationFrame(scroll);
+      logScript("Start auto scroll");
+    }
+  }
+  let resume = false;
+  const debounceAutoScroll = _.debounce(() => {
+    toggleAutoScroll();
+    resume = false;
+  }, 500);
+  function manualScroll() {
+    if (!resume && getAppStateValue("autoScroll")) {
+      toggleAutoScroll();
+      resume = true;
+    }
+    if (resume && !getAppStateValue("autoScroll")) {
+      debounceAutoScroll();
+    }
+  }
+  function autoscroll() {
+    window.addEventListener("wheel", _.throttle(manualScroll, 500));
+  }
+
+  function createStyleElement(id, content) {
+    const style = document.createElement("style");
+    style.id = id;
+    style.appendChild(document.createTextNode(content));
+    return style;
+  }
+  function appendStyleSheet(id, content) {
+    if (!document.querySelector(`#${id}`)) {
+      const head = document.head ?? document.querySelector("head");
+      head.appendChild(createStyleElement(id, content));
+    }
+  }
+  function removeStyleSheet(id) {
+    document.querySelectorAll(`style[id="${id}"]`).forEach((elem) => {
+      elem.remove();
+    });
+  }
+  function replaceStyleSheet(id, content) {
+    removeStyleSheet(id);
+    appendStyleSheet(id, content);
+  }
+  function wrapStyle(id, css) {
+    return html`
+    <style id="${id}">
+      ${css}
+    </style>
+  `;
+  }
+
   var __defProp$7 = Object.defineProperty;
   var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
   var __decorateClass$a = (decorators, target, key, kind) => {
@@ -6255,461 +6388,6 @@
       if (decorator = decorators[i])
         result = (kind ? decorator(target, key, result) : decorator(result)) || result;
     if (kind && result) __defProp$7(target, key, result);
-    return result;
-  };
-  let Pagination = class extends i$1 {
-    constructor() {
-      super(...arguments);
-      this.mode = false;
-      this.currentPage = 1;
-      this.totalPages = 1;
-      this.startPage = 1;
-    }
-    render() {
-      if (!this.mode) return E;
-      return x$1`
-      <button
-        class="pagination-button"
-        @click=${buttonRedirectURL}
-        value="${this.prev}"
-        ?disabled=${isNothing(this.prev) || this.prev === "#"}
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" />
-        </svg>
-        <div class="tooltip">Previous Chapter</div>
-      </button>
-
-      <button
-        class="pagination-button"
-        @click=${this.goToPreviousPage}
-        ?disabled=${this.currentPage <= this.startPage}
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-        </svg>
-        <div class="tooltip">Previous Page</div>
-      </button>
-
-      <div class="slider-container">
-        <input
-          type="range"
-          class="pagination-slider"
-          min="${this.startPage}"
-          max="${this.totalPages}"
-          .value="${this.currentPage.toString()}"
-          @input="${selectGoToPage}"
-        />
-        <div class="slider-tooltip">${this.currentPage} / ${this.totalPages}</div>
-      </div>
-
-      <button
-        class="pagination-button"
-        @click=${this.goToNextPage}
-        ?disabled="${this.currentPage === this.totalPages - (this.startPage - 1)}"
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-        </svg>
-        <div class="tooltip">Next Page</div>
-      </button>
-
-      <button
-        class="pagination-button"
-        @click=${buttonRedirectURL}
-        value="${this.next}"
-        ?disabled=${isNothing(this.next) || this.next === "#"}
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" />
-        </svg>
-        <div class="tooltip">Next Chapter</div>
-      </button>
-    `;
-    }
-    goToPreviousPage() {
-      this.goToPage(this.currentPage - 1);
-    }
-    goToNextPage() {
-      this.goToPage(this.currentPage + 1);
-    }
-    goToPage(page) {
-      setAppStateValue("scrollToPage", page);
-    }
-  };
-  Pagination.styles = i$3`
-    :host {
-      display: flex;
-      position: fixed;
-      bottom: 30px;
-      left: 0;
-      right: 0;
-      background-color: transparent;
-      justify-content: center;
-      align-items: center;
-      gap: 3px;
-      width: 100%;
-      font-family:
-        system-ui,
-        -apple-system,
-        sans-serif;
-      max-width: 100%;
-    }
-
-    .pagination-button {
-      background: var(--mov-color-fill-loud);
-      border: 1px solid var(--mov-color-fill-loud);
-      color: var(--mov-color-on-loud);
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 36px;
-      height: 36px;
-    }
-
-    .pagination-button:hover:not(:disabled) {
-      opacity: 0.8;
-      transform: translateY(-1px);
-    }
-
-    .pagination-button:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    .pagination-button svg {
-      width: 16px;
-      height: 16px;
-      fill: currentColor;
-    }
-
-    .slider-container {
-      position: relative;
-      max-width: 1000px;
-      width: inherit;
-      margin: 0 5px;
-    }
-
-    .pagination-slider {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 4px;
-      background: var(--mov-color-fill-loud);
-      opacity: 0.5;
-      border-radius: 2px;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .pagination-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      background: white;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--mov-color-fill-loud);
-    }
-
-    .pagination-slider::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
-      background: white;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 1px solid var(--mov-color-fill-loud);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .slider-tooltip {
-      position: absolute;
-      top: -35px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.9);
-      color: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-
-    .slider-container:hover .slider-tooltip {
-      opacity: 1;
-    }
-
-    .tooltip {
-      position: absolute;
-      bottom: 45px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--theme-body-background);
-      color: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-      z-index: 1001;
-    }
-
-    .pagination-button:hover .tooltip {
-      opacity: 1;
-    }
-  `;
-  __decorateClass$a([
-    n$1({ type: Boolean })
-  ], Pagination.prototype, "mode", 2);
-  __decorateClass$a([
-    n$1({ type: Number })
-  ], Pagination.prototype, "currentPage", 2);
-  __decorateClass$a([
-    n$1({ type: Number })
-  ], Pagination.prototype, "totalPages", 2);
-  __decorateClass$a([
-    n$1({ type: Number })
-  ], Pagination.prototype, "startPage", 2);
-  __decorateClass$a([
-    n$1({ type: String })
-  ], Pagination.prototype, "next", 2);
-  __decorateClass$a([
-    n$1({ type: String })
-  ], Pagination.prototype, "prev", 2);
-  Pagination = __decorateClass$a([
-    t$1("manga-pagination")
-  ], Pagination);
-
-  var __defProp$6 = Object.defineProperty;
-  var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$9 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
-    for (var i = decorators.length - 1, decorator; i >= 0; i--)
-      if (decorator = decorators[i])
-        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$6(target, key, result);
-    return result;
-  };
-  let Drawer = class extends i$1 {
-    constructor() {
-      super(...arguments);
-      this.open = false;
-      this.placement = "end";
-    }
-    close() {
-      this.open = false;
-    }
-    handleCancel(e) {
-      e.preventDefault();
-      this.close();
-    }
-    handleClick(event) {
-      if (event.target === this.dialog) {
-        this.close();
-      }
-    }
-    updated(changedProperties) {
-      if (changedProperties.has("open")) {
-        if (this.open) {
-          this.dialog.classList.remove("closing");
-          this.dialog.show();
-          this.dispatchEvent(new CustomEvent("open", { bubbles: true, composed: true }));
-        } else if (changedProperties.get("open") === true) {
-          this.dispatchEvent(new CustomEvent("close", { bubbles: true, composed: true }));
-          this.dialog.classList.add("closing");
-          setTimeout(() => {
-            this.dialog.classList.remove("closing");
-            if (this.dialog.open) {
-              this.dialog.close();
-            }
-          }, 300);
-        }
-      }
-    }
-    render() {
-      return x$1`
-      <div
-        class="backdrop"
-        @click=${this.close}
-      ></div>
-      <dialog
-        part="dialog"
-        @cancel=${this.handleCancel}
-        @click=${this.handleClick}
-      >
-        <div
-          class="header-bar"
-          part="header-bar"
-        >
-          <div class="action-item">
-            <slot name="header-actions"></slot>
-          </div>
-          <div class="header-content">
-            <slot name="label"></slot>
-          </div>
-          <div
-            class="close-button-container"
-            part="close-button-container"
-          >
-            <button
-              class="close-button"
-              part="close-button"
-              @click=${this.close}
-              aria-label="Close"
-            >
-              ${IconX}
-            </button>
-          </div>
-        </div>
-        <slot class="content-slot"></slot>
-      </dialog>
-    `;
-    }
-  };
-  Drawer.styles = i$3`
-    :host {
-      --panel-overlay-transition: opacity linear 0.25s;
-      --panel-overlay-opacity: 0.5;
-      --panel-z-index: 1000;
-      --panel-transition: transform 0.25s ease-out;
-    }
-
-    .backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background-color: #000;
-      opacity: 0;
-      transition: var(--panel-overlay-transition);
-      z-index: var(--panel-z-index);
-    }
-
-    :host([open]) .backdrop {
-      display: block;
-      opacity: var(--panel-overlay-opacity);
-    }
-
-    dialog {
-      all: unset;
-      background-color: var(--theme-background-color, #fff);
-      color: var(--theme-text-color, #000);
-      z-index: calc(var(--panel-z-index) + 1);
-      position: fixed;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
-      display: flex;
-      flex-direction: column;
-      visibility: hidden;
-      max-width: 100vw;
-      max-height: 100vh;
-      width: 350px;
-      top: 0;
-      bottom: 0;
-      height: 100%;
-      transition: var(--panel-transition);
-    }
-
-    :host([open]) dialog,
-    .closing {
-      visibility: visible;
-    }
-
-    /* Header Styles */
-    .header-bar {
-      display: flex;
-      align-items: center;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--theme-border-color, #e0e0e0);
-      flex-shrink: 0;
-    }
-    .action-item {
-      order: 1;
-    }
-    .header-content {
-      order: 2;
-      flex-grow: 1;
-      text-align: center;
-      font-weight: bold;
-    }
-    .close-button-container {
-      order: 3;
-      display: flex;
-      justify-content: flex-end;
-    }
-    .action-item,
-    .close-button-container {
-      min-width: 40px;
-    }
-    .close-button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.5rem;
-      line-height: 1;
-      padding: 0;
-      color: inherit;
-    }
-    .content-slot {
-      display: block;
-      padding: 1rem;
-      overflow-y: auto;
-      flex-grow: 1;
-    }
-
-    :host([placement='start']) dialog {
-      left: 0;
-      transform: translateX(-100%);
-    }
-    :host([placement='end']) dialog {
-      right: 0;
-      transform: translateX(100%);
-    }
-    :host([open]) dialog {
-      transform: none;
-    }
-    :host([placement='end']) .action-item {
-      order: 3;
-    }
-    :host([placement='end']) .header-content {
-      order: 2;
-    }
-    :host([placement='end']) .close-button-container {
-      order: 1;
-      justify-content: flex-start;
-    }
-  `;
-  __decorateClass$9([
-    n$1({ type: Boolean, reflect: true })
-  ], Drawer.prototype, "open", 2);
-  __decorateClass$9([
-    n$1({ type: String, reflect: true })
-  ], Drawer.prototype, "placement", 2);
-  __decorateClass$9([
-    e$2("dialog")
-  ], Drawer.prototype, "dialog", 2);
-  Drawer = __decorateClass$9([
-    t$1("mov-drawer")
-  ], Drawer);
-
-  var __defProp$5 = Object.defineProperty;
-  var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
-  var __decorateClass$8 = (decorators, target, key, kind) => {
-    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
-    for (var i = decorators.length - 1, decorator; i >= 0; i--)
-      if (decorator = decorators[i])
-        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-    if (kind && result) __defProp$5(target, key, result);
     return result;
   };
   let Dialog = class extends i$1 {
@@ -6987,22 +6665,22 @@
       transform: translateY(0);
     }
   `;
-  __decorateClass$8([
+  __decorateClass$a([
     n$1({ type: Boolean, reflect: true })
   ], Dialog.prototype, "open", 2);
-  __decorateClass$8([
+  __decorateClass$a([
     n$1({ type: String, reflect: true })
   ], Dialog.prototype, "mode", 2);
-  __decorateClass$8([
+  __decorateClass$a([
     n$1({ type: Boolean, reflect: true })
   ], Dialog.prototype, "fullscreen", 2);
-  __decorateClass$8([
+  __decorateClass$a([
     n$1({ type: String, reflect: true })
   ], Dialog.prototype, "icon", 2);
-  __decorateClass$8([
+  __decorateClass$a([
     e$2("dialog")
   ], Dialog.prototype, "dialog", 2);
-  Dialog = __decorateClass$8([
+  Dialog = __decorateClass$a([
     t$1("mov-dialog")
   ], Dialog);
   function showInfoDialog(options) {
@@ -7025,6 +6703,854 @@
     `
     });
   }
+
+  function changeSettingsScope(event) {
+    const scope = event.currentTarget.value;
+    toggleLocalSettings(scope === "true");
+  }
+  function changeLocale(event) {
+    const locale = event.currentTarget.value;
+    saveSettingsValue("locale", locale);
+  }
+  function changeLoadMode(event) {
+    const mode = event.currentTarget.value;
+    saveSettingsValue("loadMode", mode);
+  }
+  function checkFitWidthOversize(event) {
+    const checked = event.detail.checked;
+    saveSettingsValue("fitWidthIfOversize", checked);
+  }
+  function changeNavbarType(event) {
+    const navbarType = event.currentTarget.value;
+    saveSettingsValue("navbar", navbarType);
+  }
+  function changePagination(event) {
+    const pagination = event.currentTarget.value;
+    saveSettingsValue("pagination", pagination);
+  }
+  function checkAutoDownload(event) {
+    const checked = event.detail.checked;
+    saveSettingsValue("downloadZip", checked);
+    if (checked) {
+      showInfoDialog({
+        title: getLocaleString("ATTENTION"),
+        html: getLocaleString("AUTO_DOWNLOAD"),
+        timer: 1e4,
+        icon: "info"
+      });
+    }
+  }
+  function checkLazyLoad(event) {
+    const checked = event.detail.checked;
+    saveSettingsValue("lazyLoadImages", checked);
+    if (checked) {
+      showInfoDialog({
+        title: getLocaleString("WARNING"),
+        html: getLocaleString("LAZY_LOAD"),
+        icon: "warning"
+      });
+    }
+  }
+  function changeLazyStart(event) {
+    const start = event.currentTarget.value;
+    saveSettingsValue("lazyStart", parseInt(start, 10));
+  }
+  function changePagesPerSecond(event) {
+    const timer = parseInt(event.currentTarget.value, 10);
+    saveSettingsValue("throttlePageLoad", timer);
+    if (timer < 100) {
+      showInfoDialog({
+        title: getLocaleString("SPEED_WARNING"),
+        html: getLocaleString("SPEED_WARNING_MESSAGE"),
+        icon: "warning"
+      });
+    }
+  }
+  function changeZoomStep(event) {
+    const step = event.currentTarget.value;
+    saveSettingsValue("zoomStep", parseInt(step, 10));
+  }
+  function changeMinZoom(event) {
+    const min = event.currentTarget.value;
+    replaceStyleSheet("MinZoom", `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
+    saveSettingsValue("minZoom", parseInt(min, 10));
+  }
+  function checkHideImageControls(event) {
+    const checked = event.detail.checked;
+    saveSettingsValue("hidePageControls", checked);
+  }
+  function changeHeaderType(event) {
+    const headerType = event.currentTarget.value;
+    saveSettingsValue("header", headerType);
+  }
+  function changeScrollHeight(event) {
+    const { value } = event.currentTarget;
+    saveSettingsValue("scrollHeight", parseInt(value, 10));
+  }
+  function changeAutoScrollSpeed(sign) {
+    changeSettingsValue("scrollHeight", (v) => {
+      const speed = v + sign * 25;
+      if (speed <= 0) return 0;
+      const max = Math.ceil(window.innerHeight / 200) * 100;
+      if (speed >= max) return max;
+      return speed;
+    });
+  }
+
+  function getAvailableWidth() {
+    const navbar = getSettingsValue("navbar");
+    if (navbar === "left" || navbar === "right") {
+      return window.innerWidth - navbarSize;
+    }
+    return window.innerWidth;
+  }
+  function getAvailableHeight() {
+    const navbar = getSettingsValue("navbar");
+    if (navbar === "bottom") {
+      return window.innerHeight - navbarSize;
+    }
+    return window.innerHeight;
+  }
+  function calculatePageZoom(page, mode = getSettingsValue("zoomMode"), value = getSettingsValue("zoomValue")) {
+    const nextWidth = getAvailableWidth();
+    const nextHeight = getAvailableHeight();
+    if (mode === "width") {
+      page.width = nextWidth;
+      page.height = void 0;
+    } else if (mode === "height") {
+      page.width = void 0;
+      page.height = nextHeight;
+    } else if (mode === "percent") {
+      const width = page.naturalWidth ?? page.ref?.value?.naturalWidth;
+      page.width = width ? width * (value / 100) : void 0;
+      page.height = void 0;
+    }
+    return page;
+  }
+  function applyZoom(mode = getSettingsValue("zoomMode"), value = getSettingsValue("zoomValue")) {
+    logScript("Zoom", mode, value);
+    setSettingsValue("zoomMode", mode);
+    setSettingsValue("zoomValue", value);
+    if (mode === "height") {
+      setAppStateValue("scrollToPage", getAppStateValue("currentPage"));
+    } else {
+      refreshSettings("header");
+    }
+    const images = getAppStateValue("images");
+    const manga = getAppStateValue("manga");
+    const newImages = {};
+    for (let i = manga?.begin ?? 1; i <= (manga?.pages ?? 1); i++) {
+      newImages[i] = calculatePageZoom({ ...images?.[i] }, mode, value);
+    }
+    setAppStateValue("images", newImages);
+  }
+  function changeGlobalZoom(mode, value = getSettingsValue("zoomValue")) {
+    return () => {
+      applyZoom(mode, value);
+    };
+  }
+  function changeZoomByStep(sign = 1) {
+    return () => {
+      const ratio = getSettingsValue("zoomValue") + sign * getSettingsValue("zoomStep");
+      if (ratio > 0 && ratio < 500) applyZoom("percent", ratio);
+    };
+  }
+  function changeDefaultZoomMode(event) {
+    const target = event.currentTarget.value;
+    saveSettingsValue("zoomMode", target);
+  }
+  function changeDefaultZoomValue(event) {
+    const target = parseInt(event.currentTarget.value, 10);
+    saveSettingsValue("zoomValue", target);
+    applyZoom("percent", target);
+  }
+  function changeZoom(event) {
+    const target = parseInt(event.currentTarget.value, 10);
+    applyZoom("percent", target);
+  }
+
+  function updateViewMode(mode) {
+    return () => {
+      setSettingsValue("viewMode", mode);
+      if (mode.startsWith("Fluid")) {
+        setSettingsValue("zoomMode", "height");
+        setSettingsValue("header", "click");
+      } else {
+        refreshSettings("zoomMode");
+        refreshSettings("zoomValue");
+        refreshSettings("header");
+      }
+      applyZoom();
+    };
+  }
+  function changeDefaultViewMode(event) {
+    const mode = event.currentTarget.value;
+    saveSettingsValue("viewMode", mode);
+    updateViewMode(mode)();
+  }
+
+  function scrollFluid(sign) {
+    const viewMode = getSettingsValue("viewMode");
+    const scrollDirection = viewMode === "FluidRTL" ? -1 : 1;
+    getAppStateValue("chapter").value?.scrollBy({
+      left: 0.8 * window.innerWidth * sign * scrollDirection,
+      behavior: "smooth"
+    });
+  }
+  function scrollPage(sign) {
+    const currentPage = getAppStateValue("currentPage");
+    const target = currentPage + sign;
+    if (target < 0) {
+      setAppStateValue("scrollToPage", 0);
+    } else if (target > (getAppStateValue("manga")?.pages ?? 1)) ; else {
+      setAppStateValue("scrollToPage", target);
+    }
+  }
+  function scrollVertical(sign) {
+    window.scrollBy({
+      top: 0.8 * window.innerHeight * sign,
+      behavior: "smooth"
+    });
+  }
+  function doScrolling(sign) {
+    const viewMode = getSettingsValue("viewMode");
+    const zoomMode = getSettingsValue("zoomMode");
+    logScript("Scrolling view", viewMode, "zoom", zoomMode, "sign", sign);
+    if (viewMode.startsWith("Fluid")) {
+      scrollFluid(sign);
+    } else if (zoomMode === "height") {
+      scrollPage(sign);
+    } else {
+      scrollVertical(sign);
+    }
+  }
+  function redirectUrl(type) {
+    const url = getAppStateValue("manga")?.[type];
+    if (url && url !== "#") {
+      location.href = distExports.sanitizeUrl(url);
+    } else if (type !== "next") {
+      history.back();
+    }
+  }
+  const actions = {
+    SCROLL_UP() {
+      doScrolling(-1);
+    },
+    SCROLL_DOWN() {
+      doScrolling(1);
+    },
+    NEXT_CHAPTER() {
+      redirectUrl("next");
+    },
+    PREVIOUS_CHAPTER() {
+      redirectUrl("prev");
+    },
+    RETURN_CHAPTER_LIST() {
+      redirectUrl("series");
+    },
+    ENLARGE() {
+      changeZoomByStep(1)();
+    },
+    REDUCE() {
+      changeZoomByStep(-1)();
+    },
+    RESTORE() {
+      changeGlobalZoom("percent", 100)();
+    },
+    FIT_WIDTH() {
+      changeGlobalZoom("width")();
+    },
+    FIT_HEIGHT() {
+      changeGlobalZoom("height")();
+    },
+    SETTINGS() {
+      changeAppStateValue("panel", (p) => p === "none" ? "settings" : "none");
+    },
+    VIEW_MODE_WEBCOMIC() {
+      updateViewMode("WebComic")();
+    },
+    VIEW_MODE_VERTICAL() {
+      updateViewMode("Vertical")();
+    },
+    VIEW_MODE_LEFT() {
+      updateViewMode("FluidRTL")();
+    },
+    VIEW_MODE_RIGHT() {
+      updateViewMode("FluidLTR")();
+    },
+    SCROLL_START() {
+      toggleAutoScroll();
+    },
+    INCREASE_SPEED() {
+      changeAutoScrollSpeed(1);
+    },
+    DECREASE_SPEED() {
+      changeAutoScrollSpeed(-1);
+    }
+  };
+  function keybindings() {
+    document.onkeydown = null;
+    document.onkeyup = null;
+    window.onkeydown = null;
+    window.onkeyup = null;
+    window.onload = null;
+    document.body.onload = null;
+    hotkeys.unbind();
+    Object.keys(getSettingsValue("keybinds")).forEach((key) => {
+      hotkeys(
+        getSettingsValue("keybinds")[key]?.join(",") ?? "",
+        _.throttle((event) => {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          event.stopPropagation();
+          actions[key]();
+        }, 100)
+      );
+    });
+  }
+
+  var __defProp$6 = Object.defineProperty;
+  var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$9 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$9(target, key) : target;
+    for (var i = decorators.length - 1, decorator; i >= 0; i--)
+      if (decorator = decorators[i])
+        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+    if (kind && result) __defProp$6(target, key, result);
+    return result;
+  };
+  let Pagination = class extends i$1 {
+    constructor() {
+      super(...arguments);
+      this.mode = "disabled";
+      this.currentPage = 1;
+      this.totalPages = 1;
+      this.startPage = 1;
+    }
+    get isFirstPage() {
+      return this.currentPage <= this.startPage;
+    }
+    get isLastPage() {
+      return this.currentPage >= this.totalPages - (1 - this.startPage);
+    }
+    renderSlider() {
+      return x$1`
+      <div class="slider-pagination">
+        <button
+          class="pagination-button"
+          @click=${buttonRedirectURL}
+          value="${this.prev}"
+          ?disabled=${isNothing(this.prev) || this.prev === "#"}
+        >
+          <mov-icon name="arrow-big-left"></mov-icon>
+          <div class="tooltip">Previous Chapter</div>
+        </button>
+
+        <button
+          class="pagination-button"
+          @click=${this.goToPreviousPage}
+          ?disabled=${this.isFirstPage}
+        >
+          <mov-icon name="chevron-left"></mov-icon>
+          <div class="tooltip">Previous Page</div>
+        </button>
+
+        <div class="slider-container">
+          <input
+            type="range"
+            class="pagination-slider"
+            min="${this.startPage}"
+            max="${this.totalPages}"
+            .value="${this.currentPage.toString()}"
+            @input="${selectGoToPage}"
+          />
+          <div class="slider-tooltip">${this.currentPage} / ${this.totalPages}</div>
+        </div>
+
+        <button class="pagination-button" @click=${this.goToNextPage} ?disabled=${this.isLastPage}>
+          <mov-icon name="chevron-right"></mov-icon>
+          <div class="tooltip">Next Page</div>
+        </button>
+
+        <button
+          class="pagination-button"
+          @click=${buttonRedirectURL}
+          value="${this.next}"
+          ?disabled=${isNothing(this.next) || this.next === "#"}
+        >
+          <mov-icon name="arrow-big-right"></mov-icon>
+          <div class="tooltip">Next Chapter</div>
+        </button>
+      </div>
+    `;
+    }
+    renderSideArrows() {
+      return x$1`
+      <div class="arrows-pagination">
+        <button
+          class="side-arrow left"
+          @click=${this.handleLeftArrowClick}
+          ?disabled=${this.isFirstPage && (isNothing(this.prev) || this.prev === "#")}
+        >
+          <mov-icon name="chevron-left"></mov-icon>
+        </button>
+        <button
+          class="side-arrow right"
+          @click=${this.handleRightArrowClick}
+          ?disabled=${this.isLastPage && (isNothing(this.next) || this.next === "#")}
+        >
+          <mov-icon name="chevron-right"></mov-icon>
+        </button>
+      </div>
+    `;
+    }
+    render() {
+      if (this.mode === "disabled") {
+        return E;
+      }
+      const showSlider = this.mode === "slider" || this.mode === "both";
+      const showArrows = this.mode === "side-arrows" || this.mode === "both";
+      return x$1`
+      ${showSlider ? this.renderSlider() : E} ${showArrows ? this.renderSideArrows() : E}
+    `;
+    }
+    handleLeftArrowClick() {
+      if (this.isFirstPage) {
+        redirectUrl("prev");
+      } else {
+        this.goToPreviousPage();
+      }
+    }
+    handleRightArrowClick() {
+      if (this.isLastPage) {
+        redirectUrl("next");
+      } else {
+        this.goToNextPage();
+      }
+    }
+    goToPreviousPage() {
+      this.goToPage(this.currentPage - 1);
+    }
+    goToNextPage() {
+      this.goToPage(this.currentPage + 1);
+    }
+    goToPage(page) {
+      setAppStateValue("scrollToPage", page);
+    }
+  };
+  Pagination.styles = i$3`
+    :host {
+      display: contents; /* Use contents to not interfere with layout */
+      font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
+    }
+
+    .slider-pagination {
+      display: flex;
+      position: fixed;
+      bottom: 30px;
+      left: 0;
+      right: 0;
+      background-color: transparent;
+      justify-content: center;
+      align-items: center;
+      gap: 3px;
+      width: 100%;
+      max-width: 100%;
+      z-index: 100;
+    }
+
+    .pagination-button {
+      background: var(--mov-color-fill-loud);
+      border: 1px solid var(--mov-color-fill-loud);
+      color: var(--mov-color-on-loud);
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      height: 36px;
+    }
+
+    .pagination-button:hover:not(:disabled) {
+      opacity: 0.8;
+      transform: translateY(-1px);
+    }
+
+    .pagination-button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .pagination-button mov-icon {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .slider-container {
+      position: relative;
+      max-width: 1000px;
+      width: inherit;
+      margin: 0 5px;
+    }
+
+    .pagination-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: var(--mov-color-fill-loud);
+      opacity: 0.5;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .pagination-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--mov-color-fill-loud);
+    }
+
+    .pagination-slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1px solid var(--mov-color-fill-loud);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .slider-tooltip {
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .slider-container:hover .slider-tooltip {
+      opacity: 1;
+    }
+
+    .tooltip {
+      position: absolute;
+      bottom: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--theme-body-background);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 1001;
+    }
+
+    .pagination-button:hover .tooltip {
+      opacity: 1;
+    }
+
+    .side-arrow {
+      position: fixed;
+      top: var(--header-height, 50px);
+      bottom: 0;
+      width: 10vw;
+      height: calc(100vh - var(--header-height, 50px));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 99;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .side-arrow:hover {
+      background-color: var(--mov-color-primary-alpha-10);
+      opacity: 1;
+    }
+
+    .side-arrow.left {
+      left: 0;
+    }
+
+    .side-arrow.right {
+      right: 0;
+    }
+
+    .side-arrow:active {
+      background-color: var(--mov-color-primary-alpha-20);
+    }
+
+    .side-arrow mov-icon {
+      width: 48px;
+      height: 48px;
+      fill: var(--mov-color-on-primary);
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .side-arrow:disabled {
+      display: none;
+    }
+  `;
+  __decorateClass$9([
+    n$1({ type: String })
+  ], Pagination.prototype, "mode", 2);
+  __decorateClass$9([
+    n$1({ type: Number })
+  ], Pagination.prototype, "currentPage", 2);
+  __decorateClass$9([
+    n$1({ type: Number })
+  ], Pagination.prototype, "totalPages", 2);
+  __decorateClass$9([
+    n$1({ type: Number })
+  ], Pagination.prototype, "startPage", 2);
+  __decorateClass$9([
+    n$1({ type: String })
+  ], Pagination.prototype, "next", 2);
+  __decorateClass$9([
+    n$1({ type: String })
+  ], Pagination.prototype, "prev", 2);
+  Pagination = __decorateClass$9([
+    t$1("manga-pagination")
+  ], Pagination);
+
+  var __defProp$5 = Object.defineProperty;
+  var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
+  var __decorateClass$8 = (decorators, target, key, kind) => {
+    var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc$8(target, key) : target;
+    for (var i = decorators.length - 1, decorator; i >= 0; i--)
+      if (decorator = decorators[i])
+        result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+    if (kind && result) __defProp$5(target, key, result);
+    return result;
+  };
+  let Drawer = class extends i$1 {
+    constructor() {
+      super(...arguments);
+      this.open = false;
+      this.placement = "end";
+    }
+    close() {
+      this.open = false;
+    }
+    handleCancel(e) {
+      e.preventDefault();
+      this.close();
+    }
+    handleClick(event) {
+      if (event.target === this.dialog) {
+        this.close();
+      }
+    }
+    updated(changedProperties) {
+      if (changedProperties.has("open")) {
+        if (this.open) {
+          this.dialog.classList.remove("closing");
+          this.dialog.show();
+          this.dispatchEvent(new CustomEvent("open", { bubbles: true, composed: true }));
+        } else if (changedProperties.get("open") === true) {
+          this.dispatchEvent(new CustomEvent("close", { bubbles: true, composed: true }));
+          this.dialog.classList.add("closing");
+          setTimeout(() => {
+            this.dialog.classList.remove("closing");
+            if (this.dialog.open) {
+              this.dialog.close();
+            }
+          }, 300);
+        }
+      }
+    }
+    render() {
+      return x$1`
+      <div
+        class="backdrop"
+        @click=${this.close}
+      ></div>
+      <dialog
+        part="dialog"
+        @cancel=${this.handleCancel}
+        @click=${this.handleClick}
+      >
+        <div
+          class="header-bar"
+          part="header-bar"
+        >
+          <div class="action-item">
+            <slot name="header-actions"></slot>
+          </div>
+          <div class="header-content">
+            <slot name="label"></slot>
+          </div>
+          <div
+            class="close-button-container"
+            part="close-button-container"
+          >
+            <button
+              class="close-button"
+              part="close-button"
+              @click=${this.close}
+              aria-label="Close"
+            >
+              ${IconX}
+            </button>
+          </div>
+        </div>
+        <slot class="content-slot"></slot>
+      </dialog>
+    `;
+    }
+  };
+  Drawer.styles = i$3`
+    :host {
+      --panel-overlay-transition: opacity linear 0.25s;
+      --panel-overlay-opacity: 0.5;
+      --panel-z-index: 1000;
+      --panel-transition: transform 0.25s ease-out;
+    }
+
+    .backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: #000;
+      opacity: 0;
+      transition: var(--panel-overlay-transition);
+      z-index: var(--panel-z-index);
+    }
+
+    :host([open]) .backdrop {
+      display: block;
+      opacity: var(--panel-overlay-opacity);
+    }
+
+    dialog {
+      all: unset;
+      background-color: var(--theme-background-color, #fff);
+      color: var(--theme-text-color, #000);
+      z-index: calc(var(--panel-z-index) + 1);
+      position: fixed;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      visibility: hidden;
+      max-width: 100vw;
+      max-height: 100vh;
+      width: 350px;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+      transition: var(--panel-transition);
+    }
+
+    :host([open]) dialog,
+    .closing {
+      visibility: visible;
+    }
+
+    /* Header Styles */
+    .header-bar {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--theme-border-color, #e0e0e0);
+      flex-shrink: 0;
+    }
+    .action-item {
+      order: 1;
+    }
+    .header-content {
+      order: 2;
+      flex-grow: 1;
+      text-align: center;
+      font-weight: bold;
+    }
+    .close-button-container {
+      order: 3;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .action-item,
+    .close-button-container {
+      min-width: 40px;
+    }
+    .close-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      line-height: 1;
+      padding: 0;
+      color: inherit;
+    }
+    .content-slot {
+      display: block;
+      padding: 1rem;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    :host([placement='start']) dialog {
+      left: 0;
+      transform: translateX(-100%);
+    }
+    :host([placement='end']) dialog {
+      right: 0;
+      transform: translateX(100%);
+    }
+    :host([open]) dialog {
+      transform: none;
+    }
+    :host([placement='end']) .action-item {
+      order: 3;
+    }
+    :host([placement='end']) .header-content {
+      order: 2;
+    }
+    :host([placement='end']) .close-button-container {
+      order: 1;
+      justify-content: flex-start;
+    }
+  `;
+  __decorateClass$8([
+    n$1({ type: Boolean, reflect: true })
+  ], Drawer.prototype, "open", 2);
+  __decorateClass$8([
+    n$1({ type: String, reflect: true })
+  ], Drawer.prototype, "placement", 2);
+  __decorateClass$8([
+    e$2("dialog")
+  ], Drawer.prototype, "dialog", 2);
+  Drawer = __decorateClass$8([
+    t$1("mov-drawer")
+  ], Drawer);
 
   var __defProp$4 = Object.defineProperty;
   var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
@@ -7483,11 +8009,15 @@
       };
       this.host = host;
       host.addController(this);
+      const header = getSettingsValue("header");
+      const zoomMode = getSettingsValue("zoomMode");
+      if (zoomMode === "height" && ["click", "hover"].includes(header)) {
+        this.headerVisible = false;
+      }
     }
     hostConnected() {
       window.addEventListener("scroll", this.handleScroll);
       window.addEventListener("mousemove", this.handleMouseMove);
-      this.handleScroll();
     }
     hostDisconnected() {
       window.removeEventListener("scroll", this.handleScroll);
@@ -7567,62 +8097,6 @@
     }
   }
 
-  function scroll() {
-    const chapterElement = getAppStateValue("chapter").value;
-    if (getSettingsValue("viewMode").startsWith("Fluid")) {
-      const scrollDirection = getSettingsValue("viewMode") === "FluidRTL" ? -1 : 1;
-      chapterElement?.scrollBy({
-        top: 0,
-        left: getSettingsValue("scrollHeight") * scrollDirection,
-        behavior: "smooth"
-      });
-      if (chapterElement && chapterElement.scrollLeft + chapterElement.clientWidth >= chapterElement.scrollWidth - 2) {
-        setAppStateValue("autoScroll", false);
-        logScript("Finished auto scroll");
-      }
-    } else {
-      window.scrollBy({
-        top: getSettingsValue("scrollHeight"),
-        left: 0,
-        behavior: "smooth"
-      });
-      if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
-        setAppStateValue("autoScroll", false);
-        logScript("Finished auto scroll");
-      }
-    }
-    if (getAppStateValue("autoScroll")) {
-      requestAnimationFrame(scroll);
-    }
-  }
-  function toggleAutoScroll() {
-    if (getAppStateValue("autoScroll")) {
-      setAppStateValue("autoScroll", false);
-      logScript("Stopped auto scroll");
-    } else {
-      setAppStateValue("autoScroll", true);
-      requestAnimationFrame(scroll);
-      logScript("Start auto scroll");
-    }
-  }
-  let resume = false;
-  const debounceAutoScroll = _.debounce(() => {
-    toggleAutoScroll();
-    resume = false;
-  }, 500);
-  function manualScroll() {
-    if (!resume && getAppStateValue("autoScroll")) {
-      toggleAutoScroll();
-      resume = true;
-    }
-    if (resume && !getAppStateValue("autoScroll")) {
-      debounceAutoScroll();
-    }
-  }
-  function autoscroll() {
-    window.addEventListener("wheel", _.throttle(manualScroll, 500));
-  }
-
   function removeURLBookmark(url = window.location.href) {
     if (!isNothing(isBookmarked(url))) {
       logScript(`Bookmark Removed ${url}`);
@@ -7665,340 +8139,6 @@
     }
   }
 
-  function createStyleElement(id, content) {
-    const style = document.createElement("style");
-    style.id = id;
-    style.appendChild(document.createTextNode(content));
-    return style;
-  }
-  function appendStyleSheet(id, content) {
-    if (!document.querySelector(`#${id}`)) {
-      const head = document.head ?? document.querySelector("head");
-      head.appendChild(createStyleElement(id, content));
-    }
-  }
-  function removeStyleSheet(id) {
-    document.querySelectorAll(`style[id="${id}"]`).forEach((elem) => {
-      elem.remove();
-    });
-  }
-  function replaceStyleSheet(id, content) {
-    removeStyleSheet(id);
-    appendStyleSheet(id, content);
-  }
-  function wrapStyle(id, css) {
-    return html`
-    <style id="${id}">
-      ${css}
-    </style>
-  `;
-  }
-
-  function changeSettingsScope(event) {
-    const scope = event.currentTarget.value;
-    toggleLocalSettings(scope === "true");
-  }
-  function changeLocale(event) {
-    const locale = event.currentTarget.value;
-    saveSettingsValue("locale", locale);
-  }
-  function changeLoadMode(event) {
-    const mode = event.currentTarget.value;
-    saveSettingsValue("loadMode", mode);
-  }
-  function checkFitWidthOversize(event) {
-    const checked = event.detail.checked;
-    saveSettingsValue("fitWidthIfOversize", checked);
-  }
-  function changeNavbarType(event) {
-    const navbarType = event.currentTarget.value;
-    saveSettingsValue("navbar", navbarType);
-  }
-  function checkPagination(event) {
-    const checked = event.detail.checked;
-    saveSettingsValue("pagination", checked);
-  }
-  function checkAutoDownload(event) {
-    const checked = event.detail.checked;
-    saveSettingsValue("downloadZip", checked);
-    if (checked) {
-      showInfoDialog({
-        title: getLocaleString("ATTENTION"),
-        html: getLocaleString("AUTO_DOWNLOAD"),
-        timer: 1e4,
-        icon: "info"
-      });
-    }
-  }
-  function checkLazyLoad(event) {
-    const checked = event.detail.checked;
-    saveSettingsValue("lazyLoadImages", checked);
-    if (checked) {
-      showInfoDialog({
-        title: getLocaleString("WARNING"),
-        html: getLocaleString("LAZY_LOAD"),
-        icon: "warning"
-      });
-    }
-  }
-  function changeLazyStart(event) {
-    const start = event.currentTarget.value;
-    saveSettingsValue("lazyStart", parseInt(start, 10));
-  }
-  function changePagesPerSecond(event) {
-    const timer = parseInt(event.currentTarget.value, 10);
-    saveSettingsValue("throttlePageLoad", timer);
-    if (timer < 100) {
-      showInfoDialog({
-        title: getLocaleString("SPEED_WARNING"),
-        html: getLocaleString("SPEED_WARNING_MESSAGE"),
-        icon: "warning"
-      });
-    }
-  }
-  function changeZoomStep(event) {
-    const step = event.currentTarget.value;
-    saveSettingsValue("zoomStep", parseInt(step, 10));
-  }
-  function changeMinZoom(event) {
-    const min = event.currentTarget.value;
-    replaceStyleSheet("MinZoom", `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-    saveSettingsValue("minZoom", parseInt(min, 10));
-  }
-  function checkHideImageControls(event) {
-    const checked = event.detail.checked;
-    saveSettingsValue("hidePageControls", checked);
-  }
-  function changeHeaderType(event) {
-    const headerType = event.currentTarget.value;
-    saveSettingsValue("header", headerType);
-  }
-  function changeScrollHeight(event) {
-    const { value } = event.currentTarget;
-    saveSettingsValue("scrollHeight", parseInt(value, 10));
-  }
-  function changeAutoScrollSpeed(sign) {
-    changeSettingsValue("scrollHeight", (v) => {
-      const speed = v + sign * 25;
-      if (speed <= 0) return 0;
-      const max = Math.ceil(window.innerHeight / 200) * 100;
-      if (speed >= max) return max;
-      return speed;
-    });
-  }
-
-  function getAvailableWidth() {
-    const navbar = getSettingsValue("navbar");
-    if (navbar === "left" || navbar === "right") {
-      return window.innerWidth - navbarSize;
-    }
-    return window.innerWidth;
-  }
-  function getAvailableHeight() {
-    const navbar = getSettingsValue("navbar");
-    if (navbar === "bottom") {
-      return window.innerHeight - navbarSize;
-    }
-    return window.innerHeight;
-  }
-  function calculatePageZoom(page, mode = getSettingsValue("zoomMode"), value = getSettingsValue("zoomValue")) {
-    const nextWidth = getAvailableWidth();
-    const nextHeight = getAvailableHeight();
-    if (mode === "width") {
-      page.width = nextWidth;
-      page.height = void 0;
-    } else if (mode === "height") {
-      page.width = void 0;
-      page.height = nextHeight;
-    } else if (mode === "percent") {
-      const width = page.naturalWidth ?? page.ref?.value?.naturalWidth;
-      page.width = width ? width * (value / 100) : void 0;
-      page.height = void 0;
-    }
-    return page;
-  }
-  function applyZoom(mode = getSettingsValue("zoomMode"), value = getSettingsValue("zoomValue")) {
-    logScript("Zoom", mode, value);
-    setSettingsValue("zoomMode", mode);
-    setSettingsValue("zoomValue", value);
-    if (mode === "height") {
-      setAppStateValue("scrollToPage", getAppStateValue("currentPage"));
-    } else {
-      refreshSettings("header");
-    }
-    const images = getAppStateValue("images");
-    const manga = getAppStateValue("manga");
-    const newImages = {};
-    for (let i = manga?.begin ?? 1; i <= (manga?.pages ?? 1); i++) {
-      newImages[i] = calculatePageZoom({ ...images?.[i] }, mode, value);
-    }
-    setAppStateValue("images", newImages);
-  }
-  function changeGlobalZoom(mode, value = getSettingsValue("zoomValue")) {
-    return () => {
-      applyZoom(mode, value);
-    };
-  }
-  function changeZoomByStep(sign = 1) {
-    return () => {
-      const ratio = getSettingsValue("zoomValue") + sign * getSettingsValue("zoomStep");
-      if (ratio > 0 && ratio < 500) applyZoom("percent", ratio);
-    };
-  }
-  function changeDefaultZoomMode(event) {
-    const target = event.currentTarget.value;
-    saveSettingsValue("zoomMode", target);
-  }
-  function changeDefaultZoomValue(event) {
-    const target = parseInt(event.currentTarget.value, 10);
-    saveSettingsValue("zoomValue", target);
-    applyZoom("percent", target);
-  }
-  function changeZoom(event) {
-    const target = parseInt(event.currentTarget.value, 10);
-    applyZoom("percent", target);
-  }
-
-  function updateViewMode(mode) {
-    return () => {
-      setSettingsValue("viewMode", mode);
-      if (mode.startsWith("Fluid")) {
-        setSettingsValue("zoomMode", "height");
-        setSettingsValue("header", "click");
-      } else {
-        refreshSettings("zoomMode");
-        refreshSettings("zoomValue");
-        refreshSettings("header");
-      }
-      applyZoom();
-    };
-  }
-  function changeDefaultViewMode(event) {
-    const mode = event.currentTarget.value;
-    saveSettingsValue("viewMode", mode);
-    updateViewMode(mode)();
-  }
-
-  function scrollFluid(sign) {
-    const viewMode = getSettingsValue("viewMode");
-    const scrollDirection = viewMode === "FluidRTL" ? -1 : 1;
-    getAppStateValue("chapter").value?.scrollBy({
-      left: 0.8 * window.innerWidth * sign * scrollDirection,
-      behavior: "smooth"
-    });
-  }
-  function scrollPage(sign) {
-    const currentPage = getAppStateValue("currentPage");
-    const target = currentPage + sign;
-    if (target < 0) {
-      setAppStateValue("scrollToPage", 0);
-    } else if (target > (getAppStateValue("manga")?.pages ?? 1)) ; else {
-      setAppStateValue("scrollToPage", target);
-    }
-  }
-  function scrollVertical(sign) {
-    window.scrollBy({
-      top: 0.8 * window.innerHeight * sign,
-      behavior: "smooth"
-    });
-  }
-  function doScrolling(sign) {
-    const viewMode = getSettingsValue("viewMode");
-    const zoomMode = getSettingsValue("zoomMode");
-    logScript("Scrolling view", viewMode, "zoom", zoomMode, "sign", sign);
-    if (viewMode.startsWith("Fluid")) {
-      scrollFluid(sign);
-    } else if (zoomMode === "height") {
-      scrollPage(sign);
-    } else {
-      scrollVertical(sign);
-    }
-  }
-  function redirectUrl(type) {
-    const url = getAppStateValue("manga")?.[type];
-    if (url && url !== "#") {
-      location.href = distExports.sanitizeUrl(url);
-    } else if (type !== "next") {
-      history.back();
-    }
-  }
-  const actions = {
-    SCROLL_UP() {
-      doScrolling(-1);
-    },
-    SCROLL_DOWN() {
-      doScrolling(1);
-    },
-    NEXT_CHAPTER() {
-      redirectUrl("next");
-    },
-    PREVIOUS_CHAPTER() {
-      redirectUrl("prev");
-    },
-    RETURN_CHAPTER_LIST() {
-      redirectUrl("series");
-    },
-    ENLARGE() {
-      changeZoomByStep(1)();
-    },
-    REDUCE() {
-      changeZoomByStep(-1)();
-    },
-    RESTORE() {
-      changeGlobalZoom("percent", 100)();
-    },
-    FIT_WIDTH() {
-      changeGlobalZoom("width")();
-    },
-    FIT_HEIGHT() {
-      changeGlobalZoom("height")();
-    },
-    SETTINGS() {
-      changeAppStateValue("panel", (p) => p === "none" ? "settings" : "none");
-    },
-    VIEW_MODE_WEBCOMIC() {
-      updateViewMode("WebComic")();
-    },
-    VIEW_MODE_VERTICAL() {
-      updateViewMode("Vertical")();
-    },
-    VIEW_MODE_LEFT() {
-      updateViewMode("FluidRTL")();
-    },
-    VIEW_MODE_RIGHT() {
-      updateViewMode("FluidLTR")();
-    },
-    SCROLL_START() {
-      toggleAutoScroll();
-    },
-    INCREASE_SPEED() {
-      changeAutoScrollSpeed(1);
-    },
-    DECREASE_SPEED() {
-      changeAutoScrollSpeed(-1);
-    }
-  };
-  function keybindings() {
-    document.onkeydown = null;
-    document.onkeyup = null;
-    window.onkeydown = null;
-    window.onkeyup = null;
-    window.onload = null;
-    document.body.onload = null;
-    hotkeys.unbind();
-    Object.keys(getSettingsValue("keybinds")).forEach((key) => {
-      hotkeys(
-        getSettingsValue("keybinds")[key]?.join(",") ?? "",
-        _.throttle((event) => {
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          event.stopPropagation();
-          actions[key]();
-        }, 100)
-      );
-    });
-  }
-
   function buttonPanelsClose() {
     setAppStateValue("panel", "none");
   }
@@ -8025,7 +8165,7 @@
     setAppStateValue("panel", "keybindingsEditor");
   }
 
-  const styles$5 = "#Header {\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: var(--theme-background-color);\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n  z-index: 900;\n}\n\n#Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n  }\n  to {\n    transform: translateY(0%);\n  }\n}\n\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-hide:not(.visible) {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-show,\n#Header.headroom-end,\n#Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.headroom-top {\n  animation: none;\n}\n\n#Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#menu:not(.click),\n#menu.hide {\n  display: none;\n}\n\n#menu.click {\n  z-index: 901;\n  top:0;\n  left: 0;\n}\n\n#MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n  word-wrap: anywhere;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  min-width: 200px;\n  max-width: 40vw;\n}\n\n#GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  z-index: 100;\n}\n\n#ZoomControl {\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  gap: 3px;\n  padding: 10px 5px;\n}\n";
+  const styles$5 = "#Header {\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  flex-flow: row nowrap;\n  transition: transform 0.3s ease-in;\n  position: sticky;\n  top: 0;\n  left: 0;\n  right: 0;\n  background-color: var(--theme-background-color);\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\n  z-index: 900;\n}\n\n#Header.click {\n  padding-left: 40px;\n}\n\n@keyframes headroom {\n  from {\n    transform: translateY(-100%);\n  }\n  to {\n    transform: translateY(0%);\n  }\n}\n\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\n  animation: headroom 0.3s ease-in reverse;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-hide:not(.visible) {\n  animation: none;\n  transform: translateY(-100%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.scroll.headroom-show,\n#Header.headroom-end,\n#Header.visible {\n  animation: headroom 0.3s ease-in;\n  transform: translateY(0%);\n  position: sticky;\n  top: 0;\n}\n\n#Header.headroom-top {\n  animation: none;\n}\n\n#Header.fixed {\n  position: sticky;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#Header.simple {\n  position: static;\n  animation: none;\n  top: 0;\n  transform: translateY(0%);\n}\n\n#menu {\n  position: fixed;\n  z-index: 1;\n  color: var(--theme-body-text-color);\n  height: 40px;\n  width: 40px;\n}\n\n#menu:not(.click),\n#menu.hide {\n  display: none;\n}\n\n#menu.click {\n  z-index: 901;\n  top: 0;\n  left: 0;\n}\n\n#MangaTitle {\n  padding: 2px;\n  margin: 0;\n  font-size: 1.2rem;\n  font-weight: 400;\n  word-wrap: anywhere;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  min-width: 200px;\n  max-width: 40vw;\n}\n\n#GlobalFunctions {\n  display: flex;\n  gap: 3px;\n  padding: 3px 3px 3px 0;\n  flex-wrap: wrap;\n  z-index: 100;\n}\n\n#ZoomControl {\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  gap: 3px;\n  padding: 10px 5px;\n}\n";
 
   const media = "#Header.mobile,\n#Header.tablet {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n.mobile #ViewerTitle,\n.tablet #ViewerTitle {\n  order: 4;\n  min-height: auto;\n}\n\n.mobile #GlobalFunctions,\n.tablet #GlobalFunctions {\n  order: 2;\n  width: auto;\n  padding: 5px;\n}\n\n.mobile #GlobalFunctions span {\n  flex-direction: column;\n}\n\n.mobile #ZoomControl,\n.tablet #ZoomControl {\n  order: 3;\n}\n\n.mobile #Toolbar,\n.tabler #Toolbar {\n  order: 1;\n}\n\n#Header.mobile {\n  flex-direction: row;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: center;\n}\n\n#Header.mobile.click + #Chapter:not(.webcomic, .vertical) {\n  position: sticky;\n}\n\n.tablet #MangaTitle,\n.mobile #MangaTitle {\n  max-width: 90vw;\n}\n\n.mobile #ViewerTitle {\n  order: 3;\n  margin-top: 0;\n  height: auto;\n  padding: 0;\n}\n\n.mobile #GlobalFunctions {\n  order: 2;\n  padding: 0;\n  width: auto;\n  gap: 0;\n}\n\n.mobile mov-button::part(base) {\n  border-radius: 0;\n}\n\n.mobile #FileDropdown mov-button:first-of-type::part(base) {\n  border-radius: 5px 0 0 5px;\n}\n\n.mobile #GlobalFunctions mov-button:last-of-type::part(base) {\n  border-radius: 0 5px 5px 0;\n}\n\n.mobile .PageFunctions {\n  padding: 0;\n}\n\n.mobile .PageFunctions .PageButton.Bookmark {\n  opacity: 1;\n}\n\n.mobile #GlobalFunctions #ZoomSlider,\n.tablet #GlobalFunctions #ZoomSlider,\n.mobile .PageFunctions .PageButton:not(.Bookmark),\n.tablet #Counters,\n.mobile #ZoomControl,\n.mobile #ZoomDropdown,\n.mobile #ViewDropdown,\n.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)) {\n  display: none;\n}\n";
 
@@ -8901,14 +9041,6 @@
         @change=${checkFitWidthOversize}
       ></toggle-switch>
     </div>
-    <div class="ControlLabel pagination">
-      ${getLocaleString("ENABLE_PAGINATION")}
-      <toggle-switch
-        name="pagination"
-        ?checked=${getSettingsValue("pagination")}
-        @change=${checkPagination}
-      ></toggle-switch>
-    </div>
     <div class="ControlLabel downloadZip">
       ${getLocaleString("DOWNLOAD_IMAGES")}
       <toggle-switch
@@ -9006,6 +9138,39 @@
     </div>
   `;
   }
+  function pagination() {
+    return x$1`
+    <div class="ControlLabel pagination">
+      ${getLocaleString("PAGINATION_TYPE")}
+      <segmented-control
+        .value=${getSettingsValue("pagination")}
+        @change=${changePagination}
+        labelPosition="side"
+      >
+        <segmented-control-option
+          value="disabled"
+          label=${getLocaleString("PAGINATION_DISABLED")}
+          icon="x"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="slider"
+          label=${getLocaleString("PAGINATION_SLIDER")}
+          icon="adjustments-horizontal"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="side-arrows"
+          label=${getLocaleString("PAGINATION_ARROWS")}
+          icon="arrows-left-right"
+        ></segmented-control-option>
+        <segmented-control-option
+          value="both"
+          label=${getLocaleString("PAGINATION_BOTH")}
+          icon="arrows-horizontal"
+        ></segmented-control-option>
+      </segmented-control>
+    </div>
+  `;
+  }
   function navbarType() {
     return x$1`
     <div class="ControlLabel navbarType">
@@ -9064,7 +9229,7 @@
     </div>
   `;
   }
-  const SettingsPanelOthers = () => x$1`${checkboxOptions()} ${lazyLoad()} ${headerType()} ${navbarType()} ${autoScroll()}`;
+  const SettingsPanelOthers = () => x$1`${checkboxOptions()} ${pagination()} ${lazyLoad()} ${headerType()} ${navbarType()} ${autoScroll()}`;
 
   function changeColorScheme() {
     const isDark = getSettingsValue("colorScheme") === "dark";
@@ -9376,77 +9541,6 @@
     libExports.useStores(settings$1, locale, appState)
   ], SettingsPanel);
 
-  function computeCurrentPage() {
-    const pages = getAppStateValue("images");
-    if (!pages) return null;
-    const viewMode = getSettingsValue("viewMode");
-    const isHorizontal = viewMode === "FluidLTR" || viewMode === "FluidRTL";
-    const isRTL = viewMode === "FluidRTL";
-    const viewportCenterY = window.innerHeight / 2;
-    const viewportCenterX = window.innerWidth / 2;
-    let best = null;
-    for (const index in pages) {
-      const image = pages[index].ref?.value;
-      if (!image) continue;
-      const rect = image?.getBoundingClientRect();
-      let edge;
-      if (isHorizontal) {
-        if (isRTL) {
-          edge = rect.right;
-        } else {
-          edge = rect.left;
-        }
-      } else {
-        edge = rect.top;
-      }
-      const passed = isHorizontal ? edge <= viewportCenterX : edge <= viewportCenterY;
-      if (passed) {
-        if (!best || edge > best.edge) {
-          best = { index: parseInt(index, 10), edge };
-        }
-      }
-    }
-    if (!best) {
-      return getAppStateValue("manga")?.begin ?? 1;
-    }
-    return best.index;
-  }
-  function updateCurrentPage() {
-    const page = computeCurrentPage();
-    if (page == null) return;
-    if (getAppStateValue("currentPage") !== page) {
-      setAppStateValue("currentPage", page);
-    }
-  }
-  function attachListeners() {
-    const handler = _.throttle(() => {
-      requestAnimationFrame(updateCurrentPage);
-    }, 100);
-    window.addEventListener("scroll", handler, { passive: true });
-    window.addEventListener("resize", handler);
-    getAppStateValue("chapter").value?.addEventListener("scroll", handler, {
-      passive: true
-    });
-    requestAnimationFrame(updateCurrentPage);
-  }
-  function trackCurrentPage() {
-    if (!getAppStateValue("chapter").value) {
-      setTimeout(trackCurrentPage, 50);
-      return;
-    }
-    attachListeners();
-  }
-
-  async function events() {
-    await waitForFunc(() => getAppStateValue("manga") !== void 0);
-    keybindings();
-    window.addEventListener("resize", () => {
-      setAppStateValue("device", getDevice());
-    });
-    autoscroll();
-    trackCurrentPage();
-  }
-
   async function fetchText(url, format) {
     return new Promise((resolve) => {
       logScript("Fetching page: ", url);
@@ -9578,6 +9672,77 @@
         }
       }
     });
+  }
+
+  function computeCurrentPage() {
+    const pages = getAppStateValue("images");
+    if (!pages) return null;
+    const viewMode = getSettingsValue("viewMode");
+    const isHorizontal = viewMode === "FluidLTR" || viewMode === "FluidRTL";
+    const isRTL = viewMode === "FluidRTL";
+    const viewportCenterY = window.innerHeight / 2;
+    const viewportCenterX = window.innerWidth / 2;
+    let best = null;
+    for (const index in pages) {
+      const image = pages[index].ref?.value;
+      if (!image) continue;
+      const rect = image?.getBoundingClientRect();
+      let edge;
+      if (isHorizontal) {
+        if (isRTL) {
+          edge = rect.right;
+        } else {
+          edge = rect.left;
+        }
+      } else {
+        edge = rect.top;
+      }
+      const passed = isHorizontal ? edge <= viewportCenterX : edge <= viewportCenterY;
+      if (passed) {
+        if (!best || edge > best.edge) {
+          best = { index: parseInt(index, 10), edge };
+        }
+      }
+    }
+    if (!best) {
+      return getAppStateValue("manga")?.begin ?? 1;
+    }
+    return best.index;
+  }
+  function updateCurrentPage() {
+    const page = computeCurrentPage();
+    if (page == null) return;
+    if (getAppStateValue("currentPage") !== page) {
+      setAppStateValue("currentPage", page);
+    }
+  }
+  function attachListeners() {
+    const handler = _.throttle(() => {
+      requestAnimationFrame(updateCurrentPage);
+    }, 100);
+    window.addEventListener("scroll", handler, { passive: true });
+    window.addEventListener("resize", handler);
+    getAppStateValue("chapter").value?.addEventListener("scroll", handler, {
+      passive: true
+    });
+    requestAnimationFrame(updateCurrentPage);
+  }
+  function trackCurrentPage() {
+    if (!getAppStateValue("chapter").value) {
+      setTimeout(trackCurrentPage, 50);
+      return;
+    }
+    attachListeners();
+  }
+
+  async function events() {
+    await waitForFunc(() => getAppStateValue("manga") !== void 0);
+    keybindings();
+    window.addEventListener("resize", () => {
+      setAppStateValue("device", getDevice());
+    });
+    autoscroll();
+    trackCurrentPage();
   }
 
   function invalidateImageCache(src, repeat) {
@@ -10361,7 +10526,7 @@
                       .mode=${getSettingsValue("navbar")}
                     ></navbar-thumbnails>
               <manga-pagination
-                        .mode="${getSettingsValue("pagination")}"
+                      .mode="${getSettingsValue("pagination")}"
                       .startPage=${manga.begin}
                       .totalPages=${manga.pages}
                       .currentPage=${getAppStateValue("currentPage")}
