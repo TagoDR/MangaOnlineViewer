@@ -47,13 +47,10 @@ const mangastreamwp: ISite = {
   language: [Language.ENGLISH, Language.SPANISH],
   category: Category.MANGA,
   // waitTime: 2000,
-  waitEle: ':where(#chapter, #nPL_select) option:nth-child(2)',
+  waitEle:
+    ':where(#readerarea, .check-box, #viewer-img) img:not(.asurascans):not([src*="loader"]):not([src*="chevron"])',
   run(): IManga {
-    const images = [
-      ...document.querySelectorAll(
-        ':where(#readerarea, .check-box) img:not(.asurascans):not([src*="loader"]):not([src*="chevron"])',
-      ),
-    ];
+    const images = [...document.querySelectorAll(this.waitEle ?? '')];
     return {
       title: document.querySelector('title')?.textContent?.trim(),
       series:
