@@ -48,7 +48,7 @@ const mangastreamwp: ISite = {
   category: Category.MANGA,
   // waitTime: 2000,
   waitEle:
-    ':where(#readerarea, .check-box, #viewer-img) img:not(.asurascans):not([src*="loader"]):not([src*="chevron"])',
+    ':where(#readerarea, .check-box, #viewer-img) img:not(.asurascans):not([src*="loader"]):not([src*="chevron"]),:where(.nextprev, .inner_nPL)',
   run(): IManga {
     const images = [...document.querySelectorAll(this.waitEle ?? '')];
     return {
