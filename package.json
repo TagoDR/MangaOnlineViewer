@@ -21,25 +21,31 @@
     "type": "git",
     "url": "git+https://github.com/TagoDR/MangaOnlineViewer.git"
   },
-  "keywords": ["manga", "reader", "viewer", "online", "loader"],
+  "keywords": [
+    "manga",
+    "reader",
+    "viewer",
+    "online",
+    "loader"
+  ],
   "bugs": "https://github.com/TagoDR/MangaOnlineViewer/issues",
   "homepage": "https://github.com/TagoDR/MangaOnlineViewer#readme",
   "devDependencies": {
-    "@biomejs/biome": "^2.3.10",
-    "@storybook/addon-docs": "^10.1.10",
-    "@storybook/web-components-vite": "^10.1.10",
+    "@biomejs/biome": "^2.3.11",
+    "@storybook/addon-docs": "^10.2.0",
+    "@storybook/web-components-vite": "^10.2.0",
     "@types/file-saver": "^2.0.7",
-    "@types/lodash": "^4.17.21",
-    "@types/node": "^24.10.4",
+    "@types/lodash": "^4.17.23",
+    "@types/node": "^24.10.9",
     "@types/nprogress": "^0.2.3",
     "@types/tampermonkey": "^5.0.5",
-    "@vueless/storybook-dark-mode": "^10.0.4",
+    "@vueless/storybook-dark-mode": "^10.0.6",
     "rollup-plugin-external-globals": "^0.13.0",
-    "storybook": "^10.1.10",
+    "storybook": "^10.2.0",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
     "userscript-metadata-generator": "^0.2.4",
-    "vite": "^7.3.0",
+    "vite": "^7.3.1",
     "vite-plugin-banner": "^0.8.1",
     "vite-plugin-singlefile": "^2.3.0",
     "vite-svg-loader": "^5.1.0"
@@ -56,14 +62,17 @@
     "file-saver": "^2.0.5",
     "hotkeys-js": "^3.13.15",
     "jszip": "=3.9.1",
-    "lit": "^3.3.1",
+    "lit": "^3.3.2",
     "lodash": "^4.17.23",
     "nanostores": "^1.1.0",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "toolcool-range-slider": "^4.0.28"
   },
-  "browserslist": ["defaults and fully supports es6-module", "maintained node versions"],
+  "browserslist": [
+    "defaults and fully supports es6-module",
+    "maintained node versions"
+  ],
   "prettier": {
     "overrides": [
       {
