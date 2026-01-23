@@ -25,6 +25,7 @@ import mangapark from './mangapark';
 import mangareader from './mangareader';
 import mangastreamwp from './mangastreamwp';
 import mangatoon from './mangatoon';
+import mangatown from './mangatown';
 import manhwaweb from './manhwaweb';
 import mgeko from './mgeko';
 import nineanime from './nineanime';
@@ -62,6 +63,7 @@ const sites: ISite[] = [
   mangapark,
   mangareader,
   mangatoon,
+  mangatown,
   manhwaweb,
   mgeko,
   nineanime,
