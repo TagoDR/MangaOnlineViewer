@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.01.22.build-0120
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
+// @version       2026.01.23.build-0135
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -49,6 +49,7 @@
 // @include       /https?:\/\/(www\.)?(mangapark|mpark|comicpark|readpark|parkmanga).(com|me|org|net|io|to)\/title\/.+\/.+/
 // @include       /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/
 // @include       /https?:\/\/.*mangatoon.mobi\/.+\/watch\/.+/
+// @include       /https?:\/\/www\.mangatown\.com\/manga\/.+\/.+\//
 // @include       /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/
 // @include       /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/
 // @include       /https?:\/\/(www\.)?nineanime.com\/chapter\/.+/
@@ -509,13 +510,13 @@
    * Copyright 2017 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
    */
-  const t$4=globalThis,i$5=t$4.trustedTypes,s$3=i$5?i$5.createPolicy("lit-html",{createHTML:t=>t}):void 0,e$8="$lit$",h$3=`lit$${Math.random().toFixed(9).slice(2)}$`,o$c="?"+h$3,n$6=`<${o$c}>`,r$6=document,l$1=()=>r$6.createComment(""),c$3=t=>null===t||"object"!=typeof t&&"function"!=typeof t,a$1=Array.isArray,u$1=t=>a$1(t)||"function"==typeof t?.[Symbol.iterator],d$2="[ \t\n\f\r]",f$3=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,v=/-->/g,_$1=/>/g,m=RegExp(`>|${d$2}(?:([^\\s"'>=/]+)(${d$2}*=${d$2}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),p$1=/'/g,g=/"/g,$=/^(?:script|style|textarea|title)$/i,y$1=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),x$1=y$1(1),T=Symbol.for("lit-noChange"),E=Symbol.for("lit-nothing"),A=new WeakMap,C=r$6.createTreeWalker(r$6,129);function P(t,i){if(!a$1(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==s$3?s$3.createHTML(i):i}const V=(t,i)=>{const s=t.length-1,o=[];let r,l=2===i?"<svg>":3===i?"<math>":"",c=f$3;for(let i=0;i<s;i++){const s=t[i];let a,u,d=-1,y=0;for(;y<s.length&&(c.lastIndex=y,u=c.exec(s),null!==u);)y=c.lastIndex,c===f$3?"!--"===u[1]?c=v:void 0!==u[1]?c=_$1:void 0!==u[2]?($.test(u[2])&&(r=RegExp("</"+u[2],"g")),c=m):void 0!==u[3]&&(c=m):c===m?">"===u[0]?(c=r??f$3,d=-1):void 0===u[1]?d=-2:(d=c.lastIndex-u[2].length,a=u[1],c=void 0===u[3]?m:'"'===u[3]?g:p$1):c===g||c===p$1?c=m:c===v||c===_$1?c=f$3:(c=m,r=void 0);const x=c===m&&t[i+1].startsWith("/>")?" ":"";l+=c===f$3?s+n$6:d>=0?(o.push(a),s.slice(0,d)+e$8+s.slice(d)+h$3+x):s+h$3+(-2===d?i:x);}return [P(t,l+(t[s]||"<?>")+(2===i?"</svg>":3===i?"</math>":"")),o]};class N{constructor({strings:t,_$litType$:s},n){let r;this.parts=[];let c=0,a=0;const u=t.length-1,d=this.parts,[f,v]=V(t,s);if(this.el=N.createElement(f,n),C.currentNode=this.el.content,2===s||3===s){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes);}for(;null!==(r=C.nextNode())&&d.length<u;){if(1===r.nodeType){if(r.hasAttributes())for(const t of r.getAttributeNames())if(t.endsWith(e$8)){const i=v[a++],s=r.getAttribute(t).split(h$3),e=/([.?@])?(.*)/.exec(i);d.push({type:1,index:c,name:e[2],strings:s,ctor:"."===e[1]?H:"?"===e[1]?I:"@"===e[1]?L:k}),r.removeAttribute(t);}else t.startsWith(h$3)&&(d.push({type:6,index:c}),r.removeAttribute(t));if($.test(r.tagName)){const t=r.textContent.split(h$3),s=t.length-1;if(s>0){r.textContent=i$5?i$5.emptyScript:"";for(let i=0;i<s;i++)r.append(t[i],l$1()),C.nextNode(),d.push({type:2,index:++c});r.append(t[s],l$1());}}}else if(8===r.nodeType)if(r.data===o$c)d.push({type:2,index:c});else {let t=-1;for(;-1!==(t=r.data.indexOf(h$3,t+1));)d.push({type:7,index:c}),t+=h$3.length-1;}c++;}}static createElement(t,i){const s=r$6.createElement("template");return s.innerHTML=t,s}}function S$1(t,i,s=t,e){if(i===T)return i;let h=void 0!==e?s._$Co?.[e]:s._$Cl;const o=c$3(i)?void 0:i._$litDirective$;return h?.constructor!==o&&(h?._$AO?.(false),void 0===o?h=void 0:(h=new o(t),h._$AT(t,s,e)),void 0!==e?(s._$Co??=[])[e]=h:s._$Cl=h),void 0!==h&&(i=S$1(t,h._$AS(t,i.values),h,e)),i}class M{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:i},parts:s}=this._$AD,e=(t?.creationScope??r$6).importNode(i,true);C.currentNode=e;let h=C.nextNode(),o=0,n=0,l=s[0];for(;void 0!==l;){if(o===l.index){let i;2===l.type?i=new R(h,h.nextSibling,this,t):1===l.type?i=new l.ctor(h,l.name,l.strings,this,t):6===l.type&&(i=new z(h,this,t)),this._$AV.push(i),l=s[++n];}o!==l?.index&&(h=C.nextNode(),o++);}return C.currentNode=r$6,e}p(t){let i=0;for(const s of this._$AV) void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class R{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,i,s,e){this.type=2,this._$AH=E,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cv=e?.isConnected??true;}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t?.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=S$1(this,t,i),c$3(t)?t===E||null==t||""===t?(this._$AH!==E&&this._$AR(),this._$AH=E):t!==this._$AH&&t!==T&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):u$1(t)?this.k(t):this._(t);}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t));}_(t){this._$AH!==E&&c$3(this._$AH)?this._$AA.nextSibling.data=t:this.T(r$6.createTextNode(t)),this._$AH=t;}$(t){const{values:i,_$litType$:s}=t,e="number"==typeof s?this._$AC(t):(void 0===s.el&&(s.el=N.createElement(P(s.h,s.h[0]),this.options)),s);if(this._$AH?._$AD===e)this._$AH.p(i);else {const t=new M(e,this),s=t.u(this.options);t.p(i),this.T(s),this._$AH=t;}}_$AC(t){let i=A.get(t.strings);return void 0===i&&A.set(t.strings,i=new N(t)),i}k(t){a$1(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const h of t)e===i.length?i.push(s=new R(this.O(l$1()),this.O(l$1()),this,this.options)):s=i[e],s._$AI(h),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,i){for(this._$AP?.(false,true,i);t!==this._$AB;){const i=t.nextSibling;t.remove(),t=i;}}setConnected(t){ void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t));}}class k{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,i,s,e,h){this.type=1,this._$AH=E,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=h,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=E;}_$AI(t,i=this,s,e){const h=this.strings;let o=false;if(void 0===h)t=S$1(this,t,i,0),o=!c$3(t)||t!==this._$AH&&t!==T,o&&(this._$AH=t);else {const e=t;let n,r;for(t=h[0],n=0;n<h.length-1;n++)r=S$1(this,e[s+n],i,n),r===T&&(r=this._$AH[n]),o||=!c$3(r)||r!==this._$AH[n],r===E?t=E:t!==E&&(t+=(r??"")+h[n+1]),this._$AH[n]=r;}o&&!e&&this.j(t);}j(t){t===E?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"");}}class H extends k{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===E?void 0:t;}}class I extends k{constructor(){super(...arguments),this.type=4;}j(t){this.element.toggleAttribute(this.name,!!t&&t!==E);}}class L extends k{constructor(t,i,s,e,h){super(t,i,s,e,h),this.type=5;}_$AI(t,i=this){if((t=S$1(this,t,i,0)??E)===T)return;const s=this._$AH,e=t===E&&s!==E||t.capture!==s.capture||t.once!==s.once||t.passive!==s.passive,h=t!==E&&(s===E||e);e&&this.element.removeEventListener(this.name,this,s),h&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t);}}class z{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){S$1(this,t);}}const j=t$4.litHtmlPolyfillSupport;j?.(N,R),(t$4.litHtmlVersions??=[]).push("3.3.1");const B=(t,i,s)=>{const e=s?.renderBefore??i;let h=e._$litPart$;if(void 0===h){const t=s?.renderBefore??null;e._$litPart$=h=new R(i.insertBefore(l$1(),t),t,void 0,s??{});}return h._$AI(t),h};
+  const t$4=globalThis,i$5=t=>t,s$3=t$4.trustedTypes,e$8=s$3?s$3.createPolicy("lit-html",{createHTML:t=>t}):void 0,h$3="$lit$",o$c=`lit$${Math.random().toFixed(9).slice(2)}$`,n$6="?"+o$c,r$7=`<${n$6}>`,l$1=document,c$3=()=>l$1.createComment(""),a$1=t=>null===t||"object"!=typeof t&&"function"!=typeof t,u$1=Array.isArray,d$2=t=>u$1(t)||"function"==typeof t?.[Symbol.iterator],f$2="[ \t\n\f\r]",v=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,_$1=/-->/g,m=/>/g,p$1=RegExp(`>|${f$2}(?:([^\\s"'>=/]+)(${f$2}*=${f$2}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),g=/'/g,$=/"/g,y$1=/^(?:script|style|textarea|title)$/i,x$1=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),b$1=x$1(1),E=Symbol.for("lit-noChange"),A=Symbol.for("lit-nothing"),C=new WeakMap,P=l$1.createTreeWalker(l$1,129);function V(t,i){if(!u$1(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==e$8?e$8.createHTML(i):i}const N=(t,i)=>{const s=t.length-1,e=[];let n,l=2===i?"<svg>":3===i?"<math>":"",c=v;for(let i=0;i<s;i++){const s=t[i];let a,u,d=-1,f=0;for(;f<s.length&&(c.lastIndex=f,u=c.exec(s),null!==u);)f=c.lastIndex,c===v?"!--"===u[1]?c=_$1:void 0!==u[1]?c=m:void 0!==u[2]?(y$1.test(u[2])&&(n=RegExp("</"+u[2],"g")),c=p$1):void 0!==u[3]&&(c=p$1):c===p$1?">"===u[0]?(c=n??v,d=-1):void 0===u[1]?d=-2:(d=c.lastIndex-u[2].length,a=u[1],c=void 0===u[3]?p$1:'"'===u[3]?$:g):c===$||c===g?c=p$1:c===_$1||c===m?c=v:(c=p$1,n=void 0);const x=c===p$1&&t[i+1].startsWith("/>")?" ":"";l+=c===v?s+r$7:d>=0?(e.push(a),s.slice(0,d)+h$3+s.slice(d)+o$c+x):s+o$c+(-2===d?i:x);}return [V(t,l+(t[s]||"<?>")+(2===i?"</svg>":3===i?"</math>":"")),e]};let S$1 = class S{constructor({strings:t,_$litType$:i},e){let r;this.parts=[];let l=0,a=0;const u=t.length-1,d=this.parts,[f,v]=N(t,i);if(this.el=S.createElement(f,e),P.currentNode=this.el.content,2===i||3===i){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes);}for(;null!==(r=P.nextNode())&&d.length<u;){if(1===r.nodeType){if(r.hasAttributes())for(const t of r.getAttributeNames())if(t.endsWith(h$3)){const i=v[a++],s=r.getAttribute(t).split(o$c),e=/([.?@])?(.*)/.exec(i);d.push({type:1,index:l,name:e[2],strings:s,ctor:"."===e[1]?I:"?"===e[1]?L:"@"===e[1]?z:H}),r.removeAttribute(t);}else t.startsWith(o$c)&&(d.push({type:6,index:l}),r.removeAttribute(t));if(y$1.test(r.tagName)){const t=r.textContent.split(o$c),i=t.length-1;if(i>0){r.textContent=s$3?s$3.emptyScript:"";for(let s=0;s<i;s++)r.append(t[s],c$3()),P.nextNode(),d.push({type:2,index:++l});r.append(t[i],c$3());}}}else if(8===r.nodeType)if(r.data===n$6)d.push({type:2,index:l});else {let t=-1;for(;-1!==(t=r.data.indexOf(o$c,t+1));)d.push({type:7,index:l}),t+=o$c.length-1;}l++;}}static createElement(t,i){const s=l$1.createElement("template");return s.innerHTML=t,s}};function M(t,i,s=t,e){if(i===E)return i;let h=void 0!==e?s._$Co?.[e]:s._$Cl;const o=a$1(i)?void 0:i._$litDirective$;return h?.constructor!==o&&(h?._$AO?.(false),void 0===o?h=void 0:(h=new o(t),h._$AT(t,s,e)),void 0!==e?(s._$Co??=[])[e]=h:s._$Cl=h),void 0!==h&&(i=M(t,h._$AS(t,i.values),h,e)),i}class R{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:i},parts:s}=this._$AD,e=(t?.creationScope??l$1).importNode(i,true);P.currentNode=e;let h=P.nextNode(),o=0,n=0,r=s[0];for(;void 0!==r;){if(o===r.index){let i;2===r.type?i=new k(h,h.nextSibling,this,t):1===r.type?i=new r.ctor(h,r.name,r.strings,this,t):6===r.type&&(i=new Z(h,this,t)),this._$AV.push(i),r=s[++n];}o!==r?.index&&(h=P.nextNode(),o++);}return P.currentNode=l$1,e}p(t){let i=0;for(const s of this._$AV) void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class k{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,i,s,e){this.type=2,this._$AH=A,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cv=e?.isConnected??true;}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t?.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=M(this,t,i),a$1(t)?t===A||null==t||""===t?(this._$AH!==A&&this._$AR(),this._$AH=A):t!==this._$AH&&t!==E&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):d$2(t)?this.k(t):this._(t);}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t));}_(t){this._$AH!==A&&a$1(this._$AH)?this._$AA.nextSibling.data=t:this.T(l$1.createTextNode(t)),this._$AH=t;}$(t){const{values:i,_$litType$:s}=t,e="number"==typeof s?this._$AC(t):(void 0===s.el&&(s.el=S$1.createElement(V(s.h,s.h[0]),this.options)),s);if(this._$AH?._$AD===e)this._$AH.p(i);else {const t=new R(e,this),s=t.u(this.options);t.p(i),this.T(s),this._$AH=t;}}_$AC(t){let i=C.get(t.strings);return void 0===i&&C.set(t.strings,i=new S$1(t)),i}k(t){u$1(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const h of t)e===i.length?i.push(s=new k(this.O(c$3()),this.O(c$3()),this,this.options)):s=i[e],s._$AI(h),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,s){for(this._$AP?.(false,true,s);t!==this._$AB;){const s=i$5(t).nextSibling;i$5(t).remove(),t=s;}}setConnected(t){ void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t));}}class H{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,i,s,e,h){this.type=1,this._$AH=A,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=h,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=A;}_$AI(t,i=this,s,e){const h=this.strings;let o=false;if(void 0===h)t=M(this,t,i,0),o=!a$1(t)||t!==this._$AH&&t!==E,o&&(this._$AH=t);else {const e=t;let n,r;for(t=h[0],n=0;n<h.length-1;n++)r=M(this,e[s+n],i,n),r===E&&(r=this._$AH[n]),o||=!a$1(r)||r!==this._$AH[n],r===A?t=A:t!==A&&(t+=(r??"")+h[n+1]),this._$AH[n]=r;}o&&!e&&this.j(t);}j(t){t===A?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"");}}class I extends H{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===A?void 0:t;}}class L extends H{constructor(){super(...arguments),this.type=4;}j(t){this.element.toggleAttribute(this.name,!!t&&t!==A);}}class z extends H{constructor(t,i,s,e,h){super(t,i,s,e,h),this.type=5;}_$AI(t,i=this){if((t=M(this,t,i,0)??A)===E)return;const s=this._$AH,e=t===A&&s!==A||t.capture!==s.capture||t.once!==s.once||t.passive!==s.passive,h=t!==A&&(s===A||e);e&&this.element.removeEventListener(this.name,this,s),h&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t);}}class Z{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){M(this,t);}}const B=t$4.litHtmlPolyfillSupport;B?.(S$1,k),(t$4.litHtmlVersions??=[]).push("3.3.2");const D=(t,i,s)=>{const e=s?.renderBefore??i;let h=e._$litPart$;if(void 0===h){const t=s?.renderBefore??null;e._$litPart$=h=new k(i.insertBefore(c$3(),t),t,void 0,s??{});}return h._$AI(t),h};
 
   /**
    * @license
    * Copyright 2020 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
-   */const f$2=o=>void 0===o.strings;
+   */const r$6=o=>void 0===o.strings;
 
   /**
    * @license
@@ -528,13 +529,13 @@
    * @license
    * Copyright 2017 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
-   */const s$2=(i,t)=>{const e=i._$AN;if(void 0===e)return  false;for(const i of e)i._$AO?.(t,false),s$2(i,t);return  true},o$b=i=>{let t,e;do{if(void 0===(t=i._$AM))break;e=t._$AN,e.delete(i),i=t;}while(0===e?.size)},r$5=i=>{for(let t;t=i._$AM;i=t){let e=t._$AN;if(void 0===e)t._$AN=e=new Set;else if(e.has(i))break;e.add(i),c$2(t);}};function h$2(i){ void 0!==this._$AN?(o$b(this),this._$AM=i,r$5(this)):this._$AM=i;}function n$5(i,t=false,e=0){const r=this._$AH,h=this._$AN;if(void 0!==h&&0!==h.size)if(t)if(Array.isArray(r))for(let i=e;i<r.length;i++)s$2(r[i],false),o$b(r[i]);else null!=r&&(s$2(r,false),o$b(r));else s$2(this,i);}const c$2=i=>{i.type==t$3.CHILD&&(i._$AP??=n$5,i._$AQ??=h$2);};let f$1 = class f extends i$4{constructor(){super(...arguments),this._$AN=void 0;}_$AT(i,t,e){super._$AT(i,t,e),r$5(this),this.isConnected=i._$AU;}_$AO(i,t=true){i!==this.isConnected&&(this.isConnected=i,i?this.reconnected?.():this.disconnected?.()),t&&(s$2(this,i),o$b(this));}setValue(t){if(f$2(this._$Ct))this._$Ct._$AI(t,this);else {const i=[...this._$Ct._$AH];i[this._$Ci]=t,this._$Ct._$AI(i,this,0);}}disconnected(){}reconnected(){}};
+   */const s$2=(i,t)=>{const e=i._$AN;if(void 0===e)return  false;for(const i of e)i._$AO?.(t,false),s$2(i,t);return  true},o$b=i=>{let t,e;do{if(void 0===(t=i._$AM))break;e=t._$AN,e.delete(i),i=t;}while(0===e?.size)},r$5=i=>{for(let t;t=i._$AM;i=t){let e=t._$AN;if(void 0===e)t._$AN=e=new Set;else if(e.has(i))break;e.add(i),c$2(t);}};function h$2(i){ void 0!==this._$AN?(o$b(this),this._$AM=i,r$5(this)):this._$AM=i;}function n$5(i,t=false,e=0){const r=this._$AH,h=this._$AN;if(void 0!==h&&0!==h.size)if(t)if(Array.isArray(r))for(let i=e;i<r.length;i++)s$2(r[i],false),o$b(r[i]);else null!=r&&(s$2(r,false),o$b(r));else s$2(this,i);}const c$2=i=>{i.type==t$3.CHILD&&(i._$AP??=n$5,i._$AQ??=h$2);};let f$1 = class f extends i$4{constructor(){super(...arguments),this._$AN=void 0;}_$AT(i,t,e){super._$AT(i,t,e),r$5(this),this.isConnected=i._$AU;}_$AO(i,t=true){i!==this.isConnected&&(this.isConnected=i,i?this.reconnected?.():this.disconnected?.()),t&&(s$2(this,i),o$b(this));}setValue(t){if(r$6(this._$Ct))this._$Ct._$AI(t,this);else {const i=[...this._$Ct._$AH];i[this._$Ci]=t,this._$Ct._$AI(i,this,0);}}disconnected(){}reconnected(){}};
 
   /**
    * @license
    * Copyright 2020 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
-   */const e$6=()=>new h$1;let h$1 = class h{};const o$a=new WeakMap,n$4=e$7(class extends f$1{render(i){return E}update(i,[s]){const e=s!==this.G;return e&&void 0!==this.G&&this.rt(void 0),(e||this.lt!==this.ct)&&(this.G=s,this.ht=i.options?.host,this.rt(this.ct=i.element)),E}rt(t){if(this.isConnected||(t=void 0),"function"==typeof this.G){const i=this.ht??globalThis;let s=o$a.get(i);void 0===s&&(s=new WeakMap,o$a.set(i,s)),void 0!==s.get(this.G)&&this.G.call(this.ht,void 0),s.set(this.G,t),void 0!==t&&this.G.call(this.ht,t);}else this.G.value=t;}get lt(){return "function"==typeof this.G?o$a.get(this.ht??globalThis)?.get(this.G):this.G?.value}disconnected(){this.lt===this.ct&&this.rt(void 0);}reconnected(){this.rt(this.ct);}});
+   */const e$6=()=>new h$1;let h$1 = class h{};const o$a=new WeakMap,n$4=e$7(class extends f$1{render(i){return A}update(i,[s]){const e=s!==this.G;return e&&void 0!==this.G&&this.rt(void 0),(e||this.lt!==this.ct)&&(this.G=s,this.ht=i.options?.host,this.rt(this.ct=i.element)),A}rt(t){if(this.isConnected||(t=void 0),"function"==typeof this.G){const i=this.ht??globalThis;let s=o$a.get(i);void 0===s&&(s=new WeakMap,o$a.set(i,s)),void 0!==s.get(this.G)&&this.G.call(this.ht,void 0),s.set(this.G,t),void 0!==t&&this.G.call(this.ht,t);}else this.G.value=t;}get lt(){return "function"==typeof this.G?o$a.get(this.ht??globalThis)?.get(this.G):this.G?.value}disconnected(){this.lt===this.ct&&this.rt(void 0);}reconnected(){this.rt(this.ct);}});
 
   const de_DE = {
     ID: "de_DE",
@@ -1362,7 +1363,7 @@
       SCROLL_DOWN: ["down", "S", "num_2"],
       NEXT_CHAPTER: ["right", "/", "D", "num_6"],
       PREVIOUS_CHAPTER: ["left", ";", "A", "num_4"],
-      RETURN_CHAPTER_LIST: ["backspace", "del"],
+      RETURN_CHAPTER_LIST: ["backspace", "del", "num_decimal"],
       ENLARGE: ["-", "num_add", "E"],
       REDUCE: ["=", "num_subtract", "Q"],
       RESTORE: ["9", "num_divide", "R"],
@@ -2182,32 +2183,32 @@
    * Copyright 2019 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
    */
-  const t$2=globalThis,e$5=t$2.ShadowRoot&&(void 0===t$2.ShadyCSS||t$2.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s$1=Symbol(),o$9=new WeakMap;let n$3 = class n{constructor(t,e,o){if(this._$cssResult$=true,o!==s$1)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e;}get styleSheet(){let t=this.o;const s=this.t;if(e$5&&void 0===t){const e=void 0!==s&&1===s.length;e&&(t=o$9.get(s)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),e&&o$9.set(s,t));}return t}toString(){return this.cssText}};const r$4=t=>new n$3("string"==typeof t?t:t+"",void 0,s$1),i$3=(t,...e)=>{const o=1===t.length?t[0]:e.reduce(((e,s,o)=>e+(t=>{if(true===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[o+1]),t[0]);return new n$3(o,t,s$1)},S=(s,o)=>{if(e$5)s.adoptedStyleSheets=o.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet));else for(const e of o){const o=document.createElement("style"),n=t$2.litNonce;void 0!==n&&o.setAttribute("nonce",n),o.textContent=e.cssText,s.appendChild(o);}},c$1=e$5?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return r$4(e)})(t):t;
+  const t$2=globalThis,e$5=t$2.ShadowRoot&&(void 0===t$2.ShadyCSS||t$2.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s$1=Symbol(),o$9=new WeakMap;let n$3 = class n{constructor(t,e,o){if(this._$cssResult$=true,o!==s$1)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e;}get styleSheet(){let t=this.o;const s=this.t;if(e$5&&void 0===t){const e=void 0!==s&&1===s.length;e&&(t=o$9.get(s)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),e&&o$9.set(s,t));}return t}toString(){return this.cssText}};const r$4=t=>new n$3("string"==typeof t?t:t+"",void 0,s$1),i$3=(t,...e)=>{const o=1===t.length?t[0]:e.reduce((e,s,o)=>e+(t=>{if(true===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[o+1],t[0]);return new n$3(o,t,s$1)},S=(s,o)=>{if(e$5)s.adoptedStyleSheets=o.map(t=>t instanceof CSSStyleSheet?t:t.styleSheet);else for(const e of o){const o=document.createElement("style"),n=t$2.litNonce;void 0!==n&&o.setAttribute("nonce",n),o.textContent=e.cssText,s.appendChild(o);}},c$1=e$5?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return r$4(e)})(t):t;
 
   /**
    * @license
    * Copyright 2017 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
-   */const{is:i$2,defineProperty:e$4,getOwnPropertyDescriptor:h,getOwnPropertyNames:r$3,getOwnPropertySymbols:o$8,getPrototypeOf:n$2}=Object,a=globalThis,c=a.trustedTypes,l=c?c.emptyScript:"",p=a.reactiveElementPolyfillSupport,d$1=(t,s)=>t,u={toAttribute(t,s){switch(s){case Boolean:t=t?l:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t);}return t},fromAttribute(t,s){let i=t;switch(s){case Boolean:i=null!==t;break;case Number:i=null===t?null:Number(t);break;case Object:case Array:try{i=JSON.parse(t);}catch(t){i=null;}}return i}},f=(t,s)=>!i$2(t,s),b={attribute:true,type:String,converter:u,reflect:false,useDefault:false,hasChanged:f};Symbol.metadata??=Symbol("metadata"),a.litPropertyMetadata??=new WeakMap;class y extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t);}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,s=b){if(s.state&&(s.attribute=false),this._$Ei(),this.prototype.hasOwnProperty(t)&&((s=Object.create(s)).wrapped=true),this.elementProperties.set(t,s),!s.noAccessor){const i=Symbol(),h=this.getPropertyDescriptor(t,i,s);void 0!==h&&e$4(this.prototype,t,h);}}static getPropertyDescriptor(t,s,i){const{get:e,set:r}=h(this.prototype,t)??{get(){return this[s]},set(t){this[s]=t;}};return {get:e,set(s){const h=e?.call(this);r?.call(this,s),this.requestUpdate(t,h,i);},configurable:true,enumerable:true}}static getPropertyOptions(t){return this.elementProperties.get(t)??b}static _$Ei(){if(this.hasOwnProperty(d$1("elementProperties")))return;const t=n$2(this);t.finalize(),void 0!==t.l&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties);}static finalize(){if(this.hasOwnProperty(d$1("finalized")))return;if(this.finalized=true,this._$Ei(),this.hasOwnProperty(d$1("properties"))){const t=this.properties,s=[...r$3(t),...o$8(t)];for(const i of s)this.createProperty(i,t[i]);}const t=this[Symbol.metadata];if(null!==t){const s=litPropertyMetadata.get(t);if(void 0!==s)for(const[t,i]of s)this.elementProperties.set(t,i);}this._$Eh=new Map;for(const[t,s]of this.elementProperties){const i=this._$Eu(t,s);void 0!==i&&this._$Eh.set(i,t);}this.elementStyles=this.finalizeStyles(this.styles);}static finalizeStyles(s){const i=[];if(Array.isArray(s)){const e=new Set(s.flat(1/0).reverse());for(const s of e)i.unshift(c$1(s));}else void 0!==s&&i.push(c$1(s));return i}static _$Eu(t,s){const i=s.attribute;return  false===i?void 0:"string"==typeof i?i:"string"==typeof t?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=false,this.hasUpdated=false,this._$Em=null,this._$Ev();}_$Ev(){this._$ES=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach((t=>t(this)));}addController(t){(this._$EO??=new Set).add(t),void 0!==this.renderRoot&&this.isConnected&&t.hostConnected?.();}removeController(t){this._$EO?.delete(t);}_$E_(){const t=new Map,s=this.constructor.elementProperties;for(const i of s.keys())this.hasOwnProperty(i)&&(t.set(i,this[i]),delete this[i]);t.size>0&&(this._$Ep=t);}createRenderRoot(){const t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return S(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(true),this._$EO?.forEach((t=>t.hostConnected?.()));}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach((t=>t.hostDisconnected?.()));}attributeChangedCallback(t,s,i){this._$AK(t,i);}_$ET(t,s){const i=this.constructor.elementProperties.get(t),e=this.constructor._$Eu(t,i);if(void 0!==e&&true===i.reflect){const h=(void 0!==i.converter?.toAttribute?i.converter:u).toAttribute(s,i.type);this._$Em=t,null==h?this.removeAttribute(e):this.setAttribute(e,h),this._$Em=null;}}_$AK(t,s){const i=this.constructor,e=i._$Eh.get(t);if(void 0!==e&&this._$Em!==e){const t=i.getPropertyOptions(e),h="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==t.converter?.fromAttribute?t.converter:u;this._$Em=e;const r=h.fromAttribute(s,t.type);this[e]=r??this._$Ej?.get(e)??r,this._$Em=null;}}requestUpdate(t,s,i){if(void 0!==t){const e=this.constructor,h=this[t];if(i??=e.getPropertyOptions(t),!((i.hasChanged??f)(h,s)||i.useDefault&&i.reflect&&h===this._$Ej?.get(t)&&!this.hasAttribute(e._$Eu(t,i))))return;this.C(t,s,i);} false===this.isUpdatePending&&(this._$ES=this._$EP());}C(t,s,{useDefault:i,reflect:e,wrapped:h},r){i&&!(this._$Ej??=new Map).has(t)&&(this._$Ej.set(t,r??s??this[t]),true!==h||void 0!==r)||(this._$AL.has(t)||(this.hasUpdated||i||(s=void 0),this._$AL.set(t,s)),true===e&&this._$Em!==t&&(this._$Eq??=new Set).add(t));}async _$EP(){this.isUpdatePending=true;try{await this._$ES;}catch(t){Promise.reject(t);}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[t,s]of this._$Ep)this[t]=s;this._$Ep=void 0;}const t=this.constructor.elementProperties;if(t.size>0)for(const[s,i]of t){const{wrapped:t}=i,e=this[s];true!==t||this._$AL.has(s)||void 0===e||this.C(s,void 0,i,e);}}let t=false;const s=this._$AL;try{t=this.shouldUpdate(s),t?(this.willUpdate(s),this._$EO?.forEach((t=>t.hostUpdate?.())),this.update(s)):this._$EM();}catch(s){throw t=false,this._$EM(),s}t&&this._$AE(s);}willUpdate(t){}_$AE(t){this._$EO?.forEach((t=>t.hostUpdated?.())),this.hasUpdated||(this.hasUpdated=true,this.firstUpdated(t)),this.updated(t);}_$EM(){this._$AL=new Map,this.isUpdatePending=false;}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return  true}update(t){this._$Eq&&=this._$Eq.forEach((t=>this._$ET(t,this[t]))),this._$EM();}updated(t){}firstUpdated(t){}}y.elementStyles=[],y.shadowRootOptions={mode:"open"},y[d$1("elementProperties")]=new Map,y[d$1("finalized")]=new Map,p?.({ReactiveElement:y}),(a.reactiveElementVersions??=[]).push("2.1.1");
+   */const{is:i$2,defineProperty:e$4,getOwnPropertyDescriptor:h,getOwnPropertyNames:r$3,getOwnPropertySymbols:o$8,getPrototypeOf:n$2}=Object,a=globalThis,c=a.trustedTypes,l=c?c.emptyScript:"",p=a.reactiveElementPolyfillSupport,d$1=(t,s)=>t,u={toAttribute(t,s){switch(s){case Boolean:t=t?l:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t);}return t},fromAttribute(t,s){let i=t;switch(s){case Boolean:i=null!==t;break;case Number:i=null===t?null:Number(t);break;case Object:case Array:try{i=JSON.parse(t);}catch(t){i=null;}}return i}},f=(t,s)=>!i$2(t,s),b={attribute:true,type:String,converter:u,reflect:false,useDefault:false,hasChanged:f};Symbol.metadata??=Symbol("metadata"),a.litPropertyMetadata??=new WeakMap;class y extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t);}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,s=b){if(s.state&&(s.attribute=false),this._$Ei(),this.prototype.hasOwnProperty(t)&&((s=Object.create(s)).wrapped=true),this.elementProperties.set(t,s),!s.noAccessor){const i=Symbol(),h=this.getPropertyDescriptor(t,i,s);void 0!==h&&e$4(this.prototype,t,h);}}static getPropertyDescriptor(t,s,i){const{get:e,set:r}=h(this.prototype,t)??{get(){return this[s]},set(t){this[s]=t;}};return {get:e,set(s){const h=e?.call(this);r?.call(this,s),this.requestUpdate(t,h,i);},configurable:true,enumerable:true}}static getPropertyOptions(t){return this.elementProperties.get(t)??b}static _$Ei(){if(this.hasOwnProperty(d$1("elementProperties")))return;const t=n$2(this);t.finalize(),void 0!==t.l&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties);}static finalize(){if(this.hasOwnProperty(d$1("finalized")))return;if(this.finalized=true,this._$Ei(),this.hasOwnProperty(d$1("properties"))){const t=this.properties,s=[...r$3(t),...o$8(t)];for(const i of s)this.createProperty(i,t[i]);}const t=this[Symbol.metadata];if(null!==t){const s=litPropertyMetadata.get(t);if(void 0!==s)for(const[t,i]of s)this.elementProperties.set(t,i);}this._$Eh=new Map;for(const[t,s]of this.elementProperties){const i=this._$Eu(t,s);void 0!==i&&this._$Eh.set(i,t);}this.elementStyles=this.finalizeStyles(this.styles);}static finalizeStyles(s){const i=[];if(Array.isArray(s)){const e=new Set(s.flat(1/0).reverse());for(const s of e)i.unshift(c$1(s));}else void 0!==s&&i.push(c$1(s));return i}static _$Eu(t,s){const i=s.attribute;return  false===i?void 0:"string"==typeof i?i:"string"==typeof t?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=false,this.hasUpdated=false,this._$Em=null,this._$Ev();}_$Ev(){this._$ES=new Promise(t=>this.enableUpdating=t),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(t=>t(this));}addController(t){(this._$EO??=new Set).add(t),void 0!==this.renderRoot&&this.isConnected&&t.hostConnected?.();}removeController(t){this._$EO?.delete(t);}_$E_(){const t=new Map,s=this.constructor.elementProperties;for(const i of s.keys())this.hasOwnProperty(i)&&(t.set(i,this[i]),delete this[i]);t.size>0&&(this._$Ep=t);}createRenderRoot(){const t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return S(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(true),this._$EO?.forEach(t=>t.hostConnected?.());}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach(t=>t.hostDisconnected?.());}attributeChangedCallback(t,s,i){this._$AK(t,i);}_$ET(t,s){const i=this.constructor.elementProperties.get(t),e=this.constructor._$Eu(t,i);if(void 0!==e&&true===i.reflect){const h=(void 0!==i.converter?.toAttribute?i.converter:u).toAttribute(s,i.type);this._$Em=t,null==h?this.removeAttribute(e):this.setAttribute(e,h),this._$Em=null;}}_$AK(t,s){const i=this.constructor,e=i._$Eh.get(t);if(void 0!==e&&this._$Em!==e){const t=i.getPropertyOptions(e),h="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==t.converter?.fromAttribute?t.converter:u;this._$Em=e;const r=h.fromAttribute(s,t.type);this[e]=r??this._$Ej?.get(e)??r,this._$Em=null;}}requestUpdate(t,s,i,e=false,h){if(void 0!==t){const r=this.constructor;if(false===e&&(h=this[t]),i??=r.getPropertyOptions(t),!((i.hasChanged??f)(h,s)||i.useDefault&&i.reflect&&h===this._$Ej?.get(t)&&!this.hasAttribute(r._$Eu(t,i))))return;this.C(t,s,i);} false===this.isUpdatePending&&(this._$ES=this._$EP());}C(t,s,{useDefault:i,reflect:e,wrapped:h},r){i&&!(this._$Ej??=new Map).has(t)&&(this._$Ej.set(t,r??s??this[t]),true!==h||void 0!==r)||(this._$AL.has(t)||(this.hasUpdated||i||(s=void 0),this._$AL.set(t,s)),true===e&&this._$Em!==t&&(this._$Eq??=new Set).add(t));}async _$EP(){this.isUpdatePending=true;try{await this._$ES;}catch(t){Promise.reject(t);}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[t,s]of this._$Ep)this[t]=s;this._$Ep=void 0;}const t=this.constructor.elementProperties;if(t.size>0)for(const[s,i]of t){const{wrapped:t}=i,e=this[s];true!==t||this._$AL.has(s)||void 0===e||this.C(s,void 0,i,e);}}let t=false;const s=this._$AL;try{t=this.shouldUpdate(s),t?(this.willUpdate(s),this._$EO?.forEach(t=>t.hostUpdate?.()),this.update(s)):this._$EM();}catch(s){throw t=false,this._$EM(),s}t&&this._$AE(s);}willUpdate(t){}_$AE(t){this._$EO?.forEach(t=>t.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=true,this.firstUpdated(t)),this.updated(t);}_$EM(){this._$AL=new Map,this.isUpdatePending=false;}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return  true}update(t){this._$Eq&&=this._$Eq.forEach(t=>this._$ET(t,this[t])),this._$EM();}updated(t){}firstUpdated(t){}}y.elementStyles=[],y.shadowRootOptions={mode:"open"},y[d$1("elementProperties")]=new Map,y[d$1("finalized")]=new Map,p?.({ReactiveElement:y}),(a.reactiveElementVersions??=[]).push("2.1.2");
 
   /**
    * @license
    * Copyright 2017 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
-   */const s=globalThis;let i$1 = class i extends y{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0;}createRenderRoot(){const t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){const r=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=B(r,this.renderRoot,this.renderOptions);}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(true);}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(false);}render(){return T}};i$1._$litElement$=true,i$1["finalized"]=true,s.litElementHydrateSupport?.({LitElement:i$1});const o$7=s.litElementPolyfillSupport;o$7?.({LitElement:i$1});(s.litElementVersions??=[]).push("4.2.1");
+   */const s=globalThis;let i$1 = class i extends y{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0;}createRenderRoot(){const t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){const r=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=D(r,this.renderRoot,this.renderOptions);}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(true);}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(false);}render(){return E}};i$1._$litElement$=true,i$1["finalized"]=true,s.litElementHydrateSupport?.({LitElement:i$1});const o$7=s.litElementPolyfillSupport;o$7?.({LitElement:i$1});(s.litElementVersions??=[]).push("4.2.2");
 
   /**
    * @license
    * Copyright 2017 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
    */
-  const t$1=t=>(e,o)=>{ void 0!==o?o.addInitializer((()=>{customElements.define(t,e);})):customElements.define(t,e);};
+  const t$1=t=>(e,o)=>{ void 0!==o?o.addInitializer(()=>{customElements.define(t,e);}):customElements.define(t,e);};
 
   /**
    * @license
    * Copyright 2017 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
-   */const o$6={attribute:true,type:String,converter:u,reflect:false,hasChanged:f},r$2=(t=o$6,e,r)=>{const{kind:n,metadata:i}=r;let s=globalThis.litPropertyMetadata.get(i);if(void 0===s&&globalThis.litPropertyMetadata.set(i,s=new Map),"setter"===n&&((t=Object.create(t)).wrapped=true),s.set(r.name,t),"accessor"===n){const{name:o}=r;return {set(r){const n=e.get.call(this);e.set.call(this,r),this.requestUpdate(o,n,t);},init(e){return void 0!==e&&this.C(o,void 0,t,e),e}}}if("setter"===n){const{name:o}=r;return function(r){const n=this[o];e.call(this,r),this.requestUpdate(o,n,t);}}throw Error("Unsupported decorator location: "+n)};function n$1(t){return (e,o)=>"object"==typeof o?r$2(t,e,o):((t,e,o)=>{const r=e.hasOwnProperty(o);return e.constructor.createProperty(o,t),r?Object.getOwnPropertyDescriptor(e,o):void 0})(t,e,o)}
+   */const o$6={attribute:true,type:String,converter:u,reflect:false,hasChanged:f},r$2=(t=o$6,e,r)=>{const{kind:n,metadata:i}=r;let s=globalThis.litPropertyMetadata.get(i);if(void 0===s&&globalThis.litPropertyMetadata.set(i,s=new Map),"setter"===n&&((t=Object.create(t)).wrapped=true),s.set(r.name,t),"accessor"===n){const{name:o}=r;return {set(r){const n=e.get.call(this);e.set.call(this,r),this.requestUpdate(o,n,t,true,r);},init(e){return void 0!==e&&this.C(o,void 0,t,e),e}}}if("setter"===n){const{name:o}=r;return function(r){const n=this[o];e.call(this,r),this.requestUpdate(o,n,t,true,r);}}throw Error("Unsupported decorator location: "+n)};function n$1(t){return (e,o)=>"object"==typeof o?r$2(t,e,o):((t,e,o)=>{const r=e.hasOwnProperty(o);return e.constructor.createProperty(o,t),r?Object.getOwnPropertyDescriptor(e,o):void 0})(t,e,o)}
 
   /**
    * @license
@@ -2232,7 +2233,7 @@
    * @license
    * Copyright 2017 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
-   */let e$1 = class e extends i$4{constructor(i){if(super(i),this.it=E,i.type!==t$3.CHILD)throw Error(this.constructor.directiveName+"() can only be used in child bindings")}render(r){if(r===E||null==r)return this._t=void 0,this.it=r;if(r===T)return r;if("string"!=typeof r)throw Error(this.constructor.directiveName+"() called with a non-string value");if(r===this.it)return this._t;this.it=r;const s=[r];return s.raw=s,this._t={_$litType$:this.constructor.resultType,strings:s,values:[]}}};e$1.directiveName="unsafeHTML",e$1.resultType=1;const o$5=e$7(e$1);
+   */let e$1 = class e extends i$4{constructor(i){if(super(i),this.it=A,i.type!==t$3.CHILD)throw Error(this.constructor.directiveName+"() can only be used in child bindings")}render(r){if(r===A||null==r)return this._t=void 0,this.it=r;if(r===E)return r;if("string"!=typeof r)throw Error(this.constructor.directiveName+"() called with a non-string value");if(r===this.it)return this._t;this.it=r;const s=[r];return s.raw=s,this._t={_$litType$:this.constructor.resultType,strings:s,values:[]}}};e$1.directiveName="unsafeHTML",e$1.resultType=1;const o$5=e$7(e$1);
 
   /**
    * @license
@@ -2784,10 +2785,10 @@
       const key = toPascalCase(this.name);
       const styledSvg = styledIcons$1[key];
       const style = this.size ? `--mov-icon-size: ${this.size};` : "";
-      return x$1`<span
-      role=${this.label ? "img" : E}
-      aria-label=${this.label || E}
-      aria-hidden=${this.label ? E : "true"}
+      return b$1`<span
+      role=${this.label ? "img" : A}
+      aria-label=${this.label || A}
+      aria-hidden=${this.label ? A : "true"}
       style=${style}
       >${o$4(styledSvg)}</span
     >`;
@@ -2829,13 +2830,13 @@
    * @license
    * Copyright 2018 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
-   */const e=e$7(class extends i$4{constructor(t){if(super(t),t.type!==t$3.ATTRIBUTE||"class"!==t.name||t.strings?.length>2)throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.")}render(t){return " "+Object.keys(t).filter((s=>t[s])).join(" ")+" "}update(s,[i]){if(void 0===this.st){this.st=new Set,void 0!==s.strings&&(this.nt=new Set(s.strings.join(" ").split(/\s/).filter((t=>""!==t))));for(const t in i)i[t]&&!this.nt?.has(t)&&this.st.add(t);return this.render(i)}const r=s.element.classList;for(const t of this.st)t in i||(r.remove(t),this.st.delete(t));for(const t in i){const s=!!i[t];s===this.st.has(t)||this.nt?.has(t)||(s?(r.add(t),this.st.add(t)):(r.remove(t),this.st.delete(t)));}return T}});
+   */const e=e$7(class extends i$4{constructor(t){if(super(t),t.type!==t$3.ATTRIBUTE||"class"!==t.name||t.strings?.length>2)throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.")}render(t){return " "+Object.keys(t).filter(s=>t[s]).join(" ")+" "}update(s,[i]){if(void 0===this.st){this.st=new Set,void 0!==s.strings&&(this.nt=new Set(s.strings.join(" ").split(/\s/).filter(t=>""!==t)));for(const t in i)i[t]&&!this.nt?.has(t)&&this.st.add(t);return this.render(i)}const r=s.element.classList;for(const t of this.st)t in i||(r.remove(t),this.st.delete(t));for(const t in i){const s=!!i[t];s===this.st.has(t)||this.nt?.has(t)||(s?(r.add(t),this.st.add(t)):(r.remove(t),this.st.delete(t)));}return E}});
 
   /**
    * @license
    * Copyright 2018 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
-   */const o$3=o=>o??E;
+   */const o$3=o=>o??A;
 
   const styles$6 = ":host {\n  display: inline-block;\n  --mov-font-size-scale: 1;\n  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));\n  --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);\n  --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);\n  --mov-border-width-s: 0.0625rem;\n  --mov-border-radius-m: 0.375rem;\n  --mov-border-radius-pill: 9999px;\n  --mov-transition-fast: 75ms;\n  --mov-font-weight-action: 500;\n  --mov-focus-ring: solid 0.1875rem var(--mov-color-fill-loud);\n  --mov-focus-ring-offset: 0.0625rem;\n  --mov-line-height-condensed: 1.2;\n  --mov-form-control-padding-block: 0.75em;\n  --mov-form-control-padding-inline: 1em;\n  --mov-form-control-height: round(\n    calc(2 * var(--mov-form-control-padding-block) + 1em * var(--mov-line-height-condensed)),\n    1px\n  );\n}\n\n:host([size=\"small\"]) {\n  font-size: var(--mov-font-size-s);\n}\n:host([size=\"medium\"]) {\n  font-size: var(--mov-font-size-m);\n}\n:host([size=\"large\"]) {\n  font-size: var(--mov-font-size-l);\n}\n\n.button {\n  box-sizing: border-box;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  text-decoration: none;\n  user-select: none;\n  white-space: nowrap;\n  vertical-align: middle;\n  transition-property: background, border, box-shadow, color;\n  transition-duration: var(--mov-transition-fast);\n  cursor: pointer;\n  padding: 0 var(--mov-form-control-padding-inline);\n  font-family: inherit;\n  font-size: inherit;\n  font-weight: var(--mov-font-weight-action);\n  line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);\n  height: var(--mov-form-control-height);\n  border-radius: var(--mov-border-radius-m);\n  border-style: solid;\n  border-width: var(--mov-border-width-s);\n  background-color: var(--mov-color-fill-loud);\n  color: var(--mov-color-on-loud);\n  border-color: transparent;\n}\n\n/* Appearance modifiers */\n:host([appearance~=\"plain\"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~=\"outlined\"]) {\n  .button {\n    color: var(--mov-color-on-quiet);\n    background-color: transparent;\n    border-color: var(--mov-color-border-loud);\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-quiet);\n      background-color: var(--mov-color-fill-quiet);\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-quiet);\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\n  }\n}\n\n:host([appearance~=\"filled\"]) {\n  .button {\n    color: var(--mov-color-on-normal);\n    background-color: var(--mov-color-fill-normal);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      color: var(--mov-color-on-normal);\n      background-color: color-mix(\n        in oklab,\n        var(--mov-color-fill-normal),\n        var(--mov-color-mix-hover)\n      );\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    color: var(--mov-color-on-normal);\n    background-color: color-mix(\n      in oklab,\n      var(--mov-color-fill-normal),\n      var(--mov-color-mix-active)\n    );\n  }\n}\n\n:host([appearance~=\"filled\"][appearance~=\"outlined\"]) .button {\n  border-color: var(--mov-color-border-normal);\n}\n\n:host([appearance~=\"accent\"]) {\n  .button {\n    color: var(--mov-color-on-loud);\n    background-color: var(--mov-color-fill-loud);\n    border-color: transparent;\n  }\n  @media (hover: hover) {\n    .button:not(.disabled):not(.loading):hover {\n      background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-hover));\n    }\n  }\n  .button:not(.disabled):not(.loading):active {\n    background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-active));\n  }\n}\n/* Focus states */\n.button:focus {\n  outline: none;\n}\n.button:focus-visible {\n  outline: var(--mov-focus-ring);\n  outline-offset: var(--mov-focus-ring-offset);\n}\n\n/* Disabled state */\n.button.disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n.button.disabled * {\n  pointer-events: none;\n}\n\n/* Icon buttons */\n.button.is-icon-button {\n  outline-offset: 2px;\n  width: var(--mov-form-control-height);\n  aspect-ratio: 1;\n}\n\n/* Pill modifier */\n:host([pill]) .button {\n  border-radius: var(--mov-border-radius-pill);\n}\n\n.start,\n.end {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  pointer-events: none;\n}\n\n.label {\n  display: inline-block;\n}\n.is-icon-button .label {\n  display: flex;\n}\n\nmov-icon[part~=\"caret\"] {\n  display: flex;\n  align-self: center;\n  align-items: center;\n}\nmov-icon[part~=\"caret\"]::part(svg) {\n  width: 0.875em;\n  height: 0.875em;\n}\n\n.loading {\n  position: relative;\n  cursor: wait;\n}\n.loading .start,\n.loading .label,\n.loading .end,\n.loading .caret {\n  visibility: hidden;\n}\n\n.spinner {\n  --indicator-color: currentColor;\n  --track-color: color-mix(in oklab, currentColor, transparent 90%);\n  position: absolute;\n  font-size: 1em;\n  height: 1em;\n  width: 1em;\n  top: calc(50% - 0.5em);\n  left: calc(50% - 0.5em);\n  border-radius: 50%;\n  border: 2px solid var(--track-color);\n  border-top-color: var(--indicator-color);\n  animation: spin 1s linear infinite;\n}\n\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\nslot[name=\"start\"]::slotted(*) {\n  margin-inline-end: 0.75em;\n}\nslot[name=\"end\"]::slotted(*),\n.button:not(.visually-hidden-label) [part~=\"caret\"] {\n  margin-inline-start: 0.75em;\n}\n";
 
@@ -2894,7 +2895,7 @@
         "has-end": this.hasEnd,
         "is-icon-button": this.isIconButton
       };
-      const buttonContent = x$1`
+      const buttonContent = b$1`
       <slot
         name="start"
         @slotchange=${this.handleLabelSlotChange}
@@ -2912,19 +2913,19 @@
         part="end"
         class="end"
       ></slot>
-      ${this.withCaret ? x$1`<mov-icon
+      ${this.withCaret ? b$1`<mov-icon
             part="caret"
             class="caret"
             name="IconChevronRight"
             style="transform: rotate(90deg)"
           ></mov-icon>` : ""}
-      ${this.loading ? x$1`<span
+      ${this.loading ? b$1`<span
             part="spinner"
             class="spinner"
           ></span>` : ""}
     `;
       if (isLink) {
-        return x$1`
+        return b$1`
         <a
           part="base"
           class=${e(classes)}
@@ -2941,7 +2942,7 @@
         </a>
       `;
       } else {
-        return x$1`
+        return b$1`
         <button
           part="base"
           class=${e(classes)}
@@ -3072,7 +3073,7 @@
         "two-icon-mode": ["menu", "custom", "theme"].includes(this.mode),
         "single-icon-mode": ["chevron", "expand", "play-pause"].includes(this.mode)
       };
-      return x$1`
+      return b$1`
       <mov-button
         @click=${this._onClick}
         .appearance=${o$3(this.appearance)}
@@ -3128,26 +3129,26 @@
     }
     _renderIcons() {
       const icons = this._getIcons();
-      if (!icons.inactive) return E;
+      if (!icons.inactive) return A;
       if (this.mode === "chevron") {
-        return x$1`<mov-icon
+        return b$1`<mov-icon
         class="chevron-icon"
         name=${icons.inactive}
       ></mov-icon>`;
       }
       if (this.mode === "expand") {
-        return x$1`<mov-icon
+        return b$1`<mov-icon
         class="expand-icon"
         name=${icons.inactive}
       ></mov-icon>`;
       }
       if (this.mode === "play-pause") {
-        return x$1`<mov-icon
+        return b$1`<mov-icon
         class="play-pause-icon"
         name=${this.active ? icons.active : icons.inactive}
       ></mov-icon>`;
       }
-      return x$1`
+      return b$1`
       <mov-icon
         class="inactive-icon"
         name=${icons.inactive}
@@ -3339,7 +3340,7 @@
    * @license
    * Copyright 2018 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
-   */const n="important",i=" !"+n,o$2=e$7(class extends i$4{constructor(t){if(super(t),t.type!==t$3.ATTRIBUTE||"style"!==t.name||t.strings?.length>2)throw Error("The `styleMap` directive must be used in the `style` attribute and must be the only part in the attribute.")}render(t){return Object.keys(t).reduce(((e,r)=>{const s=t[r];return null==s?e:e+`${r=r.includes("-")?r:r.replace(/(?:^(webkit|moz|ms|o)|)(?=[A-Z])/g,"-$&").toLowerCase()}:${s};`}),"")}update(e,[r]){const{style:s}=e.element;if(void 0===this.ft)return this.ft=new Set(Object.keys(r)),this.render(r);for(const t of this.ft)null==r[t]&&(this.ft.delete(t),t.includes("-")?s.removeProperty(t):s[t]=null);for(const t in r){const e=r[t];if(null!=e){this.ft.add(t);const r="string"==typeof e&&e.endsWith(i);t.includes("-")||r?s.setProperty(t,r?e.slice(0,-11):e,r?n:""):s[t]=e;}}return T}});
+   */const n="important",i=" !"+n,o$2=e$7(class extends i$4{constructor(t){if(super(t),t.type!==t$3.ATTRIBUTE||"style"!==t.name||t.strings?.length>2)throw Error("The `styleMap` directive must be used in the `style` attribute and must be the only part in the attribute.")}render(t){return Object.keys(t).reduce((e,r)=>{const s=t[r];return null==s?e:e+`${r=r.includes("-")?r:r.replace(/(?:^(webkit|moz|ms|o)|)(?=[A-Z])/g,"-$&").toLowerCase()}:${s};`},"")}update(e,[r]){const{style:s}=e.element;if(void 0===this.ft)return this.ft=new Set(Object.keys(r)),this.render(r);for(const t of this.ft)null==r[t]&&(this.ft.delete(t),t.includes("-")?s.removeProperty(t):s[t]=null);for(const t in r){const e=r[t];if(null!=e){this.ft.add(t);const r="string"==typeof e&&e.endsWith(i);t.includes("-")||r?s.setProperty(t,r?e.slice(0,-11):e,r?n:""):s[t]=e;}}return E}});
 
   const styledIconsSVG = Object.fromEntries(
     Object.entries(styledIcons$1).map(([iconKey, icon]) => [iconKey, o$4(icon)])
@@ -3487,7 +3488,7 @@
         "--color": this.color,
         "--contrast-color": this.contrastColor
       };
-      return x$1`
+      return b$1`
       <div style=${o$2(hostStyles)}>
         <div
           class="swatch"
@@ -3739,11 +3740,11 @@
       );
     }
     render() {
-      return x$1`
+      return b$1`
       ${this.gradient.map((color) => {
       const isChecked = this.selected && color.toLowerCase() === this.selected.toLowerCase();
       const textColor = getTextColor(color);
-      return x$1`
+      return b$1`
           <div
             class="swatch"
             ?checked=${isChecked}
@@ -3902,7 +3903,7 @@
           const hex = colors[key][shade];
           const text = getTextColor(hex);
           const isSelected = this.selected?.toLowerCase() === hex.toLowerCase();
-          return x$1`
+          return b$1`
           <span
             title="${hex}"
             class="${e({
@@ -3916,7 +3917,7 @@
           </span>
         `;
         });
-        return x$1` <div class="SwatchGroup">
+        return b$1` <div class="SwatchGroup">
         <span class="ColorName">${key}</span>
         <div class="Swatches">${swatches}</div>
       </div>`;
@@ -4090,7 +4091,7 @@
       return Color.deltaE(color1, color2, { method: "2000" }) < 1;
     }
     renderCheckIcon(color) {
-      return x$1`
+      return b$1`
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -4121,7 +4122,7 @@
       const hueThumbStyle = {
         left: `${this.hueThumbPosition}%`
       };
-      return x$1`
+      return b$1`
       <div
         class="saturation-panel"
         style=${o$2(saturationPanelStyle)}
@@ -4151,7 +4152,7 @@
 
       <div class="swatches">
         ${(this.swatches || Object.entries(colors).filter(([name]) => !["dark", "gray", "zinc", "neutral", "stone"].includes(name)).map(([, color]) => color["600"])).map(
-      (color) => x$1`
+      (color) => b$1`
             <button
               class="swatch"
               title=${color}
@@ -4173,7 +4174,7 @@
       };
       const pickerBody = this.renderPickerBody();
       if (this.mode === "popup") {
-        return x$1`
+        return b$1`
         <div
           class="popup-trigger"
           @click=${this.togglePopup}
@@ -4183,10 +4184,10 @@
             style=${o$2({ backgroundColor: this.value })}
           ></div>
         </div>
-        ${this.opened ? x$1`<div class=${e(pickerClasses)}>${pickerBody}</div>` : ""}
+        ${this.opened ? b$1`<div class=${e(pickerClasses)}>${pickerBody}</div>` : ""}
       `;
       }
-      return x$1`<div class=${e(pickerClasses)}>${pickerBody}</div>`;
+      return b$1`<div class=${e(pickerClasses)}>${pickerBody}</div>`;
     }
     parseColor(color) {
       try {
@@ -4588,14 +4589,14 @@
       }
     }
     render() {
-      return x$1`
+      return b$1`
       <div class="segmented-control">
         <div class="thumb"></div>
         ${this._options.map(
-      (option) => x$1`
+      (option) => b$1`
             <div
               class="option"
-              title="${this.labelPosition === "tooltip" ? option.label : E}"
+              title="${this.labelPosition === "tooltip" ? option.label : A}"
             >
               <button
                 class="${e({
@@ -4611,7 +4612,7 @@
                 role="radio"
                 aria-checked="${this.value === option.value}"
               >
-                ${option.icon ? x$1`<mov-icon
+                ${option.icon ? b$1`<mov-icon
                       name="${option.icon}"
                       .size=${r(
         this.size,
@@ -4622,8 +4623,8 @@
         ],
         () => this.size
       )}
-                    ></mov-icon>` : E}
-                ${this.labelPosition !== "tooltip" ? x$1`<span>${option.label}</span>` : E}
+                    ></mov-icon>` : A}
+                ${this.labelPosition !== "tooltip" ? b$1`<span>${option.label}</span>` : A}
               </button>
             </div>
           `
@@ -4795,11 +4796,11 @@
     render() {
       let knobContent;
       if (this.design === "graphical") {
-        knobContent = x$1`${this.checked ? IconCheck : IconX}`;
+        knobContent = b$1`${this.checked ? IconCheck : IconX}`;
       } else {
-        knobContent = x$1`<span class="text">${this.checked ? this.textOn : this.textOff}</span>`;
+        knobContent = b$1`<span class="text">${this.checked ? this.textOn : this.textOff}</span>`;
       }
-      return x$1`
+      return b$1`
       <input
         type="checkbox"
         id="${this.name}"
@@ -5395,7 +5396,7 @@
       }
     }
     render() {
-      return x$1`
+      return b$1`
       <div
         class="backdrop"
         @click=${this.close}
@@ -5430,7 +5431,7 @@
           </div>
         </div>
         <div class="content-slot">
-          ${this.icon ? x$1`
+          ${this.icon ? b$1`
                 <div class="icon-container">
                   <mov-icon
                     .name=${Dialog.getIconName(this.icon)}
@@ -5640,8 +5641,8 @@
       open: true,
       icon: options.icon,
       title: options.title,
-      content: x$1`<div style="padding: 1rem;">${o$5(options.html)}</div>`,
-      footer: x$1`
+      content: b$1`<div style="padding: 1rem;">${o$5(options.html)}</div>`,
+      footer: b$1`
       <div
         slot="footer"
         style="display: flex; justify-content: flex-end; padding: 0.5rem 1rem 1rem;"
@@ -5982,7 +5983,7 @@
       return this.currentPage >= this.totalPages - (1 - this.startPage);
     }
     renderSlider() {
-      return x$1`
+      return b$1`
       <div class="slider-pagination">
         <button
           class="pagination-button"
@@ -6033,7 +6034,7 @@
     `;
     }
     renderSideArrows() {
-      return x$1`
+      return b$1`
       <div class="arrows-pagination">
         <button
           class="side-arrow left"
@@ -6054,12 +6055,12 @@
     }
     render() {
       if (this.mode === "disabled") {
-        return E;
+        return A;
       }
       const showSlider = this.mode === "slider" || this.mode === "both";
       const showArrows = this.mode === "side-arrows" || this.mode === "both";
-      return x$1`
-      ${showSlider ? this.renderSlider() : E} ${showArrows ? this.renderSideArrows() : E}
+      return b$1`
+      ${showSlider ? this.renderSlider() : A} ${showArrows ? this.renderSideArrows() : A}
     `;
     }
     handleLeftArrowClick() {
@@ -6337,7 +6338,7 @@
       }
     }
     render() {
-      return x$1`
+      return b$1`
       <div
         class="backdrop"
         @click=${this.close}
@@ -6534,7 +6535,7 @@
       this.open = !this.open;
     }
     render() {
-      return x$1`
+      return b$1`
       <div
         @click=${this.toggle}
         class="trigger-wrapper"
@@ -6587,7 +6588,7 @@
       this.selected = false;
     }
     render() {
-      return x$1`
+      return b$1`
       <div class="item">
         <div class="item-content">
           <mov-icon
@@ -7147,18 +7148,18 @@
       }
     }
     render() {
-      if (!this.manga) return x$1``;
+      if (!this.manga) return b$1``;
       const { headroom, headerVisible } = this.headroomController;
       const keybinds = getSettingsValue("keybinds");
       const renderKeybind = (action) => {
-        if (getAppStateValue("device") !== "desktop") return E;
+        if (getAppStateValue("device") !== "desktop") return A;
         const keys = keybinds[action];
         if (!keys || keys.length === 0) {
-          return E;
+          return A;
         }
-        return keys.map((key) => x$1`<kbd slot="details">${key}</kbd>`);
+        return keys.map((key) => b$1`<kbd slot="details">${key}</kbd>`);
       };
-      return x$1`
+      return b$1`
       <mov-button
         id="menu"
         class="${e({
@@ -7403,7 +7404,7 @@
         >
           <mov-button
             id="series"
-            href="${this.manga.series ?? E}"
+            href="${this.manga.series ?? A}"
             @click=${buttonRedirectURL}
             title="${getLocaleString("RETURN_CHAPTER_LIST")}"
             ?disabled=${!this.manga.series}
@@ -7423,7 +7424,7 @@
           </mov-button>
           <mov-button
             id="prev"
-            href="${this.manga.prev ?? E}"
+            href="${this.manga.prev ?? A}"
             title="${getLocaleString("PREVIOUS_CHAPTER")}"
             @click=${buttonRedirectURL}
             ?disabled=${!this.manga.prev}
@@ -7432,7 +7433,7 @@
           </mov-button>
           <mov-button
             id="next"
-            href="${this.manga.next ?? E}"
+            href="${this.manga.next ?? A}"
             title="${getLocaleString("NEXT_CHAPTER")}"
             @click=${buttonRedirectURL}
             ?disabled=${!this.manga.next}
@@ -7479,7 +7480,7 @@
         return [getLocaleString("LIST_EMPTY")];
       }
       return getSettingsValue("bookmarks").map(
-        (mark, index) => x$1`
+        (mark, index) => b$1`
         <div
           id="Bookmark${index + 1}"
           class="bookmark-item"
@@ -7529,7 +7530,7 @@
       );
     }
     render() {
-      return x$1`
+      return b$1`
       <mov-dialog
         id="BookmarksPanel"
         ?open=${getAppStateValue("panel") === "bookmarks"}
@@ -7599,10 +7600,10 @@
       const keybinds = getSettingsValue("keybinds");
       return Object.keys(keybinds).map((kb) => {
         const keys = keybinds[kb]?.length ? o$1(
-          keybinds[kb]?.map((key) => x$1`<kbd class="dark">${key}</kbd>`),
+          keybinds[kb]?.map((key) => b$1`<kbd class="dark">${key}</kbd>`),
           " / "
         ) : "";
-        return x$1`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
+        return b$1`<span>${getLocaleString(kb)}:</span> <span>${keys}</span>`;
       });
     }
     /**
@@ -7615,19 +7616,19 @@
     keybindEditor() {
       const keybinds = getSettingsValue("keybinds");
       return Object.keys(keybinds).map(
-        (kb) => x$1`<label for="${kb}">${getLocaleString(kb)}:</label>
+        (kb) => b$1`<label for="${kb}">${getLocaleString(kb)}:</label>
           <input
             type="text"
             class="KeybindInput"
             id="${kb}"
             name="${kb}"
-            value="${keybinds[kb]?.join(" , ") ?? E}"
+            value="${keybinds[kb]?.join(" , ") ?? A}"
             ${n$4(this.keybindsRefs[kb])}
           />`
       );
     }
     render() {
-      return x$1`
+      return b$1`
       <mov-drawer
         id="KeybindingsPanel"
         ?open=${getAppStateValue("panel").startsWith("keybindings")}
@@ -7639,7 +7640,7 @@
           class="controls"
           slot="header-actions"
         >
-          ${getAppStateValue("panel") === "keybindingsEditor" ? x$1` <mov-button
+          ${getAppStateValue("panel") === "keybindingsEditor" ? b$1` <mov-button
                 id="SaveKeybindings"
                 type="button"
                 title="${getLocaleString("SAVE_KEYBINDS")}"
@@ -7651,7 +7652,7 @@
                   slot="start"
                 ></mov-icon>
                 ${getLocaleString("BUTTON_SAVE")}
-              </mov-button>` : x$1` <mov-button
+              </mov-button>` : b$1` <mov-button
                 id="EditKeybindings"
                 type="button"
                 title="${getLocaleString("EDIT_KEYBINDS")}"
@@ -7749,7 +7750,7 @@
      * @returns The rendered template.
      */
     render() {
-      if (this.mode === "disabled") return E;
+      if (this.mode === "disabled") return A;
       const manga = getAppStateValue("manga");
       const navClasses = {
         horizontal: this.mode === "bottom",
@@ -7759,7 +7760,7 @@
         bottom: this.mode === "bottom",
         hiding: this.isHiding
       };
-      return x$1`
+      return b$1`
       <nav
         id="Navigation"
         class="${e(navClasses)}"
@@ -7780,7 +7781,7 @@
         >
           ${o(
       sequence(manga?.pages ?? 1, manga?.begin ?? 1),
-      (index) => x$1` <figure
+      (index) => b$1` <figure
                 id="Thumbnail${index}"
                 class="Thumbnail"
                 role="button"
@@ -7792,7 +7793,7 @@
                   id="ThumbnailImg${index}"
                   alt=""
                   class="ThumbnailImg"
-                  src=${getAppStateValue("images")?.[index]?.src ?? E}
+                  src=${getAppStateValue("images")?.[index]?.src ?? A}
                 />
                 <figcaption class="ThumbnailIndex">${index}</figcaption>
               </figure>`
@@ -7843,7 +7844,7 @@
 
   function settingsScope() {
     const value = isSettingsLocal() ? "true" : "false";
-    return x$1` <div class="ControlLabel">
+    return b$1` <div class="ControlLabel">
     ${getLocaleString("SCOPE")}
     <segmented-control
       .value=${value}
@@ -7864,7 +7865,7 @@
   }
   function localeSelector() {
     return locales.map(
-      (locale) => x$1`
+      (locale) => b$1`
       <option
         value="${locale.ID}"
         ?selected=${getSettingsValue("locale") === locale.ID}
@@ -7875,7 +7876,7 @@
     );
   }
   function language() {
-    return x$1` <div class="ControlLabel locale">
+    return b$1` <div class="ControlLabel locale">
     ${getLocaleString("LANGUAGE")}
     <select
       id="locale"
@@ -7885,10 +7886,10 @@
     </select>
   </div>`;
   }
-  const SettingsPanelGeneral = () => x$1`${settingsScope()} ${language()}`;
+  const SettingsPanelGeneral = () => b$1`${settingsScope()} ${language()}`;
 
   function loadMode() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel loadMode">
       ${getLocaleString("DEFAULT_LOAD_MODE")}
       <select
@@ -7918,7 +7919,7 @@
   `;
   }
   function loadSpeed() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel PagesPerSecond">
       ${getLocaleString("LOAD_SPEED")}
       <select
@@ -7977,10 +7978,10 @@
     </div>
   `;
   }
-  const SettingsPanelLoading = () => x$1`${loadMode()} ${loadSpeed()}`;
+  const SettingsPanelLoading = () => b$1`${loadMode()} ${loadSpeed()}`;
 
   function checkboxOptions() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel fitIfOversize">
       ${getLocaleString("FIT_WIDTH_OVERSIZED")}
       <toggle-switch
@@ -8016,7 +8017,7 @@
   `;
   }
   function lazyLoad() {
-    return x$1`
+    return b$1`
     <div
       class="${e({
     ControlLabel: true,
@@ -8049,7 +8050,7 @@
   `;
   }
   function headerType() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel headerType">
       ${getLocaleString("HEADER_TYPE")}
       <segmented-control
@@ -8087,7 +8088,7 @@
   `;
   }
   function pagination() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel pagination">
       ${getLocaleString("PAGINATION_TYPE")}
       <segmented-control
@@ -8120,7 +8121,7 @@
   `;
   }
   function navbarType() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel navbarType">
       ${getLocaleString("NAVBAR_TYPE")}
       <segmented-control
@@ -8153,7 +8154,7 @@
   `;
   }
   function autoScroll() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel autoScroll">
       <span>
         ${getLocaleString("AUTO_SCROLL_HEIGHT")}
@@ -8177,7 +8178,7 @@
     </div>
   `;
   }
-  const SettingsPanelOthers = () => x$1`${checkboxOptions()} ${pagination()} ${lazyLoad()} ${headerType()} ${navbarType()} ${autoScroll()}`;
+  const SettingsPanelOthers = () => b$1`${checkboxOptions()} ${pagination()} ${lazyLoad()} ${headerType()} ${navbarType()} ${autoScroll()}`;
 
   function changeColorScheme() {
     const isDark = getSettingsValue("colorScheme") === "dark";
@@ -8191,7 +8192,7 @@
   }
 
   function theme() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel ColorSchemeSelector">
       <label>${getLocaleString("COLOR_SCHEME")}</label>
       <toggle-button
@@ -8220,7 +8221,7 @@
     ></color-palette>
     <span id="ColorRecommendations">
       ${Object.values(sample).map(
-    (c) => x$1`<color-swatch
+    (c) => b$1`<color-swatch
             .color="${c}"
             .selected=${getSettingsValue("theme")}
             @change=${changeTheme}
@@ -8238,7 +8239,7 @@
   }
 
   function defaultZoomMode() {
-    return x$1` <div class="ControlLabel DefaultZoomMode">
+    return b$1` <div class="ControlLabel DefaultZoomMode">
     ${getLocaleString("DEFAULT_ZOOM_MODE")}
     <segmented-control
       .value=${getSettingsValue("zoomMode")}
@@ -8264,7 +8265,7 @@
   </div>`;
   }
   function zoomValue() {
-    return x$1`
+    return b$1`
     <div
       class="${e({
     ControlLabel: true,
@@ -8309,7 +8310,7 @@
   `;
   }
   function minZoom() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel minZoom">
       <span>
         ${getLocaleString("MINIMUM_ZOOM")}
@@ -8342,7 +8343,7 @@
   `;
   }
   function zoomStep() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel zoomStep">
       <span>
         ${getLocaleString("ZOOM_STEP")}
@@ -8374,7 +8375,7 @@
   `;
   }
   function viewMode() {
-    return x$1`
+    return b$1`
     <div class="ControlLabel viewMode">
       ${getLocaleString("DEFAULT_VIEW_MODE")}
       <segmented-control
@@ -8406,7 +8407,7 @@
     </div>
   `;
   }
-  const SettingsPanelZoom = () => x$1`${defaultZoomMode()} ${zoomValue()} ${minZoom()} ${zoomStep()} ${viewMode()}`;
+  const SettingsPanelZoom = () => b$1`${defaultZoomMode()} ${zoomValue()} ${minZoom()} ${zoomStep()} ${viewMode()}`;
 
   const styles$1 = "#SettingsPanel {\n  color: var(--theme-text-color);\n}\n\n#SettingsPanel fieldset {\n  border: 1px solid var(--theme-body-text-color);\n  padding: 3px;\n  border-radius: 10px;\n}\n\n#SettingsPanel .ControlLabel {\n  display: flex;\n  flex-flow: row wrap;\n  justify-content: space-between;\n  align-items: center;\n  padding: 2px;\n}\n\n#SettingsPanel .ControlLabelItem {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n#SettingsPanel .ControlLabelItem:not(.show) {\n  display: none;\n}\n\n#SettingsPanel input[type=\"range\"] {\n  width: 100%;\n}\n\n#SettingsPanel .RangeValue {\n  display: inline-block;\n  color: var(--mov-color-on-loud);\n  line-height: 20px;\n  text-align: center;\n  border-radius: 3px;\n  background: var(--mov-color-fill-loud);\n  padding: 2px 5px;\n  margin-left: 8px;\n}\n\n#SettingsPanel datalist {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  width: 100%;\n}\n\n#SettingsPanel datalist option {\n  padding: 0;\n  writing-mode: vertical-lr;\n}\n\n#ThemeSelector {\n  width: 110px;\n}\n\n#ColorRecommendations {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n  gap: 2px;\n}\n#Chapter:not(.Vertical) ~ #SettingsPanel .verticalSeparator {\n  display: none;\n}\n\n#ColorScheme {\n  padding: 5px;\n  min-height: 28px;\n  min-width: 28px;\n}\n\n#ResetSettings,\n#ResetSettings::part(base) {\n  width: 100%;\n}\n";
 
@@ -8420,7 +8421,7 @@
   };
   let SettingsPanel = class extends i$1 {
     render() {
-      return x$1`
+      return b$1`
       <mov-drawer
         id="SettingsPanel"
         ?open=${getAppStateValue("panel") === "settings"}
@@ -8692,12 +8693,15 @@
     attachListeners();
   }
 
+  const updateOnResize = _.debounce(() => {
+    setAppStateValue("device", getDevice());
+    applyZoom();
+  }, 200);
   async function events() {
     await waitForFunc(() => getAppStateValue("manga") !== void 0);
     keybindings();
-    window.addEventListener("resize", () => {
-      setAppStateValue("device", getDevice());
-    });
+    window.addEventListener("resize", updateOnResize);
+    window.addEventListener("orientationchange", updateOnResize);
     autoscroll();
     trackCurrentPage();
   }
@@ -8876,7 +8880,7 @@
     if (!getAppStateValue("images")?.[index]?.ref) {
       changeImage(index, (_image) => ({ ref: e$6() }));
     }
-    return x$1`
+    return b$1`
       <div
         id="Page${index}"
         class="${e({
@@ -8956,7 +8960,7 @@
             id="PageImg${index}"
             alt="Page ${index}"
             class="PageImg"
-            src=${getAppStateValue("images")?.[index]?.src ?? E}
+            src=${getAppStateValue("images")?.[index]?.src ?? A}
             style="${o$2(getImageStyle(index))}"
             @load=${imageLoaded}
             @error=${imageLoadError}
@@ -8970,7 +8974,7 @@
     `;
   });
 
-  const Reader = (manga) => x$1`
+  const Reader = (manga) => b$1`
   <main
     id="Chapter"
     ${n$4(getAppStateValue("chapter"))}
@@ -9274,7 +9278,7 @@
       }
     }
     renderInitialPrompt() {
-      return x$1`
+      return b$1`
       <mov-dialog
         ?open=${this.status === "initial-prompt"}
         icon="info"
@@ -9303,7 +9307,7 @@
     `;
     }
     renderLateStartButton() {
-      return x$1`
+      return b$1`
       <button
         id="StartMOV"
         @click=${this.handleButtonCLick}
@@ -9318,7 +9322,7 @@
       const onSliderChange = (e) => {
         [beginPage, endPage] = [e.detail.value1, e.detail.value2];
       };
-      return x$1`
+      return b$1`
       <mov-dialog
         ?open=${this.status === "late-start-prompt"}
         icon="question"
@@ -9459,7 +9463,7 @@
     render() {
       const manga = getAppStateValue("manga");
       const dialog = getAppStateValue("dialog");
-      return x$1`
+      return b$1`
       <style>
         ${themesCSS()}
       </style>
@@ -9476,7 +9480,7 @@
     })}"
         .locale="${getSettingsValue("locale")}"
       >
-        ${manga ? x$1`
+        ${manga ? b$1`
               <reader-header .manga=${manga}></reader-header>
               ${Reader(manga)}
               <navbar-thumbnails
@@ -9494,13 +9498,13 @@
               <bookmark-panel></bookmark-panel>
               <settings-panel></settings-panel>
               <moaqz-toaster dismissable></moaqz-toaster>
-              </div>` : x$1(_a || (_a = __template([' <script-startup\n              .mangaPages="', '"\n              begin="', '"\n              initialStatus="', '"\n              @start=', "\n            ><\/script-startup>"])), this.manga?.pages, this.manga?.begin, r(this.loadMode, [
+              </div>` : b$1(_a || (_a = __template([' <script-startup\n              .mangaPages="', '"\n              begin="', '"\n              initialStatus="', '"\n              @start=', "\n            ><\/script-startup>"])), this.manga?.pages, this.manga?.begin, r(this.loadMode, [
       ["wait", () => "initial-prompt"],
       ["never", () => "late-start-button"]
     ]), (e) => {
       this.start(e.detail?.begin, e.detail?.end);
     })}
-        ${dialog ? x$1`
+        ${dialog ? b$1`
               <mov-dialog
                 open
                 .icon=${dialog.icon}
@@ -10596,13 +10600,9 @@
     language: [Language.ENGLISH, Language.SPANISH],
     category: Category.MANGA,
     // waitTime: 2000,
-    waitEle: ":where(#chapter, #nPL_select) option:nth-child(2)",
+    waitEle: ':where(#readerarea, .check-box, #viewer-img) img:not(.asurascans):not([src*="loader"]):not([src*="chevron"]),:where(.nextprev, .inner_nPL)',
     run() {
-      const images = [
-        ...document.querySelectorAll(
-          ':where(#readerarea, .check-box) img:not(.asurascans):not([src*="loader"]):not([src*="chevron"])'
-        )
-      ];
+      const images = [...document.querySelectorAll(this.waitEle ?? "")];
       return {
         title: document.querySelector("title")?.textContent?.trim(),
         series: document.querySelector(":where(.allc, .tac) a")?.getAttribute("href") ?? document.querySelectorAll('[class*="breadcrumb"] a').item(1)?.getAttribute("href"),
@@ -10638,6 +10638,30 @@
         prev: document.querySelector(".page-icons-prev")?.getAttribute("href"),
         next: document.querySelector(".page-icons-next")?.getAttribute("href"),
         listImages: images.map((img) => img.getAttribute("data-src") ?? "")
+      };
+    }
+  };
+
+  const mangatown = {
+    name: "MangaTown",
+    url: /https?:\/\/www\.mangatown\.com\/manga\/.+\/.+\//,
+    homepage: "https://www.mangatown.com/",
+    language: [Language.ENGLISH],
+    category: Category.MANGA,
+    waitEle: "div.page_select select option, .read_img .image",
+    run() {
+      const options = document.querySelector("div.page_select select")?.querySelectorAll("option");
+      const images = [...document.querySelectorAll(".read_img .image")].map(
+        (img) => img.getAttribute("src") ?? ""
+      );
+      const pages = [...options ?? []].map((element) => element.value).filter((url) => !url.endsWith("featured.html")).map((url) => new URL(url, window.location.href).href);
+      return {
+        title: document.querySelector("div.title h1")?.textContent?.trim(),
+        series: document.querySelector("div.title a")?.getAttribute("href"),
+        pages: unsafeWindow.total_pages || pages.length,
+        prev: document.querySelector(".chapter_select option:checked")?.previousElementSibling?.getAttribute("value"),
+        next: document.querySelector(".chapter_select option:checked")?.nextElementSibling?.getAttribute("value"),
+        ...images.length > 1 ? { listImages: images } : { listPages: pages, img: "#image" }
       };
     }
   };
@@ -10940,6 +10964,7 @@
     mangapark,
     mangareader,
     mangatoon,
+    mangatown,
     manhwaweb,
     mgeko,
     nineanime,

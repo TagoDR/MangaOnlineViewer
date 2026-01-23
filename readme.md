@@ -53,6 +53,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [MangaPark](https://mangapark.net/) _[English]_
 - [MangaReader](https://mangareader.to) _[English]_ **Obs: Some galleries will not be usable**
 - [MangaToons](https://mangatoon.mobi/) _[English]_
+- [MangaTown](https://www.mangatown.com/) _[English]_
 - [MangaGeko.com](https://www.mgeko.com/) / [MangaGeko.cc](https://www.mgeko.cc/) _[English]_
 - [NineAnime](https://www.nineanime.com/) _[English]_
 - [ReaperScans](https://reaperscans.com/) _[English]_
