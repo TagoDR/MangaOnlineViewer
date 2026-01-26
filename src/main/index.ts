@@ -15,6 +15,7 @@ import lhtranslation from './lhtranslation';
 import localhost from './localhost';
 import m440 from './m440.ts';
 import madarawp from './madarawp';
+import mangaball from './mangaball';
 import mangabuddy from './mangabuddy';
 import mangadex from './mangadex';
 import mangafox from './mangafox';
@@ -61,6 +62,7 @@ const sites: ISite[] = [
   mangago,
   mangahub,
   mangakakalot,
+  mangaball,
   mangaoni,
   mangapark,
   mangareader,
