@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.01.23.build-0135
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
+// @version       2026.01.30.build-1917
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -30,6 +30,7 @@
 // @include       /https?:\/\/(?:www\.)?(?:fto|jto|hto|dto|mto|wto|bato|battwo|batotwo|comiko|batocomic|readtoto|zbato|xbato|mangatoto)\.(?:to|com|net|org)\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/
 // @include       /https?:\/\/(www\.)?comick.io\/.+/
+// @include       /https?:\/\/comix\.to\/(title|comic)\/.+\/.+/
 // @include       /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/
 // @include       /https?:\/\/(www.)?(flamecomics).(xyz)\/series\/.+/
 // @include       /https?:\/\/(visorikigai|visualikigai).(ajaco|eltanews|foodib|jobswu).(com|net|site)\/capitulo\/\d+/
@@ -45,6 +46,7 @@
 // @include       /https?:\/\/(www\.)?mangago.me\/.*\/.*\/.*/
 // @include       /https?:\/\/(www\.)?(mangahub).io\/chapter\/.+\/.+/
 // @include       /https?:\/\/(www\.)?(read|chap)?(nelomanga|mangakakalot|natomanga|manganato|mangabats|mangakakalove).(com|gg|net).*\/(chapter|manga)\/.+\/.+/
+// @include       /https?:\/\/mangaball\.net\/chapter-detail\/.+/
 // @include       /https?:\/\/(www\.)?manga-oni.com\/lector\/.+\/\d+\/cascada/
 // @include       /https?:\/\/(www\.)?(mangapark|mpark|comicpark|readpark|parkmanga).(com|me|org|net|io|to)\/title\/.+\/.+/
 // @include       /https?:\/\/(www\.)?mangareader.to\/read\/.+\/.+\/.+/
@@ -9986,6 +9988,30 @@
     }
   };
 
+  const comix = {
+    name: "Comix.to",
+    homepage: "https://comix.to/",
+    url: /https?:\/\/comix\.to\/(title|comic)\/.+\/.+/,
+    language: Language.ENGLISH,
+    category: Category.COMIC,
+    run: () => {
+      const content = [...document.querySelectorAll("script")].find(
+        (script) => script.textContent?.includes("self.__next_f.push") && script.textContent?.includes("images")
+      )?.textContent || "";
+      const jsonStr = content.substring(content.indexOf('"') + 3, content.lastIndexOf('"') - 2);
+      const data = JSON.parse(jsonStr.replaceAll(`\\`, ""));
+      const src = data[3].chapter.images.map((img) => img.url);
+      return {
+        title: document.querySelector("h1.page-title")?.textContent?.trim(),
+        series: document.querySelector('.breadcrumbs a[href*="/title/"], .breadcrumbs a[href*="/comic/"]')?.getAttribute("href"),
+        pages: src.length,
+        prev: document.querySelector("a.prev-chapter")?.getAttribute("href"),
+        next: document.querySelector("a.next-chapter")?.getAttribute("href"),
+        listImages: src
+      };
+    }
+  };
+
   const dynastyscans = {
     name: "Dynasty-Scans",
     url: /https?:\/\/(www\.)?dynasty-scans.com\/chapters\/.+/,
@@ -10307,6 +10333,27 @@
         pages: images.length,
         prev: document.querySelector(".prev_page")?.getAttribute("href"),
         next: document.querySelector(".next_page")?.getAttribute("href"),
+        listImages: images
+      };
+    }
+  };
+
+  const mangaball = {
+    name: "MangaBall",
+    homepage: "https://mangaball.net/",
+    url: /https?:\/\/mangaball\.net\/chapter-detail\/.+/,
+    language: Language.ENGLISH,
+    category: Category.MANGA,
+    run: () => {
+      const images = JSON.parse(
+        [...document.querySelectorAll("script")].find((s) => s.textContent?.includes("chapterImages"))?.textContent.match(/chapterImages\s*=.*(\[.*?\])/)?.[1] ?? ""
+      );
+      return {
+        title: document.querySelector("h1")?.textContent?.trim(),
+        series: document.querySelector('a[href*="/manga-detail/"]')?.getAttribute("href"),
+        pages: images.length,
+        prev: document.querySelector("a.prev")?.getAttribute("href"),
+        next: document.querySelector("a.next")?.getAttribute("href"),
         listImages: images
       };
     }
@@ -10945,6 +10992,7 @@
     batoto,
     bilibilicomics,
     comick,
+    comix,
     dynastyscans,
     flamecomics,
     ikigai,
@@ -10960,6 +11008,7 @@
     mangago,
     mangahub,
     mangakakalot,
+    mangaball,
     mangaoni,
     mangapark,
     mangareader,

@@ -50,6 +50,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [Mangago](https://www.mangago.me/) _[English]_
 - [MangaHub](https://mangahub.io/) _[English]_
 - [MangaKakalot](https://mangakakalot.gg/) / [NeloManga ](https://www.nelomanga.com/) / [MangaNato](https://www.manganato.gg/) / [NatoManga](https://www.natomanga.com/) / [MangaBats](https://www.mangabats.com/) _[English]_
+- [MangaBall](https://mangaball.net/) _[English]_
 - [MangaPark](https://mangapark.net/) _[English]_
 - [MangaReader](https://mangareader.to) _[English]_ **Obs: Some galleries will not be usable**
 - [MangaToons](https://mangatoon.mobi/) _[English]_
@@ -77,6 +78,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 
 ## Supported Comic Sites
 
+- [Comix.to](https://comix.to/) _[English]_
 - [ReadComicsOnline](https://readcomicsonline.ru/) _[English]_
 
 ## Supported Hentai Sites
