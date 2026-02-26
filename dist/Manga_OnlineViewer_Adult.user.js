@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.01.30.build-1917
+// @version       2026.02.26.build-2148
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -6012,7 +6012,7 @@
   	if (hasRequiredDist) return dist;
   	hasRequiredDist = 1;
   	Object.defineProperty(dist, "__esModule", { value: true });
-  	dist.sanitizeUrl = void 0;
+  	dist.sanitizeUrl = sanitizeUrl;
   	var constants_1 = requireConstants();
   	function isRelativeUrlWithoutProtocol(url) {
   	    return constants_1.relativeFirstCharacters.indexOf(url[0]) > -1;
@@ -6090,7 +6090,6 @@
   	    }
   	    return backSanitized;
   	}
-  	dist.sanitizeUrl = sanitizeUrl;
   	return dist;
   }
 
