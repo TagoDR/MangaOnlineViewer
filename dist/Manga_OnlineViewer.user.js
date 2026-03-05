@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.02.26.build-2148
+// @version       2026.03.05.build-0033
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -19,7 +19,7 @@
 // @grant         GM_addValueChangeListener
 // @noframes      on
 // @connect       *
-// @require       https://cdn.jsdelivr.net/npm/colorjs.io@0.5.2/dist/color.global.min.js
+// @require       https://cdn.jsdelivr.net/npm/colorjs.io@0.6.1/dist/color.global.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js
@@ -1951,7 +1951,9 @@
     }
   };
   function isDark(color) {
-    if (!Color.parse(color)) {
+    try {
+      Color.get(color);
+    } catch (_e) {
       return true;
     }
     const contrastWhite = Color.contrast(color, "white", "Lstar");
@@ -3591,9 +3593,9 @@
 
   function gradientBySteps(baseColor) {
     const baseOklch = baseColor.to("oklch");
-    const hue = baseOklch.get("oklch.h");
-    const chroma = baseOklch.get("oklch.c");
-    const originalLightness = baseOklch.get("oklch.l");
+    const hue = baseOklch.coords[2];
+    const chroma = baseOklch.coords[1];
+    const originalLightness = baseOklch.coords[0];
     const lightnessSteps = [0.95, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.05];
     const palette = lightnessSteps.map(
       (l) => new Color("oklch", [l, chroma, hue]).toString({ format: "hex" })
@@ -3618,13 +3620,13 @@
     const colors = [];
     for (const l of lightnessScale) {
       const newColor = baseHsl.clone();
-      newColor.set("hsl.l", l * 100);
+      newColor.coords[2] = l * 100;
       if (l > 0.8) {
-        newColor.set("hsl.s", (s) => s * 0.4);
+        newColor.coords[1] *= 0.4;
       } else if (l > 0.6) {
-        newColor.set("hsl.s", (s) => s * 0.8);
+        newColor.coords[1] *= 0.8;
       } else if (l < 0.3) {
-        newColor.set("hsl.s", (s) => Math.min(100, s * 1.1));
+        newColor.coords[1] = Math.min(100, newColor.coords[1] * 1.1);
       }
       colors.push(newColor.toString({ format: "hex" }).toUpperCase());
     }
@@ -3635,7 +3637,9 @@
     const lightnessSteps = [95, 90, 80, 70, 60, 50, 40, 30, 20, 10, 5];
     const baseHsl = baseColor.to("hsl");
     for (const lightness of lightnessSteps) {
-      colors.push(baseHsl.clone().set("hsl.l", lightness).toString({ format: "hex" }).toUpperCase());
+      const c = baseHsl.clone();
+      c.coords[2] = lightness;
+      colors.push(c.toString({ format: "hex" }).toUpperCase());
     }
     return colors;
   }
@@ -3656,13 +3660,19 @@
     const darkSaturateStep = config.darkest.saturate / darkStepsCount;
     for (let i = 1; i <= lightStepsCount; i++) {
       const step = lightStepsCount - i;
-      const color = baseHsl.clone().set("hsl.l", (l) => l + lightnessStep * (i - 0.5)).set("hsl.h", (h) => h + lightRotateStep * i).set("hsl.s", (s) => s + lightSaturateStep * i);
+      const color = baseHsl.clone();
+      color.coords[2] += lightnessStep * (i - 0.5);
+      color.coords[0] += lightRotateStep * i;
+      color.coords[1] += lightSaturateStep * i;
       palette[step] = color.toString({ format: "hex" });
     }
     palette[5] = baseHsl.clone().toString({ format: "hex" });
     for (let i = 1; i <= darkStepsCount; i++) {
       const step = lightStepsCount + i;
-      const color = baseHsl.clone().set("hsl.l", (l) => l - darknessStep * (i - 0.5)).set("hsl.h", (h) => h + darkRotateStep * i).set("hsl.s", (s) => s + darkSaturateStep * i);
+      const color = baseHsl.clone();
+      color.coords[2] -= darknessStep * (i - 0.5);
+      color.coords[0] += darkRotateStep * i;
+      color.coords[1] += darkSaturateStep * i;
       palette[step] = color.toString({ format: "hex" });
     }
     return palette;
@@ -3676,20 +3686,25 @@
       const factor = (5 - i) / 6;
       const newL = l + (100 - l) * factor;
       const newS = s - s * factor;
-      palette[i] = new Color({ space: "hsl", coords: [h, newS, newL] }).toString({ format: "hex" });
+      palette[i] = new Color("hsl", [h, newS, newL]).toString({ format: "hex" });
     }
     for (let i = 0; i < 5; i++) {
       const factor = (i + 1) / 6;
       const newL = l - l * factor;
       const newS = s + (100 - s) * factor;
-      palette[i + 6] = new Color({ space: "hsl", coords: [h, newS, newL] }).toString({
+      palette[i + 6] = new Color("hsl", [h, newS, newL]).toString({
         format: "hex"
       });
     }
     return palette;
   }
   function generateColorGradient(baseHexColor, mode = "steps") {
-    const baseColor = Color.parse(baseHexColor) ? new Color(baseHexColor) : new Color(sample.navy);
+    let baseColor;
+    try {
+      baseColor = Color.get(baseHexColor);
+    } catch (_e) {
+      baseColor = Color.get(sample.navy);
+    }
     switch (mode) {
       case "saturation":
         return gradientBySaturation(baseColor);
@@ -4117,7 +4132,7 @@
       const saturationThumbStyle = {
         top: `${this.saturationThumbPosition.y}%`,
         left: `${this.saturationThumbPosition.x}%`,
-        backgroundColor: new Color({ space: "hsv", coords: [hsv.h, hsv.s, hsv.v] }).toString({
+        backgroundColor: new Color("hsv", [hsv.h, hsv.s, hsv.v]).toString({
           format: "hex"
         })
       };
@@ -4193,7 +4208,7 @@
     }
     parseColor(color) {
       try {
-        return new Color(color);
+        return Color.get(color);
       } catch (e) {
         console.error(`[color-picker] Invalid color value: "${color}"`, e);
         return null;
@@ -4235,7 +4250,7 @@
     }
     updateValueFromHsv() {
       const hsv = { h: this.hsv.h, s: this.hsv.s * 100, v: this.hsv.v * 100 };
-      const newColorFromHsv = new Color({ space: "hsv", coords: [hsv.h, hsv.s, hsv.v] });
+      const newColorFromHsv = new Color("hsv", [hsv.h, hsv.s, hsv.v]);
       let newValue;
       try {
         const hexSpaces = ["srgb", "hsl", "hsv"];
