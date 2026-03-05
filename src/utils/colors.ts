@@ -352,7 +352,9 @@ const colors: IPalette = {
  * @returns {boolean} True if the color is dark (i.e., white text provides better contrast), false otherwise.
  */
 export function isDark(color: string) {
-  if (!Color.parse(color)) {
+  try {
+    Color.get(color);
+  } catch (_e) {
     return true;
   }
   const contrastWhite = Color.contrast(color, 'white', 'Lstar');

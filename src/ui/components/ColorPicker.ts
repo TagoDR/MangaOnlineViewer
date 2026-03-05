@@ -301,7 +301,7 @@ export class ColorPicker extends LitElement {
     const saturationThumbStyle = {
       top: `${this.saturationThumbPosition.y}%`,
       left: `${this.saturationThumbPosition.x}%`,
-      backgroundColor: new Color({ space: 'hsv', coords: [hsv.h, hsv.s, hsv.v] }).toString({
+      backgroundColor: new Color('hsv', [hsv.h, hsv.s, hsv.v]).toString({
         format: 'hex',
       }),
     };
@@ -389,7 +389,7 @@ export class ColorPicker extends LitElement {
 
   private parseColor(color: string): Color | null {
     try {
-      return new Color(color);
+      return Color.get(color);
     } catch (e) {
       console.error(`[color-picker] Invalid color value: "${color}"`, e);
       return null;
@@ -441,7 +441,7 @@ export class ColorPicker extends LitElement {
 
   private updateValueFromHsv() {
     const hsv = { h: this.hsv.h, s: this.hsv.s * 100, v: this.hsv.v * 100 };
-    const newColorFromHsv = new Color({ space: 'hsv', coords: [hsv.h, hsv.s, hsv.v] });
+    const newColorFromHsv = new Color('hsv', [hsv.h, hsv.s, hsv.v]);
 
     let newValue: string;
     try {
