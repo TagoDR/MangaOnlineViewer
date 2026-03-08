@@ -17,6 +17,7 @@ jobs:
           node-version: 18
       - run: npm ci
       - run: npm run release
+      - run: npm run ci
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
