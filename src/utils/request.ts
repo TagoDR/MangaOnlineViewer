@@ -48,6 +48,43 @@ export async function fetchXml(url: string): Promise<Document> {
 }
 
 /**
+ * Fetches a URL and returns the response as a Blob.
+ * Uses GM_xmlhttpRequest if available to bypass CORS.
+ * @param {string} url - The URL to fetch.
+ * @param {RequestInit} [options] - The options to use for the `fetch` request.
+ * @returns {Promise<Blob | null>} A promise that resolves with the `Blob`, or `null` if the fetch fails.
+ */
+export async function fetchBlob(url: string, options?: RequestInit): Promise<Blob | null> {
+  if (typeof GM_xmlhttpRequest !== 'undefined') {
+    return new Promise(resolve => {
+      GM_xmlhttpRequest({
+        method: 'GET',
+        url,
+        responseType: 'blob',
+        headers: options?.headers as { [p: string]: string },
+        onload: response => {
+          if (response.status === 200) {
+            resolve(response.response);
+          } else {
+            resolve(null);
+          }
+        },
+        onerror: () => resolve(null),
+      });
+    });
+  }
+  try {
+    const response = await fetch(url, options);
+    if (response.ok) {
+      return await response.blob();
+    }
+  } catch (error) {
+    logScript(`Failed to fetch blob from ${url}:`, error);
+  }
+  return null;
+}
+
+/**
  * Fetches an HTML page and extracts the value of a specific attribute from a given element.
  * @param {string} url - The URL of the page to fetch.
  * @param {string} selector - The CSS selector for the target element.

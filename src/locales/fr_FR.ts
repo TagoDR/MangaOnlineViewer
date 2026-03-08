@@ -45,6 +45,8 @@ export default {
   BUTTON_DOWNLOAD: 'Télécharger',
   DOWNLOAD_ZIP: 'Télécharger le fichier Zip',
   DOWNLOAD_IMAGES: 'Télécharger les images en Zip automatiquement',
+  DOWNLOAD_PROGRESS: 'Téléchargement : ##num## sur ##total##',
+  GENERATING_ZIP: 'Génération du fichier Zip...',
   DOWNLOAD_INCOMPLETE: 'Téléchargement incomplet',
   DOWNLOAD_INCOMPLETE_MESSAGE:
     "Certaines pages n'ont pas pu être téléchargées et ont été ignorées. Une liste des pages concernées a été ajoutée au fichier ZIP.",

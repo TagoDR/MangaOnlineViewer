@@ -255,3 +255,103 @@ export const FailedDownload: Story = {
     return container;
   },
 };
+
+export const DownloadProgress: Story = {
+  name: 'Download Progress',
+  args: {
+    ...DialogCentered.args,
+    open: true,
+    label: getLocaleString('BUTTON_DOWNLOAD'),
+  },
+  render: args => {
+    const container = document.createElement('div');
+    let progress = 0;
+    const total = 100;
+
+    const update = () => {
+      const template = html`
+        <button
+          @click=${() => {
+            const panel = container.querySelector('mov-dialog');
+            if (panel) panel.open = true;
+          }}
+        >
+          Open Download Progress Dialog
+        </button>
+        <mov-dialog
+          ?open=${args.open}
+          @close=${() => {
+            const panel = container.querySelector('mov-dialog');
+            if (panel) panel.open = false;
+          }}
+        >
+          <span slot="label">${args.label}</span>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <p>
+              ${getLocaleString('DOWNLOAD_PROGRESS')
+                .replace('##num##', progress.toString())
+                .replace('##total##', total.toString())}
+            </p>
+            <progress
+              value="${progress}"
+              max="${total}"
+              style="width: 100%; height: 20px;"
+            ></progress>
+          </div>
+        </mov-dialog>
+      `;
+      render(template, container);
+    };
+
+    const interval = setInterval(() => {
+      progress = (progress + 1) % (total + 1);
+      update();
+      if (progress === 100) clearInterval(interval);
+    }, 100);
+
+    // We can't easily clear the interval when Storybook switches stories
+    // without using a custom element or a more complex setup,
+    // but for a dev tool like Storybook, this simple simulation is usually fine.
+
+    update();
+    return container;
+  },
+};
+
+export const GeneratingZip: Story = {
+  name: 'Generating Zip',
+  args: {
+    ...DownloadProgress.args,
+    open: true,
+    slot: html`
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <p>${getLocaleString('GENERATING_ZIP')}</p>
+        <progress style="width: 100%; height: 20px;"></progress>
+      </div>
+    `,
+  },
+  render: args => {
+    const container = document.createElement('div');
+    const openPanel = () => {
+      const panel = container.querySelector('mov-dialog');
+      if (panel) panel.open = true;
+    };
+    const closePanel = () => {
+      const panel = container.querySelector('mov-dialog');
+      if (panel) panel.open = false;
+    };
+
+    const template = html`
+      <button @click=${openPanel}>Open Generating Zip Dialog</button>
+      <mov-dialog
+        ?open=${args.open}
+        @close=${closePanel}
+      >
+        <span slot="label">${args.label}</span>
+        ${args.slot}
+      </mov-dialog>
+    `;
+    render(template, container);
+    return container;
+  },
+};

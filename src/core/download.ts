@@ -1,6 +1,6 @@
 import { saveAs } from 'file-saver';
-import { html } from 'lit';
 import JSZip from 'jszip';
+import { html } from 'lit';
 import type { Page } from '../types';
 import { logScript } from '../utils/tampermonkey';
 import { getAppStateValue, getLocaleString, setAppStateValue } from './settings.ts';
@@ -130,9 +130,30 @@ async function generateZip(): Promise<void> {
   const zip = new JSZip();
   const images = getAppStateValue('images') ?? {};
   const manga = getAppStateValue('manga');
-  const digits = Math.floor(Math.log10(manga?.pages ?? 1)) + 1;
+  const total = manga?.pages ?? 0;
+  const digits = Math.floor(Math.log10(total || 1)) + 1;
   const imageEntries = Object.entries(images).sort((a, b) => Number(a[0]) - Number(b[0]));
   const failedDownloads: string[] = [];
+
+  const updateProgress = (current: number) => {
+    setAppStateValue('dialog', {
+      open: true,
+      title: getLocaleString('BUTTON_DOWNLOAD'),
+      content: html`
+        <div style='display: flex; flex-direction: column; gap: 10px;'>
+          <p>${getLocaleString('DOWNLOAD_PROGRESS')
+            .replace('##num##', current.toString())
+            .replace('##total##', total.toString())}</p>
+          <progress value='${current}' max='${total}' style='width: 100%; height: 20px;'></progress>
+        </div>
+      `,
+      footer: html``,
+    });
+  };
+
+  updateProgress(0);
+
+  let count = 0;
   for (const [key, page] of imageEntries) {
     try {
       // eslint-disable-next-line no-await-in-loop
@@ -151,21 +172,27 @@ async function generateZip(): Promise<void> {
     } catch (error) {
       logScript(`Error processing page ${key}`, error);
       failedDownloads.push(page.src ?? key);
+    } finally {
+      count += 1;
+      updateProgress(count);
     }
   }
+
+  setAppStateValue('dialog', {
+    open: true,
+    title: getLocaleString('BUTTON_DOWNLOAD'),
+    content: html`
+      <div style='display: flex; flex-direction: column; gap: 10px;'>
+        <p>${getLocaleString('GENERATING_ZIP')}</p>
+        <progress style='width: 100%; height: 20px;'></progress>
+      </div>
+    `,
+    footer: html``,
+  });
 
   if (failedDownloads.length > 0) {
     logScript('Some images failed to download:', failedDownloads);
     zip.file('failed_pages.txt', failedDownloads.join('\n'));
-    setAppStateValue('dialog', {
-      open: true,
-      title: getLocaleString('DOWNLOAD_INCOMPLETE'),
-      icon: 'warning',
-      content: html`<p>${getLocaleString('DOWNLOAD_INCOMPLETE_MESSAGE')}</p>`,
-      footer: html`<mov-button @click=${() => setAppStateValue('dialog', null)}>
-        ${getLocaleString('CLOSE')}
-      </mov-button>`,
-    });
   }
 
   logScript('Generating Zip');
@@ -175,9 +202,31 @@ async function generateZip(): Promise<void> {
       logScript('Download Ready');
       const zipName = `${manga?.title ?? document.title}.zip`;
       saveAs(content, zipName, { autoBom: false });
+      if (failedDownloads.length > 0) {
+        setAppStateValue('dialog', {
+          open: true,
+          title: getLocaleString('DOWNLOAD_INCOMPLETE'),
+          icon: 'warning',
+          content: html`<p>${getLocaleString('DOWNLOAD_INCOMPLETE_MESSAGE')}</p>`,
+          footer: html`<mov-button @click=${() => setAppStateValue('dialog', null)}>
+            ${getLocaleString('CLOSE')}
+          </mov-button>`,
+        });
+      } else {
+        setAppStateValue('dialog', null);
+      }
     })
     .catch(err => {
       logScript('Error generating zip', err);
+      setAppStateValue('dialog', {
+        open: true,
+        title: getLocaleString('WARNING'),
+        icon: 'error',
+        content: html`<p>Error generating zip: ${err.message}</p>`,
+        footer: html`<mov-button @click=${() => setAppStateValue('dialog', null)}>
+          ${getLocaleString('CLOSE')}
+        </mov-button>`,
+      });
     })
     .finally(() => {
       setAppStateValue('download', undefined);

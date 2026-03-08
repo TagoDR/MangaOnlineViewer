@@ -1,4 +1,3 @@
-import { blobToDataURL } from 'blob-util';
 import {
   type IManga,
   type IMangaImages,
@@ -9,7 +8,7 @@ import {
 } from '../types';
 import { removeURLBookmark } from '../ui/events/bookmarks.ts';
 import { applyZoom } from '../ui/events/zoom.ts';
-import { getElementAttribute } from '../utils/request.ts';
+import { fetchBlob, getElementAttribute } from '../utils/request.ts';
 import sequence from '../utils/sequence.ts';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey.ts';
 import { isBase64ImageUrl, isObjectURL } from '../utils/urls.ts';
@@ -34,7 +33,7 @@ function normalizeUrl(url: string): string {
 }
 
 /**
- * Fetches an image, converts it to a data URL, and adds it to the application state.
+ * Fetches an image, converts it to a blob URL, and adds it to the application state.
  * @param {IMangaImages} manga - The manga object with image loading configurations.
  * @param {number} index - The page number of the image.
  * @param {string} imageSrc - The source URL of the image.
@@ -44,13 +43,15 @@ async function addImg(manga: IMangaImages, index: number, imageSrc: string, posi
   setTimeout(
     async () => {
       let src = normalizeUrl(imageSrc);
-      if (!isObjectURL(src) && !isBase64ImageUrl(src) && manga.fetchOptions) {
-        src = await fetch(src, manga.fetchOptions)
-          .then(resp => resp.blob())
-          .then(blob => blobToDataURL(blob));
+      let blob: Blob | undefined;
+      if (!isObjectURL(src) && !isBase64ImageUrl(src)) {
+        blob = (await fetchBlob(src, manga.fetchOptions)) ?? undefined;
+        if (blob) {
+          src = URL.createObjectURL(blob);
+        }
       }
       changeAppStateValue('images', images => {
-        return { ...images, [index]: { ...images?.[index], src } };
+        return { ...images, [index]: { ...images?.[index], src, blob } };
       });
       logScriptVerbose('Loaded Image:', index, 'Source:', src);
     },
@@ -71,9 +72,16 @@ async function addPage(manga: IMangaPages, index: number, pageUrl: string, posit
     async () => {
       const imageSrc = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
       if (imageSrc) {
-        const src = normalizeUrl(imageSrc);
+        let src = normalizeUrl(imageSrc);
+        let blob: Blob | undefined;
+        if (!isObjectURL(src) && !isBase64ImageUrl(src)) {
+          blob = (await fetchBlob(src)) ?? undefined;
+          if (blob) {
+            src = URL.createObjectURL(blob);
+          }
+        }
         changeAppStateValue('images', images => {
-          return { ...images, [index]: { src } };
+          return { ...images, [index]: { src, blob } };
         });
         logScript(`Loaded Page: `, index, ' Source: ', src);
       }

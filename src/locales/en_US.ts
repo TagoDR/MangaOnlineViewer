@@ -45,6 +45,8 @@ export default {
   BUTTON_DOWNLOAD: 'Download',
   DOWNLOAD_ZIP: 'Download Zip file',
   DOWNLOAD_IMAGES: 'Download Images as Zip Automatically',
+  DOWNLOAD_PROGRESS: 'Downloading: ##num## of ##total##',
+  GENERATING_ZIP: 'Generating Zip file...',
   DOWNLOAD_INCOMPLETE: 'Download Incomplete',
   DOWNLOAD_INCOMPLETE_MESSAGE:
     'Some pages failed to download and were skipped. A list of failed pages has been added to the ZIP file.',
