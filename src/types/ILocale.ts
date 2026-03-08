@@ -43,6 +43,8 @@ export type ILocale = {
   BUTTON_DOWNLOAD: string;
   DOWNLOAD_ZIP: string;
   DOWNLOAD_IMAGES: string;
+  DOWNLOAD_INCOMPLETE: string;
+  DOWNLOAD_INCOMPLETE_MESSAGE: string;
   BUTTON_NEXT: string;
   NEXT_CHAPTER: string;
   BUTTON_PREVIOUS: string;

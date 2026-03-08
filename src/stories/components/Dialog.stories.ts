@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing, render } from 'lit';
 import Dialog from '../../ui/components/Dialog';
 import '../../ui/components/Icon';
+import '../../ui/components/Button';
+import { getLocaleString } from '../../core/settings';
 
 const meta: Meta = {
   title: 'Components/Dialog',
@@ -208,6 +210,48 @@ export const WithIcons: Story = {
     render(buttonsTemplate, container);
     container.append(dialogContainer);
 
+    return container;
+  },
+};
+
+export const FailedDownload: Story = {
+  name: 'Failed Download',
+  args: {
+    ...DialogCentered.args,
+    open: false,
+    label: getLocaleString('DOWNLOAD_INCOMPLETE'),
+    icon: 'warning',
+    slot: html`<p>${getLocaleString('DOWNLOAD_INCOMPLETE_MESSAGE')}</p>`,
+  },
+  render: args => {
+    const container = document.createElement('div');
+    const openPanel = () => {
+      const panel = container.querySelector('mov-dialog');
+      if (panel) panel.open = true;
+    };
+    const closePanel = () => {
+      const panel = container.querySelector('mov-dialog');
+      if (panel) panel.open = false;
+    };
+
+    const template = html`
+      <button @click=${openPanel}>Open Failed Download Dialog</button>
+      <mov-dialog
+        ?open=${args.open}
+        .icon="${args.icon}"
+        @close=${closePanel}
+      >
+        <span slot="label">${args.label}</span>
+        ${args.slot}
+        <div
+          slot="footer"
+          style="display: flex; justify-content: flex-end; gap: 0.5rem;"
+        >
+          <mov-button @click=${closePanel}>${getLocaleString('CLOSE')}</mov-button>
+        </div>
+      </mov-dialog>
+    `;
+    render(template, container);
     return container;
   },
 };

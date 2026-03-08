@@ -45,6 +45,9 @@ export default {
   BUTTON_DOWNLOAD: 'Descargar',
   DOWNLOAD_ZIP: 'Descargar fichero Zip',
   DOWNLOAD_IMAGES: 'Autodescargar imágenes como Zip',
+  DOWNLOAD_INCOMPLETE: 'Descarga Incompleta',
+  DOWNLOAD_INCOMPLETE_MESSAGE:
+    'Algunas páginas no se pudieron descargar y se saltaron. Se ha añadido una lista de páginas fallidas al archivo ZIP.',
   BUTTON_NEXT: 'Siguiente',
   NEXT_CHAPTER: 'Siguiente capítulo',
   BUTTON_PREVIOUS: 'Anterior',

@@ -45,6 +45,9 @@ export default {
   BUTTON_DOWNLOAD: 'Herunterladen',
   DOWNLOAD_ZIP: 'Zip-Datei herunterladen',
   DOWNLOAD_IMAGES: 'Bilder automatisch als Zip herunterladen',
+  DOWNLOAD_INCOMPLETE: 'Download unvollständig',
+  DOWNLOAD_INCOMPLETE_MESSAGE:
+    'Einige Seiten konnten nicht heruntergeladen werden und wurden übersprungen. Eine Liste der fehlgeschlagenen Seiten wurde der ZIP-Datei hinzugefügt.',
   BUTTON_NEXT: 'Weiter',
   NEXT_CHAPTER: 'Nächstes Kapitel',
   BUTTON_PREVIOUS: 'Zurück',

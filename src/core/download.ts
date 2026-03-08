@@ -1,8 +1,9 @@
 import { saveAs } from 'file-saver';
+import { html } from 'lit';
 import JSZip from 'jszip';
 import type { Page } from '../types';
 import { logScript } from '../utils/tampermonkey';
-import { getAppStateValue, setAppStateValue } from './settings.ts';
+import { getAppStateValue, getLocaleString, setAppStateValue } from './settings.ts';
 
 /**
  * Gets the file extension from a MIME type.
@@ -155,6 +156,16 @@ async function generateZip(): Promise<void> {
 
   if (failedDownloads.length > 0) {
     logScript('Some images failed to download:', failedDownloads);
+    zip.file('failed_pages.txt', failedDownloads.join('\n'));
+    setAppStateValue('dialog', {
+      open: true,
+      title: getLocaleString('DOWNLOAD_INCOMPLETE'),
+      icon: 'warning',
+      content: html`<p>${getLocaleString('DOWNLOAD_INCOMPLETE_MESSAGE')}</p>`,
+      footer: html`<mov-button @click=${() => setAppStateValue('dialog', null)}>
+        ${getLocaleString('CLOSE')}
+      </mov-button>`,
+    });
   }
 
   logScript('Generating Zip');

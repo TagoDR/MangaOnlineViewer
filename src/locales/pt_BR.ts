@@ -45,6 +45,9 @@ export default {
   BUTTON_DOWNLOAD: 'Download',
   DOWNLOAD_ZIP: 'Baixar arquivo Zip',
   DOWNLOAD_IMAGES: 'Download das Imagens como Zip Automaticamente',
+  DOWNLOAD_INCOMPLETE: 'Download Incompleto',
+  DOWNLOAD_INCOMPLETE_MESSAGE:
+    'Algumas páginas falharam ao baixar e foram puladas. Uma lista de páginas que falharam foi adicionada ao arquivo ZIP.',
   BUTTON_NEXT: 'Proximo',
   NEXT_CHAPTER: 'Proximo Capitulo',
   BUTTON_PREVIOUS: 'Anterior',

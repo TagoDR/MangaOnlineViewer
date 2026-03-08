@@ -46,6 +46,8 @@ export default {
   BUTTON_DOWNLOAD: '下载',
   DOWNLOAD_ZIP: '下载压缩文件',
   DOWNLOAD_IMAGES: '自动将图片下载成ZIP',
+  DOWNLOAD_INCOMPLETE: '下载不完整',
+  DOWNLOAD_INCOMPLETE_MESSAGE: '部分页面下载失败并已跳过。失败页面列表已添加到 ZIP 文件中。',
   BUTTON_NEXT: '下一页',
   NEXT_CHAPTER: '下一章',
   BUTTON_PREVIOUS: '上一页',
