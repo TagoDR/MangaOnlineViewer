@@ -57,6 +57,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [MangaTown](https://www.mangatown.com/) _[English]_
 - [MangaGeko.com](https://www.mgeko.com/) / [MangaGeko.cc](https://www.mgeko.cc/) _[English]_
 - [NineAnime](https://www.nineanime.com/) _[English]_
+- [QiManhwa](https://qimanhwa.com/) _[English]_
 - [ReaperScans](https://reaperscans.com/) _[English]_
 - [WebNovel](https://www.webnovel.com/) _[English]_
 - [WebToons](https://www.webtoons.com/) _[English]_
@@ -69,7 +70,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [Local Files](/index.html?raw=1) _[Raw]_
 - [Ikigai Mangas - EltaNews](https://visorikigai.eltanews.com/) / [Ikigai Mangas - Ajaco](https://visorikigai.ajaco.net/) _[Spanish]_
 - [KuManga](https://www.kumanga.com/) _[Spanish]_
-- [LeerCapitulo](https://www.leercapitulo.re/) _[Spanish]_
+- [LeerCapitulo](https://www.leercapitulo.co/) _[Spanish]_
 - [M440](https://m440.in/) _[Spanish]_
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
