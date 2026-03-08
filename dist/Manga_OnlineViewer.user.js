@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.03.08.build-1256
+// @version       2026.03.08.build-1318
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -10359,16 +10359,62 @@
     url: /https?:\/\/mangaball\.net\/chapter-detail\/.+/,
     language: Language.ENGLISH,
     category: Category.MANGA,
-    run: () => {
+    run: async () => {
+      const script = [...document.querySelectorAll("script")].find(
+        (s) => s.textContent?.includes("chapterImages")
+      )?.textContent;
+      if (!script) {
+        return {
+          title: document.querySelector("h1")?.textContent?.trim(),
+          series: document.querySelector('a[href*="/title-detail/"]')?.getAttribute("href") ?? document.querySelector('a[href*="/manga-detail/"]')?.getAttribute("href"),
+          pages: 0,
+          listImages: []
+        };
+      }
+      const titleId = script.match(/titleId\s*=\s*[`'"](.+?)[`'"]/)?.[1];
+      const chapterNumber = script.match(/chapterNumber\s*=\s*[`'"](.+?)[`'"]/)?.[1];
+      const chapterVolume = script.match(/chapterVolume\s*=\s*[`'"](.+?)[`'"]/)?.[1];
+      const chapterLanguage = script.match(/chapterLanguage\s*=\s*[`'"](.+?)[`'"]/)?.[1];
       const images = JSON.parse(
-        [...document.querySelectorAll("script")].find((s) => s.textContent?.includes("chapterImages"))?.textContent.match(/chapterImages\s*=.*(\[.*?\])/)?.[1] ?? ""
+        script.match(/chapterImages\s*=\s*JSON\.parse\(\s*[`'"](.+?)[`'"]\s*\)/)?.[1] ?? script.match(/chapterImages\s*=.*(\[.*?\])/)?.[1] ?? "[]"
       );
+      const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") || "";
+      const response = await fetch("/api/v1/chapter/chapter-listing-by-title-id/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-CSRF-TOKEN": csrfToken
+        },
+        body: `title_id=${titleId}&lang=${chapterLanguage}`
+      });
+      const data = await response.json();
+      const allChapters = (data.ALL_CHAPTERS || []).sort(
+        (a, b) => b.number_float - a.number_float
+      );
+      const findChapter = (direction) => {
+        const currentNumberFloat = parseFloat(chapterNumber || "0");
+        const currentIndex = allChapters.findIndex((chap) => chap.number_float === currentNumberFloat);
+        if (currentIndex === -1) return void 0;
+        const step = direction === "next" ? -1 : 1;
+        const start = currentIndex + step;
+        const volumeStr = String(chapterVolume);
+        for (let i = start; i >= 0 && i < allChapters.length; i += step) {
+          const chapter = allChapters[i];
+          const trans = chapter.translations.find(
+            (t) => t.language === chapterLanguage && String(t.volume) === volumeStr
+          );
+          if (trans) {
+            return trans.url;
+          }
+        }
+        return void 0;
+      };
       return {
         title: document.querySelector("h1")?.textContent?.trim(),
-        series: document.querySelector('a[href*="/manga-detail/"]')?.getAttribute("href"),
+        series: document.querySelector(`a[href*="${titleId}"]`)?.getAttribute("href") ?? document.querySelector('a[href*="/title-detail/"]')?.getAttribute("href") ?? document.querySelector('a[href*="/manga-detail/"]')?.getAttribute("href"),
         pages: images.length,
-        prev: document.querySelector("a.prev")?.getAttribute("href"),
-        next: document.querySelector("a.next")?.getAttribute("href"),
+        prev: findChapter("prev"),
+        next: findChapter("next"),
         listImages: images
       };
     }
