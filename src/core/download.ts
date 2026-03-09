@@ -33,6 +33,17 @@ function extFromMime(mime?: string): string {
  */
 async function getBlobFromFetch(page: Page): Promise<Blob | null> {
   if (!page.src) return null;
+
+  try {
+    const response = await fetch(page.src);
+    if (response.ok) {
+      logScript(`Got blob for page ${page.src} from fetch`);
+      return await response.blob();
+    }
+  } catch (error) {
+    logScript(`Failed to get blob for page ${page.src} from fetch`, error);
+  }
+
   if (typeof GM_xmlhttpRequest !== 'undefined') {
     return new Promise(resolve => {
       GM_xmlhttpRequest({
@@ -57,15 +68,6 @@ async function getBlobFromFetch(page: Page): Promise<Blob | null> {
         },
       });
     });
-  }
-  try {
-    const response = await fetch(page.src);
-    if (response.ok) {
-      logScript(`Got blob for page ${page.src} from fetch`);
-      return await response.blob();
-    }
-  } catch (error) {
-    logScript(`Failed to get blob for page ${page.src} from fetch`, error);
   }
   return null;
 }

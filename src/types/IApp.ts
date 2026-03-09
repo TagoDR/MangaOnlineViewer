@@ -46,6 +46,10 @@ export type Page = {
   blob?: Blob;
   /** Whether the image should be hidden from view. */
   hide?: boolean;
+  /** Whether the image is currently being fetched or loaded. */
+  loading?: boolean;
+  /** Whether the image has been successfully loaded into the viewer. */
+  loaded?: boolean;
 };
 
 /**

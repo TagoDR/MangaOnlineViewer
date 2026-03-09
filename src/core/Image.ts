@@ -1,3 +1,4 @@
+import { blobToDataURL } from 'blob-util';
 import {
   type IManga,
   type IMangaImages,
@@ -8,12 +9,18 @@ import {
 } from '../types';
 import { removeURLBookmark } from '../ui/events/bookmarks.ts';
 import { applyZoom } from '../ui/events/zoom.ts';
-import { fetchBlob, getElementAttribute } from '../utils/request.ts';
+import { getElementAttribute } from '../utils/request.ts';
 import sequence from '../utils/sequence.ts';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey.ts';
 import { isBase64ImageUrl, isObjectURL } from '../utils/urls.ts';
 import { waitForFunc } from '../utils/waitFor.ts';
-import { appState, changeAppStateValue, getAppStateValue, getSettingsValue } from './settings.ts';
+import {
+  appState,
+  changeAppStateValue,
+  changeImage,
+  getAppStateValue,
+  getSettingsValue,
+} from './settings.ts';
 
 /**
  * Normalizes a URL by trimming whitespace and ensuring it starts with a protocol.
@@ -33,26 +40,35 @@ function normalizeUrl(url: string): string {
 }
 
 /**
- * Fetches an image, converts it to a blob URL, and adds it to the application state.
- * @param {IMangaImages} manga - The manga object with image loading configurations.
+ * Fetches an image, converts it to a data URL, and adds it to the application state.
+ * @param {IMangaImages | IMangaPages} manga - The manga object with image loading configurations.
  * @param {number} index - The page number of the image.
  * @param {string} imageSrc - The source URL of the image.
  * @param {number} [position=0] - The position in the loading sequence, used for throttling.
  */
-async function addImg(manga: IMangaImages, index: number, imageSrc: string, position: number = 0) {
+async function addImg(
+  manga: IMangaImages | IMangaPages,
+  index: number,
+  imageSrc: string,
+  position: number = 0,
+) {
+  const image = getAppStateValue('images')?.[index];
+  if (image?.loading || image?.src) return;
+  changeImage(index, () => ({ loading: true }));
   setTimeout(
     async () => {
       let src = normalizeUrl(imageSrc);
       let blob: Blob | undefined;
-      if (!isObjectURL(src) && !isBase64ImageUrl(src)) {
-        blob = (await fetchBlob(src, manga.fetchOptions)) ?? undefined;
-        if (blob) {
-          src = URL.createObjectURL(blob);
+      try {
+        const response = await fetch(src, (manga as IMangaImages).fetchOptions);
+        if (response.ok) {
+          blob = await response.blob();
+          src = await blobToDataURL(blob);
         }
+      } catch (e) {
+        logScript('Failed to fetch image', e);
       }
-      changeAppStateValue('images', images => {
-        return { ...images, [index]: { ...images?.[index], src, blob } };
-      });
+      changeImage(index, () => ({ src, blob, loading: false }));
       logScriptVerbose('Loaded Image:', index, 'Source:', src);
     },
     (manga.timer ?? getSettingsValue('throttlePageLoad')) * position,
@@ -68,22 +84,17 @@ async function addImg(manga: IMangaImages, index: number, imageSrc: string, posi
  * @param {number} [position=0] - The position in the loading sequence, used for throttling.
  */
 async function addPage(manga: IMangaPages, index: number, pageUrl: string, position: number = 0) {
+  const image = getAppStateValue('images')?.[index];
+  if (image?.loading || image?.src) return;
+  changeImage(index, () => ({ loading: true }));
   setTimeout(
     async () => {
       const imageSrc = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
       if (imageSrc) {
-        let src = normalizeUrl(imageSrc);
-        let blob: Blob | undefined;
-        if (!isObjectURL(src) && !isBase64ImageUrl(src)) {
-          blob = (await fetchBlob(src)) ?? undefined;
-          if (blob) {
-            src = URL.createObjectURL(blob);
-          }
-        }
-        changeAppStateValue('images', images => {
-          return { ...images, [index]: { src, blob } };
-        });
-        logScript(`Loaded Page: `, index, ' Source: ', src);
+        changeImage(index, () => ({ loading: false }));
+        await addImg(manga, index, imageSrc, 0);
+      } else {
+        changeImage(index, () => ({ loading: false }));
       }
     },
     (manga.timer ?? getSettingsValue('throttlePageLoad')) * position,

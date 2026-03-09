@@ -7,26 +7,16 @@ import { logScript } from './tampermonkey';
  * @returns {Promise<Document>} A promise that resolves with the parsed `Document` object.
  */
 export async function fetchText(url: string, format: DOMParserSupportedType): Promise<Document> {
-  return new Promise(resolve => {
-    logScript('Fetching page: ', url);
-    fetch(url)
-      .then(async response =>
-        // When the page is loaded convert it to text
-        response.text(),
-      )
-      .then(html => {
-        // Initialize the DOM parser
-        const parser = new DOMParser();
-
-        // Parse the text
-        const doc = parser.parseFromString(html, format);
-
-        resolve(doc);
-      })
-      .catch(err => {
-        logScript('Failed to fetch page: ', err);
-      });
-  });
+  logScript('Fetching page: ', url);
+  try {
+    const response = await fetch(url);
+    const html = await response.text();
+    const parser = new DOMParser();
+    return parser.parseFromString(html, format);
+  } catch (err) {
+    logScript('Failed to fetch page: ', err);
+    throw err;
+  }
 }
 
 /**
@@ -96,7 +86,13 @@ export async function getElementAttribute(
   selector: string,
   attribute: string,
 ): Promise<string | null | undefined> {
-  return fetchHtml(url).then(doc => doc.querySelector(selector)?.getAttribute(attribute));
+  try {
+    const doc = await fetchHtml(url);
+    return doc.querySelector(selector)?.getAttribute(attribute);
+  } catch (err) {
+    logScript('Failed to get element attribute: ', err);
+    return null;
+  }
 }
 
 /**

@@ -95,14 +95,19 @@ export function imageLoaded(event: Event): void {
   img.classList.add('imgLoaded');
   img.classList.remove('imgBroken');
   const index = parseInt(img.id.replace('PageImg', ''), 10);
-  changeImage(index, _image =>
-    calculatePageZoom({
+  const image = getAppStateValue('images')?.[index];
+  if (!image?.loaded) {
+    changeAppStateValue('loaded', n => n + 1);
+  }
+
+  changeImage(index, _image => ({
+    ...calculatePageZoom({
       naturalWidth: img.naturalWidth,
       naturalHeight: img.naturalHeight,
     }),
-  );
+    loaded: true,
+  }));
 
-  changeAppStateValue('loaded', n => n + 1);
   const total = getAppStateValue('manga')?.pages ?? 1;
   const loaded = getAppStateValue('loaded') ?? 0;
   const percentage = Math.floor((loaded / total) * 100);
