@@ -6,21 +6,15 @@ import {
   isBruteforceManga,
   isImagesManga,
   isPagesManga,
+  type PageStatus,
 } from '../types';
 import { removeURLBookmark } from '../ui/events/bookmarks.ts';
 import { applyZoom } from '../ui/events/zoom.ts';
 import { getElementAttribute } from '../utils/request.ts';
 import sequence from '../utils/sequence.ts';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey.ts';
-import { isBase64ImageUrl, isObjectURL } from '../utils/urls.ts';
 import { waitForFunc } from '../utils/waitFor.ts';
-import {
-  appState,
-  changeAppStateValue,
-  changeImage,
-  getAppStateValue,
-  getSettingsValue,
-} from './settings.ts';
+import { appState, changeImage, getAppStateValue, getSettingsValue } from './settings.ts';
 
 /**
  * Normalizes a URL by trimming whitespace and ensuring it starts with a protocol.
@@ -53,22 +47,26 @@ async function addImg(
   position: number = 0,
 ) {
   const image = getAppStateValue('images')?.[index];
-  if (image?.loading || image?.src) return;
-  changeImage(index, () => ({ loading: true }));
+  if (image?.status && image.status !== 'pending') return;
+  changeImage(index, () => ({ status: 'loading' }));
   setTimeout(
     async () => {
       let src = normalizeUrl(imageSrc);
       let blob: Blob | undefined;
+      let status: PageStatus = 'loaded';
       try {
         const response = await fetch(src, (manga as IMangaImages).fetchOptions);
         if (response.ok) {
           blob = await response.blob();
           src = await blobToDataURL(blob);
+        } else {
+          status = 'error';
         }
       } catch (e) {
         logScript('Failed to fetch image', e);
+        status = 'error';
       }
-      changeImage(index, () => ({ src, blob, loading: false }));
+      changeImage(index, () => ({ src, blob, status }));
       logScriptVerbose('Loaded Image:', index, 'Source:', src);
     },
     (manga.timer ?? getSettingsValue('throttlePageLoad')) * position,
@@ -85,16 +83,21 @@ async function addImg(
  */
 async function addPage(manga: IMangaPages, index: number, pageUrl: string, position: number = 0) {
   const image = getAppStateValue('images')?.[index];
-  if (image?.loading || image?.src) return;
-  changeImage(index, () => ({ loading: true }));
+  if (image?.status && image.status !== 'pending') return;
+  changeImage(index, () => ({ status: 'loading' }));
   setTimeout(
     async () => {
-      const imageSrc = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
-      if (imageSrc) {
-        changeImage(index, () => ({ loading: false }));
-        await addImg(manga, index, imageSrc, 0);
-      } else {
-        changeImage(index, () => ({ loading: false }));
+      try {
+        const imageSrc = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
+        if (imageSrc) {
+          changeImage(index, () => ({ status: 'pending' }));
+          await addImg(manga, index, imageSrc, 0);
+        } else {
+          changeImage(index, () => ({ status: 'error' }));
+        }
+      } catch (e) {
+        logScript('Failed to get page attribute', e);
+        changeImage(index, () => ({ status: 'error' }));
       }
     },
     (manga.timer ?? getSettingsValue('throttlePageLoad')) * position,

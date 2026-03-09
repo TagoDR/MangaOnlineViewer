@@ -25,6 +25,11 @@ export type Device = 'desktop' | 'mobile' | 'tablet';
 export type Headroom = 'top' | 'end' | 'show' | 'hide' | 'none';
 
 /**
+ * Defines the possible loading states for a single page.
+ */
+export type PageStatus = 'pending' | 'loading' | 'loaded' | 'error';
+
+/**
  * Represents the state and properties of a single page image in the viewer.
  */
 export type Page = {
@@ -46,10 +51,8 @@ export type Page = {
   blob?: Blob;
   /** Whether the image should be hidden from view. */
   hide?: boolean;
-  /** Whether the image is currently being fetched or loaded. */
-  loading?: boolean;
-  /** Whether the image has been successfully loaded into the viewer. */
-  loaded?: boolean;
+  /** The current loading status of the image. */
+  status?: PageStatus;
 };
 
 /**

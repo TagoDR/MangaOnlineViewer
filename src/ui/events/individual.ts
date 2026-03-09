@@ -92,11 +92,9 @@ export function buttonHidePage(event: Event): void {
  */
 export function imageLoaded(event: Event): void {
   const img = event.currentTarget as HTMLImageElement;
-  img.classList.add('imgLoaded');
-  img.classList.remove('imgBroken');
   const index = parseInt(img.id.replace('PageImg', ''), 10);
   const image = getAppStateValue('images')?.[index];
-  if (!image?.loaded) {
+  if (image?.status !== 'loaded') {
     changeAppStateValue('loaded', n => n + 1);
   }
 
@@ -105,7 +103,7 @@ export function imageLoaded(event: Event): void {
       naturalWidth: img.naturalWidth,
       naturalHeight: img.naturalHeight,
     }),
-    loaded: true,
+    status: 'loaded',
   }));
 
   const total = getAppStateValue('manga')?.pages ?? 1;
@@ -131,7 +129,7 @@ export function imageLoaded(event: Event): void {
 export function imageLoadError(event: Event): void {
   const img = event.currentTarget as HTMLImageElement;
   if (isEmpty(img.getAttribute('src'))) return;
-  img.classList.add('imgBroken');
   const index = parseInt(img.id.replace('PageImg', ''), 10);
+  changeImage(index, () => ({ status: 'error' }));
   reloadImage(index, img);
 }
