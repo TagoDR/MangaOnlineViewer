@@ -73,7 +73,7 @@ export class ToggleSwitch extends LitElement {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
+      font-size: 1rem;
       font-weight: bold;
       font-family: Arial;
       color: #333;
