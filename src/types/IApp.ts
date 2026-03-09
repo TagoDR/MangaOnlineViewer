@@ -79,8 +79,6 @@ export type IApp = {
   download?: Download;
   /** The target for a pending redirection. */
   link?: Redirect;
-  /** The number of pages that have been successfully loaded. */
-  loaded: number;
   /** The core manga data object for the current chapter. */
   manga?: IManga;
   /** The currently visible UI panel. */

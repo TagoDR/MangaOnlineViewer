@@ -38,11 +38,13 @@ class StateDisplay extends LitElement {
       currentScrollTo === undefined && this.lastScrolledToPage !== undefined
         ? ' (then cleared)'
         : '';
-
+    const loaded = Object.values(getAppStateValue('images') ?? {}).filter(
+      i => i.status === 'loaded',
+    ).length;
     return html`
       <div style="font-family: monospace; font-size: 0.9rem;">
         <div><b>Current Page:</b> ${getAppStateValue('currentPage')}</div>
-        <div><b>Loaded:</b> ${getAppStateValue('loaded')}</div>
+        <div><b>Loaded:</b> ${loaded}</div>
         <div><b>Scroll To Page Triggered:</b> ${displayValue}${status}</div>
       </div>
     `;
@@ -68,10 +70,9 @@ const meta: Meta = {
     setAppStateValue('manga', mockManga);
     setAppStateValue('currentPage', 1);
     const images: Record<number, Page> = Object.fromEntries(
-      mockManga.listImages.map((img, index) => [index + 1, { src: img }]),
+      mockManga.listImages.map((img, index) => [index + 1, { src: img, status: 'loaded' }]),
     );
     setAppStateValue('images', images);
-    setAppStateValue('loaded', mockManga.pages);
     setAppStateValue('scrollToPage', undefined); // Reset on each render
 
     const isVertical = args.mode === 'left' || args.mode === 'right';

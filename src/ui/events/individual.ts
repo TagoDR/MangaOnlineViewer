@@ -1,6 +1,5 @@
 import NProgress from 'nprogress';
 import {
-  changeAppStateValue,
   changeImage,
   getAppStateValue,
   getSettingsValue,
@@ -93,11 +92,6 @@ export function buttonHidePage(event: Event): void {
 export function imageLoaded(event: Event): void {
   const img = event.currentTarget as HTMLImageElement;
   const index = parseInt(img.id.replace('PageImg', ''), 10);
-  const image = getAppStateValue('images')?.[index];
-  if (image?.status !== 'loaded') {
-    changeAppStateValue('loaded', n => n + 1);
-  }
-
   changeImage(index, _image => ({
     ...calculatePageZoom({
       naturalWidth: img.naturalWidth,
@@ -107,7 +101,9 @@ export function imageLoaded(event: Event): void {
   }));
 
   const total = getAppStateValue('manga')?.pages ?? 1;
-  const loaded = getAppStateValue('loaded') ?? 0;
+  const loaded = Object.values(getAppStateValue('images') ?? {}).filter(
+    i => i.status === 'loaded',
+  ).length;
   const percentage = Math.floor((loaded / total) * 100);
   document.title = `(${percentage}%) ${getAppStateValue('manga')?.title}`;
   NProgress.configure({

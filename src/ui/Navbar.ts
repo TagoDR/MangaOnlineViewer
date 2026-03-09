@@ -107,7 +107,9 @@ export default class Navbar extends LitElement {
       bottom: this.mode === 'bottom',
       hiding: this.isHiding,
     };
-
+    const loaded = Object.values(getAppStateValue('images') ?? {}).filter(
+      i => i.status === 'loaded',
+    ).length;
     return html`
       <nav
         id="Navigation"
@@ -118,7 +120,7 @@ export default class Navbar extends LitElement {
           class="ControlLabel"
         >
           ${IconCategory}
-          <i>${getAppStateValue('loaded')}</i> /
+          <i>${loaded}</i> /
           <b> ${(manga?.pages ?? 1) - ((manga?.begin ?? 1) - 1)} </b>
           ${getLocaleString('PAGES_LOADED')}
           <span>: ${getAppStateValue('currentPage')}</span>

@@ -268,7 +268,6 @@ export const appState = map<IApp>({
   chapter: createRef(),
   currentPage: 0,
   device: getDevice(),
-  loaded: 0,
   manga: undefined,
   panel: 'none',
   scrollToPage: undefined,
