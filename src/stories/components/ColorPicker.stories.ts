@@ -20,21 +20,21 @@ class StoryColorPickerThemeWrapper extends LitElement {
   render() {
     const theme = getSettingsValue('theme');
     return html`
-      <color-picker
+      <mov-color-picker
         .mode="${this.mode}"
         .value=${theme}
         @change=${changeTheme}
         .swatches=${Object.values(colors)
           .slice(6)
           .flatMap(c => [c[600]])}
-      ></color-picker>
+      ></mov-color-picker>
     `;
   }
 }
 
 const meta: Meta<ColorPicker> = {
   title: 'Components/Color Picker',
-  component: 'color-picker',
+  component: 'mov-color-picker',
   parameters: {
     docs: {
       description: {

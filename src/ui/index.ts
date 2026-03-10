@@ -12,7 +12,7 @@ import './components/ColorPalette.ts';
 import './components/ColorPanel.ts';
 import './components/ColorPicker.ts';
 import './components/SegmentedControl.ts';
-import './components/ToggleSwitch.ts';
+import './components/Switch.ts';
 import './components/Pagination.ts';
 import './components/Drawer.ts';
 import './components/Dialog.ts';

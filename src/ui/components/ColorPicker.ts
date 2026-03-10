@@ -7,7 +7,7 @@ import colors, { getTextColor } from '../../utils/colors';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'color-picker': ColorPicker;
+    'mov-color-picker': ColorPicker;
   }
 }
 
@@ -20,7 +20,7 @@ declare global {
  * @fires input - Dispatched continuously while the color is changing.
  * @fires change - Dispatched when the color selection is finalized.
  */
-@customElement('color-picker')
+@customElement('mov-color-picker')
 export class ColorPicker extends LitElement {
   static readonly styles = css`
     :host {
@@ -393,7 +393,7 @@ export class ColorPicker extends LitElement {
     try {
       return Color.get(color);
     } catch (e) {
-      console.error(`[color-picker] Invalid color value: "${color}"`, e);
+      console.error(`[mov-color-picker] Invalid color value: "${color}"`, e);
       return null;
     }
   }
@@ -454,7 +454,7 @@ export class ColorPicker extends LitElement {
         newValue = newColorFromHsv.to(this.sourceSpace).toString({ precision: 5 });
       }
     } catch (e) {
-      console.error(`[color-picker] Could not convert color to space ${this.sourceSpace}`, e);
+      console.error(`[mov-color-picker] Could not convert color to space ${this.sourceSpace}`, e);
       newValue = newColorFromHsv.to('srgb').toString({ format: 'hex' });
     }
 
