@@ -17,13 +17,13 @@ function theme() {
     </div>
     <div class="ControlLabel ThemeSelector">
       <label>${getLocaleString('THEME_COLOR')}</label>
-      <color-picker
+      <mov-color-picker
         id="ThemeHex"
         .value="${getSettingsValue('theme')}"
         title="${getSettingsValue('theme')}"
         @input=${changeTheme}
         .swatches=${Object.values(sample)}
-      ></color-picker>
+      ></mov-color-picker>
     </div>
     <color-palette
       .baseColor="${getSettingsValue('theme')}"
