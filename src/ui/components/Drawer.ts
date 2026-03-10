@@ -11,6 +11,8 @@ declare global {
 /**
  * A side drawer component.
  *
+ * API is compatible with Web Awesome's wa-drawer component and Webcomponents 3.0.0 standards.
+ *
  * @element mov-drawer
  * @fires open - Dispatched when the drawer begins to open.
  * @fires close - Dispatched when the drawer has closed.

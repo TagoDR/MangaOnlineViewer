@@ -3,6 +3,12 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { IconCheck, IconX } from '../icons';
 
+/**
+ * Custom switch
+ *
+ * API is compatible with Web Awesome's wa-switch component and Webcomponents 3.0.0 standards.
+ *
+ */
 @customElement('toggle-switch')
 export class ToggleSwitch extends LitElement {
   @property({ type: String }) name = '';

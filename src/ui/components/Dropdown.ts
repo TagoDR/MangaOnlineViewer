@@ -2,6 +2,17 @@ import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import './Icon.ts';
 
+/**
+ * A dropdown component that can be used to display a menu of options.
+ * This component is designed to be compatible with wa-dropdown API. *
+ *
+ * API is compatible with Web Awesome's wa-dropdown component and Webcomponents 3.0.0 standards.
+ *
+ * @element mov-dropdown
+ *
+ * @slot - The default slot for the dropdown's content.
+ * @slot trigger - The element that triggers the dropdown.
+ */
 @customElement('mov-dropdown')
 export class MovDropdown extends LitElement {
   static readonly styles = css`
@@ -78,6 +89,18 @@ export class MovDropdown extends LitElement {
   }
 }
 
+/**
+ * A dropdown item component that can be used within a mov-dropdown.
+ * This component is designed to be compatible with wa-dropdown-item API.
+ *
+ * API is compatible with Web Awesome's wa-dropdown-item component and Webcomponents 3.0.0 standards.
+ *
+ * @element mov-dropdown-item
+ *
+ * @slot - The default slot for the item's label.
+ * @slot icon - For placing an icon before the label.
+ * @slot details - For placing additional information after the label.
+ */
 @customElement('mov-dropdown-item')
 export class MovDropdownItem extends LitElement {
   static readonly styles = css`
