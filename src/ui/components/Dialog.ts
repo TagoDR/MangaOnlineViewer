@@ -208,23 +208,6 @@ export default class Dialog extends LitElement {
     | 'error'
     | 'question';
 
-  static getIconName(iconType?: 'info' | 'warning' | 'success' | 'error' | 'question') {
-    switch (iconType) {
-      case 'info':
-        return 'info-circle';
-      case 'warning':
-        return 'alert-circle';
-      case 'success':
-        return 'circle-check';
-      case 'error':
-        return 'circle-x';
-      case 'question':
-        return 'help';
-      default:
-        return '';
-    }
-  }
-
   @query('dialog')
   private readonly dialog!: HTMLDialogElement;
 
@@ -252,8 +235,14 @@ export default class Dialog extends LitElement {
         this.dialog.classList.remove('closing');
         this.dialog.show();
         this.dispatchEvent(new CustomEvent('open', { bubbles: true, composed: true }));
+        this.dispatchEvent(new CustomEvent('wa-show', { bubbles: true, composed: true }));
+        // Wait for animations to finish before dispatching after-show.
+        setTimeout(() => {
+          this.dispatchEvent(new CustomEvent('wa-after-show', { bubbles: true, composed: true }));
+        }, 150);
       } else if (changedProperties.get('open') === true) {
         this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
+        this.dispatchEvent(new CustomEvent('wa-hide', { bubbles: true, composed: true }));
         this.dialog.classList.add('closing');
         // Wait for animations to finish before closing the dialog.
         // The longest animation is 250ms, so 300ms is a safe buffer.
@@ -262,6 +251,7 @@ export default class Dialog extends LitElement {
           if (this.dialog.open) {
             this.dialog.close();
           }
+          this.dispatchEvent(new CustomEvent('wa-after-hide', { bubbles: true, composed: true }));
         }, 300);
       }
     }
@@ -308,7 +298,7 @@ export default class Dialog extends LitElement {
               ? html`
                 <div class="icon-container">
                   <mov-icon
-                    .name=${Dialog.getIconName(this.icon)}
+                    .name=${getIconName(this.icon)}
                     size="4rem"
                   ></mov-icon>
                 </div>
@@ -360,4 +350,21 @@ export function showInfoDialog(options: {
       </div>
     `,
   });
+}
+
+export function getIconName(iconType?: 'info' | 'warning' | 'success' | 'error' | 'question') {
+  switch (iconType) {
+    case 'info':
+      return 'info-circle';
+    case 'warning':
+      return 'alert-circle';
+    case 'success':
+      return 'circle-check';
+    case 'error':
+      return 'circle-x';
+    case 'question':
+      return 'help';
+    default:
+      return '';
+  }
 }

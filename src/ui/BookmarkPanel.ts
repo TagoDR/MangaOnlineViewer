@@ -100,6 +100,7 @@ export default class BookmarkPanel extends LitElement {
       <mov-dialog
         id="BookmarksPanel"
         ?open=${getAppStateValue('panel') === 'bookmarks'}
+        light-dismiss
         @close=${buttonPanelsClose}
       >
         <mov-button

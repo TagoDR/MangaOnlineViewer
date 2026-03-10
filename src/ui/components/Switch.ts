@@ -110,7 +110,20 @@ export class Switch extends LitElement {
   private toggleChecked() {
     if (!this.disabled) {
       this.checked = !this.checked;
-      this.dispatchEvent(new CustomEvent('change', { detail: { checked: this.checked } }));
+      this.dispatchEvent(
+        new CustomEvent('change', {
+          detail: { checked: this.checked },
+          bubbles: true,
+          composed: true,
+        }),
+      );
+      this.dispatchEvent(
+        new CustomEvent('input', {
+          detail: { checked: this.checked },
+          bubbles: true,
+          composed: true,
+        }),
+      );
     }
   }
 

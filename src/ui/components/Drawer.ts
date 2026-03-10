@@ -165,8 +165,14 @@ export default class Drawer extends LitElement {
         this.dialog.classList.remove('closing');
         this.dialog.show();
         this.dispatchEvent(new CustomEvent('open', { bubbles: true, composed: true }));
+        this.dispatchEvent(new CustomEvent('wa-show', { bubbles: true, composed: true }));
+        // Wait for animations to finish before dispatching after-show.
+        setTimeout(() => {
+          this.dispatchEvent(new CustomEvent('wa-after-show', { bubbles: true, composed: true }));
+        }, 250);
       } else if (changedProperties.get('open') === true) {
         this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
+        this.dispatchEvent(new CustomEvent('wa-hide', { bubbles: true, composed: true }));
         this.dialog.classList.add('closing');
         // Wait for animations to finish before closing the dialog.
         // The longest animation is 250ms, so 300ms is a safe buffer.
@@ -175,6 +181,7 @@ export default class Drawer extends LitElement {
           if (this.dialog.open) {
             this.dialog.close();
           }
+          this.dispatchEvent(new CustomEvent('wa-after-hide', { bubbles: true, composed: true }));
         }, 300);
       }
     }

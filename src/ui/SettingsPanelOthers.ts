@@ -17,35 +17,35 @@ function checkboxOptions() {
   return html`
     <div class="ControlLabel fitIfOversize">
       ${getLocaleString('FIT_WIDTH_OVERSIZED')}
-      <toggle-switch
+      <mov-switch
         name="fitIfOversize"
         ?checked=${getSettingsValue('fitWidthIfOversize')}
         @change=${checkFitWidthOversize}
-      ></toggle-switch>
+      ></mov-switch>
     </div>
     <div class="ControlLabel downloadZip">
       ${getLocaleString('DOWNLOAD_IMAGES')}
-      <toggle-switch
+      <mov-switch
         name="downloadZip"
         ?checked=${getSettingsValue('downloadZip')}
         @change=${checkAutoDownload}
-      ></toggle-switch>
+      ></mov-switch>
     </div>
     <div class="ControlLabel hidePageControls">
       ${getLocaleString('HIDE_CONTROLS')}
-      <toggle-switch
+      <mov-switch
         name="hidePageControls"
         ?checked=${getSettingsValue('hidePageControls')}
         @change=${checkHideImageControls}
-      ></toggle-switch>
+      ></mov-switch>
     </div>
     <div class="ControlLabel lazyLoadImages">
       ${getLocaleString('LAZY_LOAD_IMAGES_ENABLE')}
-      <toggle-switch
+      <mov-switch
         name="lazyLoadImages"
         ?checked=${getSettingsValue('lazyLoadImages')}
         @change=${checkLazyLoad}
-      ></toggle-switch>
+      ></mov-switch>
     </div>
   `;
 }

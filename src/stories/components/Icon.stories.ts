@@ -32,6 +32,16 @@ export default {
       options: icons,
       description: 'The name of the icon to display',
     },
+    variant: {
+      control: 'select',
+      options: ['regular', 'solid'],
+      description: 'The variant of the icon',
+    },
+    family: {
+      control: 'select',
+      options: ['classic', 'duotone'],
+      description: 'The family of the icon',
+    },
     label: {
       control: 'text',
       description: 'Accessibility label for the icon',
@@ -44,6 +54,8 @@ export default {
   render: args => html`
     <mov-icon
       name="${args.name}"
+      variant="${args.variant}"
+      family="${args.family}"
       label="${args.label}"
       size="${args.size}"
     ></mov-icon>

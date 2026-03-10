@@ -302,6 +302,7 @@ export class Header extends LitElement {
           <input
             type="range"
             id="Zoom"
+            name="Zoom"
             .value="${getSettingsValue('zoomValue')}"
             min="${getSettingsValue('minZoom')}"
             max="200"

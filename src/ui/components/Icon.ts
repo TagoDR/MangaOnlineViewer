@@ -1,7 +1,5 @@
-import { css, html, LitElement, nothing } from 'lit';
+import { css, html, LitElement, nothing, type PropertyValueMap } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import type { DirectiveResult } from 'lit/directive.js';
-import type { UnsafeSVGDirective } from 'lit/directives/unsafe-svg.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { toPascalCase } from '../../utils/format.ts';
 import * as styledIcons from '../icons/StyledIcons.ts';
@@ -53,6 +51,20 @@ export class Icon extends LitElement {
   name = '';
 
   /**
+   * The variant of the icon to display.
+   * @type {'thin' | 'light' | 'regular' | 'solid'}
+   */
+  @property({ type: String, reflect: true })
+  variant: 'thin' | 'light' | 'regular' | 'solid' = 'regular';
+
+  /**
+   * The family of the icon to display.
+   * @type {'classic' | 'sharp' | 'duotone' | 'brands'}
+   */
+  @property({ type: String, reflect: true })
+  family: 'classic' | 'sharp' | 'duotone' | 'brands' = 'classic';
+
+  /**
    * An optional accessibility label for the icon. If provided, the icon will have an `aria-label`.
    * @type {string}
    */
@@ -67,11 +79,28 @@ export class Icon extends LitElement {
   @property({ type: String })
   size = '';
 
+  protected updated(changedProperties: PropertyValueMap<this>) {
+    super.updated(changedProperties);
+    if (changedProperties.has('name')) {
+      const key = toPascalCase(this.name);
+      const styledSvg = (styledIcons as Record<string, string>)[key];
+      if (styledSvg) {
+        this.dispatchEvent(new CustomEvent('load', { bubbles: true, composed: true }));
+        this.dispatchEvent(new CustomEvent('wa-load', { bubbles: true, composed: true }));
+      } else {
+        this.dispatchEvent(new CustomEvent('error', { bubbles: true, composed: true }));
+        this.dispatchEvent(new CustomEvent('wa-error', { bubbles: true, composed: true }));
+      }
+    }
+  }
+
   render() {
     const key = toPascalCase(this.name);
-    const styledSvg = (styledIcons as Record<string, DirectiveResult<typeof UnsafeSVGDirective>>)[
-      key
-    ] as string | undefined;
+    const styledSvg = (styledIcons as Record<string, string>)[key];
+
+    if (!styledSvg) {
+      return nothing;
+    }
 
     const style = this.size ? `--mov-icon-size: ${this.size};` : '';
 
