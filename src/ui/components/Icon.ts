@@ -17,6 +17,8 @@ declare global {
  * This component looks up pre-processed SVG strings from the `icons` module
  * and renders them directly. It is an alternative to using a larger library like WebAwesome.
  *
+ * API is compatible with Web Awesome's wa-icon component and Webcomponents 3.0.0 standards.
+ *
  * @element mov-icon
  * @cssprop [--mov-icon-size=1rem] - The width and height of the icon.
  */

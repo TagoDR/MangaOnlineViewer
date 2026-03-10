@@ -33,6 +33,16 @@ The project is written in TypeScript and uses Vite for its build process. The ar
 - **UI Layer**: The UI is built with `lit` and organized into a component-based architecture.
   - **`src/ui/`**: Contains the main UI panels and application layout files (e.g., `App.ts`, `Header.ts`, `SettingsPanel.ts`). These are the top-level containers.
   - **`src/ui/components/`**: Houses smaller, reusable UI components (e.g., buttons, switches, dialogs) that are used to build the main UI. This promotes modularity and reusability. The components are designed to be standalone and are registered as custom elements.
+  - **Web Awesome Parity**: Components in `src/ui/components/` are designed with strict parity to **Web Awesome** (formerly Shoelace) components. Their APIs are compatible with **Webcomponents 3.0.0** standards, ensuring they can be swapped with their Web Awesome counterparts with minimal friction. This includes consistent property names, events, and slot usage.
+    - mov-button with wa-button
+    - mov-icon with wa-icon
+    - mov-drawer with wa-drawer
+    - mov-color-picker with wa-color-picker
+    - mov-dialog with wa-dialog
+    - toggle-switch wa-switch
+    - mov-dropdown with wa-dropdown and mov-dropdown-item with wa-dropdown-item
+    - segmented-control with wa-button-group
+
 
 - **Icon System**: The project uses a custom icon system to handle SVGs.
   - **`src/ui/icons/svg.ts`**: This file exports all raw SVG strings.
