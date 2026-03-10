@@ -44,7 +44,9 @@ export default class Button extends LitElement {
   @state() private readonly hasEnd = false;
 
   @property() title = '';
-  @property({ reflect: true }) appearance: 'accent' | 'filled' | 'outline' | 'plain' = 'accent';
+  @property({ reflect: true }) appearance: 'accent' | 'filled' | 'outlined' | 'plain' = 'accent';
+  @property({ reflect: true }) variant: 'neutral' | 'brand' | 'success' | 'warning' | 'danger' =
+    'brand';
   @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
   @property({ attribute: 'with-caret', type: Boolean, reflect: true }) withCaret = false;
   @property({ type: Boolean, reflect: true }) disabled = false;

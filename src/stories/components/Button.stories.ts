@@ -10,7 +10,7 @@ import '../../ui/components/Icon.ts';
 import { toKebabCase } from '../../utils/format.ts'; // Ensure the <mov-button> component is defined
 
 const variants = ['brand', 'neutral', 'success', 'warning', 'danger'];
-const appearances = ['plain', 'accent', 'filled', 'filled outline', 'outline'];
+const appearances = ['plain', 'accent', 'filled', 'filled-outlined', 'outlined'];
 const sizes = ['small', 'medium', 'large'];
 const commonIcons = [
   'IconArrowAutofitDown',
@@ -201,31 +201,31 @@ export const AllVariants: StoryObj = {
                 <div class="wa-cluster wa-gap-2xs">
                   <wa-button
                     variant="brand"
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Brand</wa-button
                   >
                   <wa-button
                     variant="neutral"
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Neutral</wa-button
                   >
                   <wa-button
                     variant="success"
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Success</wa-button
                   >
                   <wa-button
                     variant="warning"
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Warning</wa-button
                   >
                   <wa-button
                     variant="danger"
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Danger</wa-button
                   >
@@ -234,7 +234,7 @@ export const AllVariants: StoryObj = {
               <td>
                 <div class="wa-cluster wa-gap-2xs">
                   <mov-button
-                    appearance="filled outlined"
+                    appearance="filled-outlined"
                     size="medium"
                     >Brand</mov-button
                   >
