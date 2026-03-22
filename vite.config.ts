@@ -91,7 +91,11 @@ export default defineConfig(({ mode }) => {
     plugins: [
       viteBanner({ content: banner, verify: false }),
       svgLoader({ svgo: false, defaultImport: 'raw' }),
-      biomePlugin(),
+      biomePlugin({
+        mode: 'check',
+        files: '.',
+        applyFixes: true,
+      }),
     ],
     build: {
       target: 'esnext',
