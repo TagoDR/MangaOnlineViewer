@@ -8,7 +8,7 @@ export const requiredScripts: string[] = [
   'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js',
   'https://cdn.jsdelivr.net/npm/lodash@4.17.23/lodash.min.js',
-  'https://cdn.jsdelivr.net/npm/hotkeys-js@4.0.2/dist/hotkeys.min.js',
+  'https://cdn.jsdelivr.net/npm/hotkeys-js@4.0.2/dist/hotkeys-js.min.js',
   'https://cdn.jsdelivr.net/npm/bowser@2.14.1/bundled.js',
   'https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js',
