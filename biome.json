@@ -6,7 +6,8 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": ["**", "!node_modules", "!dist"]
   },
   "formatter": {
     "enabled": true,
@@ -19,8 +20,7 @@
     "bracketSameLine": false,
     "bracketSpacing": true,
     "expand": "auto",
-    "useEditorconfig": true,
-    "includes": ["**", "!node_modules", "!dist/*min*"]
+    "useEditorconfig": true
   },
   "linter": {
     "enabled": true,
@@ -29,8 +29,7 @@
       "correctness": {
         "noUnusedVariables": "warn"
       }
-    },
-    "includes": ["**", "!node_modules", "!dist"]
+    }
   },
   "javascript": {
     "formatter": {
