@@ -10,6 +10,7 @@ import externalGlobals from 'rollup-plugin-external-globals';
 import userscript, { type Metadata } from 'userscript-metadata-generator';
 import { defineConfig } from 'vite';
 import viteBanner from 'vite-plugin-banner';
+import biomePlugin from 'vite-plugin-biome';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 import svgLoader from 'vite-svg-loader';
 import metaAdult from './src/meta/meta-adult';
@@ -40,6 +41,7 @@ export default defineConfig(({ mode }) => {
         },
       ],
       build: {
+        minify: 'esbuild',
         target: 'esnext',
         emptyOutDir: false,
         outDir: 'dist',
@@ -51,11 +53,13 @@ export default defineConfig(({ mode }) => {
   }
 
   if (mode === 'development') mode = 'dev';
+  const isMin = mode.endsWith('-min');
+  const buildMode = isMin ? mode.replace('-min', '') : mode;
   const meta = {
     main: metaMain,
     adult: metaAdult,
     dev: metaDev,
-  }[mode];
+  }[buildMode];
 
   if (mode === 'main') {
     /**
@@ -87,29 +91,33 @@ export default defineConfig(({ mode }) => {
     plugins: [
       viteBanner({ content: banner, verify: false }),
       svgLoader({ svgo: false, defaultImport: 'raw' }),
+      biomePlugin(),
     ],
     build: {
       target: 'esnext',
-      minify: false,
+      minify: isMin ? 'esbuild' : false,
+      chunkSizeWarningLimit: 1000,
       emptyOutDir: false,
       outDir: 'dist',
       rollupOptions: {
-        input: `src/userscript-${mode}.ts`,
-        plugins: [
-          externalGlobals({
-            'blob-util': 'blobUtil',
-            'hotkeys-js': 'hotkeys',
-            jszip: 'JSZip',
-            lodash: '_',
-            nprogress: 'NProgress',
-            'colorjs.io': 'Color',
-            bowser: 'bowser',
-            'file-saver': 'window',
-          }),
-        ],
+        input: `src/userscript-${buildMode}.ts`,
+        plugins: isMin
+          ? []
+          : [
+              externalGlobals({
+                'blob-util': 'blobUtil',
+                'hotkeys-js': 'hotkeys',
+                jszip: 'JSZip',
+                lodash: '_',
+                nprogress: 'NProgress',
+                'colorjs.io': 'Color',
+                bowser: 'bowser',
+                'file-saver': 'window',
+              }),
+            ],
         output: {
           format: 'iife',
-          entryFileNames: `${meta?.name?.replace(/ /g, '_')}.user.js`,
+          entryFileNames: `${meta?.name?.replace(/ /g, '_')}${isMin ? '.min' : ''}.user.js`,
           sourcemap: false,
         },
       },

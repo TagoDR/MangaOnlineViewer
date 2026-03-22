@@ -15,6 +15,7 @@ import colors, { sample } from '../src/utils/colors.ts';
 @customElement('theme-wrapper')
 @useStores(settings, locale, appState)
 // @ts-expect-error
+// biome-ignore lint/correctness/noUnusedVariables: helperClass
 class ThemeWrapper extends LitElement {
   static readonly styles = [
     unsafeCSS(externalCSS),
