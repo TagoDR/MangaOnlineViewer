@@ -22,9 +22,9 @@ Other Browsers with other add-ons may also work, but not officially supported.
 
 ## Installation
 
-#### [Main Reader](/dist/Manga_OnlineViewer.user.js?raw=1)
+#### [Main Reader](/dist/Manga_OnlineViewer.user.js?raw=1) \([Alternative](/dist/Manga_OnlineViewer.min.user.js?raw=1)) with dependencies bundled inside and minified)
 
-#### [Adult Reader](/dist/Manga_OnlineViewer_Adult.user.js?raw=1)
+#### [Adult Reader](/dist/Manga_OnlineViewer_Adult.user.js?raw=1)\([Alternative](/dist/Manga_OnlineViewer_Adult.min.user.js?raw=1)) with dependencies bundled inside and minified)
 
 #### Official Source: [GitHub](https://github.com/TagoDR/MangaOnlineViewer)
 
@@ -262,7 +262,7 @@ bookmarklet.
 ```JS
 javascript:(function() {
   if (unsafeWindow === undefined) unsafeWindow = window;
-  ["https://cdn.jsdelivr.net/npm/colorjs.io@0.6.1/dist/color.global.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdn.jsdelivr.net/npm/lodash@4.17.23/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@4.0.2/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/bowser@2.14.1/bundled.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/toolcool-range-slider.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-generated-labels.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-marks.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
+  ["https://cdn.jsdelivr.net/npm/colorjs.io@0.6.1/dist/color.global.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdn.jsdelivr.net/npm/lodash@4.17.23/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@4.0.2/dist/hotkeys-js.min.js", "https://cdn.jsdelivr.net/npm/bowser@2.14.1/bundled.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/toolcool-range-slider.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-generated-labels.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-marks.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
 ```
 
@@ -271,6 +271,6 @@ javascript:(function() {
 ```JS
 javascript:(function() {
   if (unsafeWindow === undefined) unsafeWindow = window;
-  ["https://cdn.jsdelivr.net/npm/colorjs.io@0.6.1/dist/color.global.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdn.jsdelivr.net/npm/lodash@4.17.23/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@4.0.2/dist/hotkeys.min.js", "https://cdn.jsdelivr.net/npm/bowser@2.14.1/bundled.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/toolcool-range-slider.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-generated-labels.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-marks.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
+  ["https://cdn.jsdelivr.net/npm/colorjs.io@0.6.1/dist/color.global.min.js", "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js", "https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js", "https://cdn.jsdelivr.net/npm/lodash@4.17.23/lodash.min.js", "https://cdn.jsdelivr.net/npm/hotkeys-js@4.0.2/dist/hotkeys-js.min.js", "https://cdn.jsdelivr.net/npm/bowser@2.14.1/bundled.js", "https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js", "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/toolcool-range-slider.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-generated-labels.min.js", "https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-marks.min.js", "https://cdn.jsdelivr.net/gh/TagoDR/MangaOnlineViewer@latest/dist/Manga_OnlineViewer_Adult.user.min.js"].map(s => document.body.appendChild(document.createElement('script')).src = s)
 })();
 ```
