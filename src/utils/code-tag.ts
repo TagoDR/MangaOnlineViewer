@@ -29,4 +29,4 @@ const html = concatenateTemplateLiteralTag;
  */
 const css = concatenateTemplateLiteralTag;
 
-export { html, css };
+export { css, html };

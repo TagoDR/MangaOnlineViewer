@@ -208,4 +208,4 @@ function randomPlaceholder(): string {
   return placeholder(widths[randomWidth], heights[randomHeight], backgrounds[randomColor]);
 }
 
-export { randomPlaceholder, placeholder, svgToUrl, rectangle, rectangleRuler };
+export { placeholder, randomPlaceholder, rectangle, rectangleRuler, svgToUrl };
