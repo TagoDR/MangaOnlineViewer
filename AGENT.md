@@ -58,10 +58,12 @@ The project is written in TypeScript and uses Vite for its build process. The ar
   2.  Run `npm install` to install all dependencies.
 
 - **Builds**: The build process is managed by Vite and configured in `vite.config.ts`.
-  - **Development**: Run `npm start` or `npm run build`. This generates a `Manga_Online_Viewer_DEV.user.js` file in the `dist/` directory. This is the recommended script for development as it includes all sites.
-  - **UI Development**: Run `npm run storybook`. This starts a Storybook server where you can develop and test UI components in isolation. It's the best way to work on the UI without needing to load a live manga site.
-  - **Release**: Run `npm run release`. This generates the separate `main` and `adult` userscripts for production. Should only be used by the CI/CD pipeline.
-  - **Standalone**: Run `npm run build:standalone`. This compiles the application into a single, portable HTML file (`dist/Manga_Online_Viewer_Standalone.html`) that can be opened directly in a browser to read local files.
+  - **Development (`npm run build:dev`)**: Generates `Manga_Online_Viewer_DEV.user.js` in `dist/`. This build includes all sites and relies on external dependencies loaded via Tampermonkey (using global variables).
+  - **Release (`npm run build:release`)**: Generates the standard production builds: `Manga_Online_Viewer.user.js` (Main) and `Manga_Online_Viewer_Adult.user.js` (Adult). These builds use `externalGlobals` to exclude dependencies (e.g., `lodash`, `jszip`) from the bundle, instead loading them from CDNs via `@require` in the userscript metadata. This keeps the file size optimized.
+  - **Minified (`npm run build:min`)**: Generates minified production builds: `Manga_Online_Viewer.min.user.js` and `Manga_Online_Viewer_Adult.min.user.js`. **Crucially, these builds bundle all dependencies inside the script.** They do not rely on external `@require` scripts or global variables, making them self-contained but larger in file size.
+  - **Standalone (`npm run build:standalone`)**: Compiles the application into a single, portable HTML file (`dist/Manga_Local_Viewer.html`) that can be opened directly in a browser to read local files.
+  - **All (`npm run build:all`)**: Executes all the above build tasks.
+  - **UI Development (`npm run storybook`)**: Starts a Storybook server where you can develop and test UI components in isolation. It's the best way to work on the UI without needing to load a live manga site.
 
 - **Linting & Formatting**: The project uses Biome to maintain code quality and consistency. Configuration is in `biome.json`.
   - `npm run lint`: Check for linting issues.
@@ -127,7 +129,7 @@ This is the most common contribution. Follow these steps carefully.
     ```
 
 5.  **Build and Test**:
-    - Run `npm run build` to generate the development userscript.
+    - Run `npm run build:dev` to generate the development userscript.
     - Install or update the script in Tampermonkey.
     - Navigate to a URL that matches the `url` regex you defined and verify that the viewer loads correctly.
 
@@ -155,7 +157,7 @@ To maintain a clean and organized codebase, follow these guidelines for creating
 
 ## 6. Important Conventions
 
-- **External Dependencies**: Dependencies are **not** bundled into the userscript. As defined in `vite.config.ts` under `externalGlobals`, they are loaded via CDN at runtime by the userscript manager. Do not add new dependencies without modifying the build configuration.
+- **External Dependencies**: For standard builds (`dev` and `release`), dependencies are **not** bundled into the userscript. As defined in `vite.config.ts` under `externalGlobals`, they are loaded via CDN at runtime by the userscript manager. Do not add new dependencies without modifying the build configuration. Note that `min` builds are an exception; they bundle dependencies internally.
 
 - **Code Style**: Adhere to the styles enforced by Biome and Prettier. Use single quotes, 2-space indentation, and trailing commas.
 
