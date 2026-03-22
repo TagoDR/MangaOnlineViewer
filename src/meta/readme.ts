@@ -90,4 +90,4 @@ const hentaiSites = sitesList(adult);
  */
 const bookmarklet = `${requiredScripts.join('", "')}`;
 
-export { mangaSites, comicSites, hentaiSites, languages, bookmarklet };
+export { bookmarklet, comicSites, hentaiSites, languages, mangaSites };
