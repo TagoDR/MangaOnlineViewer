@@ -2,8 +2,10 @@
  * @file This module imports styled SVG icon strings and exports them as Lit `unsafeSVG` directives
  * for direct rendering in templates.
  */
+
 import type { DirectiveResult } from 'lit/directive.js';
 import { type UnsafeSVGDirective, unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import _ from 'lodash';
 import * as styledIcons from './StyledIcons.ts';
 
 /**
@@ -11,11 +13,8 @@ import * as styledIcons from './StyledIcons.ts';
  * The keys are in the format `IconName`.
  * @internal
  */
-const styledIconsSVG: Record<
-  string,
-  DirectiveResult<typeof UnsafeSVGDirective>
-> = Object.fromEntries(
-  Object.entries(styledIcons).map(([iconKey, icon]) => [iconKey, unsafeSVG(icon)]),
+const styledIconsSVG: Record<string, DirectiveResult<typeof UnsafeSVGDirective>> = _.fromPairs(
+  _.entries(styledIcons).map(([iconKey, icon]) => [iconKey, unsafeSVG(icon)]),
 );
 
 /**

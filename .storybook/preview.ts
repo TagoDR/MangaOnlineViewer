@@ -5,6 +5,7 @@ import { themes } from 'storybook/theming';
 import '../src/ui';
 import { useStores } from '@nanostores/lit';
 import { styleMap } from 'lit-html/directives/style-map.js';
+import _ from 'lodash';
 import { appState, getSettingsValue, locale, settings } from '../src/core/settings.ts';
 import { changeTheme } from '../src/ui/events/theming.ts';
 import cssStyles from '../src/ui/styles';
@@ -49,7 +50,7 @@ class ThemeWrapper extends LitElement {
             list="color-sample"
           />
           <datalist id="color-sample">
-            ${Object.values(sample).map(c => html`<option value="${c}"></option>`)}
+            ${_.values(sample).map(c => html`<option value="${c}"></option>`)}
           </datalist>
           <p style="margin-top: 1rem;">Selected Color:</p>
           <span

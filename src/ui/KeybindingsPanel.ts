@@ -4,6 +4,7 @@ import { customElement } from 'lit/decorators.js';
 import { createRef, type Ref, ref } from 'lit/directives/ref.js';
 import { join } from 'lit-html/directives/join.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import _ from 'lodash';
 import {
   appState,
   getAppStateValue,
@@ -33,7 +34,7 @@ declare global {
 export default class KeybindingsPanel extends LitElement {
   static readonly styles = [unsafeCSS(styles), unsafeCSS(keycss)];
 
-  private readonly keybindsRefs: Record<string, Ref<HTMLInputElement>> = Object.keys(
+  private readonly keybindsRefs: Record<string, Ref<HTMLInputElement>> = _.keys(
     getSettingsValue('keybinds'),
   ).reduce(
     (acc, key) => {
@@ -51,7 +52,7 @@ export default class KeybindingsPanel extends LitElement {
    */
   private keybindList() {
     const keybinds = getSettingsValue('keybinds');
-    return Object.keys(keybinds).map(kb => {
+    return _.keys(keybinds).map(kb => {
       const keys = keybinds[kb]?.length
         ? join(
             keybinds[kb]?.map(key => html`<kbd class="dark">${key}</kbd>`),
@@ -71,7 +72,7 @@ export default class KeybindingsPanel extends LitElement {
    */
   private keybindEditor() {
     const keybinds = getSettingsValue('keybinds');
-    return Object.keys(keybinds).map(
+    return _.keys(keybinds).map(
       kb =>
         html`<label for="${kb}">${getLocaleString(kb)}:</label>
           <input

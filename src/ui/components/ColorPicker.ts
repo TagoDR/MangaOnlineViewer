@@ -3,6 +3,7 @@ import { css, html, LitElement, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import _ from 'lodash';
 import colors, { getTextColor } from '../../utils/colors';
 
 declare global {
@@ -21,7 +22,7 @@ declare global {
  * @fires change - Dispatched when the color selection is finalized.
  */
 @customElement('mov-color-picker')
-export class ColorPicker extends LitElement {
+class ColorPicker extends LitElement {
   static readonly styles = css`
     :host {
       display: inline-block;
@@ -343,7 +344,7 @@ export class ColorPicker extends LitElement {
       <div class="swatches">
         ${(
           this.swatches ||
-            Object.entries(colors)
+            _.entries(colors)
               .filter(([name]) => !['dark', 'gray', 'zinc', 'neutral', 'stone'].includes(name))
               .map(([, color]) => color['600'])
         ).map(
@@ -401,7 +402,9 @@ export class ColorPicker extends LitElement {
   private colorToHsv(color: Color): { h: number; s: number; v: number } {
     const srgbColor = color.to('srgb');
     const hsvColor = srgbColor.to('hsv');
-    let [h, s, v] = hsvColor.coords;
+    let h = hsvColor.coords?.[0] || 0;
+    let s = hsvColor.coords?.[1] || 0;
+    let v = hsvColor.coords?.[2] || 0;
 
     if (Number.isNaN(h)) {
       h = this.hsv.h || 0;
@@ -555,3 +558,5 @@ export class ColorPicker extends LitElement {
     this.dispatchChange();
   }
 }
+
+export default ColorPicker;

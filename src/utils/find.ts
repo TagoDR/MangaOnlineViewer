@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 /**
  * A type definition for a function that checks if an element's text content matches a given string.
  * @param {HTMLElement} element - The HTML element to check.
@@ -36,7 +38,7 @@ function findElements(
   }
 
   return [...document.querySelectorAll<HTMLElement>(selector)].filter(element =>
-    Array.isArray(content) ? content.some(c => matcher(element, c)) : matcher(element, content),
+    _.castArray(content).some(c => matcher(element, c)),
   );
 }
 

@@ -1,6 +1,7 @@
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import { html } from 'lit';
+import _ from 'lodash';
 import type { Page } from '../types';
 import { logScript } from '../utils/tampermonkey';
 import { getAppStateValue, getLocaleString, setAppStateValue } from './settings.ts';
@@ -134,7 +135,7 @@ async function generateZip(): Promise<void> {
   const manga = getAppStateValue('manga');
   const total = manga?.pages ?? 0;
   const digits = Math.floor(Math.log10(total || 1)) + 1;
-  const imageEntries = Object.entries(images).sort((a, b) => Number(a[0]) - Number(b[0]));
+  const imageEntries = _.sortBy(_.entries(images), ([key]) => Number(key));
   const failedDownloads: string[] = [];
 
   const updateProgress = (current: number) => {

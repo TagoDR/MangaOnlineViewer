@@ -1,6 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import _ from 'lodash';
 import colors, { getTextColor } from '../../utils/colors.ts';
 import { IconCheck } from '../icons';
 
@@ -119,7 +120,7 @@ export class ColorPanel extends LitElement {
    * @internal
    */
   protected render() {
-    const swatchKeys = Object.keys(colors).filter(
+    const swatchKeys = _.keys(colors).filter(
       k => !['dark', 'gray', 'zinc', 'neutral', 'stone'].includes(k),
     );
     // .sort(sortColors);

@@ -3,6 +3,7 @@ import { css, html, LitElement, nothing, type PropertyValues, unsafeCSS } from '
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
+import _ from 'lodash';
 import { appState, getAppStateValue, getLocaleString, locale, settings } from '../core/settings.js';
 import type { NavbarMode } from '../types';
 import sequence from '../utils/sequence';
@@ -107,9 +108,7 @@ export default class Navbar extends LitElement {
       bottom: this.mode === 'bottom',
       hiding: this.isHiding,
     };
-    const loaded = Object.values(getAppStateValue('images') ?? {}).filter(
-      i => i.status === 'loaded',
-    ).length;
+    const loaded = _.countBy(getAppStateValue('images'), 'status').loaded || 0;
     return html`
       <nav
         id="Navigation"

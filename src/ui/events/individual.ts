@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import NProgress from 'nprogress';
 import {
   changeImage,
@@ -101,9 +102,7 @@ export function imageLoaded(event: Event): void {
   }));
 
   const total = getAppStateValue('manga')?.pages ?? 1;
-  const loaded = Object.values(getAppStateValue('images') ?? {}).filter(
-    i => i.status === 'loaded',
-  ).length;
+  const loaded = _.countBy(getAppStateValue('images'), 'status').loaded || 0;
   const percentage = Math.floor((loaded / total) * 100);
   document.title = `(${percentage}%) ${getAppStateValue('manga')?.title}`;
   NProgress.configure({
