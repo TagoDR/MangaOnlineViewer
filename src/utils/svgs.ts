@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { html } from './code-tag';
 import colors from './colors';
 
@@ -193,7 +194,7 @@ function placeholder(
   return svgToUrl(str);
 }
 
-const backgrounds = Object.values(colors).map(i => i['900']);
+const backgrounds = _.values(colors).map(i => i['900']);
 const widths = [400, 600, 900, 1200, 1400, 1600, 1970];
 const heights = [600, 800, 1000, 1200, 1400, 2000, 2600];
 

@@ -148,7 +148,7 @@ function keybindings() {
   window.onload = null;
   document.body.onload = null;
   hotkeys.unbind();
-  Object.keys(getSettingsValue('keybinds')).forEach(key => {
+  _.keys(getSettingsValue('keybinds')).forEach(key => {
     hotkeys(
       getSettingsValue('keybinds')[key]?.join(',') ?? '',
       _.throttle(event => {

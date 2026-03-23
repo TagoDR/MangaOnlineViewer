@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import _ from 'lodash';
 import { getLocaleString, getSettingsValue } from '../core/settings.ts';
 import { sample } from '../utils/colors.ts';
 import { changeColorScheme, changeTheme } from './events/theming.ts';
@@ -22,7 +23,7 @@ function theme() {
         .value="${getSettingsValue('theme')}"
         title="${getSettingsValue('theme')}"
         @input=${changeTheme}
-        .swatches=${Object.values(sample)}
+        .swatches=${_.values(sample)}
       ></mov-color-picker>
     </div>
     <color-palette
@@ -32,7 +33,7 @@ function theme() {
       @change="${changeTheme}"
     ></color-palette>
     <span id="ColorRecommendations">
-      ${Object.values(sample).map(
+      ${_.values(sample).map(
         c =>
           html`<color-swatch
             .color="${c}"

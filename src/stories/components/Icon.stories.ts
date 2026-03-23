@@ -3,20 +3,20 @@
  * This file defines stories that showcase the icon component's different properties,
  * such as name, size, and color, as well as its usage in various contexts.
  */
+
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import _ from 'lodash';
 import * as styledIcons from '../../ui/icons/StyledIcons.ts';
 import colors, { sample } from '../../utils/colors.ts';
 import '../../ui/components/Icon.ts'; // Ensure the <mov-icon> component is defined
 
-const icons = Object.keys(styledIcons).sort((a, b) => a.localeCompare(b));
+const icons = _.keys(styledIcons).sort((a, b) => a.localeCompare(b));
 
-const samples = Object.entries({ ...sample, white: '#fff', black: '#000' }).map(
-  ([name, value]) => ({
-    name: name.charAt(0).toUpperCase() + name.slice(1),
-    value,
-  }),
-);
+const samples = _.entries({ ...sample, white: '#fff', black: '#000' }).map(([name, value]) => ({
+  name: name.charAt(0).toUpperCase() + name.slice(1),
+  value,
+}));
 
 /**
  * The `Meta` object for the `<mov-icon>` component stories.
@@ -203,7 +203,7 @@ export const IconContexts: StoryObj = {
         <div>
           <h4>Icon in buttons (White Icon Variant)</h4>
           <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-            ${Object.values(colors).map(
+            ${_.values(colors).map(
               color => html`
                 <button style="${buttonStyle} background-color: ${color[800]}; color: white;">
                   <mov-icon name="${args.name}"></mov-icon>
@@ -217,7 +217,7 @@ export const IconContexts: StoryObj = {
         <div>
           <h4>Icon in buttons (Black Icon Variant)</h4>
           <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-            ${Object.values(colors).map(
+            ${_.values(colors).map(
               color => html`
                 <button style="${buttonStyle} background-color: ${color[200]}; color: black;">
                   <mov-icon

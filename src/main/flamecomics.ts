@@ -1,4 +1,5 @@
 // == Flame Comics =================================================================================
+import _ from 'lodash';
 import { Category, type IManga, type ISite, Language } from '../types';
 
 const flamecomics: ISite = {
@@ -11,7 +12,7 @@ const flamecomics: ISite = {
     const cdn = 'https://cdn.flamecomics.xyz/uploads/images/series';
     const json = JSON.parse(document.getElementById('__NEXT_DATA__')?.innerHTML ?? '');
     const chapter = json?.props?.pageProps?.chapter;
-    const images = Object.keys(chapter?.images).map(
+    const images = _.keys(chapter?.images).map(
       i =>
         `${cdn}/${chapter?.series_id}/${chapter?.token}/${chapter?.images?.[i]?.name}?${chapter?.unix_timestamp}`,
     );

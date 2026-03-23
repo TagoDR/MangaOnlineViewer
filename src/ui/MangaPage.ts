@@ -157,8 +157,6 @@ const listPages = (times: number, begin: number) =>
             alt="Page ${index}"
             class="${classMap({
               PageImg: true,
-              imgLoaded: getAppStateValue('images')?.[index]?.status === 'loaded',
-              imgLoading: getAppStateValue('images')?.[index]?.status === 'loading',
               imgBroken: getAppStateValue('images')?.[index]?.status === 'error',
             })}"
             src=${getAppStateValue('images')?.[index]?.src ?? nothing}

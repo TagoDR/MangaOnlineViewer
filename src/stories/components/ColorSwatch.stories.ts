@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import _ from 'lodash';
 import { appState, getSettingsValue, locale, settings } from '../../core/settings.ts';
 import { changeTheme } from '../../ui/events/theming.ts';
 import { sample } from '../../utils/colors';
@@ -20,7 +21,7 @@ class StoryColorSwatchWrapper extends LitElement {
   render() {
     return html`
       <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-        ${Object.entries(sample).map(
+        ${_.entries(sample).map(
           ([name, color]) => html`
             <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
               <color-swatch

@@ -1,4 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: must be generic */
+import _ from 'lodash';
+
 /**
  * Checks if a value is "empty".
  * An empty value is `null`, `undefined`, an empty string, an empty array, or an object with no own properties.
@@ -17,14 +19,7 @@
  * @returns {boolean} `true` if the value is empty, `false` otherwise.
  */
 function isEmpty<T>(value: T | T[] | undefined): boolean {
-  return (
-    value === null || // Check for null
-    typeof value === 'undefined' ||
-    value === undefined || // Check for undefined
-    (typeof value === 'string' && value === '') || // Check for empty string
-    (Array.isArray(value) && value.length === 0) || // Check for empty array
-    (typeof value === 'object' && Object.keys(value).length === 0)
-  );
+  return _.isEmpty(value) || _.isNil(value);
 }
 
 /**

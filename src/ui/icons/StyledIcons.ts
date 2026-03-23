@@ -4,6 +4,7 @@
  * directly to the SVG strings by adding `stroke` attributes, and then exports the processed icons
  * as raw SVG strings.
  */
+import _ from 'lodash';
 import iconsCSS from '../styles/icons.css?inline';
 import * as rawIcons from './svg.ts';
 
@@ -119,20 +120,11 @@ function applyColorsToSvg(svgString: string, className: string): string {
  * A record of all icons as processed SVG strings with colors applied.
  * @internal
  */
-const styledIcons: Record<string, string> = Object.fromEntries(
-  Object.keys(rawIcons).map(iconKey => {
-    const kebabCaseName = iconKey
-      .replace(/^Icon/, '')
-      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-      .toLowerCase();
-
-    const rawSvg = (rawIcons as Record<string, string>)[iconKey];
-    const className = `icon-tabler-${kebabCaseName}`;
-    const styledSvg = applyColorsToSvg(rawSvg, className);
-
-    return [iconKey, styledSvg];
-  }),
-);
+const styledIcons: Record<string, string> = _.mapValues(rawIcons, (rawSvg, iconKey) => {
+  const kebabCaseName = _.kebabCase(iconKey.replace(/^Icon/, ''));
+  const className = `icon-tabler-${kebabCaseName}`;
+  return applyColorsToSvg(rawSvg, className);
+});
 
 /**
  * A collection of all processed icons, exported as raw SVG strings.

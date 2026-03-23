@@ -1,4 +1,5 @@
 import type { Ref } from 'lit/directives/ref.js';
+import _ from 'lodash';
 import { saveSettingsValue, setAppStateValue } from '../../core/settings';
 import keybindings from './keybindings';
 
@@ -29,7 +30,7 @@ export function buttonKeybindingsOpen() {
  */
 export function saveKeybindings(keybindsRefs: Record<string, Ref<HTMLInputElement>>) {
   const newKeybinds: Record<string, string[] | undefined> = {};
-  Object.keys(keybindsRefs).forEach(id => {
+  _.keys(keybindsRefs).forEach(id => {
     const element = keybindsRefs[id].value;
     if (element) {
       const keys = element.value

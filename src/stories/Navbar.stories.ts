@@ -2,10 +2,12 @@
  * @file Storybook stories for the Navbar component (`<navbar-thumbnails>`).
  * This file defines stories that showcase the thumbnail navigation bar in all its positions.
  */
+
 import { useStores } from '@nanostores/lit';
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement, type PropertyValueMap } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import _ from 'lodash';
 import { appState, getAppStateValue, setAppStateValue } from '../core/settings';
 import localhost from '../main/localhost.ts';
 import type { IMangaImages, NavbarMode, Page } from '../types';
@@ -38,7 +40,7 @@ class StateDisplay extends LitElement {
       currentScrollTo === undefined && this.lastScrolledToPage !== undefined
         ? ' (then cleared)'
         : '';
-    const loaded = Object.values(getAppStateValue('images') ?? {}).filter(
+    const loaded = _.values(getAppStateValue('images') ?? {}).filter(
       i => i.status === 'loaded',
     ).length;
     return html`
@@ -69,7 +71,7 @@ const meta: Meta = {
     // Set up the mock manga data in the store
     setAppStateValue('manga', mockManga);
     setAppStateValue('currentPage', 1);
-    const images: Record<number, Page> = Object.fromEntries(
+    const images: Record<number, Page> = _.fromPairs(
       mockManga.listImages.map((img, index) => [index + 1, { src: img, status: 'loaded' }]),
     );
     setAppStateValue('images', images);

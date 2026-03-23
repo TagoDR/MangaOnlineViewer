@@ -144,8 +144,8 @@ function areKeybindsEqual(
   if (value && typeof value === 'object' && other && typeof other === 'object') {
     const valueKeybinds = value as Record<string, string[]>;
     const otherKeybinds = other as Record<string, string[]>;
-    const keysA = Object.keys(valueKeybinds).sort((a, b) => a.localeCompare(b));
-    const keysB = Object.keys(otherKeybinds).sort((a, b) => a.localeCompare(b));
+    const keysA = _.keys(valueKeybinds).sort((a, b) => a.localeCompare(b));
+    const keysB = _.keys(otherKeybinds).sort((a, b) => a.localeCompare(b));
 
     if (!_.isEqual(keysA, keysB)) {
       return false;
