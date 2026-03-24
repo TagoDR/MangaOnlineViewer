@@ -33,6 +33,7 @@ export default {
   VIEW_MODE_LEFT: 'Left to Right',
   VIEW_MODE_RIGHT: 'Right to Left',
   VIEW_MODE_WEBCOMIC: 'WebComic',
+  VIEW_MODE_BOOK: 'Book',
   FIT_WIDTH_OVERSIZED: 'Fit Width if Oversized',
   SHOW_THUMBNAILS: 'Show Thumbnails',
   HIDE_CONTROLS: 'Always Hide Page Controls',
@@ -135,4 +136,5 @@ export default {
   FILE_MENU: 'Main Menu',
   VIEW_MENU: 'View Menu',
   ZOOM_MENU: 'Zoom Menu',
+  DOUBLE_PAGE: 'Toggle Double Page',
 } satisfies ILocale;

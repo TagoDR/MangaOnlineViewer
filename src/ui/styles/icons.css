@@ -39,6 +39,10 @@
   color: fuchsia;
 }
 
+.icon-tabler-spacing-horizontal > :nth-child(4) {
+  color: fuchsia;
+}
+
 .icon-tabler-list-numbers > :nth-child(n + 5) {
   color: #e48900;
 }
@@ -98,7 +102,12 @@
   color: greenyellow;
 }
 
-.icon-tabler-book-return > g {
+.icon-tabler-book-arrow-left > :nth-child(7),
+.icon-tabler-book-arrow-left > :nth-child(8),
+.icon-tabler-book-arrow-right > :nth-child(7),
+.icon-tabler-book-arrow-right > :nth-child(8),
+.icon-tabler-books-return > :nth-child(8),
+.icon-tabler-books-return > :nth-child(9) {
   color: greenyellow;
 }
 
@@ -109,5 +118,9 @@
 }
 
 .icon-tabler-settings-off > :nth-child(4) {
+  color: red;
+}
+
+.icon-tabler-book-off > :nth-child(7) {
   color: red;
 }

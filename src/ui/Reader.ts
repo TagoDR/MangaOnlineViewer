@@ -25,6 +25,8 @@ const Reader = (manga: IManga) => html`
       fitWidthIfOversize: getSettingsValue('fitWidthIfOversize'),
       [getSettingsValue('viewMode')]: true,
       separator: getSettingsValue('viewMode') === 'Vertical',
+      // Optional: Add RTL class if you want Book mode to support RTL based on locale or specific setting
+      // RTL: getSettingsValue('viewMode') === 'Book' && getSettingsValue('locale').startsWith('ar'),
     })}"
     @wheel=${(e: WheelEvent) => {
       if (getSettingsValue('viewMode') === 'FluidLTR') transformScrollToHorizontal(e);

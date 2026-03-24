@@ -196,6 +196,11 @@ function viewMode() {
           label=${getLocaleString('VIEW_MODE_RIGHT')}
           icon="arrow-autofit-left"
         ></segmented-control-option>
+        <segmented-control-option
+            value="Book"
+            label="Book"
+            icon="IconBookArrowRight"
+        ></segmented-control-option>
       </segmented-control>
     </div>
   `;

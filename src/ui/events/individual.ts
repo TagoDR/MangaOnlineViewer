@@ -99,6 +99,7 @@ export function imageLoaded(event: Event): void {
       naturalHeight: img.naturalHeight,
     }),
     status: 'loaded',
+    doublePage: img.naturalWidth > img.naturalHeight,
   }));
 
   const total = getAppStateValue('manga')?.pages ?? 1;

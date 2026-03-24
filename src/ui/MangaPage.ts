@@ -33,6 +33,7 @@ import {
   IconEye,
   IconEyeOff,
   IconRefresh,
+  IconSpacingHorizontal,
   IconZoomCancel,
   IconZoomIn,
   IconZoomOut,
@@ -82,6 +83,7 @@ const listPages = (times: number, begin: number) =>
         class="${classMap({
           MangaPage: true,
           hide: !!getAppStateValue('images')?.[index].hide,
+          DoublePage: !!getAppStateValue('images')?.[index].doublePage,
         })}"
       >
         <div class="PageFunctions">
@@ -133,6 +135,22 @@ const listPages = (times: number, begin: number) =>
           >
             ${IconArrowAutofitHeight}
           </button>
+          ${
+            !getSettingsValue('viewMode').startsWith('Book')
+              ? nothing
+              : html`
+            <button
+              class="DoublePage PageButton"
+              title="${getLocaleString('DOUBLE_PAGE')}"
+              @click=${() => {
+                changeImage(index, image => ({ doublePage: !image.doublePage }));
+              }}
+              value="${index}"
+            >
+              ${IconSpacingHorizontal}
+            </button>`
+          }
+
           <button
             class="Hide PageButton"
             title="${getLocaleString('HIDE')}"

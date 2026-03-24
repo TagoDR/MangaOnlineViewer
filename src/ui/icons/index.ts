@@ -24,6 +24,7 @@ const styledIconsSVG: Record<string, DirectiveResult<typeof UnsafeSVGDirective>>
  */
 export const {
   IconAdjustmentsHorizontal,
+  IconApiBook,
   IconArrowsHorizontal,
   IconArrowsLeftRight,
   IconArrowAutofitDown,
@@ -37,7 +38,10 @@ export const {
   IconArrowsMoveVertical,
   IconArrowsVertical,
   IconBook,
-  IconBookReturn,
+  IconBookOff,
+  IconBookArrowLeft,
+  IconBookArrowRight,
+  IconBooksReturn,
   IconBookUpload,
   IconBookmark,
   IconBookmarkOff,
@@ -97,6 +101,7 @@ export const {
   IconRefresh,
   IconSettings,
   IconSettingsOff,
+  IconSpacingHorizontal,
   IconSpacingVertical,
   IconSun,
   IconTrash,

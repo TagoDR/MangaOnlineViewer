@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { appState } from '../core/settings';
+import { appState, settings } from '../core/settings';
 
 // Import the component and all its dependencies to ensure they are registered
 import '../ui';
@@ -38,4 +38,21 @@ export default {
 export const Default: StoryObj = {
   name: 'Default View',
   args: {},
+};
+
+/**
+ * The Book Mode story for the App component.
+ * It renders the entire application UI with mocked data in Book mode.
+ * @type {StoryObj}
+ */
+export const BookMode: StoryObj = {
+  name: 'Book Mode',
+  args: {},
+  render: _args => {
+    // Set the global state required by the App component before rendering.
+    // This simulates the application being in a loaded state.
+    appState.setKey('manga', mockManga);
+    settings.setKey('viewMode', 'Book');
+    return html`<manga-online-viewer></manga-online-viewer>`;
+  },
 };

@@ -8,6 +8,7 @@ import { svgToUrl } from '../../utils/svgs';
 import { IconPhoto, IconPhotoOff } from '../icons/StyledIcons.ts';
 import styles from './App.css?inline';
 import animation from './animation.css?inline';
+import book from './book.css?inline';
 import fluid from './fluid.css?inline';
 import media from './media.css?inline';
 import page from './page.css?inline';
@@ -27,6 +28,7 @@ export default css`
   ${styles}
   ${page}
   ${fluid}
+  ${book}
   ${media}
   ${animation}
 `;

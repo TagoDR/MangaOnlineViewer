@@ -153,7 +153,7 @@ export const Sizes: Story = {
                       <segmented-control-option
                         value="Menu${index}"
                         label="Menu${index}"
-                        icon="book-return"
+                        icon="books-return"
                       ></segmented-control-option>`,
                 )}
               </segmented-control>
