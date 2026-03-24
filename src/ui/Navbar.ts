@@ -108,7 +108,13 @@ export default class Navbar extends LitElement {
       bottom: this.mode === 'bottom',
       hiding: this.isHiding,
     };
-    const loaded = _.countBy(getAppStateValue('images'), 'status').loaded || 0;
+    const images = getAppStateValue('images') || {};
+    const loaded = _.keys(images).filter(key => {
+      const idx = parseInt(key, 10);
+      return (
+        idx >= (manga?.begin ?? 1) && idx <= (manga?.pages ?? 1) && images[idx]?.status === 'loaded'
+      );
+    }).length;
     return html`
       <nav
         id="Navigation"

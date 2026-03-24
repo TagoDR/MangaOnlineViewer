@@ -189,7 +189,7 @@ export default async function loadImages() {
   // Lazy load images as the user scrolls
   appState.listen((value, oldValue, changedKey) => {
     if (changedKey === 'currentPage' && value.currentPage > oldValue.currentPage) {
-      for (let i = value.currentPage; i < value.currentPage + 5; i++) {
+      for (let i = value.currentPage; i < Math.min(value.currentPage + 5, manga.pages + 1); i++) {
         if (value.images?.[i]?.src !== undefined) continue;
         if (isImagesManga(manga)) {
           addImg(manga, i, manga.listImages[i - 1]);

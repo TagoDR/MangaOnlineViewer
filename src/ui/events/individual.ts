@@ -102,8 +102,15 @@ export function imageLoaded(event: Event): void {
     doublePage: img.naturalWidth > img.naturalHeight,
   }));
 
-  const total = getAppStateValue('manga')?.pages ?? 1;
-  const loaded = _.countBy(getAppStateValue('images'), 'status').loaded || 0;
+  const manga = getAppStateValue('manga');
+  const images = getAppStateValue('images') || {};
+  const loaded = _.keys(images).filter(key => {
+    const idx = parseInt(key, 10);
+    return (
+      idx >= (manga?.begin ?? 1) && idx <= (manga?.pages ?? 1) && images[idx]?.status === 'loaded'
+    );
+  }).length;
+  const total = (manga?.pages ?? 1) - ((manga?.begin ?? 1) - 1);
   const percentage = Math.floor((loaded / total) * 100);
   document.title = `(${percentage}%) ${getAppStateValue('manga')?.title}`;
   NProgress.configure({
