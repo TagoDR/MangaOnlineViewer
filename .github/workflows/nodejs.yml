@@ -2,10 +2,24 @@ name: Build and commit
 
 on:
   push:
-    branches: [master]
+    branches: '*'
 
 jobs:
+  test:
+    if: github.ref != 'refs/heads/master'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run biome
+      - run: npm run build:all
+
   release:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -18,7 +32,26 @@ jobs:
       - run: npm ci
       - run: npm run build:all
 
+      - name: Check for significant changes
+        run: |
+          git add .
+          DIFF=$(git diff --cached --shortstat)
+          if [[ $DIFF =~ ([0-9]+) ]]; then
+            INSERTIONS=$(echo $DIFF | awk '{print $4}')
+            DELETIONS=$(echo $DIFF | awk '{print $6}')
+            TOTAL=$((INSERTIONS + DELETIONS))
+            if [ $TOTAL -gt 1 ]; then
+              echo "Significant changes detected"
+              echo "COMMIT=true" >> $GITHUB_ENV
+            else
+              echo "Only minor changes (likely version)"
+            fi
+          else
+            echo "No changes"
+          fi
+
       - name: Commit changes
+        if: env.COMMIT == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply changes to release
