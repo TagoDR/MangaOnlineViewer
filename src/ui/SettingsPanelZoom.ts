@@ -198,8 +198,13 @@ function viewMode() {
         ></segmented-control-option>
         <segmented-control-option
             value="Book"
-            label="Book"
+            label=${getLocaleString('VIEW_MODE_BOOK')}
             icon="IconBookArrowRight"
+        ></segmented-control-option>
+        <segmented-control-option
+            value="Manga"
+            label=${getLocaleString('VIEW_MODE_MANGA')}
+            icon="IconBookArrowLeft"
         ></segmented-control-option>
       </segmented-control>
     </div>

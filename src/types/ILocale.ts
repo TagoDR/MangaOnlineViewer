@@ -31,6 +31,8 @@ export type ILocale = {
   VIEW_MODE_LEFT: string;
   VIEW_MODE_RIGHT: string;
   VIEW_MODE_WEBCOMIC: string;
+  VIEW_MODE_BOOK: string;
+  VIEW_MODE_MANGA: string;
   FIT_WIDTH_OVERSIZED: string;
   SHOW_THUMBNAILS: string;
   HIDE_CONTROLS: string;
@@ -124,6 +126,7 @@ export type ILocale = {
   FILE_MENU: string;
   VIEW_MENU: string;
   ZOOM_MENU: string;
+  DOUBLE_PAGE: string;
 };
 
 /**

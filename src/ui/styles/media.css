@@ -89,6 +89,10 @@
 .mobile #ZoomControl,
 .mobile #ZoomDropdown,
 .mobile #ViewDropdown,
-.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)) {
+.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)),
+.mobile #BookMode,
+.mobile #MangaMode,
+.tablet #BookMode,
+.tablet #MangaMode {
   display: none;
 }
