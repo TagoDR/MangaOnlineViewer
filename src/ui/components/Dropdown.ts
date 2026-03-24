@@ -106,6 +106,7 @@ export class MovDropdownItem extends LitElement {
   static readonly styles = css`
     :host {
       display: block;
+      min-width: max-content;
     }
     .item {
       display: flex;
