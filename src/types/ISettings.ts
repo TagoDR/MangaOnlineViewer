@@ -6,8 +6,9 @@ import type { IBookmark } from './IBookmark';
  * - `FluidLTR`: A continuous horizontal strip, read from Left to Right.
  * - `FluidRTL`: A continuous horizontal strip, read from Right to Left.
  * - `Vertical`: Pages are displayed one below the other with a separator.
+ * - `Book`: Pages are displayed side-by-side (like a spread).
  */
-export type ViewMode = 'WebComic' | 'FluidLTR' | 'FluidRTL' | 'Vertical';
+export type ViewMode = 'WebComic' | 'FluidLTR' | 'FluidRTL' | 'Vertical' | 'Book';
 
 /**
  * Defines when the script should automatically start.

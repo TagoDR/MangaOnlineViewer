@@ -51,6 +51,8 @@ export type Page = {
   blob?: Blob;
   /** Whether the image should be hidden from view. */
   hide?: boolean;
+  /** Whether the image should span two columns in 'Book' mode. */
+  doublePage?: boolean;
   /** The current loading status of the image. */
   status?: PageStatus;
 };

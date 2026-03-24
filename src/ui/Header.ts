@@ -173,7 +173,7 @@ export class Header extends LitElement {
             >
               <mov-icon
                 label="View"
-                name="IconBook"
+                name="IconApiBook"
               ></mov-icon>
             </mov-button>
             <mov-dropdown-item
@@ -221,6 +221,17 @@ export class Header extends LitElement {
                 name="IconArrowAutofitLeft"
               ></mov-icon>
               ${getLocaleString('VIEW_MODE_RIGHT')} ${renderKeybind('VIEW_MODE_RIGHT')}
+            </mov-dropdown-item>
+            <mov-dropdown-item
+              id="BookMode"
+              @click="${updateViewMode('Book')}"
+              ?selected=${getSettingsValue('viewMode') === 'Book'}
+            >
+              <mov-icon
+                slot="icon"
+                name="IconBookArrowRight"
+              ></mov-icon>
+              ${getLocaleString('VIEW_MODE_BOOK')} ${renderKeybind('VIEW_MODE_BOOK')}
             </mov-dropdown-item>
           </mov-dropdown>
           <mov-dropdown
@@ -328,7 +339,7 @@ export class Header extends LitElement {
             title="${getLocaleString('RETURN_CHAPTER_LIST')}"
             ?disabled=${!this.manga.series}
           >
-            <mov-icon name="IconBookReturn"></mov-icon>
+            <mov-icon name="IconBooksReturn"></mov-icon>
           </mov-button>
           <mov-button
             id="download"
