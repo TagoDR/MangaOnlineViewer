@@ -33,6 +33,8 @@ export default {
   VIEW_MODE_LEFT: 'Izquierda a derecha',
   VIEW_MODE_RIGHT: 'Derecha a izquierda',
   VIEW_MODE_WEBCOMIC: 'WebComic',
+  VIEW_MODE_BOOK: 'Libro (LTR)',
+  VIEW_MODE_MANGA: 'Manga (RTL)',
   FIT_WIDTH_OVERSIZED: 'Ajustar ancho si es demasiado grande',
   SHOW_THUMBNAILS: 'Mostrar miniaturas',
   HIDE_CONTROLS: 'Ocultar siempre la barra de controles',
@@ -137,4 +139,5 @@ export default {
   FILE_MENU: 'Menú principal',
   VIEW_MENU: 'Ver menú',
   ZOOM_MENU: 'Menú Zoom',
+  DOUBLE_PAGE: 'Alternar Página Doble',
 } satisfies ILocale;

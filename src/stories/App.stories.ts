@@ -8,7 +8,8 @@ import localhost from '../main/localhost.ts';
 import type { IMangaImages } from '../types';
 
 // Mock data required by the App component and its children
-const mockManga = localhost.run() as IMangaImages;
+// @ts-expect-error
+const mockManga = localhost.run(25) as IMangaImages;
 
 /**
  * The `Meta` object for the `<manga-online-viewer>` component stories.

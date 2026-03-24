@@ -72,18 +72,49 @@ function getImageStyle(index: number): StyleInfo {
  * @param {number} begin - The starting page number.
  * @returns An array of Lit `TemplateResult` objects, one for each page.
  */
-const listPages = (times: number, begin: number) =>
-  sequence(times, begin).map(index => {
+const listPages = (times: number, begin: number) => {
+  return sequence(times, begin).map(index => {
     if (!getAppStateValue('images')?.[index]?.ref) {
       changeImage(index, _image => ({ ref: createRef() }));
     }
+
+    // Find the last double page before this one and count single pages since then
+    let singlePageCount = 0;
+    for (let i = index - 1; i >= begin; i--) {
+      if (getAppStateValue('images')?.[i].doublePage) {
+        break; // Found the last double page, stop counting
+      }
+      if (!getAppStateValue('images')?.[i].doublePage) {
+        singlePageCount++;
+      }
+    }
+
+    const isDblPage = getAppStateValue('images')?.[index].doublePage ?? false;
+    const isBookMode = getSettingsValue('viewMode') === 'Book';
+
+    // For single pages, alternate left/right based on the count of single pages since last double page
+    // Book mode (LTR): even count = left, odd count = right
+    // Manga mode (RTL): even count = right, odd count = left (reversed for RTL flow)
+    const isLeftPage =
+      !isDblPage &&
+      (isBookMode
+        ? singlePageCount % 2 === 0 // Book: even = left
+        : singlePageCount % 2 === 1); // Manga: odd = left
+    const isRightPage =
+      !isDblPage &&
+      (isBookMode
+        ? singlePageCount % 2 === 1 // Book: odd = right
+        : singlePageCount % 2 === 0); // Manga: even = right
+
     return html`
       <div
         id="Page${index}"
         class="${classMap({
           MangaPage: true,
           hide: !!getAppStateValue('images')?.[index].hide,
-          DoublePage: !!getAppStateValue('images')?.[index].doublePage,
+          DoublePage: isDblPage,
+          LeftPage: isLeftPage && !isDblPage,
+          RightPage: isRightPage && !isDblPage,
         })}"
       >
         <div class="PageFunctions">
@@ -120,14 +151,6 @@ const listPages = (times: number, begin: number) =>
             ${IconZoomOut}
           </button>
           <button
-            class="ZoomWidth PageButton"
-            title="${getLocaleString('ZOOM_WIDTH')}"
-            @click=${buttonZoomWidth}
-            value="${index}"
-          >
-            ${IconArrowAutofitWidth}
-          </button>
-          <button
             class="ZoomHeight PageButton"
             title="${getLocaleString('ZOOM_HEIGHT')}"
             @click=${buttonZoomHeight}
@@ -136,8 +159,16 @@ const listPages = (times: number, begin: number) =>
             ${IconArrowAutofitHeight}
           </button>
           ${
-            !getSettingsValue('viewMode').startsWith('Book')
-              ? nothing
+            !getSettingsValue('viewMode').match(/^(Book|Manga)$/)
+              ? html`
+              <button
+                class="ZoomWidth PageButton"
+                title="${getLocaleString('ZOOM_WIDTH')}"
+                @click=${buttonZoomWidth}
+                value="${index}"
+              >
+                ${IconArrowAutofitWidth}
+              </button>`
               : html`
             <button
               class="DoublePage PageButton"
@@ -150,7 +181,6 @@ const listPages = (times: number, begin: number) =>
               ${IconSpacingHorizontal}
             </button>`
           }
-
           <button
             class="Hide PageButton"
             title="${getLocaleString('HIDE')}"
@@ -190,4 +220,5 @@ const listPages = (times: number, begin: number) =>
       </div>
     `;
   });
+};
 export default listPages;
