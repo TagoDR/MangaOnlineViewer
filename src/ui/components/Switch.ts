@@ -6,7 +6,7 @@ import { IconCheck, IconX } from '../icons';
 /**
  * Custom switch
  *
- * API is compatible with Web Awesome's wa-switch component and Webcomponents 3.0.0 standards.
+ * API is compatible with Web Awesome's wa-switch component (v3.3.1).
  *
  */
 @customElement('mov-switch')

@@ -15,7 +15,7 @@ declare global {
 /**
  * An interactive color picker component that allows users to select a color.
  *
- * API is compatible with Web Awesome's wa-color-picker component and Webcomponents 3.0.0 standards.
+ * API is compatible with Web Awesome's wa-color-picker component (v3.3.1).
  *
  * @element mov-color-picker
  * @fires input - Dispatched continuously while the color is changing.

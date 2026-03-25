@@ -6,7 +6,7 @@ import './Icon.ts';
  * A dropdown component that can be used to display a menu of options.
  * This component is designed to be compatible with wa-dropdown API. *
  *
- * API is compatible with Web Awesome's wa-dropdown component and Webcomponents 3.0.0 standards.
+ * API is compatible with Web Awesome's wa-dropdown component (v3.3.1).
  *
  * @element mov-dropdown
  *
@@ -93,7 +93,7 @@ export class MovDropdown extends LitElement {
  * A dropdown item component that can be used within a mov-dropdown.
  * This component is designed to be compatible with wa-dropdown-item API.
  *
- * API is compatible with Web Awesome's wa-dropdown-item component and Webcomponents 3.0.0 standards.
+ * API is compatible with Web Awesome's wa-dropdown-item component (v3.3.1).
  *
  * @element mov-dropdown-item
  *
@@ -168,9 +168,9 @@ export class MovDropdownItem extends LitElement {
 
 /**
  * A divider component that can be used within a mov-dropdown.
- * This component is designed to be compatible with wa-dropdown-divider API.
+ * This component is designed to be compatible with wa-divider API.
  *
- * API is compatible with Web Awesome's wa-dropdown-divider component and Webcomponents 3.0.0 standards.
+ * API is compatible with Web Awesome's wa-divider component (v3.3.1).
  *
  * @element mov-divider
  */

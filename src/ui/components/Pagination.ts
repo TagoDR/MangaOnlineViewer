@@ -8,6 +8,15 @@ import { selectGoToPage } from '../events/navigation.ts';
 import './Icon.ts';
 import { redirectUrl } from '../events/keybindings.ts';
 
+/**
+ * A pagination component for navigating through manga pages and chapters.
+ * This component is inspired by the Pagination component from Mantine, but
+ * reimagined with a slider instead of a list of numbers.
+ *
+ * API is designed to be similar to Web Awesome components.
+ *
+ * @element manga-pagination
+ */
 @customElement('manga-pagination')
 export class Pagination extends LitElement {
   static readonly styles = css`

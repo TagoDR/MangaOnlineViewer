@@ -13,7 +13,7 @@ declare global {
 /**
  * A dialog component that can be modal or inline.
  *
- * API is compatible with Web Awesome's wa-dialog component and Webcomponents 3.0.0 standards.
+ * API is compatible with Web Awesome's wa-dialog component (v3.3.1).
  *
  * @element mov-dialog
  * @fires open - Dispatched when the dialog begins to open.

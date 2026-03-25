@@ -26,6 +26,10 @@ declare global {
  * A control that allows users to select one option from a set, presented as a row of connected buttons.
  * It is a fully custom component, eliminating the need for hidden radio inputs.
  *
+ * This component is inspired by the SegmentedControl component from Mantine.
+ *
+ * API is designed to be similar to Web Awesome components.
+ *
  * @element segmented-control
  *
  * @fires change - Dispatched when the selected value changes. The `detail` property of the event contains the new value.
