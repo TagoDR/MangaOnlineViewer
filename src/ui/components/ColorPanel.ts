@@ -16,6 +16,10 @@ declare global {
  * It renders a list of predefined color families and their shades, allowing the user
  * to pick a new primary theme color for the application.
  *
+ * This component is inspired by SmartUI's Smart.ColorPanel in display mode "materialGrid".
+ *
+ * API is designed to be similar to Web Awesome components.
+ *
  * @element color-panel
  *
  * @fires click - When a color swatch is clicked, it dispatches an event that is handled by `buttonSelectTheme` to update the application settings.

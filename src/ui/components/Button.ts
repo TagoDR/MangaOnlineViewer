@@ -17,7 +17,7 @@ declare global {
  * sizes, and a loading state. This component is fully standalone while maintaining
  * compatibility with wa-button API.
  *
- * API is compatible with Web Awesome's wa-button component and Webcomponents 3.0.0 standards.
+ * API is compatible with Web Awesome's wa-button component (v3.3.1).
  *
  * @element mov-button
  *

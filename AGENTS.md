@@ -33,7 +33,7 @@ The project is written in TypeScript and uses Vite for its build process. The ar
 - **UI Layer**: The UI is built with `lit` and organized into a component-based architecture.
   - **`src/ui/`**: Contains the main UI panels and application layout files (e.g., `App.ts`, `Header.ts`, `SettingsPanel.ts`). These are the top-level containers.
   - **`src/ui/components/`**: Houses smaller, reusable UI components (e.g., buttons, switches, dialogs) that are used to build the main UI. This promotes modularity and reusability. The components are designed to be standalone and are registered as custom elements.
-  - **Web Awesome Parity**: Components in `src/ui/components/` are designed with strict parity to **Web Awesome** (formerly Shoelace) components. Their APIs are compatible with **Webcomponents 3.0.0** standards, ensuring they can be swapped with their Web Awesome counterparts with minimal friction. This includes consistent property names, events, and slot usage. For components that does not start with "mov-" there isn't a webawesome component equivalent, that could replace it
+  - **Web Awesome Parity**: Some components in `src/ui/components/` are designed with strict parity to **Web Awesome** (formerly Shoelace) components. Their APIs are compatible with **Webcomponents 3.0.0** standards, ensuring they can be swapped with their Web Awesome counterparts with minimal friction. This includes consistent property names, events, and slot usage. For components that does not start with "mov-" there isn't a webawesome component equivalent, that could replace it
     - mov-button with wa-button
     - mov-icon with wa-icon
     - mov-drawer with wa-drawer
@@ -41,6 +41,14 @@ The project is written in TypeScript and uses Vite for its build process. The ar
     - mov-dialog with wa-dialog
     - mov-switch with wa-switch
     - mov-dropdown with wa-dropdown and mov-dropdown-item with wa-dropdown-item
+  - **Mantine Reimplementation** Some components in `src/ui/components/` are designed inspired by React's **Mantine** library, however APIs are designed to be similar to  **Web Awesome** components
+    - segmented-control reimplementation of SegmentedControl
+    - toggle-button similar to CopyButton but with sticky toggle
+    - color-swatch reimplementation of ColorSwatch
+    - color-palette similar to ColorPicker with only swatches
+    - manga-pagination inspired by Pagination but with slider instead of a list of numbers
+  - **Other Inspirations**
+    - color-panel inspired by SmartUI1s Smart.ColorPanel in display mode "materialGrid"
 
 - **Icon System**: The project uses a custom icon system to handle SVGs.
   - **`src/ui/icons/svg.ts`**: This file exports all raw SVG strings.
