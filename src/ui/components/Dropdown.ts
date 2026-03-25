@@ -165,3 +165,31 @@ export class MovDropdownItem extends LitElement {
     `;
   }
 }
+
+/**
+ * A divider component that can be used within a mov-dropdown.
+ * This component is designed to be compatible with wa-dropdown-divider API.
+ *
+ * API is compatible with Web Awesome's wa-dropdown-divider component and Webcomponents 3.0.0 standards.
+ *
+ * @element mov-divider
+ */
+@customElement('mov-divider')
+export class MovDivider extends LitElement {
+  static readonly styles = css`
+    :host {
+      display: block;
+    }
+    .divider {
+      border-top: 1px solid var(--theme-border-color, #ccc);
+      margin: 4px 0;
+    }
+  `;
+
+  render() {
+    return html`<div
+      class="divider"
+      role="separator"
+    ></div>`;
+  }
+}

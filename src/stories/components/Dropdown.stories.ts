@@ -42,6 +42,7 @@ export default {
         <mov-icon slot="icon" name="IconKeyboard"></mov-icon>
         Keybindings
       </mov-dropdown-item>
+      <mov-divider></mov-divider>
       <mov-dropdown-item>
         <mov-icon slot="icon" name="IconBookmarks"></mov-icon>
         Bookmarks
@@ -104,6 +105,7 @@ export const Checkable: StoryObj = {
         ></mov-icon>
         ${getLocaleString('VIEW_MODE_VERTICAL')} ${renderKeybind('VIEW_MODE_VERTICAL')}
       </mov-dropdown-item>
+      <mov-divider></mov-divider>
       <mov-dropdown-item
         id="ltrMode"
         @click="${updateViewMode('FluidLTR')}"
@@ -126,6 +128,7 @@ export const Checkable: StoryObj = {
         ></mov-icon>
         ${getLocaleString('VIEW_MODE_RIGHT')} ${renderKeybind('VIEW_MODE_RIGHT')}
       </mov-dropdown-item>
+      <mov-divider></mov-divider>
       <mov-dropdown-item
         id="BookMode"
         @click="${updateViewMode('Book')}"
@@ -187,6 +190,7 @@ export const WithDetails: StoryObj = {
         ></mov-icon>
         ${getLocaleString('KEYBINDINGS')}
       </mov-dropdown-item>
+      <mov-divider></mov-divider>
       <mov-dropdown-item
         id="AutoScroll"
         class="${classMap({ running: getAppStateValue('autoScroll') })}"
@@ -198,6 +202,7 @@ export const WithDetails: StoryObj = {
         ></mov-icon>
         ${getLocaleString('SCROLL_START')} ${renderKeybind('SCROLL_START')}
       </mov-dropdown-item>
+      <mov-divider></mov-divider>
       <mov-dropdown-item
         id="bookmarks"
         class="tablets"

@@ -128,17 +128,6 @@ export class Header extends LitElement {
               ${getLocaleString('KEYBINDINGS')}
             </mov-dropdown-item>
             <mov-dropdown-item
-              id="AutoScroll"
-              class="${classMap({ running: getAppStateValue('autoScroll') })}"
-              @click=${toggleAutoScroll}
-            >
-              <mov-icon
-                slot="icon"
-                name="${getAppStateValue('autoScroll') ? 'IconPlayerPause' : 'IconPlayerPlay'}"
-              ></mov-icon>
-              ${getLocaleString('SCROLL_START')} ${renderKeybind('SCROLL_START')}
-            </mov-dropdown-item>
-            <mov-dropdown-item
               id="bookmarks"
               class="tablets"
               @click=${buttonBookmarksOpen}
@@ -148,6 +137,18 @@ export class Header extends LitElement {
                 name="IconBookmarks"
               ></mov-icon>
               ${getLocaleString('BOOKMARKS')}
+            </mov-dropdown-item>
+            <mov-divider></mov-divider>
+            <mov-dropdown-item
+              id="AutoScroll"
+              class="${classMap({ running: getAppStateValue('autoScroll') })}"
+              @click=${toggleAutoScroll}
+            >
+              <mov-icon
+                slot="icon"
+                name="${getAppStateValue('autoScroll') ? 'IconPlayerPause' : 'IconPlayerPlay'}"
+              ></mov-icon>
+              ${getLocaleString('SCROLL_START')} ${renderKeybind('SCROLL_START')}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="pageControls"
@@ -200,6 +201,7 @@ export class Header extends LitElement {
               ></mov-icon>
               ${getLocaleString('VIEW_MODE_VERTICAL')} ${renderKeybind('VIEW_MODE_VERTICAL')}
             </mov-dropdown-item>
+            <mov-divider></mov-divider>
             <mov-dropdown-item
               id="ltrMode"
               @click="${updateViewMode('FluidLTR')}"
@@ -222,6 +224,7 @@ export class Header extends LitElement {
               ></mov-icon>
               ${getLocaleString('VIEW_MODE_RIGHT')} ${renderKeybind('VIEW_MODE_RIGHT')}
             </mov-dropdown-item>
+            <mov-divider></mov-divider>
             <mov-dropdown-item
               id="BookMode"
               @click="${updateViewMode('Book')}"
@@ -288,6 +291,7 @@ export class Header extends LitElement {
               ></mov-icon>
               ${getLocaleString('REDUCE')} ${renderKeybind('REDUCE')}
             </mov-dropdown-item>
+            <mov-divider></mov-divider>
             <mov-dropdown-item
               id="fitWidth"
               @click="${changeGlobalZoom('width')}"
