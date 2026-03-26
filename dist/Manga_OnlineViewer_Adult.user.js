@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.03.24.build-1858
+// @version       2026.03.26.build-1610
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -3912,17 +3912,17 @@
 					placeholder(1970, 1400, "#2D1657"),
 					placeholder(985, 1400, "#152C55"),
 					placeholder(985, 1400, "#7A1420"),
-					placeholder(985, 1400, "#0F5B30"),
-					placeholder(985, 1400, "#0F5B30"),
 					placeholder(1970, 1400, "#806D15"),
-					placeholder(985, 1400, "#152C55"),
-					placeholder(985, 1400, "#7A1420"),
-					placeholder(985, 1400, "#152C55"),
-					placeholder(985, 1400, "#7A1420"),
-					placeholder(1970, 1400, "#806D15"),
-					placeholder(985, 1400, "#7A1420"),
-					placeholder(1970, 1400, "#2D1657"),
-					placeholder(985, 1400, "#152C55"),
+					placeholder(985, 1400, "#0F5B30"),
+					placeholder(1970, 1400, "#1a3e3c"),
+					placeholder(985, 1400, "#480f5b"),
+					placeholder(985, 1400, "#a9bf7a"),
+					placeholder(985, 1400, "#147a56"),
+					placeholder(1970, 1400, "#190343"),
+					placeholder(985, 1400, "#d5b91e"),
+					placeholder(985, 1400, "#836ecd"),
+					placeholder(985, 1400, "#bf19b2"),
+					placeholder(985, 1400, "#152055"),
 					...Array(num).fill(0).map(randomPlaceholder)
 				]
 			};
@@ -3967,7 +3967,8 @@
 	* @returns {string} The blob URL representing the image.
 	*/
 	var getImageBlob$1 = (content) => {
-		const blob = new Blob([new Uint8Array(content).buffer]);
+		const buffer = new Uint8Array(content);
+		const blob = new Blob([buffer.buffer]);
 		return URL.createObjectURL(blob);
 	};
 	/**
@@ -5056,7 +5057,7 @@
 		return applyColorsToSvg(rawSvg, `icon-tabler-${_.kebabCase(iconKey.replace(/^Icon/, ""))}`);
 	});
 	//#endregion
-	//#region \0@oxc-project+runtime@0.120.0/helpers/decorate.js
+	//#region \0@oxc-project+runtime@0.122.0/helpers/decorate.js
 	function __decorate(decorators, target, key, desc) {
 		var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 		if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5810,10 +5811,7 @@
 	* @returns {string[]} An array of 11 hex color strings.
 	*/
 	function gradientBySteps(baseColor) {
-		const baseOklch = baseColor.to("oklch");
-		const hue = baseOklch.coords[2];
-		const chroma = baseOklch.coords[1];
-		const originalLightness = baseOklch.coords[0];
+		const [originalLightness, chroma, hue] = baseColor.to("oklch").coords.map((c) => c ?? 0);
 		const lightnessSteps = [
 			.95,
 			.9,
@@ -5870,9 +5868,10 @@
 		for (const l of lightnessScale) {
 			const newColor = baseHsl.clone();
 			newColor.coords[2] = l * 100;
-			if (l > .8) newColor.coords[1] *= .4;
-			else if (l > .6) newColor.coords[1] *= .8;
-			else if (l < .3) newColor.coords[1] = Math.min(100, newColor.coords[1] * 1.1);
+			const s = newColor.coords[1] ?? 0;
+			if (l > .8) newColor.coords[1] = s * .4;
+			else if (l > .6) newColor.coords[1] = s * .8;
+			else if (l < .3) newColor.coords[1] = Math.min(100, s * 1.1);
 			colors.push(newColor.toString({ format: "hex" }).toUpperCase());
 		}
 		return colors;
@@ -5937,18 +5936,18 @@
 		for (let i = 1; i <= lightStepsCount; i++) {
 			const step = lightStepsCount - i;
 			const color = baseHsl.clone();
-			color.coords[2] += lightnessStep * (i - .5);
-			color.coords[0] += lightRotateStep * i;
-			color.coords[1] += lightSaturateStep * i;
+			color.coords[2] = (color.coords[2] ?? 0) + lightnessStep * (i - .5);
+			color.coords[0] = (color.coords[0] ?? 0) + lightRotateStep * i;
+			color.coords[1] = (color.coords[1] ?? 0) + lightSaturateStep * i;
 			palette[step] = color.toString({ format: "hex" });
 		}
 		palette[5] = baseHsl.clone().toString({ format: "hex" });
 		for (let i = 1; i <= darkStepsCount; i++) {
 			const step = lightStepsCount + i;
 			const color = baseHsl.clone();
-			color.coords[2] -= darknessStep * (i - .5);
-			color.coords[0] += darkRotateStep * i;
-			color.coords[1] += darkSaturateStep * i;
+			color.coords[2] = (color.coords[2] ?? 0) - darknessStep * (i - .5);
+			color.coords[0] = (color.coords[0] ?? 0) + darkRotateStep * i;
+			color.coords[1] = (color.coords[1] ?? 0) + darkSaturateStep * i;
 			palette[step] = color.toString({ format: "hex" });
 		}
 		return palette;
@@ -5959,7 +5958,7 @@
 	* @param {Color} baseColor - A `Color` instance for the base color.
 	*/
 	function gradientByMantine(baseColor) {
-		const [h, s, l] = baseColor.to("hsl").coords;
+		const [h, s, l] = baseColor.to("hsl").coords.map((c) => c ?? 0);
 		const palette = new Array(11);
 		palette[5] = baseColor.toString({ format: "hex" });
 		for (let i = 0; i < 5; i++) {
@@ -6615,10 +6614,7 @@
 			}
 		}
 		colorToHsv(color) {
-			const hsvColor = color.to("srgb").to("hsv");
-			let h = hsvColor.coords?.[0] || 0;
-			let s = hsvColor.coords?.[1] || 0;
-			let v = hsvColor.coords?.[2] || 0;
+			let [h, s, v] = color.to("srgb").to("hsv").coords.map((c) => c ?? 0);
 			if (Number.isNaN(h)) {
 				h = this.hsv.h || 0;
 				s = 0;
@@ -9029,6 +9025,26 @@
 		reflect: true
 	})], MovDropdownItem.prototype, "selected", void 0);
 	MovDropdownItem = __decorate([t$1("mov-dropdown-item")], MovDropdownItem);
+	var MovDivider = class MovDivider extends i$1 {
+		static {
+			this.styles = i$3`
+    :host {
+      display: block;
+    }
+    .divider {
+      border-top: 1px solid var(--theme-border-color, #ccc);
+      margin: 4px 0;
+    }
+  `;
+		}
+		render() {
+			return b$1`<div
+      class="divider"
+      role="separator"
+    ></div>`;
+		}
+	};
+	MovDivider = __decorate([t$1("mov-divider")], MovDivider);
 	//#endregion
 	//#region node_modules/@gerhobbelt/keyscss/keys.css?inline
 	var keys_default = "/**\r\n * KEYS.css\r\n *\r\n * A simple stylesheet for rendering beautiful keyboard-style elements.\r\n *\r\n * Author:  Michael Hüneburg\r\n * Website: http://michaelhue.com/keyscss\r\n * License: MIT License (see LICENSE.txt)\r\n */\r\n\r\nkbd,\r\n.key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: \"Lucida Grande\", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #505050;\r\n  background-color: gradient(linear, left top, left bottom, from(#3c3c3c), to(#505050));\r\n  color: #fafafa;\r\n  text-shadow: -1px -1px 0 #464646;\r\n  -webkit-box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n          box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n  font-size: .85em;\r\n  line-height: 1;\r\n  cursor: default;\r\n  -webkit-user-select: none;\r\n     -moz-user-select: none;\r\n      -ms-user-select: none;\r\n          user-select: none;\r\n}\r\nkbd[title],\r\n.key[title] {\r\n  cursor: help;\r\n}\r\nkbd.dark,\r\n.dark-keys kbd,\r\n.key.dark,\r\n.dark-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: \"Lucida Grande\", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #505050;\r\n  background-color: gradient(linear, left top, left bottom, from(#3c3c3c), to(#505050));\r\n  color: #fafafa;\r\n  text-shadow: -1px -1px 0 #464646;\r\n  -webkit-box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n          box-shadow: inset 0 0 1px #969696, inset 0 -0.05em 0.4em #505050, 0 0.1em 0 #1e1e1e, 0 0.1em 0.1em rgba(0, 0, 0, 0.3);\r\n}\r\nkbd.light,\r\n.light-keys kbd,\r\n.key.light,\r\n.light-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: \"Lucida Grande\", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  background-color: #fafafa;\r\n  background-color: gradient(linear, left top, left bottom, from(#d2d2d2), to(#ffffff));\r\n  color: #323232;\r\n  text-shadow: 0 0 2px #ffffff;\r\n  -webkit-box-shadow: inset 0 0 1px #ffffff, inset 0 0 0.4em #c8c8c8, 0 0.1em 0 #828282, 0 0.11em 0 rgba(0, 0, 0, 0.4), 0 0.1em 0.11em rgba(0, 0, 0, 0.9);\r\n          box-shadow: inset 0 0 1px #ffffff, inset 0 0 0.4em #c8c8c8, 0 0.1em 0 #828282, 0 0.11em 0 rgba(0, 0, 0, 0.4), 0 0.1em 0.11em rgba(0, 0, 0, 0.9);\r\n}\r\nkbd.so,\r\n.so-keys kbd,\r\n.key.so,\r\n.so-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: \"Lucida Grande\", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  margin: 0 .1em;\r\n  padding: .1em .6em;\r\n  font-family: Arial, \"Helvetica Neue\", Helvetica, sans-serif;\r\n  line-height: 1.4;\r\n  color: #242729;\r\n  text-shadow: 0 1px 0 #FFF;\r\n  background-color: #e1e3e5;\r\n  border: 1px solid #adb3b9;\r\n  border-radius: 0.27272727em;\r\n  -webkit-box-shadow: 0 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #FFF inset;\r\n          box-shadow: 0 1px 0 rgba(12, 13, 14, 0.2), 0 0 0 2px #FFF inset;\r\n}\r\nkbd.github,\r\n.github-keys kbd,\r\n.key.github,\r\n.github-keys .key {\r\n  display: inline;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  min-width: 1em;\r\n  padding: .3em .4em .2em .3em;\r\n  font-style: normal;\r\n  font-family: \"Lucida Grande\", Lucida, Arial, sans-serif;\r\n  text-align: center;\r\n  text-decoration: none;\r\n  border-radius: .3em;\r\n  border: none;\r\n  padding: 0.27272727em 0.45454545em;\r\n  font-size: 68.75%;\r\n  line-height: 0.90909091;\r\n  color: #444d56;\r\n  vertical-align: middle;\r\n  background-color: #fafbfc;\r\n  border: solid 1px #c6cbd1;\r\n  border-bottom-color: #959da5;\r\n  border-radius: 0.27272727em;\r\n  -webkit-box-shadow: inset 0 -1px 0 #959da5;\r\n          box-shadow: inset 0 -1px 0 #959da5;\r\n  font-family: \"SFMono-Regular\", Consolas, \"Liberation Mono\", Menlo, Courier, monospace;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  text-shadow: none;\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImtleXMuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztFQUVFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb0JBQW9CO0VBQ3BCLGVBQWU7RUFDZiw2QkFBNkI7RUFDN0IsbUJBQW1CO0VBQ25CLHdEQUF3RDtFQUN4RCxtQkFBbUI7RUFDbkIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixhQUFhO0VBQ2IsMEJBQTBCO0VBQzFCLHNGQUFzRjtFQUN0RixlQUFlO0VBQ2YsaUNBQWlDO0VBQ2pDLDhIQUFzSDtVQUF0SCxzSEFBc0g7RUFDdEgsaUJBQWlCO0VBQ2pCLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsMEJBQWtCO0tBQWxCLHVCQUFrQjtNQUFsQixzQkFBa0I7VUFBbEIsa0JBQWtCO0NBQ25CO0FBQ0Q7O0VBRUUsYUFBYTtDQUNkO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLDBCQUEwQjtFQUMxQixzRkFBc0Y7RUFDdEYsZUFBZTtFQUNmLGlDQUFpQztFQUNqQyw4SEFBc0g7VUFBdEgsc0hBQXNIO0NBQ3ZIO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLDBCQUEwQjtFQUMxQixzRkFBc0Y7RUFDdEYsZUFBZTtFQUNmLDZCQUE2QjtFQUM3Qix3SkFBZ0o7VUFBaEosZ0pBQWdKO0NBQ2pKO0FBQ0Q7Ozs7RUFJRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixlQUFlO0VBQ2YsNkJBQTZCO0VBQzdCLG1CQUFtQjtFQUNuQix3REFBd0Q7RUFDeEQsbUJBQW1CO0VBQ25CLHNCQUFzQjtFQUN0QixvQkFBb0I7RUFDcEIsYUFBYTtFQUNiLGVBQWU7RUFDZixtQkFBbUI7RUFDbkIsNERBQTREO0VBQzVELGlCQUFpQjtFQUNqQixlQUFlO0VBQ2YsMEJBQTBCO0VBQzFCLDBCQUEwQjtFQUMxQiwwQkFBMEI7RUFDMUIsNEJBQTRCO0VBQzVCLHdFQUFnRTtVQUFoRSxnRUFBZ0U7Q0FDakU7QUFDRDs7OztFQUlFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb0JBQW9CO0VBQ3BCLGVBQWU7RUFDZiw2QkFBNkI7RUFDN0IsbUJBQW1CO0VBQ25CLHdEQUF3RDtFQUN4RCxtQkFBbUI7RUFDbkIsc0JBQXNCO0VBQ3RCLG9CQUFvQjtFQUNwQixhQUFhO0VBQ2IsbUNBQW1DO0VBQ25DLGtCQUFrQjtFQUNsQix3QkFBd0I7RUFDeEIsZUFBZTtFQUNmLHVCQUF1QjtFQUN2QiwwQkFBMEI7RUFDMUIsMEJBQTBCO0VBQzFCLDZCQUE2QjtFQUM3Qiw0QkFBNEI7RUFDNUIsMkNBQW1DO1VBQW5DLG1DQUFtQztFQUNuQyxzRkFBc0Y7RUFDdEYsK0JBQXVCO1VBQXZCLHVCQUF1QjtFQUN2QixrQkFBa0I7Q0FDbkIiLCJmaWxlIjoidG1wMi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJrYmQsXG4ua2V5IHtcbiAgZGlzcGxheTogaW5saW5lO1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIHdoaXRlLXNwYWNlOiBub3dyYXA7XG4gIG1pbi13aWR0aDogMWVtO1xuICBwYWRkaW5nOiAuM2VtIC40ZW0gLjJlbSAuM2VtO1xuICBmb250LXN0eWxlOiBub3JtYWw7XG4gIGZvbnQtZmFtaWx5OiBcIkx1Y2lkYSBHcmFuZGVcIiwgTHVjaWRhLCBBcmlhbCwgc2Fucy1zZXJpZjtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIGJvcmRlci1yYWRpdXM6IC4zZW07XG4gIGJvcmRlcjogbm9uZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzUwNTA1MDtcbiAgYmFja2dyb3VuZC1jb2xvcjogZ3JhZGllbnQobGluZWFyLCBsZWZ0IHRvcCwgbGVmdCBib3R0b20sIGZyb20oIzNjM2MzYyksIHRvKCM1MDUwNTApKTtcbiAgY29sb3I6ICNmYWZhZmE7XG4gIHRleHQtc2hhZG93OiAtMXB4IC0xcHggMCAjNDY0NjQ2O1xuICBib3gtc2hhZG93OiBpbnNldCAwIDAgMXB4ICM5Njk2OTYsIGluc2V0IDAgLTAuMDVlbSAwLjRlbSAjNTA1MDUwLCAwIDAuMWVtIDAgIzFlMWUxZSwgMCAwLjFlbSAwLjFlbSByZ2JhKDAsIDAsIDAsIDAuMyk7XG4gIGZvbnQtc2l6ZTogLjg1ZW07XG4gIGxpbmUtaGVpZ2h0OiAxO1xuICBjdXJzb3I6IGRlZmF1bHQ7XG4gIHVzZXItc2VsZWN0OiBub25lO1xufVxua2JkW3RpdGxlXSxcbi5rZXlbdGl0bGVdIHtcbiAgY3Vyc29yOiBoZWxwO1xufVxua2JkLmRhcmssXG4uZGFyay1rZXlzIGtiZCxcbi5rZXkuZGFyayxcbi5kYXJrLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIGJhY2tncm91bmQtY29sb3I6ICM1MDUwNTA7XG4gIGJhY2tncm91bmQtY29sb3I6IGdyYWRpZW50KGxpbmVhciwgbGVmdCB0b3AsIGxlZnQgYm90dG9tLCBmcm9tKCMzYzNjM2MpLCB0bygjNTA1MDUwKSk7XG4gIGNvbG9yOiAjZmFmYWZhO1xuICB0ZXh0LXNoYWRvdzogLTFweCAtMXB4IDAgIzQ2NDY0NjtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAwIDFweCAjOTY5Njk2LCBpbnNldCAwIC0wLjA1ZW0gMC40ZW0gIzUwNTA1MCwgMCAwLjFlbSAwICMxZTFlMWUsIDAgMC4xZW0gMC4xZW0gcmdiYSgwLCAwLCAwLCAwLjMpO1xufVxua2JkLmxpZ2h0LFxuLmxpZ2h0LWtleXMga2JkLFxuLmtleS5saWdodCxcbi5saWdodC1rZXlzIC5rZXkge1xuICBkaXNwbGF5OiBpbmxpbmU7XG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcbiAgbWluLXdpZHRoOiAxZW07XG4gIHBhZGRpbmc6IC4zZW0gLjRlbSAuMmVtIC4zZW07XG4gIGZvbnQtc3R5bGU6IG5vcm1hbDtcbiAgZm9udC1mYW1pbHk6IFwiTHVjaWRhIEdyYW5kZVwiLCBMdWNpZGEsIEFyaWFsLCBzYW5zLXNlcmlmO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgYm9yZGVyLXJhZGl1czogLjNlbTtcbiAgYm9yZGVyOiBub25lO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmFmYWZhO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiBncmFkaWVudChsaW5lYXIsIGxlZnQgdG9wLCBsZWZ0IGJvdHRvbSwgZnJvbSgjZDJkMmQyKSwgdG8oI2ZmZmZmZikpO1xuICBjb2xvcjogIzMyMzIzMjtcbiAgdGV4dC1zaGFkb3c6IDAgMCAycHggI2ZmZmZmZjtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAwIDFweCAjZmZmZmZmLCBpbnNldCAwIDAgMC40ZW0gI2M4YzhjOCwgMCAwLjFlbSAwICM4MjgyODIsIDAgMC4xMWVtIDAgcmdiYSgwLCAwLCAwLCAwLjQpLCAwIDAuMWVtIDAuMTFlbSByZ2JhKDAsIDAsIDAsIDAuOSk7XG59XG5rYmQuc28sXG4uc28ta2V5cyBrYmQsXG4ua2V5LnNvLFxuLnNvLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIG1hcmdpbjogMCAuMWVtO1xuICBwYWRkaW5nOiAuMWVtIC42ZW07XG4gIGZvbnQtZmFtaWx5OiBBcmlhbCwgXCJIZWx2ZXRpY2EgTmV1ZVwiLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7XG4gIGxpbmUtaGVpZ2h0OiAxLjQ7XG4gIGNvbG9yOiAjMjQyNzI5O1xuICB0ZXh0LXNoYWRvdzogMCAxcHggMCAjRkZGO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZTFlM2U1O1xuICBib3JkZXI6IDFweCBzb2xpZCAjYWRiM2I5O1xuICBib3JkZXItcmFkaXVzOiAwLjI3MjcyNzI3ZW07XG4gIGJveC1zaGFkb3c6IDAgMXB4IDAgcmdiYSgxMiwgMTMsIDE0LCAwLjIpLCAwIDAgMCAycHggI0ZGRiBpbnNldDtcbn1cbmtiZC5naXRodWIsXG4uZ2l0aHViLWtleXMga2JkLFxuLmtleS5naXRodWIsXG4uZ2l0aHViLWtleXMgLmtleSB7XG4gIGRpc3BsYXk6IGlubGluZTtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBtaW4td2lkdGg6IDFlbTtcbiAgcGFkZGluZzogLjNlbSAuNGVtIC4yZW0gLjNlbTtcbiAgZm9udC1zdHlsZTogbm9ybWFsO1xuICBmb250LWZhbWlseTogXCJMdWNpZGEgR3JhbmRlXCIsIEx1Y2lkYSwgQXJpYWwsIHNhbnMtc2VyaWY7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICBib3JkZXItcmFkaXVzOiAuM2VtO1xuICBib3JkZXI6IG5vbmU7XG4gIHBhZGRpbmc6IDAuMjcyNzI3MjdlbSAwLjQ1NDU0NTQ1ZW07XG4gIGZvbnQtc2l6ZTogNjguNzUlO1xuICBsaW5lLWhlaWdodDogMC45MDkwOTA5MTtcbiAgY29sb3I6ICM0NDRkNTY7XG4gIHZlcnRpY2FsLWFsaWduOiBtaWRkbGU7XG4gIGJhY2tncm91bmQtY29sb3I6ICNmYWZiZmM7XG4gIGJvcmRlcjogc29saWQgMXB4ICNjNmNiZDE7XG4gIGJvcmRlci1ib3R0b20tY29sb3I6ICM5NTlkYTU7XG4gIGJvcmRlci1yYWRpdXM6IDAuMjcyNzI3MjdlbTtcbiAgYm94LXNoYWRvdzogaW5zZXQgMCAtMXB4IDAgIzk1OWRhNTtcbiAgZm9udC1mYW1pbHk6IFwiU0ZNb25vLVJlZ3VsYXJcIiwgQ29uc29sYXMsIFwiTGliZXJhdGlvbiBNb25vXCIsIE1lbmxvLCBDb3VyaWVyLCBtb25vc3BhY2U7XG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gIHRleHQtc2hhZG93OiBub25lO1xufVxuIl19 */";
@@ -9575,17 +9591,6 @@
               ${getLocaleString("KEYBINDINGS")}
             </mov-dropdown-item>
             <mov-dropdown-item
-              id="AutoScroll"
-              class="${e({ running: getAppStateValue("autoScroll") })}"
-              @click=${toggleAutoScroll}
-            >
-              <mov-icon
-                slot="icon"
-                name="${getAppStateValue("autoScroll") ? "IconPlayerPause" : "IconPlayerPlay"}"
-              ></mov-icon>
-              ${getLocaleString("SCROLL_START")} ${renderKeybind("SCROLL_START")}
-            </mov-dropdown-item>
-            <mov-dropdown-item
               id="bookmarks"
               class="tablets"
               @click=${buttonBookmarksOpen}
@@ -9595,6 +9600,18 @@
                 name="IconBookmarks"
               ></mov-icon>
               ${getLocaleString("BOOKMARKS")}
+            </mov-dropdown-item>
+            <mov-divider></mov-divider>
+            <mov-dropdown-item
+              id="AutoScroll"
+              class="${e({ running: getAppStateValue("autoScroll") })}"
+              @click=${toggleAutoScroll}
+            >
+              <mov-icon
+                slot="icon"
+                name="${getAppStateValue("autoScroll") ? "IconPlayerPause" : "IconPlayerPlay"}"
+              ></mov-icon>
+              ${getLocaleString("SCROLL_START")} ${renderKeybind("SCROLL_START")}
             </mov-dropdown-item>
             <mov-dropdown-item
               id="pageControls"
@@ -9647,6 +9664,7 @@
               ></mov-icon>
               ${getLocaleString("VIEW_MODE_VERTICAL")} ${renderKeybind("VIEW_MODE_VERTICAL")}
             </mov-dropdown-item>
+            <mov-divider></mov-divider>
             <mov-dropdown-item
               id="ltrMode"
               @click="${updateViewMode("FluidLTR")}"
@@ -9669,6 +9687,7 @@
               ></mov-icon>
               ${getLocaleString("VIEW_MODE_RIGHT")} ${renderKeybind("VIEW_MODE_RIGHT")}
             </mov-dropdown-item>
+            <mov-divider></mov-divider>
             <mov-dropdown-item
               id="BookMode"
               @click="${updateViewMode("Book")}"
@@ -9735,6 +9754,7 @@
               ></mov-icon>
               ${getLocaleString("REDUCE")} ${renderKeybind("REDUCE")}
             </mov-dropdown-item>
+            <mov-divider></mov-divider>
             <mov-dropdown-item
               id="fitWidth"
               @click="${changeGlobalZoom("width")}"
@@ -10149,7 +10169,11 @@
 				bottom: this.mode === "bottom",
 				hiding: this.isHiding
 			};
-			const loaded = _.countBy(getAppStateValue("images"), "status").loaded || 0;
+			const images = getAppStateValue("images") || {};
+			const loaded = _.keys(images).filter((key) => {
+				const idx = parseInt(key, 10);
+				return idx >= (manga?.begin ?? 1) && idx <= (manga?.pages ?? 1) && images[idx]?.status === "loaded";
+			}).length;
 			return b$1`
       <nav
         id="Navigation"
@@ -11053,7 +11077,7 @@
 			});
 		} else logScript("No Loading Method Found");
 		appState.listen((value, oldValue, changedKey) => {
-			if (changedKey === "currentPage" && value.currentPage > oldValue.currentPage) for (let i = value.currentPage; i < value.currentPage + 5; i++) {
+			if (changedKey === "currentPage" && value.currentPage > oldValue.currentPage) for (let i = value.currentPage; i < Math.min(value.currentPage + 5, manga.pages + 1); i++) {
 				if (value.images?.[i]?.src !== void 0) continue;
 				if (isImagesManga(manga)) addImg(manga, i, manga.listImages[i - 1]);
 				else if (isPagesManga(manga)) addPage(manga, i, manga.listPages[i - 1]);
@@ -11228,8 +11252,13 @@
 			status: "loaded",
 			doublePage: img.naturalWidth > img.naturalHeight
 		}));
-		const total = getAppStateValue("manga")?.pages ?? 1;
-		const loaded = _.countBy(getAppStateValue("images"), "status").loaded || 0;
+		const manga = getAppStateValue("manga");
+		const images = getAppStateValue("images") || {};
+		const loaded = _.keys(images).filter((key) => {
+			const idx = parseInt(key, 10);
+			return idx >= (manga?.begin ?? 1) && idx <= (manga?.pages ?? 1) && images[idx]?.status === "loaded";
+		}).length;
+		const total = (manga?.pages ?? 1) - ((manga?.begin ?? 1) - 1);
 		const percentage = Math.floor(loaded / total * 100);
 		document.title = `(${percentage}%) ${getAppStateValue("manga")?.title}`;
 		NProgress.configure({ showSpinner: false }).set(loaded / total);
@@ -11825,7 +11854,7 @@
 		elements?.forEach(removeAllEventListeners);
 	};
 	//#endregion
-	//#region \0@oxc-project+runtime@0.120.0/helpers/taggedTemplateLiteral.js
+	//#region \0@oxc-project+runtime@0.122.0/helpers/taggedTemplateLiteral.js
 	function _taggedTemplateLiteral(e, t) {
 		return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } }));
 	}
