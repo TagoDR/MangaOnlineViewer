@@ -47,11 +47,63 @@ function scrollVertical(sign: 1 | -1) {
   });
 }
 
+function scrollBook(sign: 1 | -1) {
+  const currentPage = getAppStateValue('currentPage');
+  const manga = getAppStateValue('manga');
+  if (!manga) return;
+  const images = getAppStateValue('images') ?? {};
+  const begin = manga.begin ?? 1;
+  const pages = manga.pages ?? 1;
+
+  const isStartOfRow = (index: number) => {
+    if (index < begin || index > pages) return false;
+    if (images[index]?.doublePage) return true;
+    let singlePageCount = 0;
+    for (let i = index - 1; i >= begin; i--) {
+      if (images[i]?.doublePage) break;
+      singlePageCount++;
+    }
+    return singlePageCount % 2 === 0;
+  };
+
+  let target: number;
+  if (sign === 1) {
+    target = currentPage + 1;
+    while (target <= pages && !isStartOfRow(target)) {
+      target++;
+    }
+  } else {
+    // If we are NOT at the start of a row, go to the start of the CURRENT row first.
+    // If we ARE at the start of a row, go to the start of the PREVIOUS row.
+    if (!isStartOfRow(currentPage)) {
+      target = currentPage;
+      while (target > begin && !isStartOfRow(target)) {
+        target--;
+      }
+    } else {
+      target = currentPage - 1;
+      while (target > begin && !isStartOfRow(target)) {
+        target--;
+      }
+    }
+  }
+
+  if (target < begin) {
+    setAppStateValue('scrollToPage', 0);
+  } else if (target > pages) {
+    setAppStateValue('scrollToPage', pages);
+  } else {
+    setAppStateValue('scrollToPage', target);
+  }
+}
+
 function doScrolling(sign: 1 | -1) {
   const viewMode = getSettingsValue('viewMode');
   const zoomMode = getSettingsValue('zoomMode');
   logScript('Scrolling view', viewMode, 'zoom', zoomMode, 'sign', sign);
-  if (viewMode.startsWith('Fluid')) {
+  if (viewMode.match(/^(Book|Manga)$/) && zoomMode === 'height') {
+    scrollBook(sign);
+  } else if (viewMode.startsWith('Fluid')) {
     scrollFluid(sign);
   } else if (zoomMode === 'height') {
     scrollPage(sign);

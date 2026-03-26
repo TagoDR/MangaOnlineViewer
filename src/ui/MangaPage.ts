@@ -49,17 +49,14 @@ import {
  */
 function getImageStyle(index: number): StyleInfo {
   const image = getAppStateValue('images')?.[index];
-  let maxHeight: string | undefined;
-  if (getSettingsValue('viewMode').startsWith('Fluid')) {
-    maxHeight = `${window.innerHeight + (getSettingsValue('navbar') === 'bottom' ? -navbarSize : 0)}px`;
-  } else {
-    maxHeight = undefined;
-  }
+  const isBook = getSettingsValue('viewMode').match(/^(Book|Manga)$/);
+  const isFluid = getSettingsValue('viewMode').startsWith('Fluid');
+  const withNavbar = getSettingsValue('navbar') === 'bottom';
   return {
     width: image?.width ? `${image.width}px` : 'auto',
     height: image?.height ? `${image.height}px` : 'auto',
-    'max-height': maxHeight,
-    'min-width': `${getSettingsValue('minZoom')}vw`,
+    'max-height': isFluid ? `${window.innerHeight + (withNavbar ? -navbarSize : 0)}px` : undefined,
+    'min-width': !isBook ? `${getSettingsValue('minZoom')}vw` : undefined,
   };
 }
 

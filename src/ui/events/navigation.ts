@@ -13,10 +13,26 @@ import {
  * @param {HTMLElement | undefined | null} ele - The element to scroll into view.
  */
 function scrollToElement(ele: HTMLElement | undefined | null) {
-  if (getSettingsValue('viewMode').startsWith('Fluid')) {
-    getAppStateValue('chapter').value?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
+  if (!ele) return;
+  const viewMode = getSettingsValue('viewMode');
+  if (viewMode.startsWith('Fluid')) {
+    const container = getAppStateValue('chapter').value;
+    if (container) {
+      const rect = ele.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      container.scrollBy({
+        left: rect.left - containerRect.left,
+        top: rect.top - containerRect.top,
+        behavior: 'instant',
+      });
+    }
   } else {
-    window?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
+    const rect = ele.getBoundingClientRect();
+    window.scrollTo({
+      top: rect.top + window.scrollY,
+      left: rect.left + window.scrollX,
+      behavior: 'instant',
+    });
   }
 }
 
