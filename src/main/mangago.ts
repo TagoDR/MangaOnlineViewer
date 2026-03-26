@@ -12,7 +12,7 @@ const mangago: ISite = {
     const key = CryptoJS.enc.Hex.parse('e11adc3949ba59abbe56e057f20f883e');
     const iv = CryptoJS.enc.Hex.parse('1234567890abcdef1234567890abcdef');
     const opinion = { iv, padding: CryptoJS.pad.ZeroPadding };
-    const images = CryptoJS.AES.decrypt(unsafeWindow.imgsrcs, key, opinion)
+    const images: string[] = CryptoJS.AES.decrypt(unsafeWindow.imgsrcs, key, opinion)
       .toString(CryptoJS.enc.Utf8)
       .split(',');
     return {
@@ -23,7 +23,7 @@ const mangago: ISite = {
       next: unsafeWindow.next_c_url,
       listImages: images,
       before() {
-        if (images.some(s => s === '')) {
+        if (images.some((s: string) => s === '')) {
           document.querySelector<HTMLFormElement>('#nform')?.submit();
         }
       },

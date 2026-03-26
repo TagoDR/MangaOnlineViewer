@@ -402,10 +402,7 @@ class ColorPicker extends LitElement {
   private colorToHsv(color: Color): { h: number; s: number; v: number } {
     const srgbColor = color.to('srgb');
     const hsvColor = srgbColor.to('hsv');
-    let h = hsvColor.coords?.[0] || 0;
-    let s = hsvColor.coords?.[1] || 0;
-    let v = hsvColor.coords?.[2] || 0;
-
+    let [h, s, v] = hsvColor.coords.map(c => c ?? 0);
     if (Number.isNaN(h)) {
       h = this.hsv.h || 0;
       s = 0;

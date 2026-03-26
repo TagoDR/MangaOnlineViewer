@@ -4,7 +4,6 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "esModuleInterop": false,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
@@ -26,6 +25,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "ESNext",
+    "types": ["node", "tampermonkey"],
     "useDefineForClassFields": false
   },
   "include": ["**/*.ts"]

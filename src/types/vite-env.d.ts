@@ -14,3 +14,9 @@ declare let unsafeWindow: Window & { [key: string]: any };
  * a common practice for scripts needing to share data or functions globally.
  */
 declare let window: Window & { [key: string]: any };
+
+/**
+ * Declares the `CryptoJS` global variable, often used for cryptographic operations
+ * in userscripts or provided by external libraries like CryptoJS.
+ */
+declare let CryptoJS: any;

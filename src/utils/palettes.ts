@@ -11,9 +11,7 @@ import { sample } from './colors.ts';
  */
 function gradientBySteps(baseColor: Color): string[] {
   const baseOklch = baseColor.to('oklch');
-  const hue = baseOklch.coords[2];
-  const chroma = baseOklch.coords[1];
-  const originalLightness = baseOklch.coords[0];
+  const [originalLightness, chroma, hue] = baseOklch.coords.map(c => c ?? 0);
 
   const lightnessSteps = [0.95, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.05];
   const palette = lightnessSteps.map(l =>
@@ -53,12 +51,13 @@ function gradientBySaturation(baseColor: Color): string[] {
     const newColor = baseHsl.clone();
     newColor.coords[2] = l * 100;
 
+    const s = newColor.coords[1] ?? 0;
     if (l > 0.8) {
-      newColor.coords[1] *= 0.4;
+      newColor.coords[1] = s * 0.4;
     } else if (l > 0.6) {
-      newColor.coords[1] *= 0.8;
+      newColor.coords[1] = s * 0.8;
     } else if (l < 0.3) {
-      newColor.coords[1] = Math.min(100, newColor.coords[1] * 1.1);
+      newColor.coords[1] = Math.min(100, s * 1.1);
     }
 
     colors.push(newColor.toString({ format: 'hex' }).toUpperCase());
@@ -113,9 +112,9 @@ export function gradientByChakra(baseColor: Color): string[] {
   for (let i = 1; i <= lightStepsCount; i++) {
     const step = lightStepsCount - i;
     const color = baseHsl.clone();
-    color.coords[2] += lightnessStep * (i - 0.5);
-    color.coords[0] += lightRotateStep * i;
-    color.coords[1] += lightSaturateStep * i;
+    color.coords[2] = (color.coords[2] ?? 0) + lightnessStep * (i - 0.5);
+    color.coords[0] = (color.coords[0] ?? 0) + lightRotateStep * i;
+    color.coords[1] = (color.coords[1] ?? 0) + lightSaturateStep * i;
     palette[step] = color.toString({ format: 'hex' });
   }
 
@@ -126,9 +125,9 @@ export function gradientByChakra(baseColor: Color): string[] {
   for (let i = 1; i <= darkStepsCount; i++) {
     const step = lightStepsCount + i;
     const color = baseHsl.clone();
-    color.coords[2] -= darknessStep * (i - 0.5);
-    color.coords[0] += darkRotateStep * i;
-    color.coords[1] += darkSaturateStep * i;
+    color.coords[2] = (color.coords[2] ?? 0) - darknessStep * (i - 0.5);
+    color.coords[0] = (color.coords[0] ?? 0) + darkRotateStep * i;
+    color.coords[1] = (color.coords[1] ?? 0) + darkSaturateStep * i;
     palette[step] = color.toString({ format: 'hex' });
   }
   return palette;
@@ -141,7 +140,7 @@ export function gradientByChakra(baseColor: Color): string[] {
  */
 export function gradientByMantine(baseColor: Color): string[] {
   const baseHsl = baseColor.to('hsl');
-  const [h, s, l] = baseHsl.coords;
+  const [h, s, l] = baseHsl.coords.map(c => c ?? 0);
   const palette: string[] = new Array(11);
 
   // Base color at index 5
