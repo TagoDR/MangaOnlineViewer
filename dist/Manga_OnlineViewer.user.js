@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.03.26.build-1610
+// @version       2026.03.26.build-2211
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -6455,8 +6455,26 @@
 	* @param {HTMLElement | undefined | null} ele - The element to scroll into view.
 	*/
 	function scrollToElement(ele) {
-		if (getSettingsValue("viewMode").startsWith("Fluid")) getAppStateValue("chapter").value?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
-		else window?.scroll(ele?.offsetLeft ?? 0, ele?.offsetTop ?? 0);
+		if (!ele) return;
+		if (getSettingsValue("viewMode").startsWith("Fluid")) {
+			const container = getAppStateValue("chapter").value;
+			if (container) {
+				const rect = ele.getBoundingClientRect();
+				const containerRect = container.getBoundingClientRect();
+				container.scrollBy({
+					left: rect.left - containerRect.left,
+					top: rect.top - containerRect.top,
+					behavior: "instant"
+				});
+			}
+		} else {
+			const rect = ele.getBoundingClientRect();
+			window.scrollTo({
+				top: rect.top + window.scrollY,
+				left: rect.left + window.scrollX,
+				behavior: "instant"
+			});
+		}
 	}
 	/**
 	* Listens for changes to the `scrollToPage` app state value.
@@ -7249,11 +7267,44 @@
 			behavior: "smooth"
 		});
 	}
+	function scrollBook(sign) {
+		const currentPage = getAppStateValue("currentPage");
+		const manga = getAppStateValue("manga");
+		if (!manga) return;
+		const images = getAppStateValue("images") ?? {};
+		const begin = manga.begin ?? 1;
+		const pages = manga.pages ?? 1;
+		const isStartOfRow = (index) => {
+			if (index < begin || index > pages) return false;
+			if (images[index]?.doublePage) return true;
+			let singlePageCount = 0;
+			for (let i = index - 1; i >= begin; i--) {
+				if (images[i]?.doublePage) break;
+				singlePageCount++;
+			}
+			return singlePageCount % 2 === 0;
+		};
+		let target;
+		if (sign === 1) {
+			target = currentPage + 1;
+			while (target <= pages && !isStartOfRow(target)) target++;
+		} else if (!isStartOfRow(currentPage)) {
+			target = currentPage;
+			while (target > begin && !isStartOfRow(target)) target--;
+		} else {
+			target = currentPage - 1;
+			while (target > begin && !isStartOfRow(target)) target--;
+		}
+		if (target < begin) setAppStateValue("scrollToPage", 0);
+		else if (target > pages) setAppStateValue("scrollToPage", pages);
+		else setAppStateValue("scrollToPage", target);
+	}
 	function doScrolling(sign) {
 		const viewMode = getSettingsValue("viewMode");
 		const zoomMode = getSettingsValue("zoomMode");
 		logScript("Scrolling view", viewMode, "zoom", zoomMode, "sign", sign);
-		if (viewMode.startsWith("Fluid")) scrollFluid(sign);
+		if (viewMode.match(/^(Book|Manga)$/) && zoomMode === "height") scrollBook(sign);
+		else if (viewMode.startsWith("Fluid")) scrollFluid(sign);
 		else if (zoomMode === "height") scrollPage(sign);
 		else scrollVertical(sign);
 	}
@@ -10400,14 +10451,14 @@
 	*/
 	function getImageStyle(index) {
 		const image = getAppStateValue("images")?.[index];
-		let maxHeight;
-		if (getSettingsValue("viewMode").startsWith("Fluid")) maxHeight = `${window.innerHeight + (getSettingsValue("navbar") === "bottom" ? -34 : 0)}px`;
-		else maxHeight = void 0;
+		const isBook = getSettingsValue("viewMode").match(/^(Book|Manga)$/);
+		const isFluid = getSettingsValue("viewMode").startsWith("Fluid");
+		const withNavbar = getSettingsValue("navbar") === "bottom";
 		return {
 			width: image?.width ? `${image.width}px` : "auto",
 			height: image?.height ? `${image.height}px` : "auto",
-			"max-height": maxHeight,
-			"min-width": `${getSettingsValue("minZoom")}vw`
+			"max-height": isFluid ? `${window.innerHeight + (withNavbar ? -34 : 0)}px` : void 0,
+			"min-width": !isBook ? `${getSettingsValue("minZoom")}vw` : void 0
 		};
 	}
 	/**
