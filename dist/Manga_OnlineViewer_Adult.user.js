@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.xxx, lhentai, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.03.26.build-2211
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2026.03.30.build-0117
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -53,7 +53,7 @@
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/
-// @include       /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/
+// @include       /https?:\/\/(www\.)?(nhentai).(net|xxx|com|to)\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?9hentai.(so)\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?porncomicshd.com\/es.*/
 // @include       /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/
@@ -1059,30 +1059,21 @@
 			}
 		},
 		{
-			name: [
-				"nHentai.net",
-				"nHentai.xxx",
-				"lhentai"
-			],
-			url: /https?:\/\/(www\.)?(nhentai|lhentai).(net|xxx|com|to)\/g\/.+\/.+/,
-			homepage: [
-				"https://nhentai.net/",
-				"https://nhentai.xxx/",
-				"https://lhentai.com/"
-			],
+			name: ["nHentai.net"],
+			url: /https?:\/\/(www\.)?(nhentai).(net|xxx|com|to)\/g\/.+\/.+/,
+			homepage: ["https://nhentai.net/"],
 			language: [Language.ENGLISH],
 			category: Category.HENTAI,
-			run() {
-				const num = parseInt(document.querySelector(".num-pages")?.textContent ?? "", 10);
-				const src = document.querySelector("#image-container img")?.getAttribute("src")?.replace(/\d+.\w+$/, "");
-				const ext = unsafeWindow._gallery?.images?.pages?.map((i) => extensionByCode(i.t));
+			async run() {
+				const cdn = await fetch("https://nhentai.net/api/v2/config").then(async (res) => res.json());
+				const api = await fetch(`https://nhentai.net/api/v2/galleries/${window.location.pathname.split("/")[2]}`).then(async (res) => res.json());
 				return {
 					title: document.querySelector("title")?.textContent?.split("- Page")[0].trim(),
 					series: document.querySelector(".go-back")?.getAttribute("href"),
-					pages: num,
+					pages: api.pages.length,
 					prev: "#",
 					next: "#",
-					listImages: Array(num).fill(0).map((_, i) => `${src}${i + 1}.${ext[i]}`)
+					listImages: api.pages.map((img) => `${cdn.image_servers[Math.floor(Math.random() * cdn.image_servers.length)]}/${img.path}`)
 				};
 			}
 		},
@@ -6280,7 +6271,7 @@
 	/**
 	* An interactive color picker component that allows users to select a color.
 	*
-	* API is compatible with Web Awesome's wa-color-picker component and Webcomponents 3.0.0 standards.
+	* API is compatible with Web Awesome's wa-color-picker component (v3.3.1).
 	*
 	* @element mov-color-picker
 	* @fires input - Dispatched continuously while the color is changing.

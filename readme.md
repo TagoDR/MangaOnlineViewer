@@ -111,7 +111,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [Luscious](https://luscious.net/) _[English]_
 - [MultPorn](https://multporn.net/) _[English]_
 - [MyHentaiGallery](https://www.myhentaigallery.com) _[English]_
-- [nHentai.net](https://nhentai.net/) / [nHentai.xxx](https://nhentai.xxx/) / [lhentai](https://lhentai.com/) _[English]_
+- [nHentai.net](https://nhentai.net/) _[English]_
 - [9Hentai](https://9hentai.so) _[English]_
 - [Pururin](https://pururin.me/) _[English]_
 - [SchaleNetwork](https://schale.network/) _[English]_
