@@ -3,10 +3,11 @@ import { Category, type IManga, type ISite, Language } from '../types';
 
 const nhentainet: ISite = {
   name: ['nHentai.net'],
-  url: /https?:\/\/(www\.)?(nhentai).(net|xxx|com|to)\/g\/.+\/.+/,
+  url: /https?:\/\/(www\.)?(nhentai).(net|xxx|com|to)\/g\/.+/,
   homepage: ['https://nhentai.net/'],
   language: [Language.ENGLISH],
   category: Category.HENTAI,
+  waitEle: '#image-container img',
   async run(): Promise<IManga> {
     const cdn = await fetch('https://nhentai.net/api/v2/config').then(async res => res.json());
     const api = await fetch(
