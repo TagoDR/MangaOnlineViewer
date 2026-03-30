@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.03.30.build-0117
+// @version       2026.03.30.build-1933
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -53,7 +53,7 @@
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/
-// @include       /https?:\/\/(www\.)?(nhentai).(net|xxx|com|to)\/g\/.+\/.+/
+// @include       /https?:\/\/(www\.)?(nhentai).(net|xxx|com|to)\/g\/.+/
 // @include       /https?:\/\/(www\.)?9hentai.(so)\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?porncomicshd.com\/es.*/
 // @include       /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/
