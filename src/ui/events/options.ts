@@ -4,7 +4,7 @@ import {
   saveSettingsValue,
   toggleLocalSettings,
 } from '../../core/settings';
-import type { HeaderMode, LoadMode, NavbarMode, PaginationMode } from '../../types';
+import type { HeaderMode, LoadMode, LoadSpeed, NavbarMode, PaginationMode } from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
 
 import { showInfoDialog } from '../components/Dialog.ts';
@@ -106,13 +106,13 @@ export function changeLazyStart(event: Event) {
 }
 
 /**
- * Event handler to change and save the page loading speed (throttle timer). Shows a warning for high speeds.
- * @param {Event} event - The change event from the range input.
+ * Event handler to change and save the page loading speed. Shows a warning for high speeds.
+ * @param {Event} event - The change event from the select input.
  */
-export function changePagesPerSecond(event: Event) {
-  const timer = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  saveSettingsValue('throttlePageLoad', timer);
-  if (timer < 100) {
+export function changeLoadSpeed(event: Event) {
+  const speed = (event.currentTarget as HTMLInputElement).value as LoadSpeed;
+  saveSettingsValue('loadSpeed', speed);
+  if (['Extreme', 'All'].includes(speed)) {
     showInfoDialog({
       title: getLocaleString('SPEED_WARNING'),
       html: getLocaleString('SPEED_WARNING_MESSAGE'),

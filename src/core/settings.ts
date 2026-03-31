@@ -52,7 +52,7 @@ export const defaultSettings: ISettings = {
   pagination: 'disabled',
   scrollHeight: 25,
   theme: '#29487D',
-  throttlePageLoad: 1000,
+  loadSpeed: 'Extreme',
   viewMode: 'WebComic',
   zoomMode: 'percent',
   zoomStep: 30,

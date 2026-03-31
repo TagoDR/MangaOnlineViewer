@@ -15,6 +15,9 @@ import sequence from '../utils/sequence.ts';
 import { logScript, logScriptVerbose } from '../utils/tampermonkey.ts';
 import { waitForFunc } from '../utils/waitFor.ts';
 import { appState, changeImage, getAppStateValue, getSettingsValue } from './settings.ts';
+import { WorkerPool } from './WorkerPool.ts';
+
+let pool: WorkerPool;
 
 /**
  * Normalizes a URL by trimming whitespace and ensuring it starts with a protocol.
@@ -38,39 +41,30 @@ function normalizeUrl(url: string): string {
  * @param {IMangaImages | IMangaPages} manga - The manga object with image loading configurations.
  * @param {number} index - The page number of the image.
  * @param {string} imageSrc - The source URL of the image.
- * @param {number} [position=0] - The position in the loading sequence, used for throttling.
  */
-async function addImg(
-  manga: IMangaImages | IMangaPages,
-  index: number,
-  imageSrc: string,
-  position: number = 0,
-) {
+async function addImg(manga: IMangaImages | IMangaPages, index: number, imageSrc: string) {
   const image = getAppStateValue('images')?.[index];
   if (image?.status && image.status !== 'pending') return;
   changeImage(index, () => ({ status: 'loading' }));
-  setTimeout(
-    async () => {
-      let src = normalizeUrl(imageSrc);
-      let blob: Blob | undefined;
-      let status: PageStatus = 'loaded';
-      try {
-        const response = await fetch(src, (manga as IMangaImages).fetchOptions);
-        if (response.ok) {
-          blob = await response.blob();
-          src = await blobToDataURL(blob);
-        } else {
-          status = 'error';
-        }
-      } catch (e) {
-        logScript('Failed to fetch image', e);
+  pool.add(async () => {
+    let src = normalizeUrl(imageSrc);
+    let blob: Blob | undefined;
+    let status: PageStatus = 'loaded';
+    try {
+      const response = await fetch(src, (manga as IMangaImages).fetchOptions);
+      if (response.ok) {
+        blob = await response.blob();
+        src = await blobToDataURL(blob);
+      } else {
         status = 'error';
       }
-      changeImage(index, () => ({ src, blob, status }));
-      logScriptVerbose('Loaded Image:', index, 'Source:', src);
-    },
-    (manga.timer ?? getSettingsValue('throttlePageLoad')) * position,
-  );
+    } catch (e) {
+      logScript('Failed to fetch image', e);
+      status = 'error';
+    }
+    changeImage(index, () => ({ src, blob, status }));
+    logScriptVerbose('Loaded Image:', index, 'Source:', src);
+  });
   if (manga.pages === index) removeURLBookmark();
 }
 
@@ -79,30 +73,25 @@ async function addImg(
  * @param {IMangaPages} manga - The manga object with page loading configurations.
  * @param {number} index - The page number.
  * @param {string} pageUrl - The URL of the page containing the image.
- * @param {number} [position=0] - The position in the loading sequence, used for throttling.
  */
-async function addPage(manga: IMangaPages, index: number, pageUrl: string, position: number = 0) {
+async function addPage(manga: IMangaPages, index: number, pageUrl: string) {
   const image = getAppStateValue('images')?.[index];
   if (image?.status && image.status !== 'pending') return;
   changeImage(index, () => ({ status: 'loading' }));
-  setTimeout(
-    async () => {
-      try {
-        const imageSrc = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
-        if (imageSrc) {
-          changeImage(index, () => ({ status: 'pending' }));
-          await addImg(manga, index, imageSrc, 0);
-        } else {
-          changeImage(index, () => ({ status: 'error' }));
-        }
-      } catch (e) {
-        logScript('Failed to get page attribute', e);
+  pool.add(async () => {
+    try {
+      const imageSrc = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? 'src');
+      if (imageSrc) {
+        changeImage(index, () => ({ status: 'pending' }));
+        await addImg(manga, index, imageSrc);
+      } else {
         changeImage(index, () => ({ status: 'error' }));
       }
-    },
-    (manga.timer ?? getSettingsValue('throttlePageLoad')) * position,
-  );
-  if (manga.pages === position) removeURLBookmark();
+    } catch (e) {
+      logScript('Failed to get page attribute', e);
+      changeImage(index, () => ({ status: 'error' }));
+    }
+  });
 }
 
 /**
@@ -117,8 +106,8 @@ function loadMangaPages(begin: number, manga: IMangaPages) {
         !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
         position <= getSettingsValue('lazyStart'),
     )
-    .forEach((index, position) => {
-      addPage(manga, index, manga.listPages[index - 1], position);
+    .forEach(index => {
+      addPage(manga, index, manga.listPages[index - 1]);
     });
 }
 
@@ -134,8 +123,8 @@ function loadMangaImages(begin: number, manga: IMangaImages) {
         !(manga.lazy ?? getSettingsValue('lazyLoadImages')) ||
         position <= getSettingsValue('lazyStart'),
     )
-    .forEach((index, position) => {
-      addImg(manga, index, manga.listImages[index - 1], position);
+    .forEach(index => {
+      addImg(manga, index, manga.listImages[index - 1]);
     });
 }
 
@@ -149,10 +138,9 @@ export default async function loadImages() {
   await waitForFunc(() => getAppStateValue('manga') !== undefined);
   const manga = getAppStateValue('manga') as IManga;
   const begin = manga.begin ?? 1;
+  pool = new WorkerPool(getSettingsValue('loadSpeed'), manga.timer);
   logScriptVerbose('Loading Images');
-  logScriptVerbose(
-    `Intervals: ${manga.timer ?? getSettingsValue('throttlePageLoad') ?? 'Default(1000)'}`,
-  );
+  logScriptVerbose(`Speed: ${getSettingsValue('loadSpeed')}`);
   logScriptVerbose(
     `Lazy: ${manga.lazy ?? getSettingsValue('lazyLoadImages')}, Starting from: ${getSettingsValue('lazyStart')}`,
   );
@@ -180,7 +168,7 @@ export default async function loadImages() {
           lazyAttr,
         });
       },
-      wait: getSettingsValue('throttlePageLoad'),
+      wait: 0,
     });
   } else {
     logScript('No Loading Method Found');
@@ -190,7 +178,9 @@ export default async function loadImages() {
   appState.listen((value, oldValue, changedKey) => {
     if (changedKey === 'currentPage' && value.currentPage > oldValue.currentPage) {
       for (let i = value.currentPage; i < Math.min(value.currentPage + 5, manga.pages + 1); i++) {
-        if (value.images?.[i]?.src !== undefined) continue;
+        if (value.images?.[i]?.src !== undefined || value.images?.[i]?.status === 'loading') {
+          continue;
+        }
         if (isImagesManga(manga)) {
           addImg(manga, i, manga.listImages[i - 1]);
         } else if (isPagesManga(manga)) {
