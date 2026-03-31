@@ -33,6 +33,7 @@ export type ILocale = {
   VIEW_MODE_WEBCOMIC: string;
   VIEW_MODE_BOOK: string;
   VIEW_MODE_MANGA: string;
+  VIEW_MODE_GALLERY: string;
   FIT_WIDTH_OVERSIZED: string;
   SHOW_THUMBNAILS: string;
   HIDE_CONTROLS: string;

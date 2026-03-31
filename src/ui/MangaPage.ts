@@ -50,13 +50,14 @@ import {
 function getImageStyle(index: number): StyleInfo {
   const image = getAppStateValue('images')?.[index];
   const isBook = getSettingsValue('viewMode').match(/^(Book|Manga)$/);
+  const isGallery = getSettingsValue('viewMode') === 'Gallery';
   const isFluid = getSettingsValue('viewMode').startsWith('Fluid');
   const withNavbar = getSettingsValue('navbar') === 'bottom';
   return {
     width: image?.width ? `${image.width}px` : 'auto',
     height: image?.height ? `${image.height}px` : 'auto',
     'max-height': isFluid ? `${window.innerHeight + (withNavbar ? -navbarSize : 0)}px` : undefined,
-    'min-width': !isBook ? `${getSettingsValue('minZoom')}vw` : undefined,
+    'min-width': !isBook && !isGallery ? `${getSettingsValue('minZoom')}vw` : undefined,
   };
 }
 

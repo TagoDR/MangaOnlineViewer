@@ -10,6 +10,7 @@ import styles from './App.css?inline';
 import animation from './animation.css?inline';
 import book from './book.css?inline';
 import fluid from './fluid.css?inline';
+import gallery from './gallery.css?inline';
 import media from './media.css?inline';
 import page from './page.css?inline';
 import normalize from './simplenormalize.css?inline';
@@ -29,6 +30,7 @@ export default css`
   ${page}
   ${fluid}
   ${book}
+  ${gallery}
   ${media}
   ${animation}
 `;

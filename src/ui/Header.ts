@@ -247,6 +247,18 @@ export class Header extends LitElement {
               ></mov-icon>
               ${getLocaleString('VIEW_MODE_MANGA')} ${renderKeybind('VIEW_MODE_MANGA')}
             </mov-dropdown-item>
+            <mov-divider></mov-divider>
+            <mov-dropdown-item
+              id="GalleryMode"
+              @click="${updateViewMode('Gallery')}"
+              ?selected=${getSettingsValue('viewMode') === 'Gallery'}
+            >
+              <mov-icon
+                slot="icon"
+                name="IconLayoutDashboard"
+              ></mov-icon>
+              ${getLocaleString('VIEW_MODE_GALLERY')} ${renderKeybind('VIEW_MODE_GALLERY')}
+            </mov-dropdown-item>
           </mov-dropdown>
           <mov-dropdown
             id="ZoomDropdown"
