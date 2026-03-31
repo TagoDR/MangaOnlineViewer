@@ -24,6 +24,14 @@
             - Each worker should wait for a "token" or "slot" from the pool before starting a `fetch`.
             - Apply a global delay between task initiations within the pool manager.
         - Ensure compatibility with lazy loading logic.
+        - Replace throttlePageLoad with loadSpeed with the options
+                - Safe - Pool of 5 delay of 1000ms [Default]
+                - Standard - Pool of 5 delay of 500ms
+                - Faster - Pool of 10 delay of 500ms
+                - Extreme - Pool of 10 delay of 250ms
+                - All - Pool of 20 delay of 50ms
+        - Lazy load settings must be respected when enabled
+        - Remember that the user is able to select the starting position to skip starting images
 
 - **Check components compatibility with Web Awesome**
     - **Goal**: Ensure `mov-*` components are 1:1 API compatible with Web Awesome (Shoelace) for future-proofing.

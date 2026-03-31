@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { getLocaleString, getSettingsValue } from '../core/settings.ts';
-import { changeLoadMode, changePagesPerSecond } from './events/options.ts';
+import { changeLoadMode, changeLoadSpeed } from './events/options.ts';
 
 function loadMode() {
   return html`
@@ -39,55 +39,37 @@ function loadSpeed() {
       ${getLocaleString('LOAD_SPEED')}
       <select
         id="PagesPerSecond"
-        @change="${changePagesPerSecond}"
+        @change="${changeLoadSpeed}"
       >
         <option
-          value="3000"
-          ?selected=${getSettingsValue('throttlePageLoad') === 3000}
+          value="Safe"
+          ?selected=${getSettingsValue('loadSpeed') === 'Safe'}
         >
-          0.3(${getLocaleString('SLOWLY')})
+          ${getLocaleString('SLOWLY')} (Safe)
         </option>
         <option
-          value="2000"
-          ?selected=${getSettingsValue('throttlePageLoad') === 2000}
+          value="Standard"
+          ?selected=${getSettingsValue('loadSpeed') === 'Standard'}
         >
-          0.5
+          ${getLocaleString('NORMAL')} (Standard)
         </option>
         <option
-          value="1000"
-          ?selected=${getSettingsValue('throttlePageLoad') === 1000}
+          value="Faster"
+          ?selected=${getSettingsValue('loadSpeed') === 'Faster'}
         >
-          01(${getLocaleString('NORMAL')})
+          ${getLocaleString('FAST')} (Faster)
         </option>
         <option
-          value="500"
-          ?selected=${getSettingsValue('throttlePageLoad') === 500}
+          value="Extreme"
+          ?selected=${getSettingsValue('loadSpeed') === 'Extreme'}
         >
-          02
+          ${getLocaleString('EXTREME')} (Extreme)
         </option>
         <option
-          value="250"
-          ?selected=${getSettingsValue('throttlePageLoad') === 250}
+          value="All"
+          ?selected=${getSettingsValue('loadSpeed') === 'All'}
         >
-          04(${getLocaleString('FAST')})
-        </option>
-        <option
-          value="125"
-          ?selected=${getSettingsValue('throttlePageLoad') === 125}
-        >
-          08
-        </option>
-        <option
-          value="100"
-          ?selected=${getSettingsValue('throttlePageLoad') === 100}
-        >
-          10(${getLocaleString('EXTREME')})
-        </option>
-        <option
-          value="1"
-          ?selected=${getSettingsValue('throttlePageLoad') === 1}
-        >
-          ${getLocaleString('ALL_PAGES')}
+          ${getLocaleString('ALL_PAGES')} (All)
         </option>
       </select>
     </div>

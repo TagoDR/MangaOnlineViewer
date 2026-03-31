@@ -57,6 +57,11 @@ export type ZoomMode = 'percent' | 'height' | 'width';
 export type PaginationMode = 'disabled' | 'side-arrows' | 'slider' | 'both';
 
 /**
+ * Defines the available loading speeds for the viewer.
+ */
+export type LoadSpeed = 'Safe' | 'Standard' | 'Faster' | 'Extreme' | 'All';
+
+/**
  * Defines the structure for the user's configurable settings.
  */
 export type ISettings = {
@@ -96,8 +101,8 @@ export type ISettings = {
   scrollHeight: number;
   /** The primary theme color for the UI, in hex format. */
   theme: string;
-  /** The delay (in milliseconds) between loading consecutive pages. */
-  throttlePageLoad: number;
+  /** The speed (in milliseconds) between loading consecutive pages. */
+  loadSpeed: LoadSpeed;
   /** The default reading mode. */
   viewMode: ViewMode;
   /** The default zoom behavior. */

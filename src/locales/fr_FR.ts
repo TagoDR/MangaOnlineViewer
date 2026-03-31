@@ -23,7 +23,7 @@ export default {
   LOAD_MODE_NORMAL: 'Normal (attendre 3 s)',
   LOAD_MODE_ALWAYS: 'Toujours (immédiatement)',
   LOAD_MODE_NEVER: 'Jamais (manuellement)',
-  LOAD_SPEED: 'Vitesse de chargement des pages/seconde',
+  LOAD_SPEED: 'Vitesse de chargement',
   DEFAULT_ZOOM: 'Zoom par défaut (entre 5 et 200)',
   DEFAULT_ZOOM_MODE: 'Mode de zoom par défaut',
   MINIMUM_ZOOM: "Zoom minimum par rapport à la largeur de l'écran (entre 30 et 100)",

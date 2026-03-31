@@ -24,7 +24,7 @@ export default {
   LOAD_MODE_NORMAL: '等待模式(等待3秒自动加载 )',
   LOAD_MODE_ALWAYS: '自动模式(无需等待)',
   LOAD_MODE_NEVER: '手动模式(点击启动)',
-  LOAD_SPEED: '加载速度页数/秒',
+  LOAD_SPEED: '加载速度',
   DEFAULT_ZOOM: '默认缩放 (最小 5 最大 200)',
   DEFAULT_ZOOM_MODE: '默认缩放模式',
   MINIMUM_ZOOM: '相对于屏幕宽度的最小缩放 (最小 30 最大 100)',
