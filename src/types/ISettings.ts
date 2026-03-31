@@ -9,7 +9,14 @@ import type { IBookmark } from './IBookmark';
  * - `Book`: Pages are displayed side-by-side (like a spread), left to right (default).
  * - `Manga`: Pages are displayed side-by-side (like a spread), right to left (for traditional manga).
  */
-export type ViewMode = 'WebComic' | 'FluidLTR' | 'FluidRTL' | 'Vertical' | 'Book' | 'Manga';
+export type ViewMode =
+  | 'WebComic'
+  | 'FluidLTR'
+  | 'FluidRTL'
+  | 'Vertical'
+  | 'Book'
+  | 'Manga'
+  | 'Gallery';
 
 /**
  * Defines when the script should automatically start.

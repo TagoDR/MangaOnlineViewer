@@ -206,6 +206,11 @@ function viewMode() {
             label=${getLocaleString('VIEW_MODE_MANGA')}
             icon="IconBookArrowLeft"
         ></segmented-control-option>
+        <segmented-control-option
+            value="Gallery"
+            label=${getLocaleString('VIEW_MODE_GALLERY')}
+            icon="IconLayoutDashboard"
+        ></segmented-control-option>
       </segmented-control>
     </div>
   `;

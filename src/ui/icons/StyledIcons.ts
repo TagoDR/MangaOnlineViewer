@@ -184,6 +184,7 @@ export const {
   IconFilePercent,
   IconHandClick,
   IconKeyboard,
+  IconLayoutDashboard,
   IconLayoutBottombar,
   IconLayoutBottombarInactive,
   IconLayoutSidebar,

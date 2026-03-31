@@ -36,6 +36,7 @@ export default {
   VIEW_MODE_WEBCOMIC: '垂直无缝',
   VIEW_MODE_BOOK: '书籍 - 从左到右',
   VIEW_MODE_MANGA: '漫画 - 从右到左',
+  VIEW_MODE_GALLERY: '图库',
   FIT_WIDTH_OVERSIZED: '如果尺寸过大、则适合宽度',
   SHOW_THUMBNAILS: '显示缩略图',
   HIDE_CONTROLS: '始终隐藏页面控件',

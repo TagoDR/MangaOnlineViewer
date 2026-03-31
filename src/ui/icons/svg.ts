@@ -55,6 +55,7 @@ export { default as IconInfoCircle } from './info-circle.svg';
 export { default as IconKeyboard } from './keyboard.svg';
 export { default as IconLayoutBottombar } from './layout-bottombar.svg';
 export { default as IconLayoutBottombarInactive } from './layout-bottombar-inactive.svg';
+export { default as IconLayoutDashboard } from './layout-dashboard.svg';
 export { default as IconLayoutSidebar } from './layout-sidebar.svg';
 export { default as IconLayoutSidebarInactive } from './layout-sidebar-inactive.svg';
 export { default as IconLayoutSidebarRight } from './layout-sidebar-right.svg';

@@ -1,0 +1,22 @@
+#Chapter.Gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.Gallery .MangaPage {
+  width: auto;
+  min-width: unset;
+  flex: 0 1 auto;
+}
+
+.Gallery .MangaPage .PageContent .PageImg {
+  min-width: unset;
+}
+
+.Gallery .PageFunctions,
+.Gallery .separator {
+  display: none;
+}

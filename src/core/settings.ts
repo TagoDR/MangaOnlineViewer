@@ -73,6 +73,7 @@ export const defaultSettings: ISettings = {
     VIEW_MODE_VERTICAL: ['V'],
     VIEW_MODE_LEFT: ['N'],
     VIEW_MODE_RIGHT: ['B'],
+    VIEW_MODE_GALLERY: ['G'],
     SCROLL_START: ['space'],
     INCREASE_SPEED: ['.'],
     DECREASE_SPEED: [','],

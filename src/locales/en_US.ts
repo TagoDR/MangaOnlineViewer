@@ -35,6 +35,7 @@ export default {
   VIEW_MODE_WEBCOMIC: 'WebComic',
   VIEW_MODE_BOOK: 'Book - Left to Right',
   VIEW_MODE_MANGA: 'Manga - Right to Left',
+  VIEW_MODE_GALLERY: 'Gallery',
   FIT_WIDTH_OVERSIZED: 'Fit Width if Oversized',
   SHOW_THUMBNAILS: 'Show Thumbnails',
   HIDE_CONTROLS: 'Always Hide Page Controls',

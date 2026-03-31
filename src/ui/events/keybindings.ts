@@ -176,6 +176,9 @@ const actions: Record<string, () => void> = {
   VIEW_MODE_RIGHT() {
     updateViewMode('FluidLTR')();
   },
+  VIEW_MODE_GALLERY() {
+    updateViewMode('Gallery')();
+  },
   SCROLL_START() {
     toggleAutoScroll();
   },
