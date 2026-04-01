@@ -113,6 +113,7 @@ export default {
   SCROLL_UP: 'Faire défiler vers le haut',
   SCROLL_DOWN: 'Faire défiler vers le bas',
   CLOSE: 'Fermer',
+  CANCEL: 'Annuler',
   LIST_EMPTY: 'Liste vide',
   SCROLL_START: 'Basculer le défilement automatique',
   INCREASE_SPEED: 'Augmenter la vitesse de défilement',

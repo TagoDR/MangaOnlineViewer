@@ -112,6 +112,7 @@ export default {
   SCROLL_UP: 'Subir Pagina',
   SCROLL_DOWN: 'Descer Pagina',
   CLOSE: 'Fechar',
+  CANCEL: 'Cancelar',
   LIST_EMPTY: 'Lista Vazia',
   SCROLL_START: 'Ativar Rolagem Automatica',
   INCREASE_SPEED: 'Aumentar Valocidade da Rolagem',
