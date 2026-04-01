@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.03.30.build-1933
+// @version       2026.04.01.build-1754
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -2122,7 +2122,7 @@
 			LOAD_MODE_NORMAL: "Normal(Wait 3 sec)",
 			LOAD_MODE_ALWAYS: "Always(Immediately)",
 			LOAD_MODE_NEVER: "Never(Manually)",
-			LOAD_SPEED: "Load Speed Pages/Second",
+			LOAD_SPEED: "Load Speed",
 			DEFAULT_ZOOM: "Default Zoom (between 5 and 200)",
 			DEFAULT_ZOOM_MODE: "Default Zoom Mode",
 			MINIMUM_ZOOM: "Minimum Zoom relative to the width of screen (between 30 and 100)",
@@ -2134,6 +2134,7 @@
 			VIEW_MODE_WEBCOMIC: "WebComic",
 			VIEW_MODE_BOOK: "Book - Left to Right",
 			VIEW_MODE_MANGA: "Manga - Right to Left",
+			VIEW_MODE_GALLERY: "Gallery",
 			FIT_WIDTH_OVERSIZED: "Fit Width if Oversized",
 			SHOW_THUMBNAILS: "Show Thumbnails",
 			HIDE_CONTROLS: "Always Hide Page Controls",
@@ -2206,6 +2207,7 @@
 			SCROLL_UP: "Scroll Up",
 			SCROLL_DOWN: "Scroll Down",
 			CLOSE: "Close",
+			CANCEL: "Cancel",
 			LIST_EMPTY: "List Empty",
 			SCROLL_START: "Toggle Auto Scroll",
 			INCREASE_SPEED: "Increase Scroll Speed",
@@ -2253,7 +2255,7 @@
 			LOAD_MODE_NORMAL: "Normal (Espera 3s)",
 			LOAD_MODE_ALWAYS: "Siempre (Inmediatamente)",
 			LOAD_MODE_NEVER: "Nunca (Manualmente)",
-			LOAD_SPEED: "Velocidad carga página/segundo",
+			LOAD_SPEED: "Velocidad carga",
 			DEFAULT_ZOOM: "Zoom por defecto (entre 5 y 200)",
 			DEFAULT_ZOOM_MODE: "Modo de zoom por defecto",
 			MINIMUM_ZOOM: "Zoom mínimo relativo al ancho de la pantalla",
@@ -2265,6 +2267,7 @@
 			VIEW_MODE_WEBCOMIC: "WebComic",
 			VIEW_MODE_BOOK: "Libro - Izquierda a derecha",
 			VIEW_MODE_MANGA: "Manga - Derecha a izquierda",
+			VIEW_MODE_GALLERY: "Galería",
 			FIT_WIDTH_OVERSIZED: "Ajustar ancho si es demasiado grande",
 			SHOW_THUMBNAILS: "Mostrar miniaturas",
 			HIDE_CONTROLS: "Ocultar siempre la barra de controles",
@@ -2335,8 +2338,9 @@
 			SPEED_WARNING: "Velocidad de carga muy alta",
 			SPEED_WARNING_MESSAGE: "No se recomienda esta velocidad.<br/> Puede dañar algunos servidores o marcar su IP como atacante DDoS.<br/> ¡Utilícelo con precaución!",
 			SCROLL_UP: "Desplazar arriba",
-			SCROLL_DOWN: "Desplazar abajo",
+			SCROLL_DOWN: "Desplazarse hacia abajo",
 			CLOSE: "Cerrar",
+			CANCEL: "Cancelar",
 			LIST_EMPTY: "Lista vacía",
 			SCROLL_START: "Alternar desplazamiento automático",
 			INCREASE_SPEED: "Aumentar la velocidad de desplazamiento",
@@ -2384,7 +2388,7 @@
 			LOAD_MODE_NORMAL: "Normal(Esperando 3 sec)",
 			LOAD_MODE_ALWAYS: "Sempre(Imediatamente)",
 			LOAD_MODE_NEVER: "Nunca(Manualmente)",
-			LOAD_SPEED: "Velocidade de Carregamento Paginas/Segundo",
+			LOAD_SPEED: "Velocidade de Carregamento",
 			DEFAULT_ZOOM: "Zoom padrão (entre 5 e 200)",
 			DEFAULT_ZOOM_MODE: "Modo de Zoom padrão",
 			MINIMUM_ZOOM: "Zoom minimo, relativo ao tamanho da tela (entre 30 e 100)",
@@ -2396,6 +2400,7 @@
 			VIEW_MODE_WEBCOMIC: "WebComic",
 			VIEW_MODE_BOOK: "Livro - Esquerda para Direita",
 			VIEW_MODE_MANGA: "Mangá - Direita para Esquerda",
+			VIEW_MODE_GALLERY: "Galeria",
 			FIT_WIDTH_OVERSIZED: "Encher a tela se grande demais",
 			SHOW_THUMBNAILS: "Mostra Miniaturas",
 			HIDE_CONTROLS: "Sempre esconder controles das paginas",
@@ -2468,6 +2473,7 @@
 			SCROLL_UP: "Subir Pagina",
 			SCROLL_DOWN: "Descer Pagina",
 			CLOSE: "Fechar",
+			CANCEL: "Cancelar",
 			LIST_EMPTY: "Lista Vazia",
 			SCROLL_START: "Ativar Rolagem Automatica",
 			INCREASE_SPEED: "Aumentar Valocidade da Rolagem",
@@ -2515,7 +2521,7 @@
 			LOAD_MODE_NORMAL: "等待模式(等待3秒自动加载 )",
 			LOAD_MODE_ALWAYS: "自动模式(无需等待)",
 			LOAD_MODE_NEVER: "手动模式(点击启动)",
-			LOAD_SPEED: "加载速度页数/秒",
+			LOAD_SPEED: "加载速度",
 			DEFAULT_ZOOM: "默认缩放 (最小 5 最大 200)",
 			DEFAULT_ZOOM_MODE: "默认缩放模式",
 			MINIMUM_ZOOM: "相对于屏幕宽度的最小缩放 (最小 30 最大 100)",
@@ -2527,6 +2533,7 @@
 			VIEW_MODE_WEBCOMIC: "垂直无缝",
 			VIEW_MODE_BOOK: "书籍 - 从左到右",
 			VIEW_MODE_MANGA: "漫画 - 从右到左",
+			VIEW_MODE_GALLERY: "图库",
 			FIT_WIDTH_OVERSIZED: "如果尺寸过大、则适合宽度",
 			SHOW_THUMBNAILS: "显示缩略图",
 			HIDE_CONTROLS: "始终隐藏页面控件",
@@ -2599,6 +2606,7 @@
 			SCROLL_UP: "向上滚动",
 			SCROLL_DOWN: "向下滚动",
 			CLOSE: "关闭",
+			CANCEL: "取消",
 			LIST_EMPTY: "没有收藏书签",
 			SCROLL_START: "切换自动滚动",
 			INCREASE_SPEED: "增加滚动速度",
@@ -2646,7 +2654,7 @@
 			LOAD_MODE_NORMAL: "Normal (3 Sek. warten)",
 			LOAD_MODE_ALWAYS: "Immer (sofort)",
 			LOAD_MODE_NEVER: "Nie (manuell)",
-			LOAD_SPEED: "Ladegeschwindigkeit Seiten/Sekunde",
+			LOAD_SPEED: "Ladegeschwindigkeit",
 			DEFAULT_ZOOM: "Standard-Zoom (zwischen 5 und 200)",
 			DEFAULT_ZOOM_MODE: "Standard-Zoommodus",
 			MINIMUM_ZOOM: "Minimaler Zoom relativ zur Bildschirmbreite (zwischen 30 und 100)",
@@ -2658,6 +2666,7 @@
 			VIEW_MODE_WEBCOMIC: "WebComic",
 			VIEW_MODE_BOOK: "Buch - Links nach Rechts",
 			VIEW_MODE_MANGA: "Manga - Rechts nach Links",
+			VIEW_MODE_GALLERY: "Galerie",
 			FIT_WIDTH_OVERSIZED: "Breite anpassen bei Übergröße",
 			SHOW_THUMBNAILS: "Miniaturansichten anzeigen",
 			HIDE_CONTROLS: "Seitensteuerung immer ausblenden",
@@ -2730,6 +2739,7 @@
 			SCROLL_UP: "Nach oben scrollen",
 			SCROLL_DOWN: "Nach unten scrollen",
 			CLOSE: "Schließen",
+			CANCEL: "Abbrechen",
 			LIST_EMPTY: "Liste leer",
 			SCROLL_START: "Auto-Scroll umschalten",
 			INCREASE_SPEED: "Scrollgeschwindigkeit erhöhen",
@@ -2777,7 +2787,7 @@
 			LOAD_MODE_NORMAL: "Normal (attendre 3 s)",
 			LOAD_MODE_ALWAYS: "Toujours (immédiatement)",
 			LOAD_MODE_NEVER: "Jamais (manuellement)",
-			LOAD_SPEED: "Vitesse de chargement des pages/seconde",
+			LOAD_SPEED: "Vitesse de chargement",
 			DEFAULT_ZOOM: "Zoom par défaut (entre 5 et 200)",
 			DEFAULT_ZOOM_MODE: "Mode de zoom par défaut",
 			MINIMUM_ZOOM: "Zoom minimum par rapport à la largeur de l'écran (entre 30 et 100)",
@@ -2789,6 +2799,7 @@
 			VIEW_MODE_WEBCOMIC: "WebComic",
 			VIEW_MODE_BOOK: "Livre - De gauche à droite",
 			VIEW_MODE_MANGA: "Manga - De droite à gauche",
+			VIEW_MODE_GALLERY: "Galerie",
 			FIT_WIDTH_OVERSIZED: "Ajuster à la largeur si surdimensionné",
 			SHOW_THUMBNAILS: "Afficher les vignettes",
 			HIDE_CONTROLS: "Toujours masquer les contrôles de page",
@@ -2861,6 +2872,7 @@
 			SCROLL_UP: "Faire défiler vers le haut",
 			SCROLL_DOWN: "Faire défiler vers le bas",
 			CLOSE: "Fermer",
+			CANCEL: "Annuler",
 			LIST_EMPTY: "Liste vide",
 			SCROLL_START: "Basculer le défilement automatique",
 			INCREASE_SPEED: "Augmenter la vitesse de défilement",
@@ -2948,7 +2960,7 @@
 		pagination: "disabled",
 		scrollHeight: 25,
 		theme: "#29487D",
-		throttlePageLoad: 1e3,
+		loadSpeed: "Extreme",
 		viewMode: "WebComic",
 		zoomMode: "percent",
 		zoomStep: 30,
@@ -3011,6 +3023,7 @@
 			VIEW_MODE_VERTICAL: ["V"],
 			VIEW_MODE_LEFT: ["N"],
 			VIEW_MODE_RIGHT: ["B"],
+			VIEW_MODE_GALLERY: ["G"],
 			SCROLL_START: ["space"],
 			INCREASE_SPEED: ["."],
 			DECREASE_SPEED: [","]
@@ -4665,6 +4678,9 @@
 	//#region src/ui/icons/layout-bottombar-inactive.svg
 	var layout_bottombar_inactive_default = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-layout-bottombar-inactive\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z\"/><path d=\"M4 15h1\"/><path d=\"M19 15h1\"/><path d=\"M9 15h1\"/><path d=\"M14 15h1\"/></svg>";
 	//#endregion
+	//#region src/ui/icons/layout-dashboard.svg
+	var layout_dashboard_default = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-layout-dashboard\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" /><path d=\"M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1\" /><path d=\"M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1\" /><path d=\"M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1\" /><path d=\"M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1\" /></svg>";
+	//#endregion
 	//#region src/ui/icons/layout-sidebar.svg
 	var layout_sidebar_default = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-layout-sidebar\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z\"/><path d=\"M9 4l0 16\"/></svg>";
 	//#endregion
@@ -4832,6 +4848,7 @@
 		IconKeyboard: () => keyboard_default,
 		IconLayoutBottombar: () => layout_bottombar_default,
 		IconLayoutBottombarInactive: () => layout_bottombar_inactive_default,
+		IconLayoutDashboard: () => layout_dashboard_default,
 		IconLayoutSidebar: () => layout_sidebar_default,
 		IconLayoutSidebarInactive: () => layout_sidebar_inactive_default,
 		IconLayoutSidebarRight: () => layout_sidebar_right_default,
@@ -4933,6 +4950,7 @@
 		IconKeyboard: () => IconKeyboard$1,
 		IconLayoutBottombar: () => IconLayoutBottombar$1,
 		IconLayoutBottombarInactive: () => IconLayoutBottombarInactive$1,
+		IconLayoutDashboard: () => IconLayoutDashboard$1,
 		IconLayoutSidebar: () => IconLayoutSidebar$1,
 		IconLayoutSidebarInactive: () => IconLayoutSidebarInactive$1,
 		IconLayoutSidebarRight: () => IconLayoutSidebarRight$1,
@@ -5045,7 +5063,7 @@
 	* Use these when you need the SVG content directly, for example, in a CMS.
 	* @example svgToUrl(IconFileDownload)
 	*/
-	var { IconAdjustmentsHorizontal: IconAdjustmentsHorizontal$1, IconApiBook: IconApiBook$1, IconArrowsHorizontal: IconArrowsHorizontal$1, IconArrowsLeftRight: IconArrowsLeftRight$1, IconArrowAutofitDown: IconArrowAutofitDown$1, IconArrowAutofitHeight: IconArrowAutofitHeight$1, IconArrowAutofitLeft: IconArrowAutofitLeft$1, IconArrowAutofitRight: IconArrowAutofitRight$1, IconArrowAutofitWidth: IconArrowAutofitWidth$1, IconArrowBigLeft: IconArrowBigLeft$1, IconArrowBigRight: IconArrowBigRight$1, IconArrowsMove: IconArrowsMove$1, IconArrowsMoveVertical: IconArrowsMoveVertical$1, IconArrowsVertical: IconArrowsVertical$1, IconBook: IconBook$1, IconBookOff: IconBookOff$1, IconBookArrowLeft: IconBookArrowLeft$1, IconBookArrowRight: IconBookArrowRight$1, IconBooksReturn: IconBooksReturn$1, IconBookUpload: IconBookUpload$1, IconBookmark: IconBookmark$1, IconBookmarkOff: IconBookmarkOff$1, IconBookmarks: IconBookmarks$1, IconBoxAlignTop: IconBoxAlignTop$1, IconCategory: IconCategory$1, IconCheck: IconCheck$1, IconChevronLeft: IconChevronLeft$1, IconChevronRight: IconChevronRight$1, IconAlertCircle: IconAlertCircle$1, IconCircleCheck: IconCircleCheck$1, IconCircleX: IconCircleX$1, IconHelp: IconHelp$1, IconInfoCircle: IconInfoCircle$1, IconComic1: IconComic1$1, IconComic1Flat: IconComic1Flat$1, IconComic2: IconComic2$1, IconComic2Flat: IconComic2Flat$1, IconComic3: IconComic3$1, IconComic3Flat: IconComic3Flat$1, IconDeviceFloppy: IconDeviceFloppy$1, IconDotsVertical: IconDotsVertical$1, IconEReader1: IconEReader1$1, IconEReader1Flat: IconEReader1Flat$1, IconEReader2: IconEReader2$1, IconEReader2Flat: IconEReader2Flat$1, IconExternalLink: IconExternalLink$1, IconEye: IconEye$1, IconEyeOff: IconEyeOff$1, IconFileDownload: IconFileDownload$1, IconFilePercent: IconFilePercent$1, IconHandClick: IconHandClick$1, IconKeyboard: IconKeyboard$1, IconLayoutBottombar: IconLayoutBottombar$1, IconLayoutBottombarInactive: IconLayoutBottombarInactive$1, IconLayoutSidebar: IconLayoutSidebar$1, IconLayoutSidebarInactive: IconLayoutSidebarInactive$1, IconLayoutSidebarRight: IconLayoutSidebarRight$1, IconLayoutSidebarRightInactive: IconLayoutSidebarRightInactive$1, IconListNumbers: IconListNumbers$1, IconLoader2: IconLoader2$1, IconLocationCog: IconLocationCog$1, IconMenu2: IconMenu2$1, IconMenuDeep: IconMenuDeep$1, IconMessage: IconMessage$1, IconMoon: IconMoon$1, IconPage: IconPage$1, IconPageFlat: IconPageFlat$1, IconPalette: IconPalette$1, IconPencil: IconPencil$1, IconPencilCog: IconPencilCog$1, IconPhoto: IconPhoto$1, IconPhotoOff: IconPhotoOff$1, IconPin: IconPin$1, IconPlayerPause: IconPlayerPause$1, IconPlayerPlay: IconPlayerPlay$1, IconRefresh: IconRefresh$1, IconSettings: IconSettings$1, IconSettingsOff: IconSettingsOff$1, IconSpacingHorizontal: IconSpacingHorizontal$1, IconSpacingVertical: IconSpacingVertical$1, IconSun: IconSun$1, IconTrash: IconTrash$1, IconWorldCog: IconWorldCog$1, IconX: IconX$1, IconZoom: IconZoom$1, IconZoomCancel: IconZoomCancel$1, IconZoomIn: IconZoomIn$1, IconZoomInArea: IconZoomInArea$1, IconZoomOut: IconZoomOut$1, IconZoomOutArea: IconZoomOutArea$1, IconZoomPan: IconZoomPan$1 } = _.mapValues(svg_exports, (rawSvg, iconKey) => {
+	var { IconAdjustmentsHorizontal: IconAdjustmentsHorizontal$1, IconApiBook: IconApiBook$1, IconArrowsHorizontal: IconArrowsHorizontal$1, IconArrowsLeftRight: IconArrowsLeftRight$1, IconArrowAutofitDown: IconArrowAutofitDown$1, IconArrowAutofitHeight: IconArrowAutofitHeight$1, IconArrowAutofitLeft: IconArrowAutofitLeft$1, IconArrowAutofitRight: IconArrowAutofitRight$1, IconArrowAutofitWidth: IconArrowAutofitWidth$1, IconArrowBigLeft: IconArrowBigLeft$1, IconArrowBigRight: IconArrowBigRight$1, IconArrowsMove: IconArrowsMove$1, IconArrowsMoveVertical: IconArrowsMoveVertical$1, IconArrowsVertical: IconArrowsVertical$1, IconBook: IconBook$1, IconBookOff: IconBookOff$1, IconBookArrowLeft: IconBookArrowLeft$1, IconBookArrowRight: IconBookArrowRight$1, IconBooksReturn: IconBooksReturn$1, IconBookUpload: IconBookUpload$1, IconBookmark: IconBookmark$1, IconBookmarkOff: IconBookmarkOff$1, IconBookmarks: IconBookmarks$1, IconBoxAlignTop: IconBoxAlignTop$1, IconCategory: IconCategory$1, IconCheck: IconCheck$1, IconChevronLeft: IconChevronLeft$1, IconChevronRight: IconChevronRight$1, IconAlertCircle: IconAlertCircle$1, IconCircleCheck: IconCircleCheck$1, IconCircleX: IconCircleX$1, IconHelp: IconHelp$1, IconInfoCircle: IconInfoCircle$1, IconComic1: IconComic1$1, IconComic1Flat: IconComic1Flat$1, IconComic2: IconComic2$1, IconComic2Flat: IconComic2Flat$1, IconComic3: IconComic3$1, IconComic3Flat: IconComic3Flat$1, IconDeviceFloppy: IconDeviceFloppy$1, IconDotsVertical: IconDotsVertical$1, IconEReader1: IconEReader1$1, IconEReader1Flat: IconEReader1Flat$1, IconEReader2: IconEReader2$1, IconEReader2Flat: IconEReader2Flat$1, IconExternalLink: IconExternalLink$1, IconEye: IconEye$1, IconEyeOff: IconEyeOff$1, IconFileDownload: IconFileDownload$1, IconFilePercent: IconFilePercent$1, IconHandClick: IconHandClick$1, IconKeyboard: IconKeyboard$1, IconLayoutDashboard: IconLayoutDashboard$1, IconLayoutBottombar: IconLayoutBottombar$1, IconLayoutBottombarInactive: IconLayoutBottombarInactive$1, IconLayoutSidebar: IconLayoutSidebar$1, IconLayoutSidebarInactive: IconLayoutSidebarInactive$1, IconLayoutSidebarRight: IconLayoutSidebarRight$1, IconLayoutSidebarRightInactive: IconLayoutSidebarRightInactive$1, IconListNumbers: IconListNumbers$1, IconLoader2: IconLoader2$1, IconLocationCog: IconLocationCog$1, IconMenu2: IconMenu2$1, IconMenuDeep: IconMenuDeep$1, IconMessage: IconMessage$1, IconMoon: IconMoon$1, IconPage: IconPage$1, IconPageFlat: IconPageFlat$1, IconPalette: IconPalette$1, IconPencil: IconPencil$1, IconPencilCog: IconPencilCog$1, IconPhoto: IconPhoto$1, IconPhotoOff: IconPhotoOff$1, IconPin: IconPin$1, IconPlayerPause: IconPlayerPause$1, IconPlayerPlay: IconPlayerPlay$1, IconRefresh: IconRefresh$1, IconSettings: IconSettings$1, IconSettingsOff: IconSettingsOff$1, IconSpacingHorizontal: IconSpacingHorizontal$1, IconSpacingVertical: IconSpacingVertical$1, IconSun: IconSun$1, IconTrash: IconTrash$1, IconWorldCog: IconWorldCog$1, IconX: IconX$1, IconZoom: IconZoom$1, IconZoomCancel: IconZoomCancel$1, IconZoomIn: IconZoomIn$1, IconZoomInArea: IconZoomInArea$1, IconZoomOut: IconZoomOut$1, IconZoomOutArea: IconZoomOutArea$1, IconZoomPan: IconZoomPan$1 } = _.mapValues(svg_exports, (rawSvg, iconKey) => {
 		return applyColorsToSvg(rawSvg, `icon-tabler-${_.kebabCase(iconKey.replace(/^Icon/, ""))}`);
 	});
 	//#endregion
@@ -5191,7 +5209,6 @@
 			this.loading = false;
 			this.pill = false;
 			this.type = "button";
-			this.form = null;
 		}
 		static {
 			this.styles = [r$4(button_default)];
@@ -5330,7 +5347,7 @@
 	__decorate([n$1({ reflect: true })], Button.prototype, "value", void 0);
 	__decorate([n$1({ reflect: true })], Button.prototype, "href", void 0);
 	__decorate([n$1()], Button.prototype, "target", void 0);
-	__decorate([n$1()], Button.prototype, "rel", void 0);
+	__decorate([n$1({ reflect: true })], Button.prototype, "rel", void 0);
 	__decorate([n$1()], Button.prototype, "download", void 0);
 	__decorate([n$1({ reflect: true })], Button.prototype, "form", void 0);
 	Button = __decorate([t$1("mov-button")], Button);
@@ -5656,7 +5673,7 @@
 	* Use these for direct rendering within a Lit template.
 	* @example html`${IconFileDownload}`
 	*/
-	var { IconAdjustmentsHorizontal, IconApiBook, IconArrowsHorizontal, IconArrowsLeftRight, IconArrowAutofitDown, IconArrowAutofitHeight, IconArrowAutofitLeft, IconArrowAutofitRight, IconArrowAutofitWidth, IconArrowBigLeft, IconArrowBigRight, IconArrowsMove, IconArrowsMoveVertical, IconArrowsVertical, IconBook, IconBookOff, IconBookArrowLeft, IconBookArrowRight, IconBooksReturn, IconBookUpload, IconBookmark, IconBookmarkOff, IconBookmarks, IconBoxAlignTop, IconCategory, IconCheck, IconChevronLeft, IconChevronRight, IconAlertCircle, IconCircleCheck, IconCircleX, IconHelp, IconInfoCircle, IconComic1, IconComic1Flat, IconComic2, IconComic2Flat, IconComic3, IconComic3Flat, IconDeviceFloppy, IconDotsVertical, IconEReader1, IconEReader1Flat, IconEReader2, IconEReader2Flat, IconExternalLink, IconEye, IconEyeOff, IconFileDownload, IconFilePercent, IconHandClick, IconKeyboard, IconLayoutBottombar, IconLayoutBottombarInactive, IconLayoutSidebar, IconLayoutSidebarInactive, IconLayoutSidebarRight, IconLayoutSidebarRightInactive, IconListNumbers, IconLoader2, IconLocationCog, IconMenu2, IconMenuDeep, IconMessage, IconMoon, IconPage, IconPageFlat, IconPalette, IconPencil, IconPencilCog, IconPhoto, IconPhotoOff, IconPin, IconPlayerPause, IconPlayerPlay, IconRefresh, IconSettings, IconSettingsOff, IconSpacingHorizontal, IconSpacingVertical, IconSun, IconTrash, IconWorldCog, IconX, IconZoom, IconZoomCancel, IconZoomIn, IconZoomInArea, IconZoomOut, IconZoomOutArea, IconZoomPan } = _.fromPairs(_.entries(StyledIcons_exports).map(([iconKey, icon]) => [iconKey, o$4(icon)]));
+	var { IconAdjustmentsHorizontal, IconApiBook, IconArrowsHorizontal, IconArrowsLeftRight, IconArrowAutofitDown, IconArrowAutofitHeight, IconArrowAutofitLeft, IconArrowAutofitRight, IconArrowAutofitWidth, IconArrowBigLeft, IconArrowBigRight, IconArrowsMove, IconArrowsMoveVertical, IconArrowsVertical, IconBook, IconBookOff, IconBookArrowLeft, IconBookArrowRight, IconBooksReturn, IconBookUpload, IconBookmark, IconBookmarkOff, IconBookmarks, IconBoxAlignTop, IconCategory, IconCheck, IconChevronLeft, IconChevronRight, IconAlertCircle, IconCircleCheck, IconCircleX, IconHelp, IconInfoCircle, IconComic1, IconComic1Flat, IconComic2, IconComic2Flat, IconComic3, IconComic3Flat, IconDeviceFloppy, IconDotsVertical, IconEReader1, IconEReader1Flat, IconEReader2, IconEReader2Flat, IconExternalLink, IconEye, IconEyeOff, IconFileDownload, IconFilePercent, IconHandClick, IconKeyboard, IconLayoutDashboard, IconLayoutBottombar, IconLayoutBottombarInactive, IconLayoutSidebar, IconLayoutSidebarInactive, IconLayoutSidebarRight, IconLayoutSidebarRightInactive, IconListNumbers, IconLoader2, IconLocationCog, IconMenu2, IconMenuDeep, IconMessage, IconMoon, IconPage, IconPageFlat, IconPalette, IconPencil, IconPencilCog, IconPhoto, IconPhotoOff, IconPin, IconPlayerPause, IconPlayerPlay, IconRefresh, IconSettings, IconSettingsOff, IconSpacingHorizontal, IconSpacingVertical, IconSun, IconTrash, IconWorldCog, IconX, IconZoom, IconZoomCancel, IconZoomIn, IconZoomInArea, IconZoomOut, IconZoomOutArea, IconZoomPan } = _.fromPairs(_.entries(StyledIcons_exports).map(([iconKey, icon]) => [iconKey, o$4(icon)]));
 	//#endregion
 	//#region src/ui/components/ColorSwatch.ts
 	var ColorSwatch = class ColorSwatch extends i$1 {
@@ -6282,6 +6299,12 @@
 		constructor(..._args) {
 			super(..._args);
 			this.value = "#228be6";
+			this.defaultValue = "#228be6";
+			this.label = "";
+			this.hint = "";
+			this.name = "";
+			this.disabled = false;
+			this.size = "medium";
 			this.swatches = null;
 			this.mode = "popup";
 			this.opened = false;
@@ -6463,31 +6486,58 @@
 			if (changedProperties.has("mode") && this.mode === "inline") this.opened = false;
 		}
 		handleClickOutside(e) {
-			if (this.opened && !e.composedPath().includes(this)) this.opened = false;
+			if (this.opened && !e.composedPath().includes(this)) this.hide();
+		}
+		show() {
+			if (this.disabled || this.opened) return;
+			this.opened = true;
+			this.dispatchEvent(new CustomEvent("wa-show", {
+				bubbles: true,
+				composed: true
+			}));
+			setTimeout(() => {
+				this.dispatchEvent(new CustomEvent("wa-after-show", {
+					bubbles: true,
+					composed: true
+				}));
+			}, 150);
+		}
+		hide() {
+			if (!this.opened) return;
+			this.opened = false;
+			this.dispatchEvent(new CustomEvent("wa-hide", {
+				bubbles: true,
+				composed: true
+			}));
+			setTimeout(() => {
+				this.dispatchEvent(new CustomEvent("wa-after-hide", {
+					bubbles: true,
+					composed: true
+				}));
+			}, 150);
 		}
 		togglePopup() {
-			if (this.mode === "popup") {
-				if (!this.opened) {
-					const triggerRect = this.getBoundingClientRect();
-					const pickerWidth = 250;
-					let containerRect;
-					const drawer = this.closest("mov-drawer");
-					if (drawer?.shadowRoot) {
-						const dialog = drawer.shadowRoot.querySelector("dialog");
-						if (dialog) containerRect = dialog.getBoundingClientRect();
-						else containerRect = {
-							left: 0,
-							right: window.innerWidth
-						};
-					} else containerRect = {
+			if (this.mode === "popup") if (this.opened) this.hide();
+			else {
+				const triggerRect = this.getBoundingClientRect();
+				const pickerWidth = 250;
+				let containerRect;
+				const drawer = this.closest("mov-drawer");
+				if (drawer?.shadowRoot) {
+					const dialog = drawer.shadowRoot.querySelector("dialog");
+					if (dialog) containerRect = dialog.getBoundingClientRect();
+					else containerRect = {
 						left: 0,
 						right: window.innerWidth
 					};
-					if (triggerRect.left + pickerWidth > containerRect.right) if (triggerRect.right - pickerWidth > containerRect.left) this.popupDirection = "right";
-					else this.popupDirection = "left";
-					else this.popupDirection = "left";
-				}
-				this.opened = !this.opened;
+				} else containerRect = {
+					left: 0,
+					right: window.innerWidth
+				};
+				if (triggerRect.left + pickerWidth > containerRect.right) if (triggerRect.right - pickerWidth > containerRect.left) this.popupDirection = "right";
+				else this.popupDirection = "left";
+				else this.popupDirection = "left";
+				this.show();
 			}
 		}
 		isSameColor(color1, color2) {
@@ -6751,6 +6801,21 @@
 		}
 	};
 	__decorate([n$1({ type: String })], ColorPicker.prototype, "value", void 0);
+	__decorate([n$1({
+		type: String,
+		attribute: "default-value"
+	})], ColorPicker.prototype, "defaultValue", void 0);
+	__decorate([n$1({ type: String })], ColorPicker.prototype, "label", void 0);
+	__decorate([n$1({ type: String })], ColorPicker.prototype, "hint", void 0);
+	__decorate([n$1({ type: String })], ColorPicker.prototype, "name", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true
+	})], ColorPicker.prototype, "disabled", void 0);
+	__decorate([n$1({
+		type: String,
+		reflect: true
+	})], ColorPicker.prototype, "size", void 0);
 	__decorate([n$1({ type: Array })], ColorPicker.prototype, "swatches", void 0);
 	__decorate([n$1({ type: String })], ColorPicker.prototype, "mode", void 0);
 	__decorate([r$1()], ColorPicker.prototype, "opened", void 0);
@@ -7012,8 +7077,13 @@
 		constructor(..._args) {
 			super(..._args);
 			this.name = "";
+			this.value = "on";
 			this.checked = false;
+			this.defaultChecked = false;
 			this.disabled = false;
+			this.required = false;
+			this.size = "medium";
+			this.hint = "";
 			this.design = "graphical";
 			this.textOn = "ON";
 			this.textOff = "OFF";
@@ -7025,6 +7095,24 @@
       --switch-height: 1.5rem;
       --knob-size: 1.25rem;
       display: inline-block;
+    }
+
+    :host([size='small']) {
+      --switch-width: 2.5rem;
+      --switch-height: 1.25rem;
+      --knob-size: 1rem;
+    }
+
+    :host([size='large']) {
+      --switch-width: 4rem;
+      --switch-height: 2rem;
+      --knob-size: 1.75rem;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
 
     input {
@@ -7068,14 +7156,13 @@
 
     .knob {
       position: absolute;
-      top: 50%;
-      left: 2px;
-      transform: translateY(-50%);
+      top: 1px;
+      left: 1px;
       width: var(--knob-size);
       height: var(--knob-size);
       background-color: #fff;
       border-radius: 50%;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
       transition: left 0.3s;
       display: flex;
       align-items: center;
@@ -7087,7 +7174,7 @@
     }
 
     input:checked + .switch .knob {
-      left: calc(100% - var(--knob-size) - 2px);
+      left: calc(100% - var(--knob-size) - 1px);
     }
 
     .switch:focus {
@@ -7106,57 +7193,85 @@
       font-weight: bold;
       color: #333;
     }
+
+    .hint {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
   `;
 		}
-		toggleChecked() {
+		handleChange(event) {
 			if (!this.disabled) {
-				this.checked = !this.checked;
+				this.checked = event.target.checked;
 				this.dispatchEvent(new CustomEvent("change", {
-					detail: { checked: this.checked },
 					bubbles: true,
 					composed: true
 				}));
 				this.dispatchEvent(new CustomEvent("input", {
-					detail: { checked: this.checked },
 					bubbles: true,
 					composed: true
 				}));
 			}
 		}
 		render() {
+			const design = this.design.toLowerCase();
 			let knobContent;
-			if (this.design === "graphical") knobContent = b$1`${this.checked ? IconCheck : IconX}`;
+			if (design === "graphical") knobContent = b$1`${this.checked ? IconCheck : IconX}`;
 			else knobContent = b$1`<span class="text">${this.checked ? this.textOn : this.textOff}</span>`;
 			return b$1`
-      <input
-        type="checkbox"
-        id="${this.name}"
-        name="${this.name}"
-        ?checked=${this.checked}
-        ?disabled=${this.disabled}
-        @click=${this.toggleChecked}
-      />
-      <label
-        for="${this.name}"
-        class="${e({
+      <div class="base">
+        <label class="label">
+          <slot></slot>
+          <input
+            type="checkbox"
+            .name="${this.name}"
+            .value="${this.value}"
+            .checked=${this.checked}
+            ?disabled=${this.disabled}
+            ?required=${this.required}
+            @change=${this.handleChange}
+          />
+          <div
+            class="${e({
 				switch: true,
-				[this.design]: true
+				[design]: true
 			})}"
-      >
-        <div class="knob">${knobContent}</div>
-      </label>
+          >
+            <div class="knob">${knobContent}</div>
+          </div>
+        </label>
+        <div class="hint">
+          <slot name="hint">${this.hint}</slot>
+        </div>
+      </div>
     `;
 		}
 	};
 	__decorate([n$1({ type: String })], Switch.prototype, "name", void 0);
+	__decorate([n$1({ type: String })], Switch.prototype, "value", void 0);
 	__decorate([n$1({
 		type: Boolean,
 		reflect: true
 	})], Switch.prototype, "checked", void 0);
 	__decorate([n$1({
 		type: Boolean,
+		reflect: true,
+		attribute: "default-checked"
+	})], Switch.prototype, "defaultChecked", void 0);
+	__decorate([n$1({
+		type: Boolean,
 		reflect: true
 	})], Switch.prototype, "disabled", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true
+	})], Switch.prototype, "required", void 0);
+	__decorate([n$1({
+		type: String,
+		reflect: true
+	})], Switch.prototype, "size", void 0);
+	__decorate([n$1({ type: String })], Switch.prototype, "hint", void 0);
 	__decorate([n$1({
 		type: String,
 		reflect: true
@@ -7346,28 +7461,40 @@
           <progress value='${current}' max='${total}' style='width: 100%; height: 20px;'></progress>
         </div>
       `,
-				footer: b$1``
+				footer: b$1`
+        <mov-button @click=${() => setAppStateValue("download", "cancelled")}>
+          ${getLocaleString("CANCEL")}
+        </mov-button>
+      `
 			});
 		};
 		updateProgress(0);
 		let count = 0;
-		for (const [key, page] of imageEntries) try {
-			const blob = await getImageBlob(page);
-			if (blob) {
-				const ext = extFromMime(blob.type);
-				const name = `Page-${Number(key).toString().padStart(digits, "0")}.${ext}`;
-				logScript(`${name} Added to Zip from Blob`);
-				zip.file(name, blob, {
-					createFolders: true,
-					compression: "DEFLATE"
-				});
-			} else failedDownloads.push(page.src ?? key);
-		} catch (error) {
-			logScript(`Error processing page ${key}`, error);
-			failedDownloads.push(page.src ?? key);
-		} finally {
-			count += 1;
-			updateProgress(count);
+		for (const [key, page] of imageEntries) {
+			if (getAppStateValue("download") === "cancelled") {
+				logScript("Download cancelled");
+				setAppStateValue("dialog", null);
+				setAppStateValue("download", void 0);
+				return;
+			}
+			try {
+				const blob = await getImageBlob(page);
+				if (blob) {
+					const ext = extFromMime(blob.type);
+					const name = `Page-${Number(key).toString().padStart(digits, "0")}.${ext}`;
+					logScript(`${name} Added to Zip from Blob`);
+					zip.file(name, blob, {
+						createFolders: true,
+						compression: "DEFLATE"
+					});
+				} else failedDownloads.push(page.src ?? key);
+			} catch (error) {
+				logScript(`Error processing page ${key}`, error);
+				failedDownloads.push(page.src ?? key);
+			} finally {
+				count += 1;
+				updateProgress(count);
+			}
 		}
 		setAppStateValue("dialog", {
 			open: true,
@@ -7641,6 +7768,9 @@
 			this.open = false;
 			this.mode = "dialog";
 			this.fullscreen = false;
+			this.label = "";
+			this.withoutHeader = false;
+			this.lightDismiss = true;
 		}
 		static {
 			this.styles = i$3`
@@ -7819,8 +7949,11 @@
 			e.preventDefault();
 			this.close();
 		}
+		handleBackdropClick() {
+			if (this.mode !== "inline" && this.lightDismiss) this.close();
+		}
 		handleClick(event) {
-			if (this.mode !== "inline" && event.target === this.dialog) this.close();
+			if (this.mode !== "inline" && this.lightDismiss && event.target === this.dialog) this.close();
 		}
 		updated(changedProperties) {
 			if (this.mode === "inline") return;
@@ -7867,38 +8000,40 @@
 			return b$1`
       <div
         class="backdrop"
-        @click=${this.close}
+        @click=${this.handleBackdropClick}
       ></div>
       <dialog
         part="dialog"
         @cancel=${this.handleCancel}
         @click=${this.handleClick}
       >
-        <div
-          class="header-bar"
-          part="header-bar"
-        >
-          <div class="action-item">
-            <slot name="header-actions"></slot>
-          </div>
-          <div class="header-content">
-            <slot name="label"></slot>
-          </div>
+        ${!this.withoutHeader ? b$1`
           <div
-            class="close-button-container"
-            part="close-button-container"
+            class="header-bar"
+            part="header-bar"
           >
-            <button
-              class="close-button"
-              part="close-button"
-              @click=${this.close}
-              aria-label="Close"
+            <div class="action-item">
+              <slot name="header-actions"></slot>
+            </div>
+            <div class="header-content" part="title">
+              <slot name="label">${this.label}</slot>
+            </div>
+            <div
+              class="close-button-container"
+              part="close-button-container"
             >
-              ${IconX}
-            </button>
+              <button
+                class="close-button"
+                part="close-button"
+                @click=${this.close}
+                aria-label="Close"
+              >
+                ${IconX}
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="content-slot">
+        ` : ""}
+        <div class="content-slot" part="body">
           ${this.icon ? b$1`
                 <div class="icon-container">
                   <mov-icon
@@ -7909,7 +8044,7 @@
               ` : ""}
           <slot></slot>
         </div>
-        <slot name="footer"></slot>
+        <slot name="footer" part="footer"></slot>
       </dialog>
     `;
 		}
@@ -7926,6 +8061,20 @@
 		type: Boolean,
 		reflect: true
 	})], Dialog.prototype, "fullscreen", void 0);
+	__decorate([n$1({
+		type: String,
+		reflect: true
+	})], Dialog.prototype, "label", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true,
+		attribute: "without-header"
+	})], Dialog.prototype, "withoutHeader", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true,
+		attribute: "light-dismiss"
+	})], Dialog.prototype, "lightDismiss", void 0);
 	__decorate([n$1({
 		type: String,
 		reflect: true
@@ -8055,13 +8204,13 @@
 		saveSettingsValue("lazyStart", parseInt(start, 10));
 	}
 	/**
-	* Event handler to change and save the page loading speed (throttle timer). Shows a warning for high speeds.
-	* @param {Event} event - The change event from the range input.
+	* Event handler to change and save the page loading speed. Shows a warning for high speeds.
+	* @param {Event} event - The change event from the select input.
 	*/
-	function changePagesPerSecond(event) {
-		const timer = parseInt(event.currentTarget.value, 10);
-		saveSettingsValue("throttlePageLoad", timer);
-		if (timer < 100) showInfoDialog({
+	function changeLoadSpeed(event) {
+		const speed = event.currentTarget.value;
+		saveSettingsValue("loadSpeed", speed);
+		if (["Extreme", "All"].includes(speed)) showInfoDialog({
 			title: getLocaleString("SPEED_WARNING"),
 			html: getLocaleString("SPEED_WARNING_MESSAGE"),
 			icon: "warning"
@@ -8367,6 +8516,9 @@
 		},
 		VIEW_MODE_RIGHT() {
 			updateViewMode("FluidLTR")();
+		},
+		VIEW_MODE_GALLERY() {
+			updateViewMode("Gallery")();
 		},
 		SCROLL_START() {
 			toggleAutoScroll();
@@ -8711,6 +8863,9 @@
 			super(..._args);
 			this.open = false;
 			this.placement = "end";
+			this.label = "";
+			this.withoutHeader = false;
+			this.lightDismiss = true;
 		}
 		static {
 			this.styles = i$3`
@@ -8810,6 +8965,21 @@
       right: 0;
       transform: translateX(100%);
     }
+    :host([placement='top']) dialog {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      transform: translateY(-100%);
+    }
+    :host([placement='bottom']) dialog {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      top: auto;
+      transform: translateY(100%);
+    }
     :host([open]) dialog {
       transform: none;
     }
@@ -8823,6 +8993,11 @@
       order: 1;
       justify-content: flex-start;
     }
+    .footer-slot {
+      display: block;
+      padding: 1rem;
+      border-top: 1px solid var(--theme-border-color, #e0e0e0);
+    }
   `;
 		}
 		close() {
@@ -8832,8 +9007,11 @@
 			e.preventDefault();
 			this.close();
 		}
+		handleBackdropClick() {
+			if (this.lightDismiss) this.close();
+		}
 		handleClick(event) {
-			if (event.target === this.dialog) this.close();
+			if (this.lightDismiss && event.target === this.dialog) this.close();
 		}
 		updated(changedProperties) {
 			if (changedProperties.has("open")) {
@@ -8879,38 +9057,41 @@
 			return b$1`
       <div
         class="backdrop"
-        @click=${this.close}
+        @click=${this.handleBackdropClick}
       ></div>
       <dialog
         part="dialog"
         @cancel=${this.handleCancel}
         @click=${this.handleClick}
       >
-        <div
-          class="header-bar"
-          part="header-bar"
-        >
-          <div class="action-item">
-            <slot name="header-actions"></slot>
-          </div>
-          <div class="header-content">
-            <slot name="label"></slot>
-          </div>
+        ${!this.withoutHeader ? b$1`
           <div
-            class="close-button-container"
-            part="close-button-container"
+            class="header-bar"
+            part="header-bar"
           >
-            <button
-              class="close-button"
-              part="close-button"
-              @click=${this.close}
-              aria-label="Close"
+            <div class="action-item">
+              <slot name="header-actions"></slot>
+            </div>
+            <div class="header-content" part="title">
+              <slot name="label">${this.label}</slot>
+            </div>
+            <div
+              class="close-button-container"
+              part="close-button-container"
             >
-              ${IconX}
-            </button>
+              <button
+                class="close-button"
+                part="close-button"
+                @click=${this.close}
+                aria-label="Close"
+              >
+                ${IconX}
+              </button>
+            </div>
           </div>
-        </div>
-        <slot class="content-slot"></slot>
+        ` : ""}
+        <slot class="content-slot" part="body"></slot>
+        <slot name="footer" class="footer-slot" part="footer"></slot>
       </dialog>
     `;
 		}
@@ -8923,6 +9104,20 @@
 		type: String,
 		reflect: true
 	})], Drawer.prototype, "placement", void 0);
+	__decorate([n$1({
+		type: String,
+		reflect: true
+	})], Drawer.prototype, "label", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true,
+		attribute: "without-header"
+	})], Drawer.prototype, "withoutHeader", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true,
+		attribute: "light-dismiss"
+	})], Drawer.prototype, "lightDismiss", void 0);
 	__decorate([e$2("dialog")], Drawer.prototype, "dialog", void 0);
 	Drawer = __decorate([t$1("mov-drawer")], Drawer);
 	//#endregion
@@ -8959,6 +9154,9 @@
 			super();
 			this.open = false;
 			this.checkable = false;
+			this.distance = 0;
+			this.skidding = 0;
+			this.placement = "bottom-start";
 			this.boundClickHandler = this.handleClickOutside.bind(this);
 		}
 		connectedCallback() {
@@ -8970,20 +9168,53 @@
 			document.removeEventListener("click", this.boundClickHandler);
 		}
 		handleClickOutside(event) {
-			if (this.open && !event.composedPath().includes(this)) this.open = false;
+			if (this.open && !event.composedPath().includes(this)) this.hide();
+		}
+		show() {
+			if (this.open) return;
+			this.open = true;
+			this.dispatchEvent(new CustomEvent("wa-show", {
+				bubbles: true,
+				composed: true
+			}));
+			setTimeout(() => {
+				this.dispatchEvent(new CustomEvent("wa-after-show", {
+					bubbles: true,
+					composed: true
+				}));
+			}, 150);
+		}
+		hide() {
+			if (!this.open) return;
+			this.open = false;
+			this.dispatchEvent(new CustomEvent("wa-hide", {
+				bubbles: true,
+				composed: true
+			}));
+			setTimeout(() => {
+				this.dispatchEvent(new CustomEvent("wa-after-hide", {
+					bubbles: true,
+					composed: true
+				}));
+			}, 150);
 		}
 		toggle() {
-			this.open = !this.open;
+			if (this.open) this.hide();
+			else this.show();
 		}
 		render() {
 			return b$1`
       <div
         @click=${this.toggle}
         class="trigger-wrapper"
+        part="trigger"
       >
         <slot name="trigger"></slot>
       </div>
-      <div class="dropdown-content">
+      <div
+        class="dropdown-content"
+        part="menu"
+      >
         <slot></slot>
       </div>
     `;
@@ -8997,11 +9228,19 @@
 		type: Boolean,
 		reflect: true
 	})], MovDropdown.prototype, "checkable", void 0);
+	__decorate([n$1({ type: Number })], MovDropdown.prototype, "distance", void 0);
+	__decorate([n$1({ type: Number })], MovDropdown.prototype, "skidding", void 0);
+	__decorate([n$1({ type: String })], MovDropdown.prototype, "placement", void 0);
 	MovDropdown = __decorate([t$1("mov-dropdown")], MovDropdown);
 	var MovDropdownItem = class MovDropdownItem extends i$1 {
 		constructor(..._args) {
 			super(..._args);
 			this.selected = false;
+			this.checked = false;
+			this.disabled = false;
+			this.value = "";
+			this.variant = "default";
+			this.type = "normal";
 		}
 		static {
 			this.styles = i$3`
@@ -9023,9 +9262,18 @@
       background-color: var(--mov-color-fill-normal);
       color: var(--mov-color-on-normal);
     }
-    :host([selected]) .item {
+    :host([selected]) .item,
+    :host([checked]) .item {
       background-color: var(--mov-color-fill-normal);
       color: var(--mov-color-on-normal);
+    }
+    :host([disabled]) .item {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    :host([variant='danger']) .item {
+      color: var(--theme-color-danger, #dc3545);
     }
     .item-content {
       display: flex;
@@ -9038,7 +9286,8 @@
       width: 1.2em;
       height: 1.2em;
     }
-    :host([selected]) .check-icon {
+    :host([selected]) .check-icon,
+    :host([checked]) .check-icon {
       visibility: visible;
     }
     ::slotted([slot='details']) {
@@ -9047,18 +9296,40 @@
     }
   `;
 		}
+		handleSelect() {
+			if (this.disabled) return;
+			this.dispatchEvent(new CustomEvent("wa-select", {
+				detail: { item: this },
+				bubbles: true,
+				composed: true
+			}));
+		}
 		render() {
 			return b$1`
-      <div class="item">
-        <div class="item-content">
+      <div
+        class="item"
+        @click=${this.handleSelect}
+        part="base"
+      >
+        <div
+          class="item-content"
+          part="label"
+        >
           <mov-icon
             class="check-icon"
             name="IconCheck"
+            part="checkmark"
           ></mov-icon>
-          <slot name="icon"></slot>
+          <slot
+            name="icon"
+            part="icon"
+          ></slot>
           <slot></slot>
         </div>
-        <slot name="details"></slot>
+        <slot
+          name="details"
+          part="details"
+        ></slot>
       </div>
     `;
 		}
@@ -9067,16 +9338,43 @@
 		type: Boolean,
 		reflect: true
 	})], MovDropdownItem.prototype, "selected", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true
+	})], MovDropdownItem.prototype, "checked", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true
+	})], MovDropdownItem.prototype, "disabled", void 0);
+	__decorate([n$1({ type: String })], MovDropdownItem.prototype, "value", void 0);
+	__decorate([n$1({
+		type: String,
+		reflect: true
+	})], MovDropdownItem.prototype, "variant", void 0);
+	__decorate([n$1({
+		type: String,
+		reflect: true
+	})], MovDropdownItem.prototype, "type", void 0);
 	MovDropdownItem = __decorate([t$1("mov-dropdown-item")], MovDropdownItem);
 	var MovDivider = class MovDivider extends i$1 {
+		constructor(..._args2) {
+			super(..._args2);
+			this.orientation = "horizontal";
+		}
 		static {
 			this.styles = i$3`
     :host {
       display: block;
     }
-    .divider {
+    :host([orientation='horizontal']) .divider {
       border-top: 1px solid var(--theme-border-color, #ccc);
       margin: 4px 0;
+    }
+    :host([orientation='vertical']) .divider {
+      border-left: 1px solid var(--theme-border-color, #ccc);
+      height: 100%;
+      margin: 0 4px;
+      display: inline-block;
     }
   `;
 		}
@@ -9087,6 +9385,10 @@
     ></div>`;
 		}
 	};
+	__decorate([n$1({
+		type: String,
+		reflect: true
+	})], MovDivider.prototype, "orientation", void 0);
 	MovDivider = __decorate([t$1("mov-divider")], MovDivider);
 	//#endregion
 	//#region node_modules/@gerhobbelt/keyscss/keys.css?inline
@@ -9753,6 +10055,18 @@
               ></mov-icon>
               ${getLocaleString("VIEW_MODE_MANGA")} ${renderKeybind("VIEW_MODE_MANGA")}
             </mov-dropdown-item>
+            <mov-divider></mov-divider>
+            <mov-dropdown-item
+              id="GalleryMode"
+              @click="${updateViewMode("Gallery")}"
+              ?selected=${getSettingsValue("viewMode") === "Gallery"}
+            >
+              <mov-icon
+                slot="icon"
+                name="IconLayoutDashboard"
+              ></mov-icon>
+              ${getLocaleString("VIEW_MODE_GALLERY")} ${renderKeybind("VIEW_MODE_GALLERY")}
+            </mov-dropdown-item>
           </mov-dropdown>
           <mov-dropdown
             id="ZoomDropdown"
@@ -10344,55 +10658,37 @@
       ${getLocaleString("LOAD_SPEED")}
       <select
         id="PagesPerSecond"
-        @change="${changePagesPerSecond}"
+        @change="${changeLoadSpeed}"
       >
         <option
-          value="3000"
-          ?selected=${getSettingsValue("throttlePageLoad") === 3e3}
+          value="Safe"
+          ?selected=${getSettingsValue("loadSpeed") === "Safe"}
         >
-          0.3(${getLocaleString("SLOWLY")})
+          ${getLocaleString("SLOWLY")} (Safe)
         </option>
         <option
-          value="2000"
-          ?selected=${getSettingsValue("throttlePageLoad") === 2e3}
+          value="Standard"
+          ?selected=${getSettingsValue("loadSpeed") === "Standard"}
         >
-          0.5
+          ${getLocaleString("NORMAL")} (Standard)
         </option>
         <option
-          value="1000"
-          ?selected=${getSettingsValue("throttlePageLoad") === 1e3}
+          value="Faster"
+          ?selected=${getSettingsValue("loadSpeed") === "Faster"}
         >
-          01(${getLocaleString("NORMAL")})
+          ${getLocaleString("FAST")} (Faster)
         </option>
         <option
-          value="500"
-          ?selected=${getSettingsValue("throttlePageLoad") === 500}
+          value="Extreme"
+          ?selected=${getSettingsValue("loadSpeed") === "Extreme"}
         >
-          02
+          ${getLocaleString("EXTREME")} (Extreme)
         </option>
         <option
-          value="250"
-          ?selected=${getSettingsValue("throttlePageLoad") === 250}
+          value="All"
+          ?selected=${getSettingsValue("loadSpeed") === "All"}
         >
-          04(${getLocaleString("FAST")})
-        </option>
-        <option
-          value="125"
-          ?selected=${getSettingsValue("throttlePageLoad") === 125}
-        >
-          08
-        </option>
-        <option
-          value="100"
-          ?selected=${getSettingsValue("throttlePageLoad") === 100}
-        >
-          10(${getLocaleString("EXTREME")})
-        </option>
-        <option
-          value="1"
-          ?selected=${getSettingsValue("throttlePageLoad") === 1}
-        >
-          ${getLocaleString("ALL_PAGES")}
+          ${getLocaleString("ALL_PAGES")} (All)
         </option>
       </select>
     </div>
@@ -10862,6 +11158,11 @@
             label=${getLocaleString("VIEW_MODE_MANGA")}
             icon="IconBookArrowLeft"
         ></segmented-control-option>
+        <segmented-control-option
+            value="Gallery"
+            label=${getLocaleString("VIEW_MODE_GALLERY")}
+            icon="IconLayoutDashboard"
+        ></segmented-control-option>
       </segmented-control>
     </div>
   `;
@@ -10984,7 +11285,64 @@
 		}
 	}
 	//#endregion
+	//#region src/core/WorkerPool.ts
+	var WorkerPool = class {
+		constructor(speed, customDelay) {
+			this.queue = [];
+			this.activeCount = 0;
+			this.lastRunTime = 0;
+			const config = {
+				Safe: {
+					concurrency: 5,
+					delay: 1e3
+				},
+				Standard: {
+					concurrency: 5,
+					delay: 500
+				},
+				Faster: {
+					concurrency: 10,
+					delay: 500
+				},
+				Extreme: {
+					concurrency: 10,
+					delay: 250
+				},
+				All: {
+					concurrency: 20,
+					delay: 50
+				}
+			}[speed];
+			this.maxConcurrency = config.concurrency;
+			this.minDelay = customDelay ?? config.delay;
+		}
+		add(task) {
+			this.queue.push(task);
+			this.runNext();
+		}
+		async runNext() {
+			if (this.activeCount >= this.maxConcurrency || this.queue.length === 0) return;
+			const timeSinceLastRun = Date.now() - this.lastRunTime;
+			if (timeSinceLastRun < this.minDelay) {
+				setTimeout(() => this.runNext(), this.minDelay - timeSinceLastRun);
+				return;
+			}
+			const task = this.queue.shift();
+			if (task) {
+				this.activeCount += 1;
+				this.lastRunTime = Date.now();
+				try {
+					await task();
+				} finally {
+					this.activeCount -= 1;
+					this.runNext();
+				}
+			}
+		}
+	};
+	//#endregion
 	//#region src/core/Image.ts
+	var pool;
 	/**
 	* Normalizes a URL by trimming whitespace and ensuring it starts with a protocol.
 	* @param {string} url - The URL to normalize.
@@ -11003,13 +11361,12 @@
 	* @param {IMangaImages | IMangaPages} manga - The manga object with image loading configurations.
 	* @param {number} index - The page number of the image.
 	* @param {string} imageSrc - The source URL of the image.
-	* @param {number} [position=0] - The position in the loading sequence, used for throttling.
 	*/
-	async function addImg(manga, index, imageSrc, position = 0) {
+	async function addImg(manga, index, imageSrc) {
 		const image = getAppStateValue("images")?.[index];
 		if (image?.status && image.status !== "pending") return;
 		changeImage(index, () => ({ status: "loading" }));
-		setTimeout(async () => {
+		pool.add(async () => {
 			let src = normalizeUrl(imageSrc);
 			let blob;
 			let status = "loaded";
@@ -11029,7 +11386,7 @@
 				status
 			}));
 			logScriptVerbose("Loaded Image:", index, "Source:", src);
-		}, (manga.timer ?? getSettingsValue("throttlePageLoad")) * position);
+		});
 		if (manga.pages === index) removeURLBookmark();
 	}
 	/**
@@ -11037,25 +11394,23 @@
 	* @param {IMangaPages} manga - The manga object with page loading configurations.
 	* @param {number} index - The page number.
 	* @param {string} pageUrl - The URL of the page containing the image.
-	* @param {number} [position=0] - The position in the loading sequence, used for throttling.
 	*/
-	async function addPage(manga, index, pageUrl, position = 0) {
+	async function addPage(manga, index, pageUrl) {
 		const image = getAppStateValue("images")?.[index];
 		if (image?.status && image.status !== "pending") return;
 		changeImage(index, () => ({ status: "loading" }));
-		setTimeout(async () => {
+		pool.add(async () => {
 			try {
 				const imageSrc = await getElementAttribute(pageUrl, manga.img, manga.lazyAttr ?? "src");
 				if (imageSrc) {
 					changeImage(index, () => ({ status: "pending" }));
-					await addImg(manga, index, imageSrc, 0);
+					await addImg(manga, index, imageSrc);
 				} else changeImage(index, () => ({ status: "error" }));
 			} catch (e) {
 				logScript("Failed to get page attribute", e);
 				changeImage(index, () => ({ status: "error" }));
 			}
-		}, (manga.timer ?? getSettingsValue("throttlePageLoad")) * position);
-		if (manga.pages === position) removeURLBookmark();
+		});
 	}
 	/**
 	* Loads a manga by fetching individual page URLs and extracting the image source from each.
@@ -11063,8 +11418,8 @@
 	* @param {IMangaPages} manga - The manga object with a list of page URLs.
 	*/
 	function loadMangaPages(begin, manga) {
-		sequence(manga.pages, begin).filter((_index, position) => !(manga.lazy ?? getSettingsValue("lazyLoadImages")) || position <= getSettingsValue("lazyStart")).forEach((index, position) => {
-			addPage(manga, index, manga.listPages[index - 1], position);
+		sequence(manga.pages, begin).filter((_index, position) => !(manga.lazy ?? getSettingsValue("lazyLoadImages")) || position <= getSettingsValue("lazyStart")).forEach((index) => {
+			addPage(manga, index, manga.listPages[index - 1]);
 		});
 	}
 	/**
@@ -11073,8 +11428,8 @@
 	* @param {IMangaImages} manga - The manga object with a list of image URLs.
 	*/
 	function loadMangaImages(begin, manga) {
-		sequence(manga.pages, begin).filter((_index, position) => !(manga.lazy ?? getSettingsValue("lazyLoadImages")) || position <= getSettingsValue("lazyStart")).forEach((index, position) => {
-			addImg(manga, index, manga.listImages[index - 1], position);
+		sequence(manga.pages, begin).filter((_index, position) => !(manga.lazy ?? getSettingsValue("lazyLoadImages")) || position <= getSettingsValue("lazyStart")).forEach((index) => {
+			addImg(manga, index, manga.listImages[index - 1]);
 		});
 	}
 	/**
@@ -11087,8 +11442,9 @@
 		await waitForFunc(() => getAppStateValue("manga") !== void 0);
 		const manga = getAppStateValue("manga");
 		const begin = manga.begin ?? 1;
+		pool = new WorkerPool(getSettingsValue("loadSpeed"), manga.timer);
 		logScriptVerbose("Loading Images");
-		logScriptVerbose(`Intervals: ${manga.timer ?? getSettingsValue("throttlePageLoad") ?? "Default(1000)"}`);
+		logScriptVerbose(`Speed: ${getSettingsValue("loadSpeed")}`);
 		logScriptVerbose(`Lazy: ${manga.lazy ?? getSettingsValue("lazyLoadImages")}, Starting from: ${getSettingsValue("lazyStart")}`);
 		applyZoom();
 		if (isImagesManga(manga)) {
@@ -11116,12 +11472,12 @@
 						lazyAttr
 					});
 				},
-				wait: getSettingsValue("throttlePageLoad")
+				wait: 0
 			});
 		} else logScript("No Loading Method Found");
 		appState.listen((value, oldValue, changedKey) => {
 			if (changedKey === "currentPage" && value.currentPage > oldValue.currentPage) for (let i = value.currentPage; i < Math.min(value.currentPage + 5, manga.pages + 1); i++) {
-				if (value.images?.[i]?.src !== void 0) continue;
+				if (value.images?.[i]?.src !== void 0 || value.images?.[i]?.status === "loading") continue;
 				if (isImagesManga(manga)) addImg(manga, i, manga.listImages[i - 1]);
 				else if (isPagesManga(manga)) addPage(manga, i, manga.listPages[i - 1]);
 			}
@@ -11429,13 +11785,14 @@
 	function getImageStyle(index) {
 		const image = getAppStateValue("images")?.[index];
 		const isBook = getSettingsValue("viewMode").match(/^(Book|Manga)$/);
+		const isGallery = getSettingsValue("viewMode") === "Gallery";
 		const isFluid = getSettingsValue("viewMode").startsWith("Fluid");
 		const withNavbar = getSettingsValue("navbar") === "bottom";
 		return {
 			width: image?.width ? `${image.width}px` : "auto",
 			height: image?.height ? `${image.height}px` : "auto",
 			"max-height": isFluid ? `${window.innerHeight + (withNavbar ? -34 : 0)}px` : void 0,
-			"min-width": !isBook ? `${getSettingsValue("minZoom")}vw` : void 0
+			"min-width": !isBook && !isGallery ? `${getSettingsValue("minZoom")}vw` : void 0
 		};
 	}
 	/**
@@ -11619,6 +11976,7 @@
   ${".PageButton .icon-tabler {\r\n  height: 1rem;\r\n  width: 1rem;\r\n  vertical-align: sub;\r\n}\r\n\r\n.PageButton,\r\n.PageButton:visited,\r\n.PageButton:link {\r\n  cursor: pointer;\r\n  border-radius: 5px;\r\n  border-width: 1px;\r\n  border-style: solid;\r\n  padding: 2px;\r\n  min-height: 32px;\r\n  color: var(--mov-color-on-loud);\r\n  background-color: var(--mov-color-fill-loud);\r\n  border-color: var(--theme-border-color);\r\n  text-decoration: none;\r\n}\r\n\r\n.PageButton:active,\r\n.PageButton:hover {\r\n  opacity: 0.8;\r\n}\r\n\r\n.PageButton[selected] {\r\n  background-color: var(--mov-color-fill-normal);\r\n  color: var(--mov-color-on-normal);\r\n  border: 1px solid var(--theme-border-color);\r\n}\r\n\r\n.PageButton.hidden {\r\n  display: none;\r\n}\r\n\r\n.MangaPage {\r\n  width: 100%;\r\n  display: inline-block;\r\n  text-align: center;\r\n  line-height: 0;\r\n  min-height: 22px;\r\n  min-width: 100%;\r\n}\r\n\r\n.PageContent {\r\n  text-align: center;\r\n  display: inline-block;\r\n  overflow-x: auto;\r\n  max-width: 100%;\r\n  transition: all 0.3s ease-in-out;\r\n  height: 100%;\r\n  overflow-y: hidden;\r\n}\r\n\r\n.MangaPage.hide .PageContent {\r\n  height: 0;\r\n}\r\n\r\n.PageContent .PageImg[src=\"\"],\r\n.PageContent .PageImg:not([src]),\r\n.PageContent .PageImg.imgBroken {\r\n  width: 40vw;\r\n  height: 80vh;\r\n  display: inline-block;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: 20%;\r\n  background-color: var(--theme-hightlight-color);\r\n  position: relative;\r\n  text-align: center;\r\n  line-height: 80vh;\r\n  vertical-align: top;\r\n  color: var(--theme-text-color);\r\n  font-size: 1rem;\r\n  min-width: 40vw;\r\n  min-height: 50vh;\r\n  max-width: 100%;\r\n  max-height: 100%;\r\n  margin: 0;\r\n}\r\n\r\n.PageContent .PageImg[src=\"\"]:before,\r\n.PageContent .PageImg:not([src]):before,\r\n.PageContent .PageImg.imgBroken:before {\r\n  content: attr(alt);\r\n  position: absolute;\r\n  top: 40%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  white-space: pre-wrap;\r\n  text-align: center;\r\n  color: var(--theme-text-color);\r\n  font-size: 1rem;\r\n}\r\n\r\n.PageFunctions {\r\n  font-family: monospace;\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  align-items: center;\r\n  margin: 0;\r\n  padding: 0;\r\n  gap: 3px;\r\n  position: absolute;\r\n  right: 0;\r\n}\r\n\r\n.PageFunctions > .PageIndex {\r\n  background-color: var(--mov-color-fill-loud);\r\n  color: var(--mov-color-on-loud);\r\n  min-width: 20px;\r\n  text-align: center;\r\n  display: inline-block;\r\n  padding: 3px 5px;\r\n  line-height: 1rem;\r\n  border-radius: 5px;\r\n}\r\n\r\n.PageFunctions .PageButton {\r\n  padding: 3px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin: 0;\r\n  border-width: 0;\r\n  min-height: auto;\r\n  opacity: 0.5;\r\n}\r\n\r\n.PageFunctions:hover .PageButton {\r\n  opacity: 1;\r\n}\r\n\r\n.PageFunctions .PageButton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\n#Chapter.Vertical .separator {\r\n  display: flex;\r\n  align-items: center;\r\n  text-align: center;\r\n  font-style: italic;\r\n}\r\n\r\n#Chapter.Vertical .separator::before,\r\n#Chapter.Vertical .separator::after {\r\n  content: \"\";\r\n  flex: 1;\r\n  border-bottom: 1px solid var(--theme-text-color);\r\n}\r\n\r\n#Chapter.Vertical.separator:not(:empty)::before {\r\n  margin-right: 0.25em;\r\n}\r\n\r\n#Chapter.Vertical.separator:not(:empty)::after {\r\n  margin-left: 0.25em;\r\n}\r\n\r\n#Chapter:not(.separator) .separator,\r\n#Chapter:not(.Vertical) .separator {\r\n  display: none;\r\n}\r\n"}
   ${"#Chapter.FluidLTR,\r\n#Chapter.FluidRTL {\r\n  display: flex;\r\n  overflow-x: auto;\r\n  min-width: auto;\r\n\r\n  .ZoomWidth {\r\n    display: none;\r\n  }\r\n\r\n  .PageImg {\r\n    min-width: unset;\r\n  }\r\n\r\n  .MangaPage {\r\n    width: initial;\r\n    min-width: fit-content;\r\n    position: relative;\r\n  }\r\n\r\n  .MangaPage.DoublePage {\r\n    grid-column: span 2;\r\n  }\r\n}\r\n\r\n#Chapter.FluidLTR {\r\n  flex-direction: row;\r\n\r\n  .MangaPage .PageFunctions {\r\n    right: auto;\r\n    left: 0;\r\n    direction: rtl;\r\n  }\r\n}\r\n\r\n#Chapter.FluidRTL {\r\n  flex-direction: row-reverse;\r\n}\r\n"}
   ${"/* Book mode - Left to Right (Western comic/manga style) */\r\n#Chapter:where(.Book, .Manga) {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr;\r\n  grid-auto-flow: row;\r\n  width: 100%;\r\n  min-width: auto;\r\n  gap: 0;\r\n}\r\n\r\n#Chapter:where(.Book, .Manga) .MangaPage {\r\n  width: 100%;\r\n  display: block;\r\n  position: relative;\r\n  min-height: 22px;\r\n  overflow: hidden;\r\n}\r\n\r\n/* Default positioning for all controls in Book mode - top right */\r\n#Chapter:where(.Book, .Manga) .MangaPage .PageFunctions {\r\n  top: 0;\r\n  right: 0;\r\n  left: auto;\r\n  flex-direction: row;\r\n  border-radius: 0 0 0 4px;\r\n}\r\n\r\n/* Left-side images - controls at top left with reversed order */\r\n#Chapter:where(.Book, .Manga) .MangaPage.LeftPage .PageFunctions {\r\n  right: auto;\r\n  left: 0;\r\n  flex-direction: row-reverse;\r\n  border-radius: 0 0 4px 0;\r\n}\r\n\r\n#Chapter:where(.Book, .Manga) .MangaPage.DoublePage {\r\n  grid-column: span 2;\r\n}\r\n\r\n#Chapter:where(.Book, .Manga) .MangaPage .PageContent {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-shrink: 0;\r\n  overflow: hidden;\r\n}\r\n\r\n/* Left page - align image to the right (toward middle) */\r\n#Chapter:where(.Book, .Manga) .MangaPage.LeftPage .PageContent {\r\n  justify-content: flex-end;\r\n  padding-right: 0;\r\n}\r\n\r\n/* Right page - align image to the left (toward middle) */\r\n#Chapter:where(.Book, .Manga) .MangaPage.RightPage .PageContent {\r\n  justify-content: flex-start;\r\n  padding-left: 0;\r\n}\r\n\r\n/* Double page - center the image */\r\n#Chapter:where(.Book, .Manga) .MangaPage.DoublePage .PageContent {\r\n  justify-content: center;\r\n}\r\n\r\n/* Manga mode - Right to Left (Traditional manga/comic style) */\r\n#Chapter.Manga {\r\n  direction: rtl;\r\n}\r\n\r\n#Chapter.Manga .MangaPage {\r\n  direction: ltr; /* Reset text direction for page contents */\r\n}\r\n"}
+  ${"#Chapter.Gallery {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  justify-content: center;\r\n  gap: 10px;\r\n  padding: 10px;\r\n}\r\n\r\n.Gallery .MangaPage {\r\n  width: auto;\r\n  min-width: unset;\r\n  flex: 0 1 auto;\r\n}\r\n\r\n.Gallery .MangaPage .PageContent .PageImg {\r\n  min-width: unset;\r\n}\r\n\r\n.Gallery .PageFunctions,\r\n.Gallery .separator {\r\n  display: none;\r\n}\r\n"}
   ${media_default}
   ${"@-webkit-keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@-webkit-keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n@keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n.icon-tabler-loader-2,\r\n.animate-spin {\r\n  -webkit-animation: spin 1s linear infinite;\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n.animate-spin-reverse {\r\n  -webkit-animation: spin-reverse 1s linear infinite;\r\n  animation: spin-reverse 1s linear infinite;\r\n}\r\n"}
 `;
