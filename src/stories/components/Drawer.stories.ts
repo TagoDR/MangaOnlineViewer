@@ -7,7 +7,10 @@ const meta: Meta = {
   component: 'mov-drawer',
   argTypes: {
     open: { control: 'boolean' },
-    placement: { control: { type: 'radio', options: ['start', 'end'] } },
+    placement: { control: { type: 'radio', options: ['top', 'end', 'bottom', 'start'] } },
+    label: { control: 'text' },
+    withoutHeader: { control: 'boolean', attribute: 'without-header' },
+    lightDismiss: { control: 'boolean', attribute: 'light-dismiss' },
   },
   render: args => {
     const container = document.createElement('div');
@@ -26,11 +29,14 @@ const meta: Meta = {
       <mov-drawer
         ?open=${args.open}
         placement=${args.placement || 'end'}
+        label=${args.label || ''}
+        ?without-header=${args.withoutHeader}
+        ?light-dismiss=${args.lightDismiss}
         @close=${closePanel}
       >
-        <span slot="label">${args.label}</span>
         ${args.action ? html`<button slot="header-actions">${args.action}</button>` : nothing}
         ${args.slot}
+        ${args.footer ? html`<div slot="footer">${args.footer}</div>` : nothing}
       </mov-drawer>
     `;
     render(template, container);
@@ -69,5 +75,15 @@ export const WithHeaderAndAction: Story = {
     label: 'Panel Title',
     action: 'Action',
     slot: html`<p>This panel has a header and an action button.</p>`,
+  },
+};
+
+export const WithFooter: Story = {
+  name: 'With Footer',
+  args: {
+    ...DrawerEnd.args,
+    label: 'Footer Example',
+    slot: html`<p>This panel has a footer.</p>`,
+    footer: html`<mov-button variant="brand">Footer Action</mov-button>`,
   },
 };

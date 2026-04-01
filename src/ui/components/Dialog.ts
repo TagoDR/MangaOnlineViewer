@@ -201,6 +201,9 @@ export default class Dialog extends LitElement {
   @property({ type: Boolean, reflect: true }) open = false;
   @property({ type: String, reflect: true }) mode: 'dialog' | 'inline' = 'dialog';
   @property({ type: Boolean, reflect: true }) fullscreen = false;
+  @property({ type: String, reflect: true }) label = '';
+  @property({ type: Boolean, reflect: true, attribute: 'without-header' }) withoutHeader = false;
+  @property({ type: Boolean, reflect: true, attribute: 'light-dismiss' }) lightDismiss = true;
   @property({ type: String, reflect: true }) icon?:
     | 'info'
     | 'warning'
@@ -220,8 +223,14 @@ export default class Dialog extends LitElement {
     this.close();
   }
 
+  private handleBackdropClick() {
+    if (this.mode !== 'inline' && this.lightDismiss) {
+      this.close();
+    }
+  }
+
   private handleClick(event: MouseEvent) {
-    if (this.mode !== 'inline' && event.target === this.dialog) {
+    if (this.mode !== 'inline' && this.lightDismiss && event.target === this.dialog) {
       this.close();
     }
   }
@@ -261,38 +270,44 @@ export default class Dialog extends LitElement {
     return html`
       <div
         class="backdrop"
-        @click=${this.close}
+        @click=${this.handleBackdropClick}
       ></div>
       <dialog
         part="dialog"
         @cancel=${this.handleCancel}
         @click=${this.handleClick}
       >
-        <div
-          class="header-bar"
-          part="header-bar"
-        >
-          <div class="action-item">
-            <slot name="header-actions"></slot>
-          </div>
-          <div class="header-content">
-            <slot name="label"></slot>
-          </div>
+        ${
+          !this.withoutHeader
+            ? html`
           <div
-            class="close-button-container"
-            part="close-button-container"
+            class="header-bar"
+            part="header-bar"
           >
-            <button
-              class="close-button"
-              part="close-button"
-              @click=${this.close}
-              aria-label="Close"
+            <div class="action-item">
+              <slot name="header-actions"></slot>
+            </div>
+            <div class="header-content" part="title">
+              <slot name="label">${this.label}</slot>
+            </div>
+            <div
+              class="close-button-container"
+              part="close-button-container"
             >
-              ${IconX}
-            </button>
+              <button
+                class="close-button"
+                part="close-button"
+                @click=${this.close}
+                aria-label="Close"
+              >
+                ${IconX}
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="content-slot">
+        `
+            : ''
+        }
+        <div class="content-slot" part="body">
           ${
             this.icon
               ? html`
@@ -307,7 +322,7 @@ export default class Dialog extends LitElement {
           }
           <slot></slot>
         </div>
-        <slot name="footer"></slot>
+        <slot name="footer" part="footer"></slot>
       </dialog>
     `;
   }

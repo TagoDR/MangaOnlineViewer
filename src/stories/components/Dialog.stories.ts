@@ -12,6 +12,9 @@ const meta: Meta = {
     open: { control: 'boolean' },
     mode: { control: 'radio', options: ['dialog', 'inline'] },
     fullscreen: { control: 'boolean' },
+    label: { control: 'text' },
+    withoutHeader: { control: 'boolean', attribute: 'without-header' },
+    lightDismiss: { control: 'boolean', attribute: 'light-dismiss' },
     icon: { control: 'select', options: ['info', 'warning', 'success', 'error', 'question'] },
     slot: { control: 'object' },
   },
@@ -31,13 +34,16 @@ const meta: Meta = {
       <mov-dialog
         ?open=${args.open}
         ?fullscreen=${args.fullscreen}
+        label=${args.label || ''}
+        ?without-header=${args.withoutHeader}
+        ?light-dismiss=${args.lightDismiss}
         .icon="${args.icon}"
         .mode="${args.mode}"
         @close=${closePanel}
       >
-        <span slot="label">${args.label}</span>
         ${args.action ? html`<button slot="header-actions">${args.action}</button>` : nothing}
-        ${args.slot} ${args.slot}
+        ${args.slot}
+        ${args.footer ? html`<div slot="footer">${args.footer}</div>` : nothing}
       </mov-dialog>
     `;
     render(template, container);

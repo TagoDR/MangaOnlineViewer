@@ -44,7 +44,12 @@ export default class Button extends LitElement {
   @state() private readonly hasEnd = false;
 
   @property() title = '';
-  @property({ reflect: true }) appearance: 'accent' | 'filled' | 'outlined' | 'plain' = 'accent';
+  @property({ reflect: true }) appearance:
+    | 'accent'
+    | 'filled'
+    | 'outlined'
+    | 'filled-outlined'
+    | 'plain' = 'accent';
   @property({ reflect: true }) variant: 'neutral' | 'brand' | 'success' | 'warning' | 'danger' =
     'brand';
   @property({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -57,9 +62,9 @@ export default class Button extends LitElement {
   @property({ reflect: true }) value?: string;
   @property({ reflect: true }) href?: string;
   @property() target?: '_blank' | '_parent' | '_self' | '_top';
-  @property() rel?: string;
+  @property({ reflect: true }) rel?: string;
   @property() download?: string;
-  @property({ reflect: true }) form: string | null = null;
+  @property({ reflect: true }) form?: string;
 
   private handleClick(event: MouseEvent) {
     if (this.disabled || this.loading) {

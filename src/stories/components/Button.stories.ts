@@ -65,6 +65,10 @@ export default {
       options: ['_self', '_blank', '_parent', '_top'],
       description: 'Link target attribute (for `href`)',
     },
+    rel: {
+      control: 'text',
+      description: 'Link rel attribute (for `href`)',
+    },
     slot: {
       control: 'text',
       description: 'Button text content',
@@ -79,6 +83,7 @@ export default {
       ?loading="${args.loading}"
       href="${args.href || undefined}"
       target="${args.target || undefined}"
+      rel="${args.rel || undefined}"
     >
       ${args.slot}
     </mov-button>
