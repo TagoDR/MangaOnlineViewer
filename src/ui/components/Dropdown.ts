@@ -47,6 +47,22 @@ export class MovDropdown extends LitElement {
   @property({ type: Boolean, reflect: true })
   checkable = false;
 
+  @property({ type: Number }) distance = 0;
+  @property({ type: Number }) skidding = 0;
+  @property({ type: String }) placement:
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end' = 'bottom-start';
+
   private readonly boundClickHandler: (e: MouseEvent) => void;
 
   constructor() {
@@ -66,12 +82,34 @@ export class MovDropdown extends LitElement {
 
   handleClickOutside(event: MouseEvent) {
     if (this.open && !event.composedPath().includes(this)) {
-      this.open = false;
+      this.hide();
     }
   }
 
+  show() {
+    if (this.open) return;
+    this.open = true;
+    this.dispatchEvent(new CustomEvent('wa-show', { bubbles: true, composed: true }));
+    setTimeout(() => {
+      this.dispatchEvent(new CustomEvent('wa-after-show', { bubbles: true, composed: true }));
+    }, 150);
+  }
+
+  hide() {
+    if (!this.open) return;
+    this.open = false;
+    this.dispatchEvent(new CustomEvent('wa-hide', { bubbles: true, composed: true }));
+    setTimeout(() => {
+      this.dispatchEvent(new CustomEvent('wa-after-hide', { bubbles: true, composed: true }));
+    }, 150);
+  }
+
   toggle() {
-    this.open = !this.open;
+    if (this.open) {
+      this.hide();
+    } else {
+      this.show();
+    }
   }
 
   render() {
@@ -79,10 +117,14 @@ export class MovDropdown extends LitElement {
       <div
         @click=${this.toggle}
         class="trigger-wrapper"
+        part="trigger"
       >
         <slot name="trigger"></slot>
       </div>
-      <div class="dropdown-content">
+      <div
+        class="dropdown-content"
+        part="menu"
+      >
         <slot></slot>
       </div>
     `;
@@ -122,9 +164,18 @@ export class MovDropdownItem extends LitElement {
       background-color: var(--mov-color-fill-normal);
       color: var(--mov-color-on-normal);
     }
-    :host([selected]) .item {
+    :host([selected]) .item,
+    :host([checked]) .item {
       background-color: var(--mov-color-fill-normal);
       color: var(--mov-color-on-normal);
+    }
+    :host([disabled]) .item {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    :host([variant='danger']) .item {
+      color: var(--theme-color-danger, #dc3545);
     }
     .item-content {
       display: flex;
@@ -137,7 +188,8 @@ export class MovDropdownItem extends LitElement {
       width: 1.2em;
       height: 1.2em;
     }
-    :host([selected]) .check-icon {
+    :host([selected]) .check-icon,
+    :host([checked]) .check-icon {
       visibility: visible;
     }
     ::slotted([slot='details']) {
@@ -149,18 +201,53 @@ export class MovDropdownItem extends LitElement {
   @property({ type: Boolean, reflect: true })
   selected = false;
 
+  @property({ type: Boolean, reflect: true })
+  checked = false;
+
+  @property({ type: Boolean, reflect: true })
+  disabled = false;
+
+  @property({ type: String }) value = '';
+  @property({ type: String, reflect: true }) variant: 'default' | 'danger' = 'default';
+  @property({ type: String, reflect: true }) type: 'normal' | 'checkbox' = 'normal';
+
+  private handleSelect() {
+    if (this.disabled) return;
+    this.dispatchEvent(
+      new CustomEvent('wa-select', {
+        detail: { item: this },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }
+
   render() {
     return html`
-      <div class="item">
-        <div class="item-content">
+      <div
+        class="item"
+        @click=${this.handleSelect}
+        part="base"
+      >
+        <div
+          class="item-content"
+          part="label"
+        >
           <mov-icon
             class="check-icon"
             name="IconCheck"
+            part="checkmark"
           ></mov-icon>
-          <slot name="icon"></slot>
+          <slot
+            name="icon"
+            part="icon"
+          ></slot>
           <slot></slot>
         </div>
-        <slot name="details"></slot>
+        <slot
+          name="details"
+          part="details"
+        ></slot>
       </div>
     `;
   }
@@ -180,11 +267,19 @@ export class MovDivider extends LitElement {
     :host {
       display: block;
     }
-    .divider {
+    :host([orientation='horizontal']) .divider {
       border-top: 1px solid var(--theme-border-color, #ccc);
       margin: 4px 0;
     }
+    :host([orientation='vertical']) .divider {
+      border-left: 1px solid var(--theme-border-color, #ccc);
+      height: 100%;
+      margin: 0 4px;
+      display: inline-block;
+    }
   `;
+
+  @property({ type: String, reflect: true }) orientation: 'horizontal' | 'vertical' = 'horizontal';
 
   render() {
     return html`<div

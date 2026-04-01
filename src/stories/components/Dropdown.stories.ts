@@ -30,25 +30,82 @@ export default {
       control: 'boolean',
       description: 'Whether the dropdown items should display a checkmark when selected',
     },
+    distance: { control: 'number' },
+    skidding: { control: 'number' },
+    placement: {
+      control: 'select',
+      options: [
+        'top',
+        'top-start',
+        'top-end',
+        'bottom',
+        'bottom-start',
+        'bottom-end',
+        'right',
+        'right-start',
+        'right-end',
+        'left',
+        'left-start',
+        'left-end',
+      ],
+    },
   },
   render: args => html`
-    <mov-dropdown ?open=''${args.open}'' ?checkable=''${args.checkable}''>
-      <button slot="trigger" class="dropdown-trigger">Dropdown Trigger</button>
+    <mov-dropdown
+      ?open=${args.open}
+      ?checkable=${args.checkable}
+      .distance=${args.distance}
+      .skidding=${args.skidding}
+      .placement=${args.placement}
+    >
+      <button
+        slot="trigger"
+        class="dropdown-trigger"
+      >
+        Dropdown Trigger
+      </button>
       <mov-dropdown-item>
-        <mov-icon slot="icon" name="IconSettings"></mov-icon>
+        <mov-icon
+          slot="icon"
+          name="IconSettings"
+        ></mov-icon>
         Settings
       </mov-dropdown-item>
       <mov-dropdown-item selected>
-        <mov-icon slot="icon" name="IconKeyboard"></mov-icon>
+        <mov-icon
+          slot="icon"
+          name="IconKeyboard"
+        ></mov-icon>
         Keybindings
       </mov-dropdown-item>
       <mov-divider></mov-divider>
+      <mov-dropdown-item disabled>
+        <mov-icon
+          slot="icon"
+          name="IconLock"
+        ></mov-icon>
+        Disabled Item
+      </mov-dropdown-item>
+      <mov-dropdown-item variant="danger">
+        <mov-icon
+          slot="icon"
+          name="IconTrash"
+        ></mov-icon>
+        Danger Item
+      </mov-dropdown-item>
+      <mov-divider></mov-divider>
       <mov-dropdown-item>
-        <mov-icon slot="icon" name="IconBookmarks"></mov-icon>
+        <mov-icon
+          slot="icon"
+          name="IconBookmarks"
+        ></mov-icon>
         Bookmarks
       </mov-dropdown-item>
       <mov-dropdown-item>
-        <mov-icon slot="icon" name="IconPlayerPlay"></mov-icon>
+        <mov-icon
+          slot="icon"
+          name="IconPlayerPlay"
+        ></mov-icon>
         Start Auto Scroll
       </mov-dropdown-item>
     </mov-dropdown>

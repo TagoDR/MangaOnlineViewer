@@ -51,12 +51,37 @@ const meta: Meta<ColorPicker> = {
       options: ['inline', 'popup'],
     },
     swatches: { control: 'object' },
+    label: { control: 'text' },
+    hint: { control: 'text' },
+    size: {
+      control: 'select',
+      options: ['small', 'medium', 'large'],
+    },
+    disabled: { control: 'boolean' },
+    name: { control: 'text' },
   },
   args: {
     value: '#228be6',
     mode: 'inline',
     swatches: null,
+    label: 'Color',
+    hint: 'Select a theme color',
+    size: 'medium',
+    disabled: false,
+    name: 'theme-color',
   },
+  render: args => html`
+    <mov-color-picker
+      .mode="${args.mode}"
+      .value="${args.value}"
+      .swatches="${args.swatches}"
+      label="${args.label}"
+      hint="${args.hint}"
+      size="${args.size}"
+      ?disabled="${args.disabled}"
+      name="${args.name}"
+    ></mov-color-picker>
+  `,
 };
 
 export default meta;

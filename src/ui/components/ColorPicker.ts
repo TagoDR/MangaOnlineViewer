@@ -163,6 +163,24 @@ class ColorPicker extends LitElement {
   @property({ type: String })
   value = '#228be6';
 
+  @property({ type: String, attribute: 'default-value' })
+  defaultValue = '#228be6';
+
+  @property({ type: String })
+  label = '';
+
+  @property({ type: String })
+  hint = '';
+
+  @property({ type: String })
+  name = '';
+
+  @property({ type: Boolean, reflect: true })
+  disabled = false;
+
+  @property({ type: String, reflect: true })
+  size: 'small' | 'medium' | 'large' = 'medium';
+
   @property({ type: Array })
   swatches: string[] | null = null;
 
@@ -231,13 +249,33 @@ class ColorPicker extends LitElement {
 
   private handleClickOutside(e: MouseEvent) {
     if (this.opened && !e.composedPath().includes(this)) {
-      this.opened = false;
+      this.hide();
     }
+  }
+
+  show() {
+    if (this.disabled || this.opened) return;
+    this.opened = true;
+    this.dispatchEvent(new CustomEvent('wa-show', { bubbles: true, composed: true }));
+    setTimeout(() => {
+      this.dispatchEvent(new CustomEvent('wa-after-show', { bubbles: true, composed: true }));
+    }, 150);
+  }
+
+  hide() {
+    if (!this.opened) return;
+    this.opened = false;
+    this.dispatchEvent(new CustomEvent('wa-hide', { bubbles: true, composed: true }));
+    setTimeout(() => {
+      this.dispatchEvent(new CustomEvent('wa-after-hide', { bubbles: true, composed: true }));
+    }, 150);
   }
 
   private togglePopup() {
     if (this.mode === 'popup') {
-      if (!this.opened) {
+      if (this.opened) {
+        this.hide();
+      } else {
         const triggerRect = this.getBoundingClientRect();
         const pickerWidth = 250; // from CSS
 
@@ -267,8 +305,8 @@ class ColorPicker extends LitElement {
         } else {
           this.popupDirection = 'left';
         }
+        this.show();
       }
-      this.opened = !this.opened;
     }
   }
 

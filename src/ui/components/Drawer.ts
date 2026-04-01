@@ -123,6 +123,21 @@ export default class Drawer extends LitElement {
       right: 0;
       transform: translateX(100%);
     }
+    :host([placement='top']) dialog {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      transform: translateY(-100%);
+    }
+    :host([placement='bottom']) dialog {
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      top: auto;
+      transform: translateY(100%);
+    }
     :host([open]) dialog {
       transform: none;
     }
@@ -136,10 +151,18 @@ export default class Drawer extends LitElement {
       order: 1;
       justify-content: flex-start;
     }
+    .footer-slot {
+      display: block;
+      padding: 1rem;
+      border-top: 1px solid var(--theme-border-color, #e0e0e0);
+    }
   `;
 
   @property({ type: Boolean, reflect: true }) open = false;
-  @property({ type: String, reflect: true }) placement: 'start' | 'end' = 'end';
+  @property({ type: String, reflect: true }) placement: 'top' | 'end' | 'bottom' | 'start' = 'end';
+  @property({ type: String, reflect: true }) label = '';
+  @property({ type: Boolean, reflect: true, attribute: 'without-header' }) withoutHeader = false;
+  @property({ type: Boolean, reflect: true, attribute: 'light-dismiss' }) lightDismiss = true;
 
   @query('dialog')
   private readonly dialog!: HTMLDialogElement;
@@ -153,8 +176,14 @@ export default class Drawer extends LitElement {
     this.close();
   }
 
+  private handleBackdropClick() {
+    if (this.lightDismiss) {
+      this.close();
+    }
+  }
+
   private handleClick(event: MouseEvent) {
-    if (event.target === this.dialog) {
+    if (this.lightDismiss && event.target === this.dialog) {
       this.close();
     }
   }
@@ -191,38 +220,45 @@ export default class Drawer extends LitElement {
     return html`
       <div
         class="backdrop"
-        @click=${this.close}
+        @click=${this.handleBackdropClick}
       ></div>
       <dialog
         part="dialog"
         @cancel=${this.handleCancel}
         @click=${this.handleClick}
       >
-        <div
-          class="header-bar"
-          part="header-bar"
-        >
-          <div class="action-item">
-            <slot name="header-actions"></slot>
-          </div>
-          <div class="header-content">
-            <slot name="label"></slot>
-          </div>
+        ${
+          !this.withoutHeader
+            ? html`
           <div
-            class="close-button-container"
-            part="close-button-container"
+            class="header-bar"
+            part="header-bar"
           >
-            <button
-              class="close-button"
-              part="close-button"
-              @click=${this.close}
-              aria-label="Close"
+            <div class="action-item">
+              <slot name="header-actions"></slot>
+            </div>
+            <div class="header-content" part="title">
+              <slot name="label">${this.label}</slot>
+            </div>
+            <div
+              class="close-button-container"
+              part="close-button-container"
             >
-              ${IconX}
-            </button>
+              <button
+                class="close-button"
+                part="close-button"
+                @click=${this.close}
+                aria-label="Close"
+              >
+                ${IconX}
+              </button>
+            </div>
           </div>
-        </div>
-        <slot class="content-slot"></slot>
+        `
+            : ''
+        }
+        <slot class="content-slot" part="body"></slot>
+        <slot name="footer" class="footer-slot" part="footer"></slot>
       </dialog>
     `;
   }
