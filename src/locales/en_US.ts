@@ -112,6 +112,7 @@ export default {
   SCROLL_UP: 'Scroll Up',
   SCROLL_DOWN: 'Scroll Down',
   CLOSE: 'Close',
+  CANCEL: 'Cancel',
   LIST_EMPTY: 'List Empty',
   SCROLL_START: 'Toggle Auto Scroll',
   INCREASE_SPEED: 'Increase Scroll Speed',

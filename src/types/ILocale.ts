@@ -101,6 +101,7 @@ export type ILocale = {
   SCROLL_UP: string;
   SCROLL_DOWN: string;
   CLOSE: string;
+  CANCEL: string;
   LIST_EMPTY: string;
   SCROLL_START: string;
   INCREASE_SPEED: string;

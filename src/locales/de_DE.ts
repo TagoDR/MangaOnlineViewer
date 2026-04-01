@@ -113,6 +113,7 @@ export default {
   SCROLL_UP: 'Nach oben scrollen',
   SCROLL_DOWN: 'Nach unten scrollen',
   CLOSE: 'Schließen',
+  CANCEL: 'Abbrechen',
   LIST_EMPTY: 'Liste leer',
   SCROLL_START: 'Auto-Scroll umschalten',
   INCREASE_SPEED: 'Scrollgeschwindigkeit erhöhen',

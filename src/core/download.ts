@@ -150,7 +150,11 @@ async function generateZip(): Promise<void> {
           <progress value='${current}' max='${total}' style='width: 100%; height: 20px;'></progress>
         </div>
       `,
-      footer: html``,
+      footer: html`
+        <mov-button @click=${() => setAppStateValue('download', 'cancelled')}>
+          ${getLocaleString('CANCEL')}
+        </mov-button>
+      `,
     });
   };
 
@@ -158,6 +162,12 @@ async function generateZip(): Promise<void> {
 
   let count = 0;
   for (const [key, page] of imageEntries) {
+    if (getAppStateValue('download') === 'cancelled') {
+      logScript('Download cancelled');
+      setAppStateValue('dialog', null);
+      setAppStateValue('download', undefined);
+      return;
+    }
     try {
       // eslint-disable-next-line no-await-in-loop
       const blob = await getImageBlob(page);

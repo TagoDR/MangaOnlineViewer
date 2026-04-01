@@ -304,6 +304,17 @@ export const DownloadProgress: Story = {
               style="width: 100%; height: 20px;"
             ></progress>
           </div>
+          <div slot="footer">
+            <mov-button
+              @click=${() => {
+                const panel = container.querySelector('mov-dialog');
+                if (panel) panel.open = false;
+                clearInterval(interval);
+              }}
+            >
+              ${getLocaleString('CANCEL')}
+            </mov-button>
+          </div>
         </mov-dialog>
       `;
       render(template, container);

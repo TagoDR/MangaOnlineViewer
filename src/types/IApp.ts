@@ -10,7 +10,7 @@ export type Panel = 'all' | 'settings' | 'keybindings' | 'keybindingsEditor' | '
 /**
  * Defines the possible states for the download process.
  */
-export type Download = 'available' | 'working';
+export type Download = 'available' | 'working' | 'cancelled';
 
 /**
  * Defines the possible redirection targets.

@@ -111,6 +111,7 @@ export default {
   SCROLL_UP: '向上滚动',
   SCROLL_DOWN: '向下滚动',
   CLOSE: '关闭',
+  CANCEL: '取消',
   LIST_EMPTY: '没有收藏书签',
   SCROLL_START: '切换自动滚动',
   INCREASE_SPEED: '增加滚动速度',

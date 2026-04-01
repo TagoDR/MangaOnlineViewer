@@ -112,9 +112,11 @@ export default {
   SPEED_WARNING_MESSAGE:
     'No se recomienda esta velocidad.<br/> Puede dañar algunos servidores o marcar su IP como atacante DDoS.<br/> ¡Utilícelo con precaución!',
   SCROLL_UP: 'Desplazar arriba',
-  SCROLL_DOWN: 'Desplazar abajo',
+  SCROLL_DOWN: 'Desplazarse hacia abajo',
   CLOSE: 'Cerrar',
+  CANCEL: 'Cancelar',
   LIST_EMPTY: 'Lista vacía',
+
   SCROLL_START: 'Alternar desplazamiento automático',
   INCREASE_SPEED: 'Aumentar la velocidad de desplazamiento',
   DECREASE_SPEED: 'Disminuir la velocidad de desplazamiento',
