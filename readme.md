@@ -68,6 +68,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [WebNovel](https://www.webnovel.com/) _[English]_
 - [WebToons](https://www.webtoons.com/) _[English]_
 - [WeebCentral](https://weebcentral.com/) _[English]_
+- [WeebDex](https://weebdex.org/) _[English]_
 - [Vortex Scans](https://vortexscans.org/) _[English]_
 - [ZeroScans](https://zscans.com/) _[English]_
 - [FoOlSlide](https://github.com/saintly2k/FoOlSlideX) / [Kireicake](https://reader.kireicake.com) _[English]_ **Obs: Any Site that uses FoOLSlide**

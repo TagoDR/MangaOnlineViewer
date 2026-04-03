@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.04.01.build-1754
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
+// @version       2026.04.03.build-1425
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -67,6 +67,7 @@
 // @include       /https?:\/\/(www\.)?webnovel.com\/comic\/.+/
 // @include       /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/
 // @include       /https?:\/\/(www\.)?(weebcentral).com\/chapters\/.+/
+// @include       /https?:\/\/(www\.)?weebdex\.org\/.+/
 // @include       /https?:\/\/(www.)?(vortexscans).(org)\/.+/
 // @include       /https?:\/\/(www\.)?zscans.com\/comics\/.+/
 // @include       /https?:\/\/[^/]*(scans?|comic|realm|rizz|hivetoon|tresdaos|zonamiau|ntrgod|threedaos)[^/]*\/.+/
@@ -241,6 +242,11 @@
 	* @returns {boolean} `true` if the device is a mobile or tablet, `false` otherwise.
 	*/
 	var isMobile = () => getDevice() === "mobile" || getDevice() === "tablet";
+	/**
+	* Checks if the script is running in standalone mode (single HTML file).
+	* @returns {boolean} `true` if in standalone mode, `false` otherwise.
+	*/
+	var isStandalone = () => window.location.protocol === "file:" || window.location.pathname.endsWith("Manga_Local_Viewer.html");
 	/**
 	* Sets up a listener for changes to a GM storage value, triggering a callback when the value is changed in another tab.
 	* @param {(newSettings: Partial<ISettings>) => void} fn - The callback function to execute with the new settings.
@@ -2043,18 +2049,28 @@
 		pagination: "disabled"
 	};
 	/**
+	* Settings overrides for standalone mode.
+	* @type {Partial<ISettings>}
+	*/
+	var standaloneSettings = {
+		loadSpeed: "All",
+		lazyLoadImages: false,
+		downloadZip: false,
+		theme: "oklch(44.6% 0.043 257.281)"
+	};
+	/**
 	* Generates the default settings object based on the device type (mobile/desktop) and scope (global/local).
 	* @param {boolean} [global=true] - Whether to get the global or local default settings.
 	* @returns {ISettings} The default settings object.
 	*/
 	function getDefault(global = true) {
-		return isMobile() ? _.defaultsDeep(mobileSettings, {
-			...defaultSettings,
-			theme: global ? "#29487D" : "#004526"
-		}) : {
+		const baseSettings = {
 			...defaultSettings,
 			theme: global ? "#29487D" : "#004526"
 		};
+		let mergedSettings = isMobile() ? _.defaultsDeep(mobileSettings, baseSettings) : baseSettings;
+		if (isStandalone()) mergedSettings = _.defaultsDeep(standaloneSettings, mergedSettings);
+		return mergedSettings;
 	}
 	/**
 	* A customizer function for Lodash's isEqualWith to handle specific
@@ -13023,6 +13039,31 @@
 					prev: chapters.querySelector("#selected_chapter")?.nextElementSibling?.getAttribute("href"),
 					next: chapters.querySelector("#selected_chapter")?.previousElementSibling?.getAttribute("href"),
 					listImages: src
+				};
+			}
+		},
+		{
+			name: "WeebDex",
+			url: /https?:\/\/(www\.)?weebdex\.org\/.+/,
+			homepage: "https://weebdex.org/",
+			language: Language.ENGLISH,
+			category: Category.MANGA,
+			waitEle: "a[href^=\"/title/\"]",
+			async run() {
+				const chapterId = /\/chapter\/([^/]+)/.exec(window.location.pathname)?.at(1);
+				const chapterApi = `https://api.weebdex.org/chapter/${chapterId}`;
+				const chapterData = await fetch(chapterApi).then(async (res) => res.json());
+				const mangaLink = document.querySelector("a[href^=\"/title/\"]");
+				const chaptersApi = `https://api.weebdex.org/manga/${chapterData.relationships.manga.id}/aggregate?lang=${chapterData.language}`;
+				const chapters = (await fetch(chaptersApi).then(async (res) => res.json())).chapters || [];
+				const currentIndex = chapters.findIndex((c) => c.chapter === chapterData.chapter);
+				return {
+					title: document.querySelector("title")?.textContent?.trim().replace(/Page \d+:/, ""),
+					series: mangaLink?.getAttribute("href"),
+					pages: chapterData.data.length,
+					prev: chapters[currentIndex + 1] ? `/chapter/${_.keys(chapters[currentIndex + 1].entries)[0]}` : void 0,
+					next: chapters[currentIndex - 1] ? `/chapter/${_.keys(chapters[currentIndex - 1].entries)[0]}` : void 0,
+					listImages: chapterData.data.map((img) => `${chapterData.node}/data/${chapterId}/${img.name}`)
 				};
 			}
 		},

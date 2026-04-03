@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.04.01.build-1754
+// @version       2026.04.03.build-1425
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -1461,6 +1461,11 @@
 	* @returns {boolean} `true` if the device is a mobile or tablet, `false` otherwise.
 	*/
 	var isMobile = () => getDevice() === "mobile" || getDevice() === "tablet";
+	/**
+	* Checks if the script is running in standalone mode (single HTML file).
+	* @returns {boolean} `true` if in standalone mode, `false` otherwise.
+	*/
+	var isStandalone = () => window.location.protocol === "file:" || window.location.pathname.endsWith("Manga_Local_Viewer.html");
 	/**
 	* Sets up a listener for changes to a GM storage value, triggering a callback when the value is changed in another tab.
 	* @param {(newSettings: Partial<ISettings>) => void} fn - The callback function to execute with the new settings.
@@ -3043,18 +3048,28 @@
 		pagination: "disabled"
 	};
 	/**
+	* Settings overrides for standalone mode.
+	* @type {Partial<ISettings>}
+	*/
+	var standaloneSettings = {
+		loadSpeed: "All",
+		lazyLoadImages: false,
+		downloadZip: false,
+		theme: "oklch(44.6% 0.043 257.281)"
+	};
+	/**
 	* Generates the default settings object based on the device type (mobile/desktop) and scope (global/local).
 	* @param {boolean} [global=true] - Whether to get the global or local default settings.
 	* @returns {ISettings} The default settings object.
 	*/
 	function getDefault(global = true) {
-		return isMobile() ? _.defaultsDeep(mobileSettings, {
-			...defaultSettings,
-			theme: global ? "#29487D" : "#004526"
-		}) : {
+		const baseSettings = {
 			...defaultSettings,
 			theme: global ? "#29487D" : "#004526"
 		};
+		let mergedSettings = isMobile() ? _.defaultsDeep(mobileSettings, baseSettings) : baseSettings;
+		if (isStandalone()) mergedSettings = _.defaultsDeep(standaloneSettings, mergedSettings);
+		return mergedSettings;
 	}
 	/**
 	* A customizer function for Lodash's isEqualWith to handle specific
