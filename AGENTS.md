@@ -29,6 +29,7 @@ The project is written in TypeScript and uses Vite for its build process. The ar
   - **Aggregation**: All site modules are imported and aggregated in their respective `index.ts` files (`src/main/index.ts` and `src/adult/index.ts`).
 
 - **Core Logic**: Shared functionality like the viewer, settings panel, download manager, and UI components are located in `src/core/` and `src/ui/`.
+  - **Download Manager**: Supports generating ZIP files of all pages. It includes a progress dialog and allows users to cancel the process midway by setting the `download` state to `'cancelled'` in `appState`.
 
 - **UI Layer**: The UI is built with `lit` and organized into a component-based architecture.
   - **`src/ui/`**: Contains the main UI panels and application layout files (e.g., `App.ts`, `Header.ts`, `SettingsPanel.ts`). These are the top-level containers.
@@ -102,15 +103,16 @@ This is the most common contribution. Follow these steps carefully.
       url: /https:\/\/newsite\.com\/manga\/.+\/\d+/,
       language: 'English',
       category: 'manga',
-      // Use a wait condition to ensure the page is ready
+      // Use a wait condition to ensure the page is ready if necessary, all wait types are optional
       waitEle: '#chapter-images',
       run: () => {
         const images = [...document.querySelectorAll('#chapter-images img')];
+        // Here use whatever methods to get the required information
+        // for simpler properties prefer doing it from the objet construction as shown below
         return {
           title: document.querySelector('h1.title')?.textContent?.trim() ?? '',
           series: document.querySelector('a.series-link')?.getAttribute('href') ?? '',
           pages: images.length,
-          begin: 1,
           prev: document.querySelector('a.prev-chapter')?.getAttribute('href') ?? '',
           next: document.querySelector('a.next-chapter')?.getAttribute('href') ?? '',
           listImages: images.map(img => img.getAttribute('src')),

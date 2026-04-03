@@ -40,6 +40,7 @@ import vortexscans from './vortexscans';
 import webnovel from './webnovel';
 import webtoons from './webtoons';
 import weebcentral from './weebcentral';
+import weebdex from './weebdex';
 import zeroscans from './zeroscans';
 
 const sites: ISite[] = [
@@ -80,6 +81,7 @@ const sites: ISite[] = [
   webnovel,
   webtoons,
   weebcentral,
+  weebdex,
   // wpmanga, // Archived
   vortexscans,
   zeroscans,
