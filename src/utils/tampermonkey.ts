@@ -229,6 +229,15 @@ const getDevice = (): Device => {
 const isMobile = () => getDevice() === 'mobile' || getDevice() === 'tablet';
 
 /**
+ * Checks if the script is running in standalone mode (single HTML file).
+ * @returns {boolean} `true` if in standalone mode, `false` otherwise.
+ */
+const isStandalone = () =>
+  import.meta.env.MODE === 'standalone' ||
+  window.location.protocol === 'file:' ||
+  window.location.pathname.endsWith('Manga_Local_Viewer.html');
+
+/**
  * Sets up a listener for changes to a GM storage value, triggering a callback when the value is changed in another tab.
  * @param {(newSettings: Partial<ISettings>) => void} fn - The callback function to execute with the new settings.
  * @param {string} [gmValue='settings'] - The key of the GM value to listen to (e.g., 'settings' or a hostname).
@@ -264,6 +273,7 @@ export {
   getLocalSettings,
   getValueGM,
   isMobile,
+  isStandalone,
   logClear,
   logScript,
   logScriptC,

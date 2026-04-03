@@ -22,6 +22,7 @@ import {
   getLocalSettings,
   giveToWindow,
   isMobile,
+  isStandalone,
   logScript,
   logScriptVerbose,
   removeValueGM,
@@ -95,17 +96,28 @@ const mobileSettings: Partial<ISettings> = {
 };
 
 /**
+ * Settings overrides for standalone mode.
+ * @type {Partial<ISettings>}
+ */
+const standaloneSettings: Partial<ISettings> = {
+  loadSpeed: 'All',
+  lazyLoadImages: false,
+  downloadZip: false,
+  theme: 'oklch(44.6% 0.043 257.281)',
+};
+
+/**
  * Generates the default settings object based on the device type (mobile/desktop) and scope (global/local).
  * @param {boolean} [global=true] - Whether to get the global or local default settings.
  * @returns {ISettings} The default settings object.
  */
 function getDefault(global = true): ISettings {
-  return isMobile()
-    ? _.defaultsDeep(mobileSettings, {
-        ...defaultSettings,
-        theme: global ? '#29487D' : '#004526',
-      })
-    : { ...defaultSettings, theme: global ? '#29487D' : '#004526' };
+  const baseSettings = { ...defaultSettings, theme: global ? '#29487D' : '#004526' };
+  let mergedSettings = isMobile() ? _.defaultsDeep(mobileSettings, baseSettings) : baseSettings;
+  if (isStandalone()) {
+    mergedSettings = _.defaultsDeep(standaloneSettings, mergedSettings);
+  }
+  return mergedSettings;
 }
 
 /**
