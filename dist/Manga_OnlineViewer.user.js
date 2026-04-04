@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.04.03.build-1824
+// @version       2026.04.04.build-2200
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -6221,10 +6221,12 @@
 			if (!this.disabled) {
 				this.checked = event.target.checked;
 				this.dispatchEvent(new CustomEvent("change", {
+					detail: { checked: this.checked },
 					bubbles: true,
 					composed: true
 				}));
 				this.dispatchEvent(new CustomEvent("input", {
+					detail: { checked: this.checked },
 					bubbles: true,
 					composed: true
 				}));
@@ -11311,14 +11313,16 @@
 		}
 		async start(begin, end) {
 			if (this.manga) {
-				cleanUpElement(document.documentElement, document.head, document.body);
+				if (!document.documentElement.hasAttribute("mov")) {
+					cleanUpElement(document.documentElement, document.head, document.body);
+					document.documentElement.setAttribute("mov", "");
+				}
 				window.scrollTo(0, 0);
 				setAppStateValue("manga", {
 					...this.manga,
 					begin: begin ?? this.manga.begin,
 					pages: end ?? this.manga.pages
 				});
-				document.documentElement.setAttribute("mov", "");
 			}
 		}
 		/**
@@ -11360,26 +11364,25 @@
               <reader-header .manga=${manga}></reader-header>
               ${Reader(manga)}
               <navbar-thumbnails
-                      .mode=${getSettingsValue("navbar")}
-                    ></navbar-thumbnails>
+                .mode=${getSettingsValue("navbar")}
+              ></navbar-thumbnails>
               <manga-pagination
-                      .mode="${getSettingsValue("pagination")}"
-                      .startPage=${manga.begin}
-                      .totalPages=${manga.pages}
-                      .currentPage=${getAppStateValue("currentPage")}
-                      .next=${manga.next}
-                      .prev=${manga.prev}
-                    ></manga-pagination>
+                .mode="${getSettingsValue("pagination")}"
+                .startPage=${manga.begin}
+                .totalPages=${manga.pages}
+                .currentPage=${getAppStateValue("currentPage")}
+                .next=${manga.next}
+                .prev=${manga.prev}
+              ></manga-pagination>
               <keybindings-panel></keybindings-panel>
               <bookmark-panel></bookmark-panel>
               <settings-panel></settings-panel>
-              <moaqz-toaster dismissable></moaqz-toaster>
-              </div>` : b$1(_templateObject || (_templateObject = _taggedTemplateLiteral([
-				" <script-startup\n              .mangaPages=\"",
-				"\"\n              begin=\"",
-				"\"\n              initialStatus=\"",
-				"\"\n              @start=",
-				"\n            ><\/script-startup>"
+              <moaqz-toaster dismissable></moaqz-toaster>` : b$1(_templateObject || (_templateObject = _taggedTemplateLiteral([
+				"\n              <script-startup\n                .mangaPages=\"",
+				"\"\n                begin=\"",
+				"\"\n                initialStatus=\"",
+				"\"\n                @start=",
+				"\n              ><\/script-startup>"
 			])), this.manga?.pages, this.manga?.begin, r(this.loadMode, [["wait", () => "initial-prompt"], ["never", () => "late-start-button"]]), (e) => {
 				this.start(e.detail?.begin, e.detail?.end);
 			})}

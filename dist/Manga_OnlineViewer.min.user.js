@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.04.03.build-1824
+// @version       2026.04.04.build-2200
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -1607,7 +1607,7 @@ AppState`,Xt.get())}l2("MOVSettings",op);var ip=(e,t,r)=>{if(r&&!["bookmarks","z
       opacity: 0.7;
       margin-top: 0.25rem;
     }
-  `}handleChange(t){this.disabled||(this.checked=t.target.checked,this.dispatchEvent(new CustomEvent("change",{bubbles:!0,composed:!0})),this.dispatchEvent(new CustomEvent("input",{bubbles:!0,composed:!0})))}render(){const t=this.design.toLowerCase();let r;return t==="graphical"?r=ue`${this.checked?Ea:Il}`:r=ue`<span class="text">${this.checked?this.textOn:this.textOff}</span>`,ue`
+  `}handleChange(t){this.disabled||(this.checked=t.target.checked,this.dispatchEvent(new CustomEvent("change",{detail:{checked:this.checked},bubbles:!0,composed:!0})),this.dispatchEvent(new CustomEvent("input",{detail:{checked:this.checked},bubbles:!0,composed:!0})))}render(){const t=this.design.toLowerCase();let r;return t==="graphical"?r=ue`${this.checked?Ea:Il}`:r=ue`<span class="text">${this.checked?this.textOn:this.textOff}</span>`,ue`
       <div class="base">
         <label class="label">
           <slot></slot>
@@ -3712,7 +3712,7 @@ AppState`,Xt.get())}l2("MOVSettings",op);var ip=(e,t,r)=>{if(r&&!["bookmarks","z
           </mov-button>
         </div>
       </mov-dialog>
-    `}};W([oe({type:Number,reflect:!0})],Io.prototype,"mangaPages",void 0),W([oe({type:Number,reflect:!0})],Io.prototype,"begin",void 0),W([oe({type:Number})],Io.prototype,"timeoutMs",void 0),W([oe({type:String,reflect:!0})],Io.prototype,"status",void 0),Io=W([ht("script-startup")],Io);function n9(e){if(!e?.parentNode)return e;const t=e.cloneNode(!0);return e.parentNode.replaceChild(t,e),t}var r9=e=>{e.getAttributeNames().forEach(t=>{e?.removeAttribute(t)})},o9=(...e)=>{e?.forEach(r9),e?.forEach(n9)};function i9(e,t){return t||(t=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var ph,Ra=class extends et{constructor(...t){super(...t),this.loadMode="wait"}static{this.styles=[Tt``,Jt(Qb)]}async start(t,r){this.manga&&(o9(document.documentElement,document.head,document.body),window.scrollTo(0,0),Pe("manga",{...this.manga,begin:t??this.manga.begin,pages:r??this.manga.pages}),document.documentElement.setAttribute("mov",""))}firstUpdated(){this.loadMode==="always"&&this.start(),Mb(),Eb()}render(){const t=pe("manga"),r=pe("dialog");return ue`
+    `}};W([oe({type:Number,reflect:!0})],Io.prototype,"mangaPages",void 0),W([oe({type:Number,reflect:!0})],Io.prototype,"begin",void 0),W([oe({type:Number})],Io.prototype,"timeoutMs",void 0),W([oe({type:String,reflect:!0})],Io.prototype,"status",void 0),Io=W([ht("script-startup")],Io);function n9(e){if(!e?.parentNode)return e;const t=e.cloneNode(!0);return e.parentNode.replaceChild(t,e),t}var r9=e=>{e.getAttributeNames().forEach(t=>{e?.removeAttribute(t)})},o9=(...e)=>{e?.forEach(r9),e?.forEach(n9)};function i9(e,t){return t||(t=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var ph,Ra=class extends et{constructor(...t){super(...t),this.loadMode="wait"}static{this.styles=[Tt``,Jt(Qb)]}async start(t,r){this.manga&&(document.documentElement.hasAttribute("mov")||(o9(document.documentElement,document.head,document.body),document.documentElement.setAttribute("mov","")),window.scrollTo(0,0),Pe("manga",{...this.manga,begin:t??this.manga.begin,pages:r??this.manga.pages}))}firstUpdated(){this.loadMode==="always"&&this.start(),Mb(),Eb()}render(){const t=pe("manga"),r=pe("dialog");return ue`
       <style>
         ${e9()}
       </style>
@@ -3726,26 +3726,26 @@ AppState`,Xt.get())}l2("MOVSettings",op);var ip=(e,t,r)=>{if(r&&!["bookmarks","z
               <reader-header .manga=${t}></reader-header>
               ${Vb(t)}
               <navbar-thumbnails
-                      .mode=${Y("navbar")}
-                    ></navbar-thumbnails>
+                .mode=${Y("navbar")}
+              ></navbar-thumbnails>
               <manga-pagination
-                      .mode="${Y("pagination")}"
-                      .startPage=${t.begin}
-                      .totalPages=${t.pages}
-                      .currentPage=${pe("currentPage")}
-                      .next=${t.next}
-                      .prev=${t.prev}
-                    ></manga-pagination>
+                .mode="${Y("pagination")}"
+                .startPage=${t.begin}
+                .totalPages=${t.pages}
+                .currentPage=${pe("currentPage")}
+                .next=${t.next}
+                .prev=${t.prev}
+              ></manga-pagination>
               <keybindings-panel></keybindings-panel>
               <bookmark-panel></bookmark-panel>
               <settings-panel></settings-panel>
-              <moaqz-toaster dismissable></moaqz-toaster>
-              </div>`:ue(ph||(ph=i9([` <script-startup
-              .mangaPages="`,`"
-              begin="`,`"
-              initialStatus="`,`"
-              @start=`,`
-            ><\/script-startup>`])),this.manga?.pages,this.manga?.begin,D0(this.loadMode,[["wait",()=>"initial-prompt"],["never",()=>"late-start-button"]]),i=>{this.start(i.detail?.begin,i.detail?.end)})}
+              <moaqz-toaster dismissable></moaqz-toaster>`:ue(ph||(ph=i9([`
+              <script-startup
+                .mangaPages="`,`"
+                begin="`,`"
+                initialStatus="`,`"
+                @start=`,`
+              ><\/script-startup>`])),this.manga?.pages,this.manga?.begin,D0(this.loadMode,[["wait",()=>"initial-prompt"],["never",()=>"late-start-button"]]),i=>{this.start(i.detail?.begin,i.detail?.end)})}
         ${r?ue`
               <mov-dialog
                 open

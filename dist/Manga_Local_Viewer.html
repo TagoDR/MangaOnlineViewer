@@ -1542,7 +1542,7 @@ AppState`,tn.get())}x3("MOVSettings",k6);var E6=(e,n,r)=>{if(r&&!["bookmarks","z
       opacity: 0.7;
       margin-top: 0.25rem;
     }
-  `}handleChange(n){this.disabled||(this.checked=n.target.checked,this.dispatchEvent(new CustomEvent("change",{bubbles:!0,composed:!0})),this.dispatchEvent(new CustomEvent("input",{bubbles:!0,composed:!0})))}render(){const n=this.design.toLowerCase();let r;return n==="graphical"?r=ce`${this.checked?bs:Vc}`:r=ce`<span class="text">${this.checked?this.textOn:this.textOff}</span>`,ce`
+  `}handleChange(n){this.disabled||(this.checked=n.target.checked,this.dispatchEvent(new CustomEvent("change",{detail:{checked:this.checked},bubbles:!0,composed:!0})),this.dispatchEvent(new CustomEvent("input",{detail:{checked:this.checked},bubbles:!0,composed:!0})))}render(){const n=this.design.toLowerCase();let r;return n==="graphical"?r=ce`${this.checked?bs:Vc}`:r=ce`<span class="text">${this.checked?this.textOn:this.textOff}</span>`,ce`
       <div class="base">
         <label class="label">
           <slot></slot>
@@ -3647,7 +3647,7 @@ AppState`,tn.get())}x3("MOVSettings",k6);var E6=(e,n,r)=>{if(r&&!["bookmarks","z
           </mov-button>
         </div>
       </mov-dialog>
-    `}};G([re({type:Number,reflect:!0})],Ro.prototype,"mangaPages",void 0);G([re({type:Number,reflect:!0})],Ro.prototype,"begin",void 0);G([re({type:Number})],Ro.prototype,"timeoutMs",void 0);G([re({type:String,reflect:!0})],Ro.prototype,"status",void 0);Ro=G([ft("script-startup")],Ro);function wE(e){if(!e?.parentNode)return e;const n=e.cloneNode(!0);return e.parentNode.replaceChild(n,e),n}var _E=e=>{e.getAttributeNames().forEach(n=>{e?.removeAttribute(n)})},yE=(...e)=>{e?.forEach(_E),e?.forEach(wE)};function kE(e,n){return n||(n=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(n)}}))}var r1,ss=class extends Qe{constructor(...n){super(...n),this.loadMode="wait"}static{this.styles=[Tt``,en(mE)]}async start(n,r){this.manga&&(yE(document.documentElement,document.head,document.body),window.scrollTo(0,0),Pe("manga",{...this.manga,begin:n??this.manga.begin,pages:r??this.manga.pages}),document.documentElement.setAttribute("mov",""))}firstUpdated(){this.loadMode==="always"&&this.start(),Uk(),Fk()}render(){const n=pe("manga"),r=pe("dialog");return ce`
+    `}};G([re({type:Number,reflect:!0})],Ro.prototype,"mangaPages",void 0);G([re({type:Number,reflect:!0})],Ro.prototype,"begin",void 0);G([re({type:Number})],Ro.prototype,"timeoutMs",void 0);G([re({type:String,reflect:!0})],Ro.prototype,"status",void 0);Ro=G([ft("script-startup")],Ro);function wE(e){if(!e?.parentNode)return e;const n=e.cloneNode(!0);return e.parentNode.replaceChild(n,e),n}var _E=e=>{e.getAttributeNames().forEach(n=>{e?.removeAttribute(n)})},yE=(...e)=>{e?.forEach(_E),e?.forEach(wE)};function kE(e,n){return n||(n=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(n)}}))}var r1,ss=class extends Qe{constructor(...n){super(...n),this.loadMode="wait"}static{this.styles=[Tt``,en(mE)]}async start(n,r){this.manga&&(document.documentElement.hasAttribute("mov")||(yE(document.documentElement,document.head,document.body),document.documentElement.setAttribute("mov","")),window.scrollTo(0,0),Pe("manga",{...this.manga,begin:n??this.manga.begin,pages:r??this.manga.pages}))}firstUpdated(){this.loadMode==="always"&&this.start(),Uk(),Fk()}render(){const n=pe("manga"),r=pe("dialog");return ce`
       <style>
         ${vE()}
       </style>
@@ -3661,26 +3661,26 @@ AppState`,tn.get())}x3("MOVSettings",k6);var E6=(e,n,r)=>{if(r&&!["bookmarks","z
               <reader-header .manga=${n}></reader-header>
               ${lE(n)}
               <navbar-thumbnails
-                      .mode=${Y("navbar")}
-                    ></navbar-thumbnails>
+                .mode=${Y("navbar")}
+              ></navbar-thumbnails>
               <manga-pagination
-                      .mode="${Y("pagination")}"
-                      .startPage=${n.begin}
-                      .totalPages=${n.pages}
-                      .currentPage=${pe("currentPage")}
-                      .next=${n.next}
-                      .prev=${n.prev}
-                    ></manga-pagination>
+                .mode="${Y("pagination")}"
+                .startPage=${n.begin}
+                .totalPages=${n.pages}
+                .currentPage=${pe("currentPage")}
+                .next=${n.next}
+                .prev=${n.prev}
+              ></manga-pagination>
               <keybindings-panel></keybindings-panel>
               <bookmark-panel></bookmark-panel>
               <settings-panel></settings-panel>
-              <moaqz-toaster dismissable></moaqz-toaster>
-              </div>`:ce(r1||(r1=kE([` <script-startup
-              .mangaPages="`,`"
-              begin="`,`"
-              initialStatus="`,`"
-              @start=`,`
-            ><\/script-startup>`])),this.manga?.pages,this.manga?.begin,Ef(this.loadMode,[["wait",()=>"initial-prompt"],["never",()=>"late-start-button"]]),i=>{this.start(i.detail?.begin,i.detail?.end)})}
+              <moaqz-toaster dismissable></moaqz-toaster>`:ce(r1||(r1=kE([`
+              <script-startup
+                .mangaPages="`,`"
+                begin="`,`"
+                initialStatus="`,`"
+                @start=`,`
+              ><\/script-startup>`])),this.manga?.pages,this.manga?.begin,Ef(this.loadMode,[["wait",()=>"initial-prompt"],["never",()=>"late-start-button"]]),i=>{this.start(i.detail?.begin,i.detail?.end)})}
         ${r?ce`
               <mov-dialog
                 open

@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.04.03.build-1824
+// @version       2026.04.04.build-2200
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -1600,7 +1600,7 @@ AppState`,Yt.get())}tp("MOVSettings",Up);var Vp=(e,t,r)=>{if(r&&!["bookmarks","z
       opacity: 0.7;
       margin-top: 0.25rem;
     }
-  `}handleChange(t){this.disabled||(this.checked=t.target.checked,this.dispatchEvent(new CustomEvent("change",{bubbles:!0,composed:!0})),this.dispatchEvent(new CustomEvent("input",{bubbles:!0,composed:!0})))}render(){const t=this.design.toLowerCase();let r;return t==="graphical"?r=ce`${this.checked?ya:Sl}`:r=ce`<span class="text">${this.checked?this.textOn:this.textOff}</span>`,ce`
+  `}handleChange(t){this.disabled||(this.checked=t.target.checked,this.dispatchEvent(new CustomEvent("change",{detail:{checked:this.checked},bubbles:!0,composed:!0})),this.dispatchEvent(new CustomEvent("input",{detail:{checked:this.checked},bubbles:!0,composed:!0})))}render(){const t=this.design.toLowerCase();let r;return t==="graphical"?r=ce`${this.checked?ya:Sl}`:r=ce`<span class="text">${this.checked?this.textOn:this.textOff}</span>`,ce`
       <div class="base">
         <label class="label">
           <slot></slot>
@@ -3705,7 +3705,7 @@ AppState`,Yt.get())}tp("MOVSettings",Up);var Vp=(e,t,r)=>{if(r&&!["bookmarks","z
           </mov-button>
         </div>
       </mov-dialog>
-    `}};G([re({type:Number,reflect:!0})],Mo.prototype,"mangaPages",void 0),G([re({type:Number,reflect:!0})],Mo.prototype,"begin",void 0),G([re({type:Number})],Mo.prototype,"timeoutMs",void 0),G([re({type:String,reflect:!0})],Mo.prototype,"status",void 0),Mo=G([ut("script-startup")],Mo);function N9(e){if(!e?.parentNode)return e;const t=e.cloneNode(!0);return e.parentNode.replaceChild(t,e),t}var H9=e=>{e.getAttributeNames().forEach(t=>{e?.removeAttribute(t)})},F9=(...e)=>{e?.forEach(H9),e?.forEach(N9)};function G9(e,t){return t||(t=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var vh,Ta=class extends Qe{constructor(...t){super(...t),this.loadMode="wait"}static{this.styles=[Ot``,Xt(D9)]}async start(t,r){this.manga&&(F9(document.documentElement,document.head,document.body),window.scrollTo(0,0),Re("manga",{...this.manga,begin:t??this.manga.begin,pages:r??this.manga.pages}),document.documentElement.setAttribute("mov",""))}firstUpdated(){this.loadMode==="always"&&this.start(),h9(),c9()}render(){const t=fe("manga"),r=fe("dialog");return ce`
+    `}};G([re({type:Number,reflect:!0})],Mo.prototype,"mangaPages",void 0),G([re({type:Number,reflect:!0})],Mo.prototype,"begin",void 0),G([re({type:Number})],Mo.prototype,"timeoutMs",void 0),G([re({type:String,reflect:!0})],Mo.prototype,"status",void 0),Mo=G([ut("script-startup")],Mo);function N9(e){if(!e?.parentNode)return e;const t=e.cloneNode(!0);return e.parentNode.replaceChild(t,e),t}var H9=e=>{e.getAttributeNames().forEach(t=>{e?.removeAttribute(t)})},F9=(...e)=>{e?.forEach(H9),e?.forEach(N9)};function G9(e,t){return t||(t=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var vh,Ta=class extends Qe{constructor(...t){super(...t),this.loadMode="wait"}static{this.styles=[Ot``,Xt(D9)]}async start(t,r){this.manga&&(document.documentElement.hasAttribute("mov")||(F9(document.documentElement,document.head,document.body),document.documentElement.setAttribute("mov","")),window.scrollTo(0,0),Re("manga",{...this.manga,begin:t??this.manga.begin,pages:r??this.manga.pages}))}firstUpdated(){this.loadMode==="always"&&this.start(),h9(),c9()}render(){const t=fe("manga"),r=fe("dialog");return ce`
       <style>
         ${z9()}
       </style>
@@ -3719,26 +3719,26 @@ AppState`,Yt.get())}tp("MOVSettings",Up);var Vp=(e,t,r)=>{if(r&&!["bookmarks","z
               <reader-header .manga=${t}></reader-header>
               ${I9(t)}
               <navbar-thumbnails
-                      .mode=${K("navbar")}
-                    ></navbar-thumbnails>
+                .mode=${K("navbar")}
+              ></navbar-thumbnails>
               <manga-pagination
-                      .mode="${K("pagination")}"
-                      .startPage=${t.begin}
-                      .totalPages=${t.pages}
-                      .currentPage=${fe("currentPage")}
-                      .next=${t.next}
-                      .prev=${t.prev}
-                    ></manga-pagination>
+                .mode="${K("pagination")}"
+                .startPage=${t.begin}
+                .totalPages=${t.pages}
+                .currentPage=${fe("currentPage")}
+                .next=${t.next}
+                .prev=${t.prev}
+              ></manga-pagination>
               <keybindings-panel></keybindings-panel>
               <bookmark-panel></bookmark-panel>
               <settings-panel></settings-panel>
-              <moaqz-toaster dismissable></moaqz-toaster>
-              </div>`:ce(vh||(vh=G9([` <script-startup
-              .mangaPages="`,`"
-              begin="`,`"
-              initialStatus="`,`"
-              @start=`,`
-            ><\/script-startup>`])),this.manga?.pages,this.manga?.begin,N0(this.loadMode,[["wait",()=>"initial-prompt"],["never",()=>"late-start-button"]]),i=>{this.start(i.detail?.begin,i.detail?.end)})}
+              <moaqz-toaster dismissable></moaqz-toaster>`:ce(vh||(vh=G9([`
+              <script-startup
+                .mangaPages="`,`"
+                begin="`,`"
+                initialStatus="`,`"
+                @start=`,`
+              ><\/script-startup>`])),this.manga?.pages,this.manga?.begin,N0(this.loadMode,[["wait",()=>"initial-prompt"],["never",()=>"late-start-button"]]),i=>{this.start(i.detail?.begin,i.detail?.end)})}
         ${r?ce`
               <mov-dialog
                 open

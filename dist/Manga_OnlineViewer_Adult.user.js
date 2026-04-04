@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.04.03.build-1824
+// @version       2026.04.04.build-2200
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -7220,10 +7220,12 @@
 			if (!this.disabled) {
 				this.checked = event.target.checked;
 				this.dispatchEvent(new CustomEvent("change", {
+					detail: { checked: this.checked },
 					bubbles: true,
 					composed: true
 				}));
 				this.dispatchEvent(new CustomEvent("input", {
+					detail: { checked: this.checked },
 					bubbles: true,
 					composed: true
 				}));
@@ -12287,14 +12289,16 @@
 		}
 		async start(begin, end) {
 			if (this.manga) {
-				cleanUpElement(document.documentElement, document.head, document.body);
+				if (!document.documentElement.hasAttribute("mov")) {
+					cleanUpElement(document.documentElement, document.head, document.body);
+					document.documentElement.setAttribute("mov", "");
+				}
 				window.scrollTo(0, 0);
 				setAppStateValue("manga", {
 					...this.manga,
 					begin: begin ?? this.manga.begin,
 					pages: end ?? this.manga.pages
 				});
-				document.documentElement.setAttribute("mov", "");
 			}
 		}
 		/**
@@ -12336,26 +12340,25 @@
               <reader-header .manga=${manga}></reader-header>
               ${Reader(manga)}
               <navbar-thumbnails
-                      .mode=${getSettingsValue("navbar")}
-                    ></navbar-thumbnails>
+                .mode=${getSettingsValue("navbar")}
+              ></navbar-thumbnails>
               <manga-pagination
-                      .mode="${getSettingsValue("pagination")}"
-                      .startPage=${manga.begin}
-                      .totalPages=${manga.pages}
-                      .currentPage=${getAppStateValue("currentPage")}
-                      .next=${manga.next}
-                      .prev=${manga.prev}
-                    ></manga-pagination>
+                .mode="${getSettingsValue("pagination")}"
+                .startPage=${manga.begin}
+                .totalPages=${manga.pages}
+                .currentPage=${getAppStateValue("currentPage")}
+                .next=${manga.next}
+                .prev=${manga.prev}
+              ></manga-pagination>
               <keybindings-panel></keybindings-panel>
               <bookmark-panel></bookmark-panel>
               <settings-panel></settings-panel>
-              <moaqz-toaster dismissable></moaqz-toaster>
-              </div>` : b$1(_templateObject || (_templateObject = _taggedTemplateLiteral([
-				" <script-startup\n              .mangaPages=\"",
-				"\"\n              begin=\"",
-				"\"\n              initialStatus=\"",
-				"\"\n              @start=",
-				"\n            ><\/script-startup>"
+              <moaqz-toaster dismissable></moaqz-toaster>` : b$1(_templateObject || (_templateObject = _taggedTemplateLiteral([
+				"\n              <script-startup\n                .mangaPages=\"",
+				"\"\n                begin=\"",
+				"\"\n                initialStatus=\"",
+				"\"\n                @start=",
+				"\n              ><\/script-startup>"
 			])), this.manga?.pages, this.manga?.begin, r(this.loadMode, [["wait", () => "initial-prompt"], ["never", () => "late-start-button"]]), (e) => {
 				this.start(e.detail?.begin, e.detail?.end);
 			})}
