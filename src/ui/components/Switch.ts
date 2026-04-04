@@ -140,12 +140,18 @@ export class Switch extends LitElement {
       this.checked = (event.target as HTMLInputElement).checked;
       this.dispatchEvent(
         new CustomEvent('change', {
+          detail: {
+            checked: this.checked,
+          },
           bubbles: true,
           composed: true,
         }),
       );
       this.dispatchEvent(
         new CustomEvent('input', {
+          detail: {
+            checked: this.checked,
+          },
           bubbles: true,
           composed: true,
         }),
