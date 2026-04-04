@@ -42,14 +42,16 @@ export default class App extends LitElement {
 
   async start(begin?: number, end?: number) {
     if (this.manga) {
-      cleanUpElement(document.documentElement, document.head, document.body);
+      if (!document.documentElement.hasAttribute('mov')) {
+        cleanUpElement(document.documentElement, document.head, document.body);
+        document.documentElement.setAttribute('mov', '');
+      }
       window.scrollTo(0, 0);
       setAppStateValue('manga', {
         ...this.manga,
         begin: begin ?? this.manga.begin,
         pages: end ?? this.manga.pages,
       });
-      document.documentElement.setAttribute('mov', '');
     }
   }
 
@@ -97,32 +99,32 @@ export default class App extends LitElement {
               <reader-header .manga=${manga}></reader-header>
               ${Reader(manga)}
               <navbar-thumbnails
-                      .mode=${getSettingsValue('navbar')}
-                    ></navbar-thumbnails>
+                .mode=${getSettingsValue('navbar')}
+              ></navbar-thumbnails>
               <manga-pagination
-                      .mode="${getSettingsValue('pagination')}"
-                      .startPage=${manga.begin}
-                      .totalPages=${manga.pages}
-                      .currentPage=${getAppStateValue('currentPage')}
-                      .next=${manga.next}
-                      .prev=${manga.prev}
-                    ></manga-pagination>
+                .mode="${getSettingsValue('pagination')}"
+                .startPage=${manga.begin}
+                .totalPages=${manga.pages}
+                .currentPage=${getAppStateValue('currentPage')}
+                .next=${manga.next}
+                .prev=${manga.prev}
+              ></manga-pagination>
               <keybindings-panel></keybindings-panel>
               <bookmark-panel></bookmark-panel>
               <settings-panel></settings-panel>
-              <moaqz-toaster dismissable></moaqz-toaster>
-              </div>`
-            : html` <script-startup
-              .mangaPages="${this.manga?.pages}"
-              begin="${this.manga?.begin}"
-              initialStatus="${choose(this.loadMode, [
-                ['wait', () => 'initial-prompt'],
-                ['never', () => 'late-start-button'],
-              ])}"
-              @start=${(e: CustomEvent) => {
-                this.start(e.detail?.begin, e.detail?.end);
-              }}
-            ></script-startup>`
+              <moaqz-toaster dismissable></moaqz-toaster>`
+            : html`
+              <script-startup
+                .mangaPages="${this.manga?.pages}"
+                begin="${this.manga?.begin}"
+                initialStatus="${choose(this.loadMode, [
+                  ['wait', () => 'initial-prompt'],
+                  ['never', () => 'late-start-button'],
+                ])}"
+                @start=${(e: CustomEvent) => {
+                  this.start(e.detail?.begin, e.detail?.end);
+                }}
+              ></script-startup>`
         }
         ${
           dialog
