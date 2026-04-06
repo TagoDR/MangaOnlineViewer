@@ -4,26 +4,26 @@
 Replace `@moaqzdev/toast` with a custom implementation following Web Awesome standards.
 
 ### Research & Design
-- [ ] Analyze `wa-toast` and `wa-toast-item` API from Web Awesome: variants (info, success, warning, danger), `closable`, `duration`, and the `toast()` utility method.
-- [ ] Review current `toast` usage in `src/core/settings.ts` and `src/ui/events/bookmarks.ts`.
-- [ ] Design the CSS styles in `src/ui/styles/` or within the component, ensuring compatibility with the project's theme system.
-- [ ] on the documentation the code is available https://webawesome.com/docs/components/toast/
+- [x] Analyze `wa-toast` and `wa-toast-item` API from Web Awesome: variants (info, success, warning, danger), `closable`, `duration`, and the `toast()` utility method.
+- [x] Review current `toast` usage in `src/core/settings.ts` and `src/ui/events/bookmarks.ts`.
+- [x] Design the CSS styles in `src/ui/styles/` or within the component, ensuring compatibility with the project's theme system.
+- [x] on the documentation the code is available https://webawesome.com/docs/components/toast/
 
 ### Implementation
-- [ ] Create `src/ui/styles/toast.css` for component styling.
-- [ ] Create `src/ui/components/Toast.ts` (register as `mov-toast`).
-    - [ ] Support `variant` property.
-    - [ ] Implement `show()` and `hide()` methods.
-    - [ ] Implement a static `toast()` method or a global utility to manage toast stack and queuing.
-- [ ] Ensure parity with Web Awesome's `wa-toast` for properties and events.
+- [x] Create `src/ui/styles/toast.css` for component styling.
+- [x] Create `src/ui/components/Toast.ts` (register as `mov-toast`).
+    - [x] Support `variant` property.
+    - [x] Implement `show()` and `hide()` methods.
+    - [x] Implement a static `toast()` method or a global utility to manage toast stack and queuing.
+- [x] Ensure parity with Web Awesome's `wa-toast` for properties and events.
 
 ### Integration & Verification
-- [ ] Replace `@moaqzdev/toast` imports with the new `mov-toast` in:
+- [x] Replace `@moaqzdev/toast` imports with the new `mov-toast` in:
     - `src/core/settings.ts`
     - `src/ui/events/bookmarks.ts`
-- [ ] Update `src/ui/index.ts` to export/register the new component.
-- [ ] Create `src/stories/Toast.stories.ts` for visual testing in Storybook.
-- [ ] Remove `@moaqzdev/toast` from `package.json` and external dependencies.
+- [x] Update `src/ui/index.ts` to export/register the new component.
+- [x] Create `src/stories/Toast.stories.ts` for visual testing in Storybook.
+- [x] Remove `@moaqzdev/toast` from `package.json` and external dependencies.
 
 ## 2. Create a Range Slider component (`mov-slider`)
 Replace `toolcool-range-slider` with a custom implementation following Web Awesome standards, supporting dual-range if necessary.

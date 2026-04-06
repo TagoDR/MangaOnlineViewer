@@ -1,4 +1,3 @@
-import { toast } from '@moaqzdev/toast/utils';
 import {
   changeSettingsValue,
   getAppStateValue,
@@ -9,6 +8,7 @@ import {
 import type { IBookmark } from '../../types';
 import { isNothing } from '../../utils/checks';
 import { logScript } from '../../utils/tampermonkey';
+import { toast } from '../components/Toast.ts';
 
 /**
  * Removes a bookmark from the settings for a given URL.

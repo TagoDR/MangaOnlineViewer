@@ -1,4 +1,3 @@
-import { toast } from '@moaqzdev/toast/utils';
 import { logger } from '@nanostores/logger';
 import { createRef } from 'lit/directives/ref.js';
 import _ from 'lodash';
@@ -14,6 +13,7 @@ import {
   isKey,
   type Page,
 } from '../types';
+import { toast } from '../ui/components/Toast.ts';
 import { isNothing } from '../utils/checks';
 import diffObj from '../utils/diffObj';
 import {

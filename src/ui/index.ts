@@ -17,6 +17,7 @@ import './components/Pagination.ts';
 import './components/Drawer.ts';
 import './components/Dialog.ts';
 import './components/Dropdown.ts';
+import './components/Toast.ts';
 
 import './Header.ts';
 import './BookmarkPanel.ts';
@@ -24,5 +25,3 @@ import './KeybindingsPanel.ts';
 import './Navbar.ts';
 import './SettingsPanel.ts';
 import './App.ts';
-
-import '@moaqzdev/toast';
