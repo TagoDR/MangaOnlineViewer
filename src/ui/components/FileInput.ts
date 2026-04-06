@@ -27,10 +27,10 @@ export class FileInput extends LitElement {
     :host {
       display: block;
       width: 100%;
-      --mov-file-input-border-color: var(--mov-color-outline, #dee2e6);
-      --mov-file-input-border-color-hover: var(--mov-color-accent, #007bff);
-      --mov-file-input-bg: var(--mov-color-bg-light, #f8f9fa);
-      --mov-file-input-bg-hover: var(--mov-color-bg, #ffffff);
+      --mov-file-input-border-color: var(--theme-border-color, #dee2e6);
+      --mov-file-input-border-color-hover: var(--theme-hightlight-color, #007bff);
+      --mov-file-input-bg: var(--theme-background-color, #f8f9fa);
+      --mov-file-input-bg-hover: var(--theme-hightlight-color, #ffffff);
     }
 
     .file-input {
@@ -62,8 +62,8 @@ export class FileInput extends LitElement {
     }
 
     .drop-zone.dragging {
-      border-color: var(--mov-color-accent, #007bff);
-      background-color: var(--mov-color-accent-light, #e7f1ff);
+      border-color: var(--mov-color-fill-loud, #007bff);
+      background-color: var(--theme-hightlight-color, #e7f1ff);
       transform: scale(1.01);
     }
 
@@ -100,35 +100,35 @@ export class FileInput extends LitElement {
 
     .icon-wrapper {
       margin-bottom: 1rem;
-      color: var(--mov-color-text-dim, #6c757d);
+      color: var(--mov-color-on-quiet, #6c757d);
       transition: color 0.2s ease;
     }
 
     .drop-zone:hover .icon-wrapper {
-      color: var(--mov-color-accent, #007bff);
+      color: var(--mov-color-fill-loud, #007bff);
     }
 
     .drop-zone:has(.folder-button:hover) .icon-wrapper {
-      color: var(--mov-color-text-dim, #6c757d);
+      color: var(--mov-color-on-quiet, #6c757d);
     }
 
     .label-text {
       font-size: 1.125rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
-      color: var(--mov-color-text, #333);
+      color: var(--theme-text-color, #333);
     }
 
     .description-text {
       font-size: 0.875rem;
-      color: var(--mov-color-text-dim, #6c757d);
+      color: var(--mov-color-on-quiet, #6c757d);
       margin-bottom: 1rem;
     }
 
     .file-list {
       margin-top: 1rem;
       font-size: 0.875rem;
-      color: var(--mov-color-text, #333);
+      color: var(--theme-text-color, #333);
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -141,8 +141,8 @@ export class FileInput extends LitElement {
       justify-content: space-between;
       gap: 0.5rem;
       padding: 0.5rem 0.75rem;
-      background: var(--mov-color-bg, #fff);
-      border: 1px solid var(--mov-color-outline, #dee2e6);
+      background: var(--theme-background-color, #fff);
+      border: 1px solid var(--theme-border-color, #dee2e6);
       border-radius: 6px;
     }
 
@@ -160,7 +160,7 @@ export class FileInput extends LitElement {
     }
 
     .remove-button {
-      color: var(--mov-color-text-dim, #6c757d);
+      color: var(--mov-color-on-quiet, #6c757d);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -172,19 +172,19 @@ export class FileInput extends LitElement {
     }
 
     .remove-button:hover {
-      background-color: var(--mov-color-bg-light, #f8f9fa);
+      background-color: var(--theme-hightlight-color, #f8f9fa);
       color: var(--mov-color-error, #dc3545);
     }
 
     label {
       font-size: 0.875rem;
       font-weight: 500;
-      color: var(--mov-color-text, currentColor);
+      color: var(--theme-text-color, currentColor);
     }
 
     .help-text {
       font-size: 0.75rem;
-      color: var(--mov-color-text-dim, #6c757d);
+      color: var(--mov-color-on-quiet, #6c757d);
       margin-top: 0.25rem;
     }
 
@@ -307,11 +307,20 @@ export class FileInput extends LitElement {
           (file, index) => html`
             <div class="file-item">
               <div class="file-info">
-                <mov-icon name="IconFileDownload" size="16px"></mov-icon>
+                <mov-icon
+                  name="IconFileDownload"
+                  size="16px"
+                ></mov-icon>
                 <span class="file-name">${file.name}</span>
               </div>
-              <div class="remove-button" @click=${(e: Event) => this.removeFile(index, e)}>
-                <mov-icon name="IconX" size="16px"></mov-icon>
+              <div
+                class="remove-button"
+                @click=${(e: Event) => this.removeFile(index, e)}
+              >
+                <mov-icon
+                  name="IconX"
+                  size="16px"
+                ></mov-icon>
               </div>
             </div>
           `,
@@ -370,14 +379,20 @@ export class FileInput extends LitElement {
                     @click=${this.handleFolderButtonClick}
                     title="Select Folder"
                   >
-                    <mov-icon name="IconFolderOpen" size="18px"></mov-icon>
+                    <mov-icon
+                      name="IconFolderOpen"
+                      size="18px"
+                    ></mov-icon>
                   </mov-button>
                 </div>
               `
               : ''
           }
           <div class="icon-wrapper">
-            <mov-icon name="IconBookUpload" size="40px"></mov-icon>
+            <mov-icon
+              name="IconBookUpload"
+              size="40px"
+            ></mov-icon>
           </div>
           <div class="label-text">
             ${this.title || getLocaleString('CHOOSE_FILE') || 'Choose File'}

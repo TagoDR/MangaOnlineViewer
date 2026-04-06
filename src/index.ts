@@ -6,22 +6,25 @@
  * to run the script on a live website.
  */
 
-import start, { preparePage } from './core/main.ts';
-import { allowUpload } from './core/upload';
+import { html, render } from 'lit-html';
+import { preparePage } from './core/main.ts';
 import localhost from './main/localhost';
+import './ui/StandaloneLanding.ts';
+import { isStandalone } from './utils/tampermonkey.ts';
 
-if (document.querySelector('manga-online-viewer')) {
-  console.log('MangaOnlineViewer is already running');
-} else {
-  // Enable local file upload functionality.
-  allowUpload();
-
-  // Add a click listener to a test button for re-rendering the display.
-  document
-    .querySelector('#test')
-    ?.addEventListener('click', () => start([{ ...localhost, url: /.*/ }]));
+(async () => {
+  if (document.querySelector('manga-online-viewer')) {
+    console.log('MangaOnlineViewer is already running');
+    return;
+  }
 
   // Immediately render the main application UI with the mock data.
-  if (import.meta.env.MODE !== 'standalone')
+  if (window.location.search === '') {
     preparePage([{ ...localhost, start: 'always' }, await localhost.run()]);
-}
+  } else {
+    render(
+      html`<standalone-landing ?test="${!isStandalone()}"></standalone-landing>`,
+      document.body,
+    );
+  }
+})();

@@ -9,7 +9,6 @@ import {
 } from '../utils/tampermonkey';
 import { runSiteTests } from './check';
 import { getSettingsValue, isBookmarked } from './settings';
-import { allowUpload } from './upload';
 import '../ui';
 import type App from '../ui/App.ts';
 import externalCSS from '../ui/styles/externalStyle.ts';
@@ -50,7 +49,6 @@ async function start(sites: ISite[]): Promise<void> {
       getInfoGM.script.version
     } on ${getDevice()} ${getBrowser()} with ${getEngine()}`,
   );
-  if (allowUpload()) return;
   logScript(sites.length, 'Known Manga Sites:', sites);
   const foundSites = sites.filter((s: ISite) => s.url.test(window.location.href));
   logScript(foundSites.length, 'Found sites:', foundSites);

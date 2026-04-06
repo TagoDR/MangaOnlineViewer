@@ -7,55 +7,13 @@
       name="viewport"
     />
     <title>MangaOnlineViewer Script</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
-    />
   </head>
   <script type="module">
     import { requiredScripts } from './src/core/externals';
 
     requiredScripts.forEach(script => { import(script)})
+    import('./src/index.ts');
   </script>
   <body>
-    <main
-      id="MangaOnlineViewer"
-      class="container"
-    >
-      <h1>MangaOnlineViewer</h1>
-      <div id="LocalTest">
-        <h2 id="run-test">Run local test</h2>
-        <button
-          type="button"
-          id="test"
-        >
-          Run Local Test
-        </button>
-      </div>
-      <div id="LocalFiles">
-        <h2>Local Files (ZIP, CBZ, CBR..., PNGs, JPGs...)</h2>
-        <p>
-          <b>Attention</b>: You will need to "Allow access to file URLs" for tampermonkey, just go
-          to the browser extension settings.
-        </p>
-        <p>
-          Can read any zip file with images inside and display it like any of the supported sites
-        </p>
-        <mov-file-input
-          id="file-input"
-          label="Choose the local zip file, a folder or images:"
-          button-label="Select Local Content"
-          accept=".zip, .cbz, .cbr, .7z, .rar, image/*"
-          multiple
-          directory
-        ></mov-file-input>
-        <br />
-        <p>Note : your browser will process the zip file, don't choose a file too big !</p>
-      </div>
-    </main>
-    <script
-      src="/src/index.ts"
-      type="module"
-    ></script>
   </body>
 </html>
