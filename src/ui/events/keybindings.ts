@@ -7,7 +7,7 @@ import {
   getSettingsValue,
   setAppStateValue,
 } from '../../core/settings';
-import { logScript } from '../../utils/tampermonkey';
+import { isStandalone, logScript } from '../../utils/tampermonkey';
 import { toggleAutoScroll } from './autoscroll.ts';
 import { changeAutoScrollSpeed } from './options.ts';
 import { updateViewMode } from './viewmode.ts';
@@ -120,9 +120,13 @@ function doScrolling(sign: 1 | -1) {
 export function redirectUrl(type: 'next' | 'prev' | 'series') {
   const url = getAppStateValue('manga')?.[type];
   if (url && url !== '#') {
-    location.href = sanitizeUrl(url);
-  } else if (type !== 'next') {
-    history.back();
+    window.location.href = sanitizeUrl(url);
+  } else if (type === 'series') {
+    if (isStandalone()) {
+      window.location.href = window.location.pathname;
+    } else {
+      window.history.back();
+    }
   }
 }
 

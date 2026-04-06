@@ -96,27 +96,37 @@ export async function loadMangaFromZip(zipFile: File | string): Promise<void> {
 }
 
 /**
- * Handles the file input change event for loading local image files.
- * This function uses the non-standard 'webkitRelativePath' property to get the relative path of files from a directory input.
- * While non-standard, it is supported by all major modern browsers and there is no standard alternative that provides the same functionality.
- * @param {Event} evt - The file input change event.
+ * Handles universal file upload by detecting if the input contains a ZIP file, a folder, or multiple images.
+ * @param {Event} evt - The change event from the file input.
  */
-function openFileImages(evt: Event): void {
-  const input = evt.target as HTMLInputElement;
-  const files = Array.from(input.files as Iterable<File>)
-    .filter(validFileType)
-    .sort((a, b) => orderFiles(a.webkitRelativePath || a.name, b.webkitRelativePath || b.name));
-  logScript(
-    'Local Files: ',
-    files,
-    files.map(f => f.webkitRelativePath || f.name),
-  );
-  if (input.files?.[0]) {
-    displayUploadedFiles(
-      input.files[0].webkitRelativePath.split('/')[0] || 'Local Images',
-      files.map(URL.createObjectURL),
-    );
+export async function handleUniversalUpload(evt: Event): Promise<void> {
+  const target = evt.target as HTMLInputElement;
+  const files = Array.from(target.files || []);
+
+  if (files.length === 0) return;
+
+  // Check if it's a single ZIP-like file
+  if (files.length === 1 && /.(zip|cbz|cbr|7z|rar)$/i.test(files[0].name)) {
+    await loadMangaFromZip(files[0]);
+    return;
   }
+
+  // Check if it's a collection of images (either from a folder or multiple selection)
+  const imageFiles = files.filter(validFileType);
+  if (imageFiles.length > 0) {
+    const sortedImages = imageFiles.sort((a, b) =>
+      orderFiles(a.webkitRelativePath || a.name, b.webkitRelativePath || b.name),
+    );
+
+    const title =
+      imageFiles[0].webkitRelativePath.split('/')[0] ||
+      (files.length > 1 ? 'Local Images' : imageFiles[0].name);
+
+    displayUploadedFiles(title, sortedImages.map(URL.createObjectURL));
+    return;
+  }
+
+  logScript('No compatible files found in upload.');
 }
 
 /**
@@ -128,13 +138,8 @@ export function allowUpload(): boolean {
   if (localhost.url.test(window.location.href)) {
     if (document.querySelector('#MangaOnlineViewer, #LocalTest')) {
       document.querySelector('#LocalTest')?.setAttribute('style', 'display:none');
-      document.querySelector('#file')?.addEventListener('change', evt => {
-        const input = evt.target as HTMLInputElement;
-        if (input.files?.[0]) loadMangaFromZip(input.files[0]);
-      });
-      document.querySelector('#folder')?.addEventListener('change', openFileImages);
-      document.querySelector('#images')?.addEventListener('change', openFileImages);
-      logScript(`Waiting for zip/images upload`);
+      document.querySelector('#file-input')?.addEventListener('change', handleUniversalUpload);
+      logScript(`Waiting for local file upload`);
     }
     return true;
   }

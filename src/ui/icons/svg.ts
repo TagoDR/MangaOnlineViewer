@@ -49,6 +49,7 @@ export { default as IconEye } from './eye.svg';
 export { default as IconEyeOff } from './eye-off.svg';
 export { default as IconFileDownload } from './file-download.svg';
 export { default as IconFilePercent } from './file-percent.svg';
+export { default as IconFolderOpen } from './folder-open.svg';
 export { default as IconHandClick } from './hand-click.svg';
 export { default as IconHelp } from './help.svg';
 export { default as IconInfoCircle } from './info-circle.svg';

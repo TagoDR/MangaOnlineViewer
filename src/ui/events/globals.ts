@@ -1,7 +1,7 @@
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import generateZip from '../../core/download';
 import { changeSettingsValue, getAppStateValue } from '../../core/settings.ts';
-import { logScript } from '../../utils/tampermonkey';
+import { isStandalone, logScript } from '../../utils/tampermonkey';
 
 /**
  * Event handler to initiate the download of the chapter as a ZIP file.
@@ -27,13 +27,17 @@ export function buttonGlobalHideImageControls() {
  * @param {Event} event - The click event.
  */
 export function buttonRedirectURL(event: Event) {
-  const element = event.target as HTMLElement;
+  const element = (event.currentTarget || event.target) as HTMLElement;
   const url = element.getAttribute('value') ?? element.getAttribute('href');
   if ((event as MouseEvent).button !== 1 && !(event as MouseEvent).ctrlKey) {
     if (url && url !== '#') {
       window.location.href = sanitizeUrl(url);
     } else if (element.id === 'series') {
-      window.history.back();
+      if (isStandalone()) {
+        window.location.href = window.location.pathname;
+      } else {
+        window.history.back();
+      }
     }
   }
 }

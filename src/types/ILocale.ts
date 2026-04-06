@@ -129,6 +129,8 @@ export type ILocale = {
   VIEW_MENU: string;
   ZOOM_MENU: string;
   DOUBLE_PAGE: string;
+  CHOOSE_FILE: string;
+  NO_FILES_SELECTED: string;
 };
 
 /**

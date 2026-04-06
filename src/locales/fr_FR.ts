@@ -141,4 +141,6 @@ export default {
   VIEW_MENU: 'Menu Affichage',
   ZOOM_MENU: 'Menu Zoom',
   DOUBLE_PAGE: 'Basculer Double Page',
+  CHOOSE_FILE: 'Choisir un fichier',
+  NO_FILES_SELECTED: 'Aucun fichier sélectionné',
 } satisfies ILocale;

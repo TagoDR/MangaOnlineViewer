@@ -25,17 +25,17 @@ Improve the existing `toggle-button` component to support an animated "Burger" i
 ### 2. Create `mov-file-input` Component
 Develop a new reusable component for file selection, mimicking the API and styling of Web Awesome's `wa-file-input`. This will replace the disparate file inputs in the project. https://webawesome.com/docs/components/file-input
 
-- [ ] **Component Implementation** (create `src/ui/components/FileInput.ts`):
+- [x] **Component Implementation** (create `src/ui/components/FileInput.ts`):
     - Inherit from `LitElement` and implement the standard properties: `accept`, `multiple`, `directory`, `disabled`, `required`.
     - Use a hidden `<input type="file">` and a styled `mov-button` + `mov-icon` (IconFolderOpen) as the UI.
     - Implement a `files` getter to proxy the underlying input's files.
     - Dispatch standard `change` and custom `wa-change` events.
     - Show selected file names or a count when multiple files are selected.
-- [ ] **Storybook Integration**:
+- [x] **Storybook Integration**:
     - Create `src/stories/components/FileInput.stories.ts`.
     - Add stories for "Single File", "Multiple Files", "Directory Selection", and "Accept Specific Types".
     - Test the local file reading logic within a story.
-- [ ] **Integration in `index.html`**:
+- [x] **Integration in `index.html`**:
     - Replace the multiple `<input type="file">` elements in `index.html` with instances of `<mov-file-input>`.
     - Update the local testing logic in `src/index.ts` to work with the new component's API.
 

@@ -139,4 +139,6 @@ export default {
   VIEW_MENU: '查看菜单',
   ZOOM_MENU: '缩放菜单',
   DOUBLE_PAGE: '切换双页',
+  CHOOSE_FILE: '选择文件',
+  NO_FILES_SELECTED: '未选择任何文件',
 } satisfies ILocale;

@@ -73,6 +73,7 @@ export const {
   IconEyeOff,
   IconFileDownload,
   IconFilePercent,
+  IconFolderOpen,
   IconHandClick,
   IconKeyboard,
   IconLayoutDashboard,

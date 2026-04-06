@@ -140,4 +140,6 @@ export default {
   VIEW_MENU: 'View Menu',
   ZOOM_MENU: 'Zoom Menu',
   DOUBLE_PAGE: 'Toggle Double Page',
+  CHOOSE_FILE: 'Choose File',
+  NO_FILES_SELECTED: 'No files selected',
 } satisfies ILocale;

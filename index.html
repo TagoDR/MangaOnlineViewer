@@ -41,34 +41,16 @@
         <p>
           Can read any zip file with images inside and display it like any of the supported sites
         </p>
-        <label for="file">Choose the local zip file:</label>
-        <input
-          type="file"
-          id="file"
-          name="file"
-          class="btn"
-          accept=".zip, .cbz, .cbr, .7z, .rar"
-        /><br />
-        <p>Note : your browser will process the zip file, don't choose a file too big !</p>
-        <label for="file"><b>OR</b> Select a folder with images inside:</label>
-        <input
-          type="file"
-          id="folder"
-          name="folder"
-          class="btn"
-          webkitdirectory
-          mozdirectory
-          directory
-        /><br />
-        <label for="file"><b>OR</b> Select images:</label>
-        <input
-          type="file"
-          id="images"
-          name="images"
-          class="btn"
-          accept="image/*"
+        <mov-file-input
+          id="file-input"
+          label="Choose the local zip file, a folder or images:"
+          button-label="Select Local Content"
+          accept=".zip, .cbz, .cbr, .7z, .rar, image/*"
           multiple
-        /><br />
+          directory
+        ></mov-file-input>
+        <br />
+        <p>Note : your browser will process the zip file, don't choose a file too big !</p>
       </div>
     </main>
     <script

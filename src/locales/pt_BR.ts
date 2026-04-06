@@ -140,4 +140,6 @@ export default {
   VIEW_MENU: 'Menu de Visualizações',
   ZOOM_MENU: 'Menu de Zoom',
   DOUBLE_PAGE: 'Alternar Página Dupla',
+  CHOOSE_FILE: 'Escolher arquivo',
+  NO_FILES_SELECTED: 'Nenhum arquivo selecionado',
 } satisfies ILocale;
