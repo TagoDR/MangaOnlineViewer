@@ -11,14 +11,14 @@ declare global {
 
 /**
  * Defines the operational mode of the toggle button, which determines the icons and animation style used.
- * - `menu`: Toggles between a menu icon and an 'X' icon.
+ * - `burger`: Animated three-line burger icon that transforms into an 'X'.
  * - `chevron`: A single chevron icon that rotates on toggle.
  * - `theme`: Toggles between a sun and a moon icon.
  * - `custom`: Uses the `icon` and `activeIcon` properties for custom icons.
  * - `play-pause`: Toggles between play and pause icons.
  * - `expand`: A single arrow icon that rotates to indicate expansion.
  */
-type ToggleMode = 'menu' | 'chevron' | 'theme' | 'custom' | 'play-pause' | 'expand';
+type ToggleMode = 'burger' | 'chevron' | 'theme' | 'custom' | 'play-pause' | 'expand';
 
 /**
  * A generic toggle button that switches between two states, often represented by different icons.
@@ -34,6 +34,10 @@ export class ToggleButton extends LitElement {
     :host {
       display: inline-flex;
       vertical-align: middle;
+      --burger-size: 1.25rem;
+      --burger-line-height: 2px;
+      --burger-line-color: currentColor;
+      --burger-transition-duration: 0.3s;
     }
 
     /* Base button styling */
@@ -106,6 +110,48 @@ export class ToggleButton extends LitElement {
       display: block;
     }
 
+    /* Burger Mode Styling */
+    .burger-mode {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: var(--burger-size);
+      height: var(--burger-size);
+      position: relative;
+    }
+
+    .burger-line {
+      width: 100%;
+      height: var(--burger-line-height);
+      background-color: var(--burger-line-color);
+      border-radius: var(--burger-line-height);
+      transition: transform var(--burger-transition-duration) ease,
+                  opacity var(--burger-transition-duration) ease;
+      position: absolute;
+    }
+
+    .burger-line:nth-child(1) { transform: translateY(-6px); }
+    .burger-line:nth-child(2) { transform: translateY(0); }
+    .burger-line:nth-child(3) { transform: translateY(6px); }
+
+    :host([active]) .burger-line:nth-child(1) {
+      transform: translateY(0) rotate(45deg);
+    }
+
+    :host([active]) .burger-line:nth-child(2) {
+      opacity: 0;
+      transform: translateX(4px);
+    }
+
+    :host([active]) .burger-line:nth-child(3) {
+      transform: translateY(0) rotate(-45deg);
+    }
+
+    /* Size adjustments for burger */
+    :host([size="small"]) { --burger-size: 1rem; }
+    :host([size="large"]) { --burger-size: 1.5rem; }
+
     /* Simple click feedback without disrupting layout */
     mov-button:active {
       transform: scale(0.96);
@@ -151,7 +197,7 @@ export class ToggleButton extends LitElement {
    * @type {ToggleMode}
    */
   @property({ type: String })
-  mode: ToggleMode = 'menu';
+  mode: ToggleMode = 'burger';
 
   /**
    * The current state of the toggle (`true` for active, `false` for inactive).
@@ -227,8 +273,9 @@ export class ToggleButton extends LitElement {
   render() {
     const currentLabel = this.active ? (this.activeLabel ?? this.label) : this.label;
     const classes = {
-      'two-icon-mode': ['menu', 'custom', 'theme'].includes(this.mode),
+      'two-icon-mode': ['custom', 'theme'].includes(this.mode),
       'single-icon-mode': ['chevron', 'expand', 'play-pause'].includes(this.mode),
+      'burger-mode-active': this.mode === 'burger',
     };
 
     return html`
@@ -252,7 +299,7 @@ export class ToggleButton extends LitElement {
 
   private _getDefaultLabel(): string {
     switch (this.mode) {
-      case 'menu':
+      case 'burger':
         return 'Toggle menu';
       case 'chevron':
         return 'Toggle expand';
@@ -271,8 +318,6 @@ export class ToggleButton extends LitElement {
 
   private _getIcons() {
     switch (this.mode) {
-      case 'menu':
-        return { inactive: 'menu-2', active: 'x' };
       case 'chevron':
         return { inactive: 'chevron-right', active: 'chevron-right' };
       case 'theme':
@@ -289,6 +334,16 @@ export class ToggleButton extends LitElement {
   }
 
   private _renderIcons() {
+    if (this.mode === 'burger') {
+      return html`
+        <div class="burger-mode">
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+        </div>
+      `;
+    }
+
     const icons = this._getIcons();
     if (!icons.inactive) return nothing;
 

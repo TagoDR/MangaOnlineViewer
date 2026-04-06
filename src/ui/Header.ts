@@ -24,6 +24,7 @@ import {
 import { buttonKeybindingsOpen, buttonSettingsOpen } from './events/panels';
 import { updateViewMode } from './events/viewmode';
 import { changeGlobalZoom, changeZoom, changeZoomByStep } from './events/zoom';
+import './components/ToggleButton.ts';
 import styles from './styles/header.css?inline';
 import media from './styles/media.css?inline';
 
@@ -74,16 +75,17 @@ export class Header extends LitElement {
     };
 
     return html`
-      <mov-button
+      <toggle-button
         id="menu"
+        mode="burger"
         class="${classMap({
           [getSettingsValue('header')]: true,
           hide: ['top', 'end'].includes(headroom),
         })}"
-        @click=${this.headroomController.toggleHeaderVisibility}
+        ?active=${headerVisible}
+        @toggle=${this.headroomController.toggleHeaderVisibility}
       >
-        <mov-icon name="IconMenu2"></mov-icon>
-      </mov-button>
+      </toggle-button>
       <header
         id="Header"
         class="${classMap({

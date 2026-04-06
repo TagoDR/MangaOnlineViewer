@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import '../../ui/components/ToggleButton.ts';
 
-const modes = ['menu', 'chevron', 'theme', 'play-pause', 'expand', 'custom'];
+const modes = ['burger', 'chevron', 'theme', 'play-pause', 'expand', 'custom'];
 const variants = ['neutral', 'brand', 'success', 'warning', 'danger'];
 const appearances = ['plain', 'accent', 'filled', 'filled outline', 'outline', 'light', 'subtle'];
 const sizes = ['small', 'medium', 'large'];
@@ -86,9 +86,9 @@ export default {
 } satisfies Meta;
 
 export const Default: StoryObj = {
-  name: 'Menu Mode',
+  name: 'Burger Mode',
   args: {
-    mode: 'menu',
+    mode: 'burger',
     active: false,
     label: 'Open menu',
     activeLabel: 'Close menu',
@@ -143,15 +143,15 @@ export const AllModes: StoryObj = {
     </style>
     <div class="modes-demo">
       <div class="mode-item">
-        <h4 class="mode-title">Menu Mode</h4>
-        <p class="mode-description">Hamburger menu ↔ Close (X)</p>
+        <h4 class="mode-title">Burger Mode</h4>
+        <p class="mode-description">Animated burger menu ↔ Close (X)</p>
         <div class="mode-buttons">
           <toggle-button
-            mode="menu"
+            mode="burger"
             label="Menu"
           ></toggle-button>
           <toggle-button
-            mode="menu"
+            mode="burger"
             active
             label="Menu"
           ></toggle-button>
@@ -222,7 +222,7 @@ export const AllModes: StoryObj = {
         </div>
       </div>
 
-      <div class="mode-item">
+      <div class="custom-item">
         <h4 class="mode-title">Custom Mode</h4>
         <p class="mode-description">Your own icons</p>
         <div class="mode-buttons">
@@ -337,7 +337,7 @@ export const Sizes: StoryObj = {
             <span class="size-label">${size.toUpperCase()}:</span>
             <toggle-button
               size="${size}"
-              mode="menu"
+              mode="burger"
             ></toggle-button>
             <toggle-button
               size="${size}"
@@ -581,7 +581,7 @@ export const AnimationDemo: StoryObj = {
         <span class="animation-label">Fast (150ms):</span>
         <toggle-button
           animation-duration="150"
-          mode="menu"
+          mode="burger"
         ></toggle-button>
         <toggle-button
           animation-duration="150"
@@ -601,7 +601,7 @@ export const AnimationDemo: StoryObj = {
         <span class="animation-label">Normal (350ms):</span>
         <toggle-button
           animation-duration="350"
-          mode="menu"
+          mode="burger"
         ></toggle-button>
         <toggle-button
           animation-duration="350"
@@ -621,7 +621,7 @@ export const AnimationDemo: StoryObj = {
         <span class="animation-label">Slow (600ms):</span>
         <toggle-button
           animation-duration="600"
-          mode="menu"
+          mode="burger"
         ></toggle-button>
         <toggle-button
           animation-duration="600"
@@ -646,7 +646,7 @@ export const AnimationDemo: StoryObj = {
 export const InteractivePlayground: StoryObj = {
   name: 'Interactive Playground',
   args: {
-    mode: 'menu',
+    mode: 'burger',
     active: false,
     label: 'Toggle button',
     activeLabel: '',
