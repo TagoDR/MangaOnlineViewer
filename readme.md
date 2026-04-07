@@ -42,7 +42,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 
 ## Supported Manga Sites
 
-- [Asura Scans](https://asuracomic.net/) _[English]_
+- [Asura Scans](https://asurascans.com/) _[English]_
 - [Batoto](https://rentry.co/batoto) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.net/) _[English]_
 - [Comick](https://comick.io/) _[English]_
