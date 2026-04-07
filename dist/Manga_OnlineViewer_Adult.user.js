@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.04.07.build-0113
+// @version       2026.04.07.build-2011
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -5082,7 +5082,7 @@
 		return applyColorsToSvg(rawSvg, `icon-tabler-${_.kebabCase(iconKey.replace(/^Icon/, ""))}`);
 	});
 	//#endregion
-	//#region \0@oxc-project+runtime@0.122.0/helpers/decorate.js
+	//#region \0@oxc-project+runtime@0.123.0/helpers/decorate.js
 	function __decorate(decorators, target, key, desc) {
 		var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 		if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10894,10 +10894,11 @@
         ${getLocaleString("AUTO_SCROLL_HEIGHT")}
         <output
           id="scrollHeightVal"
+          class="RangeValue"
           for="scrollHeight"
         >
-          ${getSettingsValue("scrollHeight")} </output
-        >px
+          ${getSettingsValue("scrollHeight")}px
+        </output>
       </span>
       <input
         type="range"
@@ -10907,7 +10908,7 @@
         min="1"
         max="${Math.ceil(window.innerHeight / 200) * 100}"
         step="1"
-        @change="${changeScrollHeight}"
+        @input="${changeScrollHeight}"
       />
     </div>
   `;
@@ -12272,7 +12273,7 @@
 		elements?.forEach(removeAllEventListeners);
 	};
 	//#endregion
-	//#region \0@oxc-project+runtime@0.122.0/helpers/taggedTemplateLiteral.js
+	//#region \0@oxc-project+runtime@0.123.0/helpers/taggedTemplateLiteral.js
 	function _taggedTemplateLiteral(e, t) {
 		return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } }));
 	}
