@@ -218,7 +218,10 @@ export const WithDetails: StoryObj = {
     controls: { disable: true },
   },
   render: () => html`
-    <mov-dropdown id="FileDropdown" open>
+    <mov-dropdown
+      id="FileDropdown"
+      open
+    >
       <mov-button
         slot="trigger"
         title="${getLocaleString('FILE_MENU')}"
@@ -228,9 +231,7 @@ export const WithDetails: StoryObj = {
           name="IconDotsVertical"
         ></mov-icon>
       </mov-button>
-      <mov-dropdown-item
-        id="settings"
-      >
+      <mov-dropdown-item id="settings">
         <mov-icon
           slot="icon"
           name="IconSettings"
@@ -282,5 +283,101 @@ export const WithDetails: StoryObj = {
         ${getLocaleString('TOGGLE_CONTROLS')}
       </mov-dropdown-item>
     </mov-dropdown>
+  `,
+};
+
+export const Comparison: StoryObj = {
+  render: () => html`
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/styles/webawesome.css"
+    />
+    <script type="module">
+      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/button/button.js';
+      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/divider/divider.js';
+      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/icon/icon.js';
+      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/dropdown-item/dropdown-item.js';
+      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/dropdown/dropdown.js';
+
+      import {
+        registerIconLibrary,
+        setBasePath,
+      } from 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/webawesome.js';
+      const tablerResolver = name =>
+        'https://cdn.jsdelivr.net/npm/@tabler/icons/icons/' + toKebabCase(name) + '.svg';
+      setBasePath('https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/');
+      registerIconLibrary('default', {
+        resolver: name => 'https://cdn.jsdelivr.net/npm/@tabler/icons/icons/' + name + '.svg',
+        mutator: svg => {
+          svg.style.fill = 'none';
+          svg.setAttribute('stroke', 'var(--wa-color-text-normal)');
+        },
+      });
+    </script>
+    <div style="display: flex; gap: 2rem; padding: 1rem; min-height: 400px;">
+      <div>
+        <h4><code>&lt;mov-dropdown&gt;</code></h4>
+        <mov-dropdown open>
+          <mov-button slot="trigger">MOV Dropdown</mov-button>
+          <mov-dropdown-item>
+            <mov-icon
+              slot="icon"
+              name="IconSettings"
+            ></mov-icon>
+            Settings
+          </mov-dropdown-item>
+          <mov-dropdown-item>
+            <mov-icon
+              slot="icon"
+              name="IconKeyboard"
+            ></mov-icon>
+            Keybindings
+          </mov-dropdown-item>
+          <mov-divider></mov-divider>
+          <mov-dropdown-item variant="danger">
+            <mov-icon
+              slot="icon"
+              name="IconTrash"
+            ></mov-icon>
+            Delete
+          </mov-dropdown-item>
+        </mov-dropdown>
+      </div>
+
+      <div>
+        <h4><code>&lt;wa-dropdown&gt;</code></h4>
+        <wa-dropdown open>
+          <wa-button
+            slot="trigger"
+            caret
+            >WA Dropdown</wa-button
+          >
+          <wa-menu>
+            <wa-menu-item>
+              <wa-icon
+                slot="prefix"
+                name="gear"
+              ></wa-icon>
+              Settings
+            </wa-menu-item>
+            <wa-menu-item>
+              <wa-icon
+                slot="prefix"
+                name="keyboard"
+              ></wa-icon>
+              Keybindings
+            </wa-menu-item>
+            <wa-divider></wa-divider>
+            <wa-menu-item variant="danger">
+              <wa-icon
+                slot="prefix"
+                name="trash"
+              ></wa-icon>
+              Delete
+            </wa-menu-item>
+          </wa-menu>
+        </wa-dropdown>
+      </div>
+    </div>
   `,
 };

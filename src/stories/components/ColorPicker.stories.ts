@@ -119,3 +119,32 @@ export const Popup: StoryObj<ColorPicker> = {
       mode="popup"
     ></story-color-picker-theme-wrapper>`,
 };
+
+export const Comparison: StoryObj<ColorPicker> = {
+  render: () => html`
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/styles/webawesome.css"
+    />
+    <script type="module">
+      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/color-picker/color-picker.js';
+    </script>
+    <div style="display: flex; flex-direction: column; gap: 2rem; padding: 1rem;">
+      <div>
+        <h4><code>&lt;mov-color-picker&gt;</code></h4>
+        <mov-color-picker
+          label="MOV Color Picker"
+          value="#228be6"
+        ></mov-color-picker>
+      </div>
+
+      <div>
+        <h4><code>&lt;wa-color-picker&gt;</code></h4>
+        <wa-color-picker
+          label="Web Awesome Color Picker"
+          value="#228be6"
+        ></wa-color-picker>
+      </div>
+    </div>
+  `,
+};

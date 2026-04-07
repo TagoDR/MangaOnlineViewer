@@ -372,3 +372,56 @@ export const GeneratingZip: Story = {
     return container;
   },
 };
+
+export const Comparison: Story = {
+  name: 'Comparison',
+  render: () => {
+    const container = document.createElement('div');
+    const dialogContainer = document.createElement('div');
+
+    const template = html`
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/styles/webawesome.css"
+      />
+      <script type="module">
+        import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/button/button.js';
+        import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/dialog/dialog.js';
+      </script>
+      <div style="display: flex; gap: 1rem;">
+        <mov-button
+          @click=${() => {
+            render(
+              html`
+                <mov-dialog
+                  open
+                  label="MOV Dialog"
+                  @close=${() => render(html``, dialogContainer)}
+                >
+                  <p>This is a MangaOnlineViewer dialog.</p>
+                  <div slot="footer">
+                    <mov-button @click=${() => render(html``, dialogContainer)}>Close</mov-button>
+                  </div>
+                </mov-dialog>
+              `,
+              dialogContainer,
+            );
+          }}
+          >Open MOV Dialog</mov-button
+        >
+
+        <wa-dialog label="Dialog" id="dialog-opening">
+          This dialog was opened declaratively — no JavaScript required!
+          <wa-button slot="footer" variant="brand" data-dialog="close">Close</wa-button>
+        </wa-dialog>
+
+        <wa-button appearance="filled" data-dialog="open dialog-opening">Open Dialog</wa-button>
+
+      </div>
+    `;
+
+    render(template, container);
+    container.append(dialogContainer);
+    return container;
+  },
+};

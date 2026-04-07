@@ -87,3 +87,67 @@ export const WithFooter: Story = {
     footer: html`<mov-button variant="brand">Footer Action</mov-button>`,
   },
 };
+
+export const Comparison: Story = {
+  name: 'Comparison',
+  render: () => {
+    const container = document.createElement('div');
+    const drawerContainer = document.createElement('div');
+
+    const template = html`
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/styles/webawesome.css"
+      />
+      <script type="module">
+        import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/button/button.js';
+        import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/drawer/drawer.js';
+      </script>
+      <div style="display: flex; gap: 1rem;">
+        <mov-button
+          @click=${() => {
+            render(
+              html`
+                <mov-drawer
+                  open
+                  label="MOV Drawer"
+                  @close=${() => render(html``, drawerContainer)}
+                >
+                  <p>This is a MangaOnlineViewer drawer.</p>
+                  <div slot="footer">
+                    <mov-button @click=${() => render(html``, drawerContainer)}>Close</mov-button>
+                  </div>
+                </mov-drawer>
+              `,
+              drawerContainer,
+            );
+          }}
+          >Open MOV Drawer</mov-button
+        >
+
+        <wa-drawer
+          label="Drawer"
+          id="drawer-opening"
+        >
+          This drawer was opened declaratively using a data attribute on the button.
+          <wa-button
+            slot="footer"
+            variant="brand"
+            data-drawer="close"
+            >Close</wa-button
+          >
+        </wa-drawer>
+
+        <wa-button
+          appearance="filled"
+          data-drawer="open drawer-opening"
+          >Open Drawer</wa-button
+        >
+      </div>
+    `;
+
+    render(template, container);
+    container.append(drawerContainer);
+    return container;
+  },
+};

@@ -120,12 +120,19 @@ export const AllVariants: StoryObj = {
   render: () => html`
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0-beta.5/dist-cdn/styles/themes/default.css"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/styles/webawesome.css"
     />
     <script type="module">
-      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0-beta.5/dist-cdn/components/button/button.js';
-      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0-beta.5/dist-cdn/components/icon/icon.js';
-      import { registerIconLibrary } from 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.0.0-beta.5/dist-cdn/webawesome.js';
+      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/button/button.js';
+      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/icon/icon.js';
+
+      import {
+        registerIconLibrary,
+        setBasePath,
+      } from 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/webawesome.js';
+      const tablerResolver = name =>
+        'https://cdn.jsdelivr.net/npm/@tabler/icons/icons/' + toKebabCase(name) + '.svg';
+      setBasePath('https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/');
       registerIconLibrary('default', {
         resolver: name => 'https://cdn.jsdelivr.net/npm/@tabler/icons/icons/' + name + '.svg',
         mutator: svg => {

@@ -336,3 +336,75 @@ export const IconGallery: StoryObj = {
     </div>
   `,
 };
+
+export const Comparison: StoryObj = {
+  name: 'Comparison',
+  render: () => {
+    const testIcons = ['zoom-in', 'file-download', 'eye-off', 'refresh', 'bookmark'];
+    return html`
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/styles/webawesome.css"
+      />
+      <script type="module">
+        import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/icon/icon.js';
+
+        import { registerIconLibrary } from 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/webawesome.js';
+        import { toKebabCase, toPascalCase } from '../../utils/format.ts';
+        import * as styledIcons from '../../ui/icons/StyledIcons.ts';
+
+        const tablerResolver = name =>
+          'https://cdn.jsdelivr.net/npm/@tabler/icons/icons/' + toKebabCase(name) + '.svg';
+        registerIconLibrary('default', {
+          resolver: (name, family) => {
+            const customIcon = styledIcons[toPascalCase(name)];
+            if (customIcon) {
+              // Use the bundled SVG content for custom icons, avoiding a network request.
+              return 'data:image/svg+xml,' + encodeURIComponent(customIcon);
+            }
+            // Fallback to Tabler icons if the icon is not found in the custom set.
+            return tablerResolver(name);
+          },
+          mutator: svg => {
+            svg.style.fill = 'none';
+            svg.setAttribute('height', 'auto');
+            svg.setAttribute('width', 'auto');
+            svg.setAttribute('stroke', 'currentColor');
+          },
+        });
+      </script>
+      <div style="display: flex; flex-direction: column; gap: 2rem;">
+        <table>
+          <thead>
+            <tr>
+              <th>Icon Name</th>
+              <th><code>&lt;mov-icon&gt;</code></th>
+              <th><code>&lt;wa-icon&gt;</code></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${testIcons.map(
+              icon => html`
+                <tr>
+                  <td><code>${icon}</code></td>
+                  <td>
+                    <mov-icon
+                      name="${icon}"
+                      size="24px"
+                    ></mov-icon>
+                  </td>
+                  <td>
+                    <wa-icon
+                      name="${icon}"
+                      style="font-size: 24px;"
+                    ></wa-icon>
+                  </td>
+                </tr>
+              `,
+            )}
+          </tbody>
+        </table>
+      </div>
+    `;
+  },
+};

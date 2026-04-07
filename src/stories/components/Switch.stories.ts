@@ -65,3 +65,31 @@ export const Textual: StoryObj = {
     design: 'textual',
   },
 };
+
+export const Comparison: StoryObj = {
+  render: () => html`
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/styles/webawesome.css"
+    />
+    <script type="module">
+      import 'https://cdn.jsdelivr.net/npm/@awesome.me/webawesome@3.5.0/dist-cdn/components/switch/switch.js';
+    </script>
+    <div style="display: flex; flex-direction: column; gap: 2rem; padding: 1rem;">
+      <div>
+        <h4><code>&lt;mov-switch&gt;</code> (Graphical)</h4>
+        <mov-switch design="graphical">Graphical Switch</mov-switch>
+      </div>
+
+      <div>
+        <h4><code>&lt;mov-switch&gt;</code> (Textual)</h4>
+        <mov-switch design="textual">Textual Switch</mov-switch>
+      </div>
+
+      <div>
+        <h4><code>&lt;wa-switch&gt;</code></h4>
+        <wa-switch>Web Awesome Switch</wa-switch>
+      </div>
+    </div>
+  `,
+};

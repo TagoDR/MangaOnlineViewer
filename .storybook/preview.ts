@@ -57,7 +57,6 @@ class ThemeWrapper extends LitElement {
             style="${styleMap({
               display: 'block',
               minWidth: '100px',
-              height: '20px',
               'background-color': 'var(--mov-color-fill-loud)',
               color: 'var(--mov-color-on-loud)',
               border: '1px dashed silver',
