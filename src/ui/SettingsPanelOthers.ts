@@ -198,10 +198,11 @@ function autoScroll() {
         ${getLocaleString('AUTO_SCROLL_HEIGHT')}
         <output
           id="scrollHeightVal"
+          class="RangeValue"
           for="scrollHeight"
         >
-          ${getSettingsValue('scrollHeight')} </output
-        >px
+          ${getSettingsValue('scrollHeight')}px
+        </output>
       </span>
       <input
         type="range"
@@ -211,7 +212,7 @@ function autoScroll() {
         min="1"
         max="${Math.ceil(window.innerHeight / 200) * 100}"
         step="1"
-        @change="${changeScrollHeight}"
+        @input="${changeScrollHeight}"
       />
     </div>
   `;
