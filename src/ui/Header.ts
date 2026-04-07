@@ -337,6 +337,14 @@ export class Header extends LitElement {
           </h1>
         </div>
         <div id="ZoomControl">
+          <span id="ZoomVal">
+            Zoom:
+            ${
+              getSettingsValue('zoomMode') === 'percent'
+                ? `${getSettingsValue('zoomValue')}%`
+                : getSettingsValue('zoomMode')
+            }
+          </span>
           <input
             type="range"
             id="Zoom"
@@ -346,14 +354,6 @@ export class Header extends LitElement {
             max="200"
             @input=${changeZoom}
           />
-          <span id="ZoomVal">
-            Zoom:
-            ${
-              getSettingsValue('zoomMode') === 'percent'
-                ? `${getSettingsValue('zoomValue')}%`
-                : getSettingsValue('zoomMode')
-            }</span
-          >
         </div>
         <div
           id="GlobalFunctions"
