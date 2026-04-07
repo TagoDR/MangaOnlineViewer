@@ -1,32 +1,33 @@
 // == AsuraScans ===================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
-import { findClosestByContentEq, findOneByContentStarts } from '../utils/find';
-import { waitForTimer } from '../utils/waitFor.ts';
+import { findClosestByContentEq } from '../utils/find';
 
 const asura: ISite = {
   name: 'Asura Scans',
-  url: /https?:\/\/(www.)?(asuracomic).(net)\/.+/,
-  homepage: 'https://asuracomic.net/',
+  url: /https?:\/\/(www.)?(asurascans|asuracomics).(com|net)\/.+/,
+  homepage: 'https://asurascans.com/',
   language: [Language.ENGLISH],
   category: Category.MANGA,
-  waitEle: 'img[alt*="chapter"]',
-  waitTime: 2000,
+  waitEle: 'astro-island[component-url*="ChapterReader"]',
   run(): IManga {
-    const images = [...document.querySelectorAll('img[alt*="chapter"]')];
-    const ref = findOneByContentStarts('p', 'All chapters are in');
+    const island = document.querySelector('astro-island[component-url*="ChapterReader"]');
+    const props = JSON.parse(island?.getAttribute('props') || '{}');
+    const seriesSlug = props.seriesSlug?.[1];
+    const pages = props.pages?.[1] || [];
+    const imgUrls = pages.map((p: { url: string[] }[]) => p[1]?.url?.[1]).filter(Boolean);
     return {
-      title: ref?.previousSibling?.textContent?.trim(),
-      series: ref?.querySelector('a')?.getAttribute('href'),
-      pages: images.length,
-      prev: findClosestByContentEq('h2', 'Prev', 'a')?.getAttribute('href'),
-      next: findClosestByContentEq('h2', 'Next', 'a')?.getAttribute('href'),
-      listImages: images.map(img => img.getAttribute('src') ?? ''),
-      async before() {
-        document.querySelectorAll('button.absolute').forEach(e => {
-          e.dispatchEvent(new Event('click', { bubbles: true }));
-        });
-        await waitForTimer(1000);
-      },
+      title: `${props.seriesName?.[1]} - Chapter ${props.chapterName?.[1]}`,
+      series: `/comics/${seriesSlug}`,
+      pages: imgUrls.length,
+      prev:
+        findClosestByContentEq('span', 'Prev', 'a')?.getAttribute('href') ||
+        document.querySelector('link[rel="prev"]')?.getAttribute('href') ||
+        undefined,
+      next:
+        findClosestByContentEq('span', 'Next', 'a')?.getAttribute('href') ||
+        document.querySelector('link[rel="next"]')?.getAttribute('href') ||
+        undefined,
+      listImages: imgUrls,
     };
   },
 };
