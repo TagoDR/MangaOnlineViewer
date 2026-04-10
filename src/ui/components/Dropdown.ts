@@ -26,15 +26,26 @@ export class MovDropdown extends LitElement {
     .dropdown-content {
       display: none;
       position: absolute;
+      top: 100%;
+      left: 0;
       background-color: var(--theme-background-color, #f9f9f9);
       min-width: 160px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      z-index: 1;
+      z-index: 100;
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 4px 0 0;
       border: 1px solid var(--theme-border-color, #ccc);
       border-radius: 5px;
+    }
+    :host([placement^='top']) .dropdown-content {
+      top: auto;
+      bottom: 100%;
+      margin: 0 0 4px;
+    }
+    :host([placement$='end']) .dropdown-content {
+      left: auto;
+      right: 0;
     }
     :host([open]) .dropdown-content {
       display: block;

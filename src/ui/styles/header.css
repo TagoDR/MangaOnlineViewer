@@ -86,6 +86,31 @@
   left: 0;
 }
 
+#Toolbar {
+  order: 1;
+}
+
+#GlobalFunctions {
+  order: 4;
+}
+
+#ViewerTitle {
+  order: 2;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+#ZoomControl {
+  order: 3;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 5px;
+  min-width: 100px;
+}
+
 #MangaTitle {
   padding: 2px;
   margin: 0;
@@ -99,19 +124,64 @@
   max-width: 40vw;
 }
 
-#GlobalFunctions {
+.button-group {
   display: flex;
-  gap: 3px;
-  padding: 3px 3px 3px 0;
+  gap: 0;
+  padding: 3px;
   flex-wrap: wrap;
   z-index: 100;
+  vertical-align: middle;
 }
 
-#ZoomControl {
+.button-group:has(mov-dropdown[open]) {
+  z-index: 110;
+}
+
+.button-group > mov-button::part(base),
+.button-group > mov-dropdown mov-button[slot="trigger"]::part(base) {
+  border-radius: 0;
+}
+
+.button-group > mov-button:first-child::part(base),
+.button-group > mov-dropdown:first-child mov-button[slot="trigger"]::part(base) {
+  border-top-left-radius: var(--mov-border-radius-m);
+  border-bottom-left-radius: var(--mov-border-radius-m);
+}
+
+.button-group > mov-button:last-child::part(base),
+.button-group > mov-dropdown:last-child mov-button[slot="trigger"]::part(base) {
+  border-top-right-radius: var(--mov-border-radius-m);
+  border-bottom-right-radius: var(--mov-border-radius-m);
+}
+
+.button-group:has(+ .button-group) {
+  padding-right: 0;
+}
+
+.button-group:has(+ .button-group) > mov-button:last-child::part(base),
+.button-group:has(+ .button-group)
+  > mov-dropdown:last-child
+  mov-button[slot="trigger"]::part(base) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.button-group + .button-group {
+  padding-left: 0;
+  margin-inline-start: -1px;
+}
+
+.button-group + .button-group > mov-button:first-child::part(base),
+.button-group + .button-group > mov-dropdown:first-child mov-button[slot="trigger"]::part(base) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.button-group > mov-button:not(:first-child),
+.button-group > mov-dropdown:not(:first-child) {
+  margin-inline-start: -1px;
+}
+
+.button-group > mov-dropdown {
   display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 3px;
-  padding: 10px 5px;
-  min-width: 100px;
 }

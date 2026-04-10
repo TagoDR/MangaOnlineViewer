@@ -331,33 +331,6 @@ export class Header extends LitElement {
             </mov-dropdown-item>
           </mov-dropdown>
         </div>
-        <div id="ViewerTitle">
-          <h1
-            id="MangaTitle"
-            title="${this.manga.title}"
-          >
-            ${this.titleController.value ?? this.manga.title}
-          </h1>
-        </div>
-        <div id="ZoomControl">
-          <output id="ZoomVal">
-            Zoom:
-            ${
-              getSettingsValue('zoomMode') === 'percent'
-                ? `${getSettingsValue('zoomValue')}%`
-                : getSettingsValue('zoomMode')
-            }
-          </output>
-          <mov-slider
-            id="Zoom"
-            name="Zoom"
-            .value="${getSettingsValue('zoomValue')}"
-            min="${getSettingsValue('minZoom')}"
-            max="200"
-            show-tooltip
-            @input=${changeZoom}
-          ></mov-slider>
-        </div>
         <div
           id="GlobalFunctions"
           class="button-group"
@@ -402,6 +375,33 @@ export class Header extends LitElement {
           >
             <mov-icon name="IconArrowBigRight"></mov-icon>
           </mov-button>
+        </div>
+        <div id="ViewerTitle">
+          <h1
+            id="MangaTitle"
+            title="${this.manga.title}"
+          >
+            ${this.titleController.value ?? this.manga.title}
+          </h1>
+        </div>
+        <div id="ZoomControl">
+          <output id="ZoomVal">
+            Zoom:
+            ${
+              getSettingsValue('zoomMode') === 'percent'
+                ? `${getSettingsValue('zoomValue')}%`
+                : getSettingsValue('zoomMode')
+            }
+          </output>
+          <mov-slider
+            id="Zoom"
+            name="Zoom"
+            .value="${getSettingsValue('zoomValue')}"
+            min="${getSettingsValue('minZoom')}"
+            max="200"
+            show-tooltip
+            @input=${changeZoom}
+          ></mov-slider>
         </div>
       </header>
     `;
