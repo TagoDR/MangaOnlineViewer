@@ -10,6 +10,7 @@ import { html, render } from 'lit-html';
 import { preparePage } from './core/main.ts';
 import localhost from './main/localhost';
 import './ui/StandaloneLanding.ts';
+import { requiredScripts } from './core/externals.ts';
 import { isStandalone } from './utils/tampermonkey.ts';
 
 (async () => {
@@ -17,6 +18,10 @@ import { isStandalone } from './utils/tampermonkey.ts';
     console.log('MangaOnlineViewer is already running');
     return;
   }
+
+  requiredScripts.forEach(script => {
+    import(script);
+  });
 
   // Immediately render the main application UI with the mock data.
   if (window.location.search === '') {

@@ -12,7 +12,4 @@ export const requiredScripts: string[] = [
   'https://cdn.jsdelivr.net/npm/bowser@2.14.1/bundled.js',
   'https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js',
-  'https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/toolcool-range-slider.min.js',
-  'https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-generated-labels.min.js',
-  'https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-marks.min.js',
 ];

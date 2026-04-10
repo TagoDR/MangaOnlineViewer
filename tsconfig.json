@@ -28,5 +28,6 @@
     "types": ["node", "tampermonkey"],
     "useDefineForClassFields": false
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["agnosticui", "**/agnosticui/**"]
 }

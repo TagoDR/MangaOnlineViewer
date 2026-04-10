@@ -51,9 +51,6 @@ export default class Slider extends LitElement {
     trackRect: DOMRect;
   } | null = null;
 
-  private lastRenderTime = 0;
-  private renderThrottleMs = 16;
-
   constructor() {
     super();
     this._handlePointerMove = this._handlePointerMove.bind(this);

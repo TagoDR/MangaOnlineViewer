@@ -54,3 +54,6 @@ benchmarks/graphs
 
 *storybook.log
 storybook-static
+agnosticui/
+.agnosticui-viewer/
+.aider*

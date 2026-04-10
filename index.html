@@ -8,12 +8,7 @@
     />
     <title>MangaOnlineViewer Script</title>
   </head>
-  <script type="module">
-    import { requiredScripts } from './src/core/externals';
-
-    requiredScripts.forEach(script => { import(script)})
-    import('./src/index.ts');
-  </script>
+  <script type="module" src="src/index.ts" />
   <body>
   </body>
 </html>
