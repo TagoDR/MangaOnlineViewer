@@ -3,14 +3,14 @@
  * It replaces the old dialog functions with a self-contained Lit component.
  */
 import { html, LitElement, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { getLocaleString } from '../core/settings.ts';
 import './components/Dialog.ts';
 import './components/Button.ts';
+import './components/Slider.ts';
 import startButton from './styles/startButton.css?inline';
 import './components/Icon.ts';
 import colors from '../utils/colors.ts';
-import sequence from '../utils/sequence.ts';
 
 /**
  * A Lit component to handle the startup flow, including an initial prompt,
@@ -34,6 +34,12 @@ export class MovStartup extends LitElement {
 
   @property({ type: String, reflect: true })
   status: 'initial-prompt' | 'late-start-button' | 'late-start-prompt' = 'initial-prompt';
+
+  @state()
+  private beginPage?: number;
+
+  @state()
+  private endPage?: number;
 
   private timeoutId?: number;
 
@@ -59,6 +65,7 @@ export class MovStartup extends LitElement {
   private handleLateStart(begin: number, end: number) {
     this.dispatchEvent(new CustomEvent('start', { detail: { begin, end } }));
   }
+
   private handleButtonCLick() {
     this.status = 'late-start-prompt';
   }
@@ -122,11 +129,11 @@ export class MovStartup extends LitElement {
   }
 
   renderLateStartPrompt() {
-    let beginPage = this.begin;
-    let endPage = this.mangaPages;
-
-    const onSliderChange = (e: CustomEvent) => {
-      [beginPage, endPage] = [e.detail.value1, e.detail.value2];
+    this.beginPage ??= this.begin;
+    this.endPage ??= this.mangaPages;
+    const onSliderInput = (e: CustomEvent) => {
+      this.beginPage = e.detail.value[0];
+      this.endPage = e.detail.value[1];
     };
 
     return html`
@@ -142,26 +149,26 @@ export class MovStartup extends LitElement {
             id="pageInputGroup"
             style="padding: 1rem 0;"
           >
-            <tc-range-slider
+            <mov-slider
               id="pagesSlider"
-              theme="glass"
-              css-links="https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-themes.min.css"
-              min="1"
-              max="${this.mangaPages}"
-              round="0"
+              dual
+              show-tooltip
+              show-ticks
+              tick-step="${Math.max(25, Math.ceil(this.mangaPages / 250) * 25)}"
               step="1"
-              value1="${beginPage}"
-              value2="${endPage}"
-              data="${sequence(this.mangaPages).join(', ')}"
-              marks="true"
-              marks-count="11"
-              marks-values-count="11"
-              generate-labels="true"
-              slider-width="100%"
-              pointers-overlap="false"
-              generate-labels-text-color="var(--mov-color-on-loud)"
-              @change=${onSliderChange}
-            ></tc-range-slider>
+              .value=${[this.beginPage, this.endPage]}
+              min="0"
+              max="${this.mangaPages}"
+              @input=${onSliderInput}
+            ></mov-slider>
+            <output
+              id="pagesSliderVal"
+              class="RangeValue"
+              for="pagesSlider"
+            >
+              [${String(this.beginPage).padStart(3, '0')} ,
+              ${String(this.endPage).padStart(3, '0')}]
+            </output>
           </div>
         </div>
         <div
@@ -175,7 +182,7 @@ export class MovStartup extends LitElement {
             Close
           </mov-button>
           <mov-button
-            @click=${() => this.handleLateStart(beginPage, endPage)}
+            @click=${() => this.handleLateStart(this.beginPage ?? 0, this.endPage ?? this.mangaPages)}
             style="--mov-color-fill-loud: ${colors.green[700]}; --mov-color-on-loud: white;"
           >
             Run
