@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 0;
+  justify-content: center;
 }
 
 .mobile #ViewerTitle,
@@ -14,17 +16,6 @@
 .mobile #GlobalFunctions,
 .tablet #GlobalFunctions {
   order: 2;
-  width: auto;
-  padding: 5px;
-}
-
-.mobile #GlobalFunctions span {
-  flex-direction: column;
-}
-
-.mobile #ZoomControl,
-.tablet #ZoomControl {
-  order: 3;
 }
 
 .mobile #Toolbar,
@@ -58,9 +49,6 @@
 .mobile #GlobalFunctions,
 .tablet #GlobalFunctions {
   order: 2;
-  padding: 0;
-  width: auto;
-  gap: 0;
 }
 
 .mobile .PageFunctions {

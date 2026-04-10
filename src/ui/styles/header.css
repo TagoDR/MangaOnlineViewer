@@ -3,6 +3,8 @@
   justify-content: space-around;
   align-items: center;
   flex-flow: row nowrap;
+  gap: 10px;
+  padding: 0 20px;
   transition: transform 0.3s ease-in;
   position: sticky;
   top: 0;
@@ -14,7 +16,7 @@
 }
 
 #Header.click {
-  padding-left: 40px;
+  padding-left: 60px;
 }
 
 @keyframes headroom {
@@ -96,7 +98,6 @@
 
 #ViewerTitle {
   order: 2;
-  flex: 1;
   display: flex;
   justify-content: center;
 }
@@ -122,66 +123,4 @@
   text-overflow: ellipsis;
   min-width: 200px;
   max-width: 40vw;
-}
-
-.button-group {
-  display: flex;
-  gap: 0;
-  padding: 3px;
-  flex-wrap: wrap;
-  z-index: 100;
-  vertical-align: middle;
-}
-
-.button-group:has(mov-dropdown[open]) {
-  z-index: 110;
-}
-
-.button-group > mov-button::part(base),
-.button-group > mov-dropdown mov-button[slot="trigger"]::part(base) {
-  border-radius: 0;
-}
-
-.button-group > mov-button:first-child::part(base),
-.button-group > mov-dropdown:first-child mov-button[slot="trigger"]::part(base) {
-  border-top-left-radius: var(--mov-border-radius-m);
-  border-bottom-left-radius: var(--mov-border-radius-m);
-}
-
-.button-group > mov-button:last-child::part(base),
-.button-group > mov-dropdown:last-child mov-button[slot="trigger"]::part(base) {
-  border-top-right-radius: var(--mov-border-radius-m);
-  border-bottom-right-radius: var(--mov-border-radius-m);
-}
-
-.button-group:has(+ .button-group) {
-  padding-right: 0;
-}
-
-.button-group:has(+ .button-group) > mov-button:last-child::part(base),
-.button-group:has(+ .button-group)
-  > mov-dropdown:last-child
-  mov-button[slot="trigger"]::part(base) {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.button-group + .button-group {
-  padding-left: 0;
-  margin-inline-start: -1px;
-}
-
-.button-group + .button-group > mov-button:first-child::part(base),
-.button-group + .button-group > mov-dropdown:first-child mov-button[slot="trigger"]::part(base) {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.button-group > mov-button:not(:first-child),
-.button-group > mov-dropdown:not(:first-child) {
-  margin-inline-start: -1px;
-}
-
-.button-group > mov-dropdown {
-  display: flex;
 }

@@ -13,6 +13,7 @@ import {
 } from '../core/settings';
 import type { IManga } from '../types';
 import './components/Slider.ts';
+import './components/ButtonGroup.ts';
 import { HeadroomController } from './controllers/headroom.ts';
 import { TitleController } from './controllers/title.ts';
 import { toggleAutoScroll } from './events/autoscroll';
@@ -96,9 +97,11 @@ export class Header extends LitElement {
           [getAppStateValue('device')]: true,
         })}"
       >
-        <div
+        <mov-button-group
           id="Toolbar"
-          class="button-group"
+          class="${classMap({
+            'button-group-merged-end': ['mobile', 'tablet'].includes(getAppStateValue('device')),
+          })}"
         >
           <mov-dropdown id="FileDropdown">
             <mov-button
@@ -330,10 +333,12 @@ export class Header extends LitElement {
               ${getLocaleString('FIT_HEIGHT')} ${renderKeybind('FIT_HEIGHT')}
             </mov-dropdown-item>
           </mov-dropdown>
-        </div>
-        <div
+        </mov-button-group>
+        <mov-button-group
           id="GlobalFunctions"
-          class="button-group"
+          class="${classMap({
+            'button-group-merged-start': ['mobile', 'tablet'].includes(getAppStateValue('device')),
+          })}"
         >
           <mov-button
             id="series"
@@ -375,7 +380,7 @@ export class Header extends LitElement {
           >
             <mov-icon name="IconArrowBigRight"></mov-icon>
           </mov-button>
-        </div>
+        </mov-button-group>
         <div id="ViewerTitle">
           <h1
             id="MangaTitle"

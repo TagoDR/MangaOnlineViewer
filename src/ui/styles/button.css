@@ -5,7 +5,6 @@
   --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);
   --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);
   --mov-border-width-s: 0.0625rem;
-  --mov-border-radius-m: 0.375rem;
   --mov-border-radius-pill: 9999px;
   --mov-transition-fast: 75ms;
   --mov-font-weight-action: 500;
@@ -48,7 +47,7 @@
   font-weight: var(--mov-font-weight-action);
   line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);
   height: var(--mov-form-control-height);
-  border-radius: var(--mov-border-radius-m);
+  border-radius: var(--mov-border-radius-m, 0.375rem);
   border-style: solid;
   border-width: var(--mov-border-width-s);
   background-color: var(--mov-color-fill-loud);
