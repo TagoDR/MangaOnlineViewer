@@ -1,6 +1,7 @@
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { getLocaleString, getSettingsValue } from '../core/settings.ts';
+import './components/Slider.ts';
 import {
   changeHeaderType,
   changeLazyStart,
@@ -64,22 +65,24 @@ function lazyLoad() {
         ${getLocaleString('LAZY_LOAD_IMAGES')}
         <output
           id="lazyStartVal"
+          class="RangeValue"
           for="lazyStart"
         >
           ${getSettingsValue('lazyStart')}
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue('lazyStart')}"
+      <mov-slider
         name="lazyStart"
         id="lazyStart"
+        .value="${getSettingsValue('lazyStart')}"
         min="5"
         max="100"
         step="5"
-        oninput="lazyStartVal.value = this.value"
-        @change="${changeLazyStart}"
-      />
+        show-tooltip
+        show-ticks
+        tick-step="50"
+        @input="${changeLazyStart}"
+      ></mov-slider>
     </div>
   `;
 }
@@ -204,16 +207,18 @@ function autoScroll() {
           ${getSettingsValue('scrollHeight')}px
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue('scrollHeight')}"
+      <mov-slider
         name="scrollHeight"
         id="scrollHeight"
+        .value="${getSettingsValue('scrollHeight')}"
         min="1"
         max="${Math.ceil(window.innerHeight / 200) * 100}"
         step="1"
+        show-tooltip
+        show-ticks
+        tick-step="${Math.max(25, Math.ceil(window.innerHeight / 500) * 25)}"
         @input="${changeScrollHeight}"
-      />
+      ></mov-slider>
     </div>
   `;
 }

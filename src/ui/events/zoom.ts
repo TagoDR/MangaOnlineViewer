@@ -114,17 +114,19 @@ export function changeDefaultZoomMode(event: Event) {
  * Event handler to change and persist the default zoom value from a settings panel.
  * @param {Event} event - The change event from the range input.
  */
-export function changeDefaultZoomValue(event: Event) {
-  const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  saveSettingsValue('zoomValue', target);
-  applyZoom('percent', target);
+export function changeDefaultZoomValue(event: CustomEvent) {
+  const target = event.detail.value;
+  const value = typeof target === 'string' ? parseInt(target, 10) : target;
+  saveSettingsValue('zoomValue', value);
+  applyZoom('percent', value);
 }
 
 /**
  * Event handler for the main zoom slider in the header to change the current zoom percentage.
  * @param {Event} event - The input event from the range slider.
  */
-export function changeZoom(event: Event) {
-  const target = parseInt((event.currentTarget as HTMLInputElement).value, 10);
-  applyZoom('percent', target);
+export function changeZoom(event: CustomEvent) {
+  const target = event.detail.value;
+  const value = typeof target === 'string' ? parseInt(target, 10) : target;
+  applyZoom('percent', value);
 }

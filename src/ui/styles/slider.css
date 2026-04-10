@@ -6,6 +6,7 @@
   -webkit-user-select: none;
   user-select: none;
   touch-action: none;
+  width: 100%;
 }
 
 :host([vertical]) {
@@ -287,4 +288,9 @@
   margin: -1px;
   padding: 0;
   border: 0;
+}
+:host([show-ticks]) {
+  padding-bottom: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
 }

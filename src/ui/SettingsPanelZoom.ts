@@ -5,6 +5,7 @@ import { changeMinZoom, changeZoomStep } from './events/options.ts';
 import { changeDefaultViewMode } from './events/viewmode.ts';
 import { changeDefaultZoomMode, changeDefaultZoomValue } from './events/zoom.ts';
 import './components/SegmentedControl.ts';
+import './components/Slider.ts';
 
 /**
  * Renders the control for setting the default zoom mode (Percent, Fit Width, Fit Height).
@@ -62,28 +63,18 @@ function zoomValue() {
           ${getSettingsValue('zoomValue')}%
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue('zoomValue')}"
+      <mov-slider
         name="zoomValue"
         id="zoomValue"
+        .value="${getSettingsValue('zoomValue')}"
         min="5"
         max="200"
         step="5"
-        list="zoomValueList"
+        show-tooltip
+        show-ticks
+        tick-step="50"
         @input="${changeDefaultZoomValue}"
-      />
-      <datalist id="zoomValueList">
-        <option value="5">5</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="75">75</option>
-        <option value="100">100</option>
-        <option value="125">125</option>
-        <option value="150">150</option>
-        <option value="175">175</option>
-        <option value="200">200</option>
-      </datalist>
+      ></mov-slider>
     </div>
   `;
 }
@@ -105,23 +96,18 @@ function minZoom() {
           ${getSettingsValue('minZoom')}%
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue('minZoom')}"
+      <mov-slider
         name="minZoom"
         id="minZoom"
+        .value="${getSettingsValue('minZoom')}"
         min="25"
         max="100"
         step="5"
+        show-tooltip
+        show-ticks
+        tick-step="25"
         @input="${changeMinZoom}"
-        list="minZoomList"
-      />
-      <datalist id="minZoomList">
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="75">75</option>
-        <option value="100">100</option>
-      </datalist>
+      ></mov-slider>
     </div>
   `;
 }
@@ -143,22 +129,18 @@ function zoomStep() {
           ${getSettingsValue('zoomStep')}%
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue('zoomStep')}"
+      <mov-slider
         name="zoomStep"
         id="zoomStep"
+        .value="${getSettingsValue('zoomStep')}"
         min="10"
         max="50"
         step="5"
+        show-tooltip
+        show-ticks
+        tick-step="10"
         @input="${changeZoomStep}"
-        list="zoomStepList"
-      />
-      <datalist id="zoomStepList">
-        <option value="10">10</option>
-        <option value="30">30</option>
-        <option value="50">50</option>
-      </datalist>
+      ></mov-slider>
     </div>
   `;
 }

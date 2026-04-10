@@ -12,6 +12,7 @@ import {
   settings,
 } from '../core/settings';
 import type { IManga } from '../types';
+import './components/Slider.ts';
 import { HeadroomController } from './controllers/headroom.ts';
 import { TitleController } from './controllers/title.ts';
 import { toggleAutoScroll } from './events/autoscroll';
@@ -339,23 +340,23 @@ export class Header extends LitElement {
           </h1>
         </div>
         <div id="ZoomControl">
-          <span id="ZoomVal">
+          <output id="ZoomVal">
             Zoom:
             ${
               getSettingsValue('zoomMode') === 'percent'
                 ? `${getSettingsValue('zoomValue')}%`
                 : getSettingsValue('zoomMode')
             }
-          </span>
-          <input
-            type="range"
+          </output>
+          <mov-slider
             id="Zoom"
             name="Zoom"
             .value="${getSettingsValue('zoomValue')}"
             min="${getSettingsValue('minZoom')}"
             max="200"
+            show-tooltip
             @input=${changeZoom}
-          />
+          ></mov-slider>
         </div>
         <div
           id="GlobalFunctions"

@@ -56,9 +56,9 @@ appState.listen((value, _oldValue, changedKey) => {
  * It reads the selected page number and scrolls to the corresponding page element.
  * @param {Event} event - The change event from the `<select>` element.
  */
-export function selectGoToPage(event: Event) {
-  const target = (event.currentTarget as HTMLOptionElement).value;
-  setAppStateValue('scrollToPage', parseInt(target, 10));
+export function selectGoToPage(event: CustomEvent) {
+  const target = event.detail.value;
+  setAppStateValue('scrollToPage', typeof target === 'string' ? parseInt(target, 10) : target);
 }
 
 /**

@@ -100,9 +100,10 @@ export function checkLazyLoad(event: CustomEvent) {
  * Event handler to change and save the lazy load starting page.
  * @param {Event} event - The change event from the range input.
  */
-export function changeLazyStart(event: Event) {
-  const start = (event.currentTarget as HTMLInputElement).value;
-  saveSettingsValue('lazyStart', parseInt(start, 10));
+export function changeLazyStart(event: CustomEvent) {
+  const target = event.detail.value;
+  const start = typeof target === 'string' ? parseInt(target, 10) : target;
+  saveSettingsValue('lazyStart', start);
 }
 
 /**
@@ -125,19 +126,21 @@ export function changeLoadSpeed(event: Event) {
  * Event handler to change and save the zoom step value.
  * @param {Event} event - The change event from the range input.
  */
-export function changeZoomStep(event: Event) {
-  const step = (event.currentTarget as HTMLInputElement).value;
-  saveSettingsValue('zoomStep', parseInt(step, 10));
+export function changeZoomStep(event: CustomEvent) {
+  const target = event.detail.value;
+  const step = typeof target === 'string' ? parseInt(target, 10) : target;
+  saveSettingsValue('zoomStep', step);
 }
 
 /**
  * Event handler to change and save the minimum zoom value. Also injects a stylesheet to apply the rule.
  * @param {Event} event - The input event from the range input.
  */
-export function changeMinZoom(event: Event) {
-  const min = (event.currentTarget as HTMLInputElement).value;
+export function changeMinZoom(event: CustomEvent) {
+  const target = event.detail.value;
+  const min = typeof target === 'string' ? parseInt(target, 10) : target;
   replaceStyleSheet('MinZoom', `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-  saveSettingsValue('minZoom', parseInt(min, 10));
+  saveSettingsValue('minZoom', min);
 }
 
 /**
@@ -162,9 +165,10 @@ export function changeHeaderType(event: Event) {
  * Event handler to change and save the auto-scroll speed.
  * @param {Event} event - The change event from the range input.
  */
-export function changeScrollHeight(event: Event) {
-  const { value } = event.currentTarget as HTMLInputElement;
-  saveSettingsValue('scrollHeight', parseInt(value, 10));
+export function changeScrollHeight(event: CustomEvent) {
+  const target = event.detail.value;
+  const value = typeof target === 'string' ? parseInt(target, 10) : target;
+  saveSettingsValue('scrollHeight', value);
 }
 
 export function changeAutoScrollSpeed(sign: 1 | -1) {

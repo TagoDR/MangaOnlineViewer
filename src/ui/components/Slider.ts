@@ -120,10 +120,6 @@ export default class Slider extends LitElement {
   private _handlePointerMove(e: PointerEvent) {
     if (!this.activeDrag || this.disabled || this.readonly) return;
 
-    const now = Date.now();
-    if (now - this.lastRenderTime < this.renderThrottleMs) return;
-    this.lastRenderTime = now;
-
     const { thumb, trackRect } = this.activeDrag;
     const newValue = this.getValueFromPointer(e.clientX, e.clientY, trackRect);
 
@@ -196,21 +192,33 @@ export default class Slider extends LitElement {
   }
 
   private renderTicks() {
-    if (!this.showTicks || !this.tickStep || this.tickStep <= 0) return null;
-    const ticks = [];
-    const tickCount = Math.floor((this.max - this.min) / this.tickStep);
-    if (tickCount > 100) return null;
+    if (!this.showTicks) return null;
+    const tickValues = new Set<number>();
+    tickValues.add(this.min);
+    tickValues.add(this.max);
 
-    for (let i = 0; i <= tickCount; i++) {
-      const val = this.min + i * this.tickStep;
+    if (this.tickStep > 0) {
+      const tickCount = Math.floor((this.max - this.min) / this.tickStep);
+      if (tickCount <= 100) {
+        for (let i = 1; i <= tickCount; i++) {
+          const val = this.min + i * this.tickStep;
+          if (val < this.max) {
+            tickValues.add(val);
+          }
+        }
+      }
+    }
+
+    const sortedTicks = Array.from(tickValues).sort((a, b) => a - b);
+    const ticks = sortedTicks.map(val => {
       const percentage = this.getPercentage(val);
       const style = this.vertical ? `bottom: ${percentage}%` : `inset-inline-start: ${percentage}%`;
-      ticks.push(html`
+      return html`
         <div class="mov-slider__tick" style="${style}">
           <div class="mov-slider__tick-label">${val}</div>
         </div>
-      `);
-    }
+      `;
+    });
     return html`<div class="mov-slider__ticks">${ticks}</div>`;
   }
 
@@ -222,7 +230,9 @@ export default class Slider extends LitElement {
 
     return html`
       <div
-        class="mov-slider__thumb ${isFocused ? 'mov-slider__thumb--focused' : ''} ${isDragging ? 'mov-slider__thumb--active' : ''}"
+        class="mov-slider__thumb ${isFocused ? 'mov-slider__thumb--focused' : ''} ${
+          isDragging ? 'mov-slider__thumb--active' : ''
+        }"
         style="${style}"
         @pointerdown=${(e: PointerEvent) => this.handleThumbPointerDown(e, thumbType)}
       >
@@ -239,27 +249,50 @@ export default class Slider extends LitElement {
       const style = this.vertical
         ? `bottom: ${start}%; height: ${end - start}%`
         : `left: ${start}%; width: ${end - start}%`;
-      return html`<div class="mov-slider__progress" style="${style}"></div>`;
+      return html`<div
+        class="mov-slider__progress"
+        style="${style}"
+      ></div>`;
     }
     const end = this.getPercentage(vals[1]);
     const style = this.vertical ? `bottom: 0; height: ${end}%` : `left: 0; width: ${end}%`;
-    return html`<div class="mov-slider__progress" style="${style}"></div>`;
+    return html`<div
+      class="mov-slider__progress"
+      style="${style}"
+    ></div>`;
   }
 
   render() {
     const vals = this.values;
     return html`
-      <div class="mov-slider" part="base">
+      <div
+        class="mov-slider"
+        part="base"
+      >
         ${this.label ? html`<label class="mov-form-control__label">${this.label}</label>` : ''}
-        <div class="mov-slider__container" @click=${this.handleTrackClick}>
+        <div
+          class="mov-slider__container"
+          @click=${this.handleTrackClick}
+        >
           <div class="mov-slider__track">
-            ${this.renderProgress()}
-            ${this.renderTicks()}
-            ${this.dual ? html`${this.renderThumb(vals[0], 'min')}${this.renderThumb(vals[1], 'max')}` : this.renderThumb(vals[1], 'single')}
+            ${this.renderProgress()} ${this.renderTicks()}
+            ${
+              this.dual
+                ? html`${this.renderThumb(vals[0], 'min')}${this.renderThumb(vals[1], 'max')}`
+                : this.renderThumb(vals[1], 'single')
+            }
           </div>
         </div>
-        ${this.helpText && !this.invalid ? html`<div class="mov-form-control__helper">${this.helpText}</div>` : ''}
-        ${this.invalid && this.errorMessage ? html`<div class="mov-form-control__error">${this.errorMessage}</div>` : ''}
+        ${
+          this.helpText && !this.invalid
+            ? html`<div class="mov-form-control__helper">${this.helpText}</div>`
+            : ''
+        }
+        ${
+          this.invalid && this.errorMessage
+            ? html`<div class="mov-form-control__error">${this.errorMessage}</div>`
+            : ''
+        }
       </div>
     `;
   }

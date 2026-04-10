@@ -6,6 +6,7 @@ import { isNothing } from '../../utils/checks.ts';
 import { buttonRedirectURL } from '../events/globals.ts';
 import { selectGoToPage } from '../events/navigation.ts';
 import './Icon.ts';
+import './Slider.ts';
 import { redirectUrl } from '../events/keybindings.ts';
 
 /**
@@ -80,60 +81,8 @@ export class Pagination extends LitElement {
       max-width: 1000px;
       width: inherit;
       margin: 0 5px;
-    }
-
-    .pagination-slider {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 4px;
-      background: var(--mov-color-fill-loud);
-      opacity: 0.5;
-      border-radius: 2px;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .pagination-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      background: white;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--mov-color-fill-loud);
-    }
-
-    .pagination-slider::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
-      background: white;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 1px solid var(--mov-color-fill-loud);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .slider-tooltip {
-      position: absolute;
-      top: -35px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.9);
-      color: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-
-    .slider-container:hover .slider-tooltip {
-      opacity: 1;
+      --mov-slider-track-height: 4px;
+      --mov-slider-thumb-size: 16px;
     }
 
     .tooltip {
@@ -250,15 +199,14 @@ export class Pagination extends LitElement {
         </button>
 
         <div class="slider-container">
-          <input
-            type="range"
+          <mov-slider
             class="pagination-slider"
             min="${this.startPage}"
             max="${this.totalPages}"
-            .value="${this.currentPage.toString()}"
+            .value="${this.currentPage}"
+            show-tooltip
             @input="${selectGoToPage}"
-          />
-          <div class="slider-tooltip">${this.currentPage} / ${this.totalPages}</div>
+          ></mov-slider>
         </div>
 
         <button class="pagination-button" @click=${this.goToNextPage} ?disabled=${this.isLastPage}>
