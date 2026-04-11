@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.04.07.build-2128
+// @version       2026.04.11.build-1220
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -3769,7 +3769,7 @@
 	*/ var o$3 = (o) => o ?? A;
 	//#endregion
 	//#region src/ui/styles/button.css?inline
-	var button_default = ":host {\r\n  display: inline-block;\r\n  --mov-font-size-scale: 1;\r\n  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));\r\n  --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);\r\n  --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);\r\n  --mov-border-width-s: 0.0625rem;\r\n  --mov-border-radius-m: 0.375rem;\r\n  --mov-border-radius-pill: 9999px;\r\n  --mov-transition-fast: 75ms;\r\n  --mov-font-weight-action: 500;\r\n  --mov-focus-ring: solid 0.1875rem var(--mov-color-fill-loud);\r\n  --mov-focus-ring-offset: 0.0625rem;\r\n  --mov-line-height-condensed: 1.2;\r\n  --mov-form-control-padding-block: 0.75em;\r\n  --mov-form-control-padding-inline: 1em;\r\n  --mov-form-control-height: round(\r\n    calc(2 * var(--mov-form-control-padding-block) + 1em * var(--mov-line-height-condensed)),\r\n    1px\r\n  );\r\n}\r\n\r\n:host([size=\"small\"]) {\r\n  font-size: var(--mov-font-size-s);\r\n}\r\n:host([size=\"medium\"]) {\r\n  font-size: var(--mov-font-size-m);\r\n}\r\n:host([size=\"large\"]) {\r\n  font-size: var(--mov-font-size-l);\r\n}\r\n\r\n.button {\r\n  box-sizing: border-box;\r\n  display: inline-flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  text-decoration: none;\r\n  user-select: none;\r\n  white-space: nowrap;\r\n  vertical-align: middle;\r\n  transition-property: background, border, box-shadow, color;\r\n  transition-duration: var(--mov-transition-fast);\r\n  cursor: pointer;\r\n  padding: 0 var(--mov-form-control-padding-inline);\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  font-weight: var(--mov-font-weight-action);\r\n  line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);\r\n  height: var(--mov-form-control-height);\r\n  border-radius: var(--mov-border-radius-m);\r\n  border-style: solid;\r\n  border-width: var(--mov-border-width-s);\r\n  background-color: var(--mov-color-fill-loud);\r\n  color: var(--mov-color-on-loud);\r\n  border-color: transparent;\r\n}\r\n\r\n/* Appearance modifiers */\r\n:host([appearance~=\"plain\"]) {\r\n  .button {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: transparent;\r\n    border-color: transparent;\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      color: var(--mov-color-on-quiet);\r\n      background-color: var(--mov-color-fill-quiet);\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\r\n  }\r\n}\r\n\r\n:host([appearance~=\"outlined\"]) {\r\n  .button {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: transparent;\r\n    border-color: var(--mov-color-border-loud);\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      color: var(--mov-color-on-quiet);\r\n      background-color: var(--mov-color-fill-quiet);\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\r\n  }\r\n}\r\n\r\n:host([appearance~=\"filled\"]) {\r\n  .button {\r\n    color: var(--mov-color-on-normal);\r\n    background-color: var(--mov-color-fill-normal);\r\n    border-color: transparent;\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      color: var(--mov-color-on-normal);\r\n      background-color: color-mix(\r\n        in oklab,\r\n        var(--mov-color-fill-normal),\r\n        var(--mov-color-mix-hover)\r\n      );\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    color: var(--mov-color-on-normal);\r\n    background-color: color-mix(\r\n      in oklab,\r\n      var(--mov-color-fill-normal),\r\n      var(--mov-color-mix-active)\r\n    );\r\n  }\r\n}\r\n\r\n:host([appearance~=\"filled\"][appearance~=\"outlined\"]) .button {\r\n  border-color: var(--mov-color-border-normal);\r\n}\r\n\r\n:host([appearance~=\"accent\"]) {\r\n  .button {\r\n    color: var(--mov-color-on-loud);\r\n    background-color: var(--mov-color-fill-loud);\r\n    border-color: transparent;\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-hover));\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-active));\r\n  }\r\n}\r\n/* Focus states */\r\n.button:focus {\r\n  outline: none;\r\n}\r\n.button:focus-visible {\r\n  outline: var(--mov-focus-ring);\r\n  outline-offset: var(--mov-focus-ring-offset);\r\n}\r\n\r\n/* Disabled state */\r\n.button.disabled {\r\n  opacity: 0.5;\r\n  cursor: not-allowed;\r\n}\r\n.button.disabled * {\r\n  pointer-events: none;\r\n}\r\n\r\n/* Icon buttons */\r\n.button.is-icon-button {\r\n  outline-offset: 2px;\r\n  width: var(--mov-form-control-height);\r\n  aspect-ratio: 1;\r\n}\r\n\r\n/* Pill modifier */\r\n:host([pill]) .button {\r\n  border-radius: var(--mov-border-radius-pill);\r\n}\r\n\r\n.start,\r\n.end {\r\n  flex: 0 0 auto;\r\n  display: flex;\r\n  align-items: center;\r\n  pointer-events: none;\r\n}\r\n\r\n.label {\r\n  display: inline-block;\r\n}\r\n.is-icon-button .label {\r\n  display: flex;\r\n}\r\n\r\nmov-icon[part~=\"caret\"] {\r\n  display: flex;\r\n  align-self: center;\r\n  align-items: center;\r\n}\r\nmov-icon[part~=\"caret\"]::part(svg) {\r\n  width: 0.875em;\r\n  height: 0.875em;\r\n}\r\n\r\n.loading {\r\n  position: relative;\r\n  cursor: wait;\r\n}\r\n.loading .start,\r\n.loading .label,\r\n.loading .end,\r\n.loading .caret {\r\n  visibility: hidden;\r\n}\r\n\r\n.spinner {\r\n  --indicator-color: currentColor;\r\n  --track-color: color-mix(in oklab, currentColor, transparent 90%);\r\n  position: absolute;\r\n  font-size: 1em;\r\n  height: 1em;\r\n  width: 1em;\r\n  top: calc(50% - 0.5em);\r\n  left: calc(50% - 0.5em);\r\n  border-radius: 50%;\r\n  border: 2px solid var(--track-color);\r\n  border-top-color: var(--indicator-color);\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\nslot[name=\"start\"]::slotted(*) {\r\n  margin-inline-end: 0.75em;\r\n}\r\nslot[name=\"end\"]::slotted(*),\r\n.button:not(.visually-hidden-label) [part~=\"caret\"] {\r\n  margin-inline-start: 0.75em;\r\n}\r\n";
+	var button_default = ":host {\r\n  display: inline-block;\r\n  --mov-font-size-scale: 1;\r\n  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));\r\n  --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);\r\n  --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);\r\n  --mov-border-width-s: 0.0625rem;\r\n  --mov-border-radius-pill: 9999px;\r\n  --mov-transition-fast: 75ms;\r\n  --mov-font-weight-action: 500;\r\n  --mov-focus-ring: solid 0.1875rem var(--mov-color-fill-loud);\r\n  --mov-focus-ring-offset: 0.0625rem;\r\n  --mov-line-height-condensed: 1.2;\r\n  --mov-form-control-padding-block: 0.75em;\r\n  --mov-form-control-padding-inline: 1em;\r\n  --mov-form-control-height: round(\r\n    calc(2 * var(--mov-form-control-padding-block) + 1em * var(--mov-line-height-condensed)),\r\n    1px\r\n  );\r\n}\r\n\r\n:host([size=\"small\"]) {\r\n  font-size: var(--mov-font-size-s);\r\n}\r\n:host([size=\"medium\"]) {\r\n  font-size: var(--mov-font-size-m);\r\n}\r\n:host([size=\"large\"]) {\r\n  font-size: var(--mov-font-size-l);\r\n}\r\n\r\n.button {\r\n  box-sizing: border-box;\r\n  display: inline-flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  text-decoration: none;\r\n  user-select: none;\r\n  white-space: nowrap;\r\n  vertical-align: middle;\r\n  transition-property: background, border, box-shadow, color;\r\n  transition-duration: var(--mov-transition-fast);\r\n  cursor: pointer;\r\n  padding: 0 var(--mov-form-control-padding-inline);\r\n  font-family: inherit;\r\n  font-size: inherit;\r\n  font-weight: var(--mov-font-weight-action);\r\n  line-height: calc(var(--mov-form-control-height) - var(--mov-border-width-s) * 2);\r\n  height: var(--mov-form-control-height);\r\n  border-radius: var(--mov-border-radius-m, 0.375rem);\r\n  border-style: solid;\r\n  border-width: var(--mov-border-width-s);\r\n  background-color: var(--mov-color-fill-loud);\r\n  color: var(--mov-color-on-loud);\r\n  border-color: transparent;\r\n}\r\n\r\n/* Appearance modifiers */\r\n:host([appearance~=\"plain\"]) {\r\n  .button {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: transparent;\r\n    border-color: transparent;\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      color: var(--mov-color-on-quiet);\r\n      background-color: var(--mov-color-fill-quiet);\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\r\n  }\r\n}\r\n\r\n:host([appearance~=\"outlined\"]) {\r\n  .button {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: transparent;\r\n    border-color: var(--mov-color-border-loud);\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      color: var(--mov-color-on-quiet);\r\n      background-color: var(--mov-color-fill-quiet);\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    color: var(--mov-color-on-quiet);\r\n    background-color: color-mix(in oklab, var(--mov-color-fill-quiet), var(--mov-color-mix-active));\r\n  }\r\n}\r\n\r\n:host([appearance~=\"filled\"]) {\r\n  .button {\r\n    color: var(--mov-color-on-normal);\r\n    background-color: var(--mov-color-fill-normal);\r\n    border-color: transparent;\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      color: var(--mov-color-on-normal);\r\n      background-color: color-mix(\r\n        in oklab,\r\n        var(--mov-color-fill-normal),\r\n        var(--mov-color-mix-hover)\r\n      );\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    color: var(--mov-color-on-normal);\r\n    background-color: color-mix(\r\n      in oklab,\r\n      var(--mov-color-fill-normal),\r\n      var(--mov-color-mix-active)\r\n    );\r\n  }\r\n}\r\n\r\n:host([appearance~=\"filled\"][appearance~=\"outlined\"]) .button {\r\n  border-color: var(--mov-color-border-normal);\r\n}\r\n\r\n:host([appearance~=\"accent\"]) {\r\n  .button {\r\n    color: var(--mov-color-on-loud);\r\n    background-color: var(--mov-color-fill-loud);\r\n    border-color: transparent;\r\n  }\r\n  @media (hover: hover) {\r\n    .button:not(.disabled):not(.loading):hover {\r\n      background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-hover));\r\n    }\r\n  }\r\n  .button:not(.disabled):not(.loading):active {\r\n    background-color: color-mix(in oklab, var(--mov-color-fill-loud), var(--mov-color-mix-active));\r\n  }\r\n}\r\n/* Focus states */\r\n.button:focus {\r\n  outline: none;\r\n}\r\n.button:focus-visible {\r\n  outline: var(--mov-focus-ring);\r\n  outline-offset: var(--mov-focus-ring-offset);\r\n}\r\n\r\n/* Disabled state */\r\n.button.disabled {\r\n  opacity: 0.5;\r\n  cursor: not-allowed;\r\n}\r\n.button.disabled * {\r\n  pointer-events: none;\r\n}\r\n\r\n/* Icon buttons */\r\n.button.is-icon-button {\r\n  outline-offset: 2px;\r\n  width: var(--mov-form-control-height);\r\n  aspect-ratio: 1;\r\n}\r\n\r\n/* Pill modifier */\r\n:host([pill]) .button {\r\n  border-radius: var(--mov-border-radius-pill);\r\n}\r\n\r\n.start,\r\n.end {\r\n  flex: 0 0 auto;\r\n  display: flex;\r\n  align-items: center;\r\n  pointer-events: none;\r\n}\r\n\r\n.label {\r\n  display: inline-block;\r\n}\r\n.is-icon-button .label {\r\n  display: flex;\r\n}\r\n\r\nmov-icon[part~=\"caret\"] {\r\n  display: flex;\r\n  align-self: center;\r\n  align-items: center;\r\n}\r\nmov-icon[part~=\"caret\"]::part(svg) {\r\n  width: 0.875em;\r\n  height: 0.875em;\r\n}\r\n\r\n.loading {\r\n  position: relative;\r\n  cursor: wait;\r\n}\r\n.loading .start,\r\n.loading .label,\r\n.loading .end,\r\n.loading .caret {\r\n  visibility: hidden;\r\n}\r\n\r\n.spinner {\r\n  --indicator-color: currentColor;\r\n  --track-color: color-mix(in oklab, currentColor, transparent 90%);\r\n  position: absolute;\r\n  font-size: 1em;\r\n  height: 1em;\r\n  width: 1em;\r\n  top: calc(50% - 0.5em);\r\n  left: calc(50% - 0.5em);\r\n  border-radius: 50%;\r\n  border: 2px solid var(--track-color);\r\n  border-top-color: var(--indicator-color);\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\nslot[name=\"start\"]::slotted(*) {\r\n  margin-inline-end: 0.75em;\r\n}\r\nslot[name=\"end\"]::slotted(*),\r\n.button:not(.visually-hidden-label) [part~=\"caret\"] {\r\n  margin-inline-start: 0.75em;\r\n}\r\n";
 	//#endregion
 	//#region src/ui/components/Button.ts
 	var Button = class Button extends i$1 {
@@ -6253,6 +6253,251 @@
 	__decorate([n$1({ type: String })], Switch.prototype, "textOff", void 0);
 	Switch = __decorate([t$1("mov-switch")], Switch);
 	//#endregion
+	//#region src/ui/styles/slider.css?inline
+	var slider_default = ":host {\r\n  display: block;\r\n  --mov-slider-track-height: 6px;\r\n  --mov-slider-thumb-size: 18px;\r\n  --mov-slider-tooltip-offset: 24px;\r\n  -webkit-user-select: none;\r\n  user-select: none;\r\n  touch-action: none;\r\n  width: 100%;\r\n}\r\n\r\n:host([vertical]) {\r\n  display: inline-block;\r\n}\r\n\r\n/* Container */\r\n.mov-slider__container {\r\n  position: relative;\r\n  display: flex;\r\n  align-items: center;\r\n  min-height: 24px;\r\n}\r\n\r\n:host([vertical]) .mov-slider__container {\r\n  flex-direction: column;\r\n  min-height: auto;\r\n  min-width: 24px;\r\n}\r\n\r\n/* Track */\r\n.mov-slider__track {\r\n  position: relative;\r\n  flex: 1;\r\n  height: var(--mov-slider-track-height);\r\n  background: var(--theme-border-color, #ccc);\r\n  border-radius: 9999px;\r\n  cursor: pointer;\r\n}\r\n\r\n:host([vertical]) .mov-slider__track {\r\n  width: var(--mov-slider-track-height);\r\n  height: 100%;\r\n  min-height: 8rem;\r\n}\r\n\r\n/* Filled variant */\r\n:host([filled]) .mov-slider__thumb {\r\n  background: var(--mov-color-fill-loud);\r\n  border-color: var(--mov-color-fill-loud);\r\n}\r\n\r\n/* Progress */\r\n.mov-slider__progress {\r\n  position: absolute;\r\n  height: 100%;\r\n  background: var(--mov-color-fill-loud);\r\n  border-radius: 9999px;\r\n  pointer-events: none;\r\n  transition: background-color 150ms;\r\n}\r\n\r\n.mov-slider__progress--min-gap {\r\n  background: #f59e0b; /* warning color */\r\n  animation: pulse-gap 2s ease-in-out infinite;\r\n}\r\n\r\n@keyframes pulse-gap {\r\n  0%,\r\n  100% {\r\n    opacity: 1;\r\n  }\r\n  50% {\r\n    opacity: 0.7;\r\n  }\r\n}\r\n\r\n:host([vertical]) .mov-slider__progress {\r\n  width: 100%;\r\n  height: auto;\r\n}\r\n\r\n/* Thumb */\r\n.mov-slider__thumb {\r\n  position: absolute;\r\n  width: var(--mov-slider-thumb-size);\r\n  height: var(--mov-slider-thumb-size);\r\n  background: white;\r\n  border: 3px solid var(--mov-color-fill-loud);\r\n  border-radius: 9999px;\r\n  cursor: grab;\r\n  transform: translate(-50%, -50%);\r\n  top: 50%;\r\n  transition:\r\n    transform 150ms,\r\n    border-color 150ms,\r\n    box-shadow 150ms;\r\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\r\n  touch-action: none;\r\n  box-sizing: border-box;\r\n}\r\n\r\n.mov-slider__thumb:active {\r\n  cursor: grabbing;\r\n  transform: translate(-50%, -50%) scale(1.1);\r\n}\r\n\r\n:host([vertical]) .mov-slider__thumb {\r\n  transform: translate(-50%, 50%);\r\n  inset-inline-start: 50%;\r\n  top: auto;\r\n}\r\n\r\n:host([vertical]) .mov-slider__thumb:active {\r\n  transform: translate(-50%, 50%) scale(1.1);\r\n}\r\n\r\n.mov-slider__thumb:hover {\r\n  border-color: var(--mov-color-fill-loud);\r\n  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n/* Visual focus state */\r\n.mov-slider__thumb--focused {\r\n  outline: 3px solid var(--mov-color-fill-loud);\r\n  outline-offset: 2px;\r\n}\r\n\r\n/* Active drag state */\r\n.mov-slider__thumb--active {\r\n  transform: translate(-50%, -50%) scale(1.1);\r\n  z-index: 1;\r\n}\r\n\r\n:host([vertical]) .mov-slider__thumb--active {\r\n  transform: translate(-50%, 50%) scale(1.1);\r\n}\r\n\r\n/* Readonly state */\r\n:host([readonly]) .mov-slider__thumb {\r\n  cursor: default;\r\n  border-color: var(--theme-border-color);\r\n}\r\n\r\n:host([readonly]) .mov-slider__thumb:active {\r\n  transform: translate(-50%, -50%);\r\n}\r\n\r\n/* Input (hidden but accessible) */\r\n.mov-slider__input {\r\n  position: absolute;\r\n  opacity: 0;\r\n  pointer-events: none;\r\n}\r\n\r\n/* Tooltip */\r\n.mov-slider__tooltip {\r\n  position: absolute;\r\n  bottom: var(--mov-slider-tooltip-offset);\r\n  inset-inline-start: 50%;\r\n  transform: translateX(-50%);\r\n  background: var(--theme-hightlight-color, #333);\r\n  color: white;\r\n  padding: 2px 8px;\r\n  border-radius: 4px;\r\n  font-size: 0.875rem;\r\n  white-space: nowrap;\r\n  pointer-events: none;\r\n  opacity: 0;\r\n  transition: opacity 150ms;\r\n  z-index: 2;\r\n}\r\n\r\n.mov-slider__thumb:hover .mov-slider__tooltip,\r\n.mov-slider__thumb--focused .mov-slider__tooltip,\r\n.mov-slider__thumb--active .mov-slider__tooltip {\r\n  opacity: 1;\r\n}\r\n\r\n:host([vertical]) .mov-slider__tooltip {\r\n  bottom: auto;\r\n  inset-inline-start: var(--mov-slider-tooltip-offset);\r\n  top: 50%;\r\n  transform: translateY(-50%);\r\n}\r\n\r\n/* Ticks */\r\n.mov-slider__ticks {\r\n  position: absolute;\r\n  top: 50%;\r\n  inset-inline: 0;\r\n  height: 8px;\r\n  pointer-events: none;\r\n}\r\n\r\n:host([vertical]) .mov-slider__ticks {\r\n  top: 0;\r\n  bottom: 0;\r\n  inset-inline-start: 50%;\r\n  width: 8px;\r\n  height: auto;\r\n}\r\n\r\n.mov-slider__tick {\r\n  position: absolute;\r\n  width: 1px;\r\n  height: 8px;\r\n  background: var(--theme-border-color);\r\n  transform: translateX(-50%);\r\n}\r\n\r\n:host([vertical]) .mov-slider__tick {\r\n  width: 8px;\r\n  height: 1px;\r\n  transform: translateY(-50%);\r\n}\r\n\r\n.mov-slider__tick-label {\r\n  position: absolute;\r\n  top: 12px;\r\n  font-size: 0.75rem;\r\n  color: var(--theme-text-color);\r\n  opacity: 0.7;\r\n  transform: translateX(-50%);\r\n  white-space: nowrap;\r\n}\r\n\r\n:host([vertical]) .mov-slider__tick-label {\r\n  top: auto;\r\n  inset-inline-start: 12px;\r\n  transform: translateY(-50%);\r\n}\r\n\r\n/* Sizes */\r\n:host([size=\"small\"]) {\r\n  --mov-slider-track-height: 4px;\r\n  --mov-slider-thumb-size: 14px;\r\n}\r\n\r\n:host([size=\"large\"]) {\r\n  --mov-slider-track-height: 10px;\r\n  --mov-slider-thumb-size: 22px;\r\n}\r\n\r\n/* States */\r\n:host([disabled]) {\r\n  opacity: 0.6;\r\n  pointer-events: none;\r\n}\r\n\r\n:host([disabled]) .mov-slider__thumb {\r\n  cursor: not-allowed;\r\n  border-color: var(--theme-border-color);\r\n  background: #f3f4f6;\r\n}\r\n\r\n:host([invalid]) .mov-slider__progress {\r\n  background: #ef4444; /* danger color */\r\n}\r\n\r\n/* Help & Error Text */\r\n.mov-form-control__label {\r\n  display: block;\r\n  margin-bottom: 0.5rem;\r\n  color: var(--theme-text-color);\r\n}\r\n\r\n.mov-form-control__helper,\r\n.mov-form-control__error {\r\n  margin-top: 0.5rem;\r\n  font-size: 0.875rem;\r\n}\r\n\r\n.mov-form-control__helper {\r\n  color: var(--theme-text-color);\r\n  opacity: 0.8;\r\n}\r\n\r\n.mov-form-control__error {\r\n  color: #ef4444;\r\n}\r\n\r\n.mov-slider__live-region {\r\n  position: absolute;\r\n  overflow: hidden;\r\n  clip: rect(0 0 0 0);\r\n  height: 1px;\r\n  width: 1px;\r\n  margin: -1px;\r\n  padding: 0;\r\n  border: 0;\r\n}\r\n:host([show-ticks]) {\r\n  padding-bottom: 15px;\r\n  margin-left: 5px;\r\n  margin-right: 5px;\r\n}\r\n";
+	//#endregion
+	//#region src/ui/components/Slider.ts
+	var Slider = class Slider extends i$1 {
+		static {
+			this.styles = [r$4(slider_default)];
+		}
+		constructor() {
+			super();
+			this.label = "";
+			this.helpText = "";
+			this.errorMessage = "";
+			this.min = 0;
+			this.max = 100;
+			this.step = 1;
+			this.value = 0;
+			this.dual = false;
+			this.vertical = false;
+			this.filled = false;
+			this.size = "medium";
+			this.disabled = false;
+			this.readonly = false;
+			this.invalid = false;
+			this.showTooltip = false;
+			this.showTicks = false;
+			this.tickStep = 25;
+			this.focusedThumb = null;
+			this.draggingThumb = null;
+			this.activeDrag = null;
+			this.lastRenderTime = 0;
+			this.renderThrottleMs = 16;
+			this._handlePointerMove = this._handlePointerMove.bind(this);
+			this._handlePointerUp = this._handlePointerUp.bind(this);
+		}
+		get values() {
+			if (Array.isArray(this.value)) return this.value;
+			return [this.min, this.value];
+		}
+		getPercentage(val) {
+			return (val - this.min) / (this.max - this.min) * 100;
+		}
+		getValueFromPercentage(percentage) {
+			const rawValue = this.min + percentage / 100 * (this.max - this.min);
+			return this.step ? Math.round(rawValue / this.step) * this.step : rawValue;
+		}
+		getValueFromPointer(clientX, clientY, trackRect) {
+			let percentage;
+			if (this.vertical) percentage = (trackRect.bottom - clientY) / trackRect.height * 100;
+			else percentage = (clientX - trackRect.left) / trackRect.width * 100;
+			percentage = Math.max(0, Math.min(100, percentage));
+			return this.getValueFromPercentage(percentage);
+		}
+		clampValue(val) {
+			let clamped = Math.max(this.min, Math.min(this.max, val));
+			if (this.step) clamped = Math.round(clamped / this.step) * this.step;
+			return Number(clamped.toFixed(10));
+		}
+		handleThumbPointerDown(e, thumbType) {
+			if (this.disabled || this.readonly || !this.track) return;
+			e.preventDefault();
+			e.stopPropagation();
+			e.currentTarget.setPointerCapture(e.pointerId);
+			this.activeDrag = {
+				thumb: thumbType,
+				trackRect: this.track.getBoundingClientRect()
+			};
+			this.draggingThumb = thumbType;
+			document.addEventListener("pointermove", this._handlePointerMove);
+			document.addEventListener("pointerup", this._handlePointerUp);
+			document.addEventListener("pointercancel", this._handlePointerUp);
+		}
+		_handlePointerMove(e) {
+			if (!this.activeDrag || this.disabled || this.readonly) return;
+			const { thumb, trackRect } = this.activeDrag;
+			const newValue = this.getValueFromPointer(e.clientX, e.clientY, trackRect);
+			if (this.dual) {
+				const currentValues = this.values;
+				if (thumb === "min") {
+					const clampedValue = Math.min(newValue, currentValues[1] - (this.step || 1));
+					this.updateValue([clampedValue, currentValues[1]], "input");
+				} else {
+					const clampedValue = Math.max(newValue, currentValues[0] + (this.step || 1));
+					this.updateValue([currentValues[0], clampedValue], "input");
+				}
+			} else this.updateValue(newValue, "input");
+		}
+		_handlePointerUp(e) {
+			if (!this.activeDrag) return;
+			(this.shadowRoot?.querySelector(".mov-slider__thumb--active"))?.releasePointerCapture(e.pointerId);
+			this.updateValue(this.value, "change");
+			this.activeDrag = null;
+			this.draggingThumb = null;
+			document.removeEventListener("pointermove", this._handlePointerMove);
+			document.removeEventListener("pointerup", this._handlePointerUp);
+			document.removeEventListener("pointercancel", this._handlePointerUp);
+		}
+		updateValue(newValue, type = "change") {
+			if (this.readonly || this.disabled) return;
+			if (this.dual && Array.isArray(newValue)) {
+				newValue = [this.clampValue(newValue[0]), this.clampValue(newValue[1])];
+				if (newValue[0] > newValue[1]) newValue = [newValue[1], newValue[0]];
+			} else if (!this.dual && typeof newValue === "number") newValue = this.clampValue(newValue);
+			this.value = newValue;
+			this.dispatchEvent(new CustomEvent(type, {
+				bubbles: true,
+				composed: true,
+				detail: { value: newValue }
+			}));
+		}
+		handleTrackClick(e) {
+			if (this.disabled || this.readonly || !this.track) return;
+			const rect = this.track.getBoundingClientRect();
+			const newValue = this.getValueFromPointer(e.clientX, e.clientY, rect);
+			if (this.dual) {
+				const currentValues = this.values;
+				if (Math.abs(newValue - currentValues[0]) < Math.abs(newValue - currentValues[1])) this.updateValue([newValue, currentValues[1]]);
+				else this.updateValue([currentValues[0], newValue]);
+			} else this.updateValue(newValue);
+		}
+		renderTicks() {
+			if (!this.showTicks) return null;
+			const tickValues = /* @__PURE__ */ new Set();
+			tickValues.add(this.min);
+			tickValues.add(this.max);
+			if (this.tickStep > 0) {
+				const tickCount = Math.floor((this.max - this.min) / this.tickStep);
+				if (tickCount <= 100) for (let i = 1; i <= tickCount; i++) {
+					const val = this.min + i * this.tickStep;
+					if (val < this.max) tickValues.add(val);
+				}
+			}
+			return b$1`<div class="mov-slider__ticks">${Array.from(tickValues).sort((a, b) => a - b).map((val) => {
+				const percentage = this.getPercentage(val);
+				return b$1`
+        <div class="mov-slider__tick" style="${this.vertical ? `bottom: ${percentage}%` : `inset-inline-start: ${percentage}%`}">
+          <div class="mov-slider__tick-label">${val}</div>
+        </div>
+      `;
+			})}</div>`;
+		}
+		renderThumb(val, thumbType) {
+			const percentage = this.getPercentage(val);
+			const isFocused = this.focusedThumb === thumbType;
+			const isDragging = this.draggingThumb === thumbType;
+			const style = this.vertical ? `bottom: ${percentage}%` : `inset-inline-start: ${percentage}%`;
+			return b$1`
+      <div
+        class="mov-slider__thumb ${isFocused ? "mov-slider__thumb--focused" : ""} ${isDragging ? "mov-slider__thumb--active" : ""}"
+        style="${style}"
+        @pointerdown=${(e) => this.handleThumbPointerDown(e, thumbType)}
+      >
+        ${this.showTooltip ? b$1`<div class="mov-slider__tooltip">${val}</div>` : ""}
+      </div>
+    `;
+		}
+		renderProgress() {
+			const vals = this.values;
+			if (this.dual) {
+				const start = this.getPercentage(vals[0]);
+				const end = this.getPercentage(vals[1]);
+				return b$1`<div
+        class="mov-slider__progress"
+        style="${this.vertical ? `bottom: ${start}%; height: ${end - start}%` : `left: ${start}%; width: ${end - start}%`}"
+      ></div>`;
+			}
+			const end = this.getPercentage(vals[1]);
+			return b$1`<div
+      class="mov-slider__progress"
+      style="${this.vertical ? `bottom: 0; height: ${end}%` : `left: 0; width: ${end}%`}"
+    ></div>`;
+		}
+		render() {
+			const vals = this.values;
+			return b$1`
+      <div
+        class="mov-slider"
+        part="base"
+      >
+        ${this.label ? b$1`<label class="mov-form-control__label">${this.label}</label>` : ""}
+        <div
+          class="mov-slider__container"
+          @click=${this.handleTrackClick}
+        >
+          <div class="mov-slider__track">
+            ${this.renderProgress()} ${this.renderTicks()}
+            ${this.dual ? b$1`${this.renderThumb(vals[0], "min")}${this.renderThumb(vals[1], "max")}` : this.renderThumb(vals[1], "single")}
+          </div>
+        </div>
+        ${this.helpText && !this.invalid ? b$1`<div class="mov-form-control__helper">${this.helpText}</div>` : ""}
+        ${this.invalid && this.errorMessage ? b$1`<div class="mov-form-control__error">${this.errorMessage}</div>` : ""}
+      </div>
+    `;
+		}
+	};
+	__decorate([n$1({ type: String })], Slider.prototype, "label", void 0);
+	__decorate([n$1({ attribute: "help-text" })], Slider.prototype, "helpText", void 0);
+	__decorate([n$1({ attribute: "error-message" })], Slider.prototype, "errorMessage", void 0);
+	__decorate([n$1({ type: Number })], Slider.prototype, "min", void 0);
+	__decorate([n$1({ type: Number })], Slider.prototype, "max", void 0);
+	__decorate([n$1({ type: Number })], Slider.prototype, "step", void 0);
+	__decorate([n$1({ type: Object })], Slider.prototype, "value", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true
+	})], Slider.prototype, "dual", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true
+	})], Slider.prototype, "vertical", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true
+	})], Slider.prototype, "filled", void 0);
+	__decorate([n$1({ reflect: true })], Slider.prototype, "size", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true
+	})], Slider.prototype, "disabled", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true
+	})], Slider.prototype, "readonly", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		reflect: true
+	})], Slider.prototype, "invalid", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		attribute: "show-tooltip"
+	})], Slider.prototype, "showTooltip", void 0);
+	__decorate([n$1({
+		type: Boolean,
+		attribute: "show-ticks"
+	})], Slider.prototype, "showTicks", void 0);
+	__decorate([n$1({
+		type: Number,
+		attribute: "tick-step"
+	})], Slider.prototype, "tickStep", void 0);
+	__decorate([r$1()], Slider.prototype, "focusedThumb", void 0);
+	__decorate([r$1()], Slider.prototype, "draggingThumb", void 0);
+	__decorate([e$2(".mov-slider__track")], Slider.prototype, "track", void 0);
+	__decorate([e$2(".mov-slider__live-region")], Slider.prototype, "liveRegion", void 0);
+	Slider = __decorate([t$1("mov-slider")], Slider);
+	//#endregion
 	//#region node_modules/@braintree/sanitize-url/dist/constants.js
 	var require_constants = /* @__PURE__ */ __commonJSMin(((exports) => {
 		Object.defineProperty(exports, "__esModule", { value: true });
@@ -6594,8 +6839,8 @@
 	* @param {Event} event - The change event from the `<select>` element.
 	*/
 	function selectGoToPage(event) {
-		const target = event.currentTarget.value;
-		setAppStateValue("scrollToPage", parseInt(target, 10));
+		const target = event.detail.value;
+		setAppStateValue("scrollToPage", typeof target === "string" ? parseInt(target, 10) : target);
 	}
 	/**
 	* Event handler for clicking a page thumbnail in the navigation bar.
@@ -7121,8 +7366,8 @@
 	* @param {Event} event - The change event from the range input.
 	*/
 	function changeLazyStart(event) {
-		const start = event.currentTarget.value;
-		saveSettingsValue("lazyStart", parseInt(start, 10));
+		const target = event.detail.value;
+		saveSettingsValue("lazyStart", typeof target === "string" ? parseInt(target, 10) : target);
 	}
 	/**
 	* Event handler to change and save the page loading speed. Shows a warning for high speeds.
@@ -7142,17 +7387,18 @@
 	* @param {Event} event - The change event from the range input.
 	*/
 	function changeZoomStep(event) {
-		const step = event.currentTarget.value;
-		saveSettingsValue("zoomStep", parseInt(step, 10));
+		const target = event.detail.value;
+		saveSettingsValue("zoomStep", typeof target === "string" ? parseInt(target, 10) : target);
 	}
 	/**
 	* Event handler to change and save the minimum zoom value. Also injects a stylesheet to apply the rule.
 	* @param {Event} event - The input event from the range input.
 	*/
 	function changeMinZoom(event) {
-		const min = event.currentTarget.value;
+		const target = event.detail.value;
+		const min = typeof target === "string" ? parseInt(target, 10) : target;
 		replaceStyleSheet("MinZoom", `#MangaOnlineViewer .PageContent .PageImg {min-width: ${min}vw;}`);
-		saveSettingsValue("minZoom", parseInt(min, 10));
+		saveSettingsValue("minZoom", min);
 	}
 	/**
 	* Event handler to toggle and save the 'hide page controls' setting.
@@ -7175,8 +7421,8 @@
 	* @param {Event} event - The change event from the range input.
 	*/
 	function changeScrollHeight(event) {
-		const { value } = event.currentTarget;
-		saveSettingsValue("scrollHeight", parseInt(value, 10));
+		const target = event.detail.value;
+		saveSettingsValue("scrollHeight", typeof target === "string" ? parseInt(target, 10) : target);
 	}
 	function changeAutoScrollSpeed(sign) {
 		changeSettingsValue("scrollHeight", (v) => {
@@ -7267,16 +7513,18 @@
 	* @param {Event} event - The change event from the range input.
 	*/
 	function changeDefaultZoomValue(event) {
-		const target = parseInt(event.currentTarget.value, 10);
-		saveSettingsValue("zoomValue", target);
-		applyZoom("percent", target);
+		const target = event.detail.value;
+		const value = typeof target === "string" ? parseInt(target, 10) : target;
+		saveSettingsValue("zoomValue", value);
+		applyZoom("percent", value);
 	}
 	/**
 	* Event handler for the main zoom slider in the header to change the current zoom percentage.
 	* @param {Event} event - The input event from the range slider.
 	*/
 	function changeZoom(event) {
-		applyZoom("percent", parseInt(event.currentTarget.value, 10));
+		const target = event.detail.value;
+		applyZoom("percent", typeof target === "string" ? parseInt(target, 10) : target);
 	}
 	//#endregion
 	//#region src/ui/events/viewmode.ts
@@ -7546,60 +7794,8 @@
       max-width: 1000px;
       width: inherit;
       margin: 0 5px;
-    }
-
-    .pagination-slider {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 4px;
-      background: var(--mov-color-fill-loud);
-      opacity: 0.5;
-      border-radius: 2px;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .pagination-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 16px;
-      height: 16px;
-      background: white;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--mov-color-fill-loud);
-    }
-
-    .pagination-slider::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
-      background: white;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 1px solid var(--mov-color-fill-loud);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .slider-tooltip {
-      position: absolute;
-      top: -35px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.9);
-      color: white;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-
-    .slider-container:hover .slider-tooltip {
-      opacity: 1;
+      --mov-slider-track-height: 4px;
+      --mov-slider-thumb-size: 16px;
     }
 
     .tooltip {
@@ -7697,15 +7893,14 @@
         </button>
 
         <div class="slider-container">
-          <input
-            type="range"
+          <mov-slider
             class="pagination-slider"
             min="${this.startPage}"
             max="${this.totalPages}"
-            .value="${this.currentPage.toString()}"
+            .value="${this.currentPage}"
+            show-tooltip
             @input="${selectGoToPage}"
-          />
-          <div class="slider-tooltip">${this.currentPage} / ${this.totalPages}</div>
+          ></mov-slider>
         </div>
 
         <button class="pagination-button" @click=${this.goToNextPage} ?disabled=${this.isLastPage}>
@@ -8057,15 +8252,26 @@
     .dropdown-content {
       display: none;
       position: absolute;
+      top: 100%;
+      left: 0;
       background-color: var(--theme-background-color, #f9f9f9);
       min-width: 160px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      z-index: 1;
+      z-index: 100;
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 4px 0 0;
       border: 1px solid var(--theme-border-color, #ccc);
       border-radius: 5px;
+    }
+    :host([placement^='top']) .dropdown-content {
+      top: auto;
+      bottom: 100%;
+      margin: 0 0 4px;
+    }
+    :host([placement$='end']) .dropdown-content {
+      left: auto;
+      right: 0;
     }
     :host([open]) .dropdown-content {
       display: block;
@@ -8499,7 +8705,7 @@
 		exports.withStores = withStores;
 	}));
 	//#endregion
-	//#region src/ui/controllers/headroom.ts
+	//#region src/ui/components/ButtonGroup.ts
 	var import_lib = (/* @__PURE__ */ __commonJSMin(((exports) => {
 		Object.defineProperty(exports, "__esModule", { value: true });
 		exports.withStores = exports.useStores = exports.MultiStoreController = exports.StoreController = void 0;
@@ -8532,6 +8738,79 @@
 			}
 		});
 	})))();
+	var MovButtonGroup = class MovButtonGroup extends i$1 {
+		static {
+			this.styles = i$3`
+    :host {
+      display: inline-flex;
+      vertical-align: middle;
+      z-index: 100;
+    }
+
+    :host(:has(mov-dropdown[open])) {
+      z-index: 110;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    ::slotted(mov-button),
+    ::slotted(mov-dropdown) {
+      margin-inline-start: -1px;
+      --mov-border-radius-m: 0;
+    }
+
+    ::slotted(mov-button:first-child),
+    ::slotted(mov-dropdown:first-child) {
+      margin-inline-start: 0;
+      --mov-border-radius-m: 0.375rem 0 0 0.375rem;
+    }
+
+    ::slotted(mov-button:last-child),
+    ::slotted(mov-dropdown:last-child) {
+      --mov-border-radius-m: 0 0.375rem 0.375rem 0;
+    }
+
+    ::slotted(mov-button:first-child:last-child),
+    ::slotted(mov-dropdown:first-child:last-child) {
+      --mov-border-radius-m: 0.375rem;
+    }
+
+    /* Handling adjacent button groups visual merge */
+    :host(.button-group-merged-start) {
+      margin-inline-start: -1px;
+    }
+    :host(.button-group-merged-start) ::slotted(mov-button:first-child),
+    :host(.button-group-merged-start) ::slotted(mov-dropdown:first-child) {
+      --mov-border-radius-m: 0 0 0 0;
+    }
+
+    :host(.button-group-merged-end) ::slotted(mov-button:last-child),
+    :host(.button-group-merged-end) ::slotted(mov-dropdown:last-child) {
+      --mov-border-radius-m: 0 0 0 0;
+    }
+
+    ::slotted(mov-dropdown) {
+      display: flex;
+    }
+  `;
+		}
+		render() {
+			return b$1`
+      <div
+        class="button-group"
+        role="group"
+      >
+        <slot></slot>
+      </div>
+    `;
+		}
+	};
+	MovButtonGroup = __decorate([t$1("mov-button-group")], MovButtonGroup);
+	//#endregion
+	//#region src/ui/controllers/headroom.ts
 	var headerHeight = 49;
 	var showEnd = 100;
 	var HeadroomController = class HeadroomController {
@@ -8767,10 +9046,10 @@
 	}
 	//#endregion
 	//#region src/ui/styles/header.css?inline
-	var header_default = "#Header {\r\n  display: flex;\r\n  justify-content: space-around;\r\n  align-items: center;\r\n  flex-flow: row nowrap;\r\n  transition: transform 0.3s ease-in;\r\n  position: sticky;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  background-color: var(--theme-background-color);\r\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\r\n  z-index: 900;\r\n}\r\n\r\n#Header.click {\r\n  padding-left: 40px;\r\n}\r\n\r\n@keyframes headroom {\r\n  from {\r\n    transform: translateY(-100%);\r\n  }\r\n  to {\r\n    transform: translateY(0%);\r\n  }\r\n}\r\n\r\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\r\n  animation: headroom 0.3s ease-in reverse;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.scroll.headroom-hide:not(.visible) {\r\n  animation: none;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.scroll.headroom-show,\r\n#Header.headroom-end,\r\n#Header.visible {\r\n  animation: headroom 0.3s ease-in;\r\n  transform: translateY(0%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.headroom-top {\r\n  animation: none;\r\n}\r\n\r\n#Header.fixed {\r\n  position: sticky;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#Header.simple {\r\n  position: static;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#menu {\r\n  position: fixed;\r\n  z-index: 1;\r\n  color: var(--theme-body-text-color);\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n#menu:not(.click),\r\n#menu.hide {\r\n  display: none;\r\n}\r\n\r\n#menu.click {\r\n  z-index: 901;\r\n  top: 0;\r\n  left: 0;\r\n}\r\n\r\n#MangaTitle {\r\n  padding: 2px;\r\n  margin: 0;\r\n  font-size: 1.2rem;\r\n  font-weight: 400;\r\n  word-wrap: anywhere;\r\n  white-space: nowrap;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  min-width: 200px;\r\n  max-width: 40vw;\r\n}\r\n\r\n#GlobalFunctions {\r\n  display: flex;\r\n  gap: 3px;\r\n  padding: 3px 3px 3px 0;\r\n  flex-wrap: wrap;\r\n  z-index: 100;\r\n}\r\n\r\n#ZoomControl {\r\n  display: flex;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  gap: 3px;\r\n  padding: 10px 5px;\r\n}\r\n";
+	var header_default = "#Header {\r\n  display: flex;\r\n  justify-content: space-around;\r\n  align-items: center;\r\n  flex-flow: row nowrap;\r\n  gap: 10px;\r\n  padding: 0 20px;\r\n  transition: transform 0.3s ease-in;\r\n  position: sticky;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  background-color: var(--theme-background-color);\r\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\r\n  z-index: 900;\r\n}\r\n\r\n#Header.click {\r\n  padding-left: 60px;\r\n}\r\n\r\n@keyframes headroom {\r\n  from {\r\n    transform: translateY(-100%);\r\n  }\r\n  to {\r\n    transform: translateY(0%);\r\n  }\r\n}\r\n\r\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\r\n  animation: headroom 0.3s ease-in reverse;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.scroll.headroom-hide:not(.visible) {\r\n  animation: none;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.scroll.headroom-show,\r\n#Header.headroom-end,\r\n#Header.visible {\r\n  animation: headroom 0.3s ease-in;\r\n  transform: translateY(0%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.headroom-top {\r\n  animation: none;\r\n}\r\n\r\n#Header.fixed {\r\n  position: sticky;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#Header.simple {\r\n  position: static;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#menu {\r\n  position: fixed;\r\n  z-index: 1;\r\n  color: var(--theme-body-text-color);\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n#menu:not(.click),\r\n#menu.hide {\r\n  display: none;\r\n}\r\n\r\n#menu.click {\r\n  z-index: 901;\r\n  top: 0;\r\n  left: 0;\r\n}\r\n\r\n#Toolbar {\r\n  order: 1;\r\n}\r\n\r\n#GlobalFunctions {\r\n  order: 4;\r\n}\r\n\r\n#ViewerTitle {\r\n  order: 2;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n#ZoomControl {\r\n  order: 3;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  gap: 3px;\r\n  padding: 10px 5px;\r\n  min-width: 100px;\r\n}\r\n\r\n#MangaTitle {\r\n  padding: 2px;\r\n  margin: 0;\r\n  font-size: 1.2rem;\r\n  font-weight: 400;\r\n  word-wrap: anywhere;\r\n  white-space: nowrap;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  min-width: 200px;\r\n  max-width: 40vw;\r\n}\r\n";
 	//#endregion
 	//#region src/ui/styles/media.css?inline
-	var media_default = "#Header.mobile,\r\n#Header.tablet {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n.mobile #ViewerTitle,\r\n.tablet #ViewerTitle {\r\n  order: 4;\r\n  min-height: auto;\r\n}\r\n\r\n.mobile #GlobalFunctions,\r\n.tablet #GlobalFunctions {\r\n  order: 2;\r\n  width: auto;\r\n  padding: 5px;\r\n}\r\n\r\n.mobile #GlobalFunctions span {\r\n  flex-direction: column;\r\n}\r\n\r\n.mobile #ZoomControl,\r\n.tablet #ZoomControl {\r\n  order: 3;\r\n}\r\n\r\n.mobile #Toolbar,\r\n.tabler #Toolbar {\r\n  order: 1;\r\n}\r\n\r\n#Header.mobile {\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n#Header.mobile.click + #Chapter:not(.webcomic, .vertical) {\r\n  position: sticky;\r\n}\r\n\r\n.tablet #MangaTitle,\r\n.mobile #MangaTitle {\r\n  max-width: 90vw;\r\n}\r\n\r\n.mobile #ViewerTitle {\r\n  order: 3;\r\n  margin-top: 0;\r\n  height: auto;\r\n  padding: 0;\r\n}\r\n\r\n.mobile #GlobalFunctions {\r\n  order: 2;\r\n  padding: 0;\r\n  width: auto;\r\n  gap: 0;\r\n}\r\n\r\n.mobile mov-button::part(base) {\r\n  border-radius: 0;\r\n}\r\n\r\n.mobile #FileDropdown mov-button:first-of-type::part(base) {\r\n  border-radius: 5px 0 0 5px;\r\n}\r\n\r\n.mobile #GlobalFunctions mov-button:last-of-type::part(base) {\r\n  border-radius: 0 5px 5px 0;\r\n}\r\n\r\n.mobile .PageFunctions {\r\n  padding: 0;\r\n}\r\n\r\n.mobile .PageFunctions .PageButton.Bookmark {\r\n  opacity: 1;\r\n}\r\n\r\n.mobile #GlobalFunctions #ZoomSlider,\r\n.tablet #GlobalFunctions #ZoomSlider,\r\n.mobile .PageFunctions .PageButton:not(.Bookmark),\r\n.tablet #Counters,\r\n.mobile #ZoomControl,\r\n.mobile #ZoomDropdown,\r\n.mobile #ViewDropdown,\r\n.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)),\r\n.mobile #BookMode,\r\n.mobile #MangaMode,\r\n.tablet #BookMode,\r\n.tablet #MangaMode {\r\n  display: none;\r\n}\r\n";
+	var media_default = "#Header.mobile,\r\n#Header.tablet {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  gap: 0;\r\n  justify-content: center;\r\n}\r\n\r\n.mobile #ViewerTitle,\r\n.tablet #ViewerTitle {\r\n  order: 4;\r\n  min-height: auto;\r\n}\r\n\r\n.mobile #GlobalFunctions,\r\n.tablet #GlobalFunctions {\r\n  order: 2;\r\n}\r\n\r\n.mobile #Toolbar,\r\n.tablet #Toolbar {\r\n  order: 1;\r\n}\r\n\r\n#Header.mobile {\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n#Header.mobile.click + #Chapter:not(.webcomic, .vertical) {\r\n  position: sticky;\r\n}\r\n\r\n.tablet #MangaTitle,\r\n.mobile #MangaTitle {\r\n  max-width: 90vw;\r\n}\r\n\r\n.mobile #ViewerTitle {\r\n  order: 3;\r\n  margin-top: 0;\r\n  height: auto;\r\n  padding: 0;\r\n}\r\n\r\n.mobile #GlobalFunctions,\r\n.tablet #GlobalFunctions {\r\n  order: 2;\r\n}\r\n\r\n.mobile .PageFunctions {\r\n  padding: 0;\r\n}\r\n\r\n.mobile .PageFunctions .PageButton.Bookmark {\r\n  opacity: 1;\r\n}\r\n\r\n.mobile #GlobalFunctions #ZoomSlider,\r\n.tablet #GlobalFunctions #ZoomSlider,\r\n.mobile .PageFunctions .PageButton:not(.Bookmark),\r\n.tablet #Counters,\r\n.mobile #ZoomControl,\r\n.mobile #ZoomDropdown,\r\n.mobile #ViewDropdown,\r\n.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)),\r\n.mobile #BookMode,\r\n.mobile #MangaMode,\r\n.tablet #BookMode,\r\n.tablet #MangaMode {\r\n  display: none;\r\n}\r\n";
 	//#endregion
 	//#region src/ui/Header.ts
 	var Header = class Header extends i$1 {
@@ -8824,9 +9103,9 @@
 				[getAppStateValue("device")]: true
 			})}"
       >
-        <div
+        <mov-button-group
           id="Toolbar"
-          class="button-group"
+          class="${e$1({ "button-group-merged-end": ["mobile", "tablet"].includes(getAppStateValue("device")) })}"
         >
           <mov-dropdown id="FileDropdown">
             <mov-button
@@ -9058,33 +9337,10 @@
               ${getLocaleString("FIT_HEIGHT")} ${renderKeybind("FIT_HEIGHT")}
             </mov-dropdown-item>
           </mov-dropdown>
-        </div>
-        <div id="ViewerTitle">
-          <h1
-            id="MangaTitle"
-            title="${this.manga.title}"
-          >
-            ${this.titleController.value ?? this.manga.title}
-          </h1>
-        </div>
-        <div id="ZoomControl">
-          <span id="ZoomVal">
-            Zoom:
-            ${getSettingsValue("zoomMode") === "percent" ? `${getSettingsValue("zoomValue")}%` : getSettingsValue("zoomMode")}
-          </span>
-          <input
-            type="range"
-            id="Zoom"
-            name="Zoom"
-            .value="${getSettingsValue("zoomValue")}"
-            min="${getSettingsValue("minZoom")}"
-            max="200"
-            @input=${changeZoom}
-          />
-        </div>
-        <div
+        </mov-button-group>
+        <mov-button-group
           id="GlobalFunctions"
-          class="button-group"
+          class="${e$1({ "button-group-merged-start": ["mobile", "tablet"].includes(getAppStateValue("device")) })}"
         >
           <mov-button
             id="series"
@@ -9124,6 +9380,29 @@
           >
             <mov-icon name="IconArrowBigRight"></mov-icon>
           </mov-button>
+        </mov-button-group>
+        <div id="ViewerTitle">
+          <h1
+            id="MangaTitle"
+            title="${this.manga.title}"
+          >
+            ${this.titleController.value ?? this.manga.title}
+          </h1>
+        </div>
+        <div id="ZoomControl">
+          <output id="ZoomVal">
+            Zoom:
+            ${getSettingsValue("zoomMode") === "percent" ? `${getSettingsValue("zoomValue")}%` : getSettingsValue("zoomMode")}
+          </output>
+          <mov-slider
+            id="Zoom"
+            name="Zoom"
+            .value="${getSettingsValue("zoomValue")}"
+            min="${getSettingsValue("minZoom")}"
+            max="200"
+            show-tooltip
+            @input=${changeZoom}
+          ></mov-slider>
         </div>
       </header>
     `;
@@ -9819,22 +10098,24 @@
         ${getLocaleString("LAZY_LOAD_IMAGES")}
         <output
           id="lazyStartVal"
+          class="RangeValue"
           for="lazyStart"
         >
           ${getSettingsValue("lazyStart")}
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue("lazyStart")}"
+      <mov-slider
         name="lazyStart"
         id="lazyStart"
+        .value="${getSettingsValue("lazyStart")}"
         min="5"
         max="100"
         step="5"
-        oninput="lazyStartVal.value = this.value"
-        @change="${changeLazyStart}"
-      />
+        show-tooltip
+        show-ticks
+        tick-step="50"
+        @input="${changeLazyStart}"
+      ></mov-slider>
     </div>
   `;
 	}
@@ -9955,16 +10236,18 @@
           ${getSettingsValue("scrollHeight")}px
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue("scrollHeight")}"
+      <mov-slider
         name="scrollHeight"
         id="scrollHeight"
+        .value="${getSettingsValue("scrollHeight")}"
         min="1"
         max="${Math.ceil(window.innerHeight / 200) * 100}"
         step="1"
+        show-tooltip
+        show-ticks
+        tick-step="${Math.max(25, Math.ceil(window.innerHeight / 500) * 25)}"
         @input="${changeScrollHeight}"
-      />
+      ></mov-slider>
     </div>
   `;
 	}
@@ -10090,28 +10373,18 @@
           ${getSettingsValue("zoomValue")}%
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue("zoomValue")}"
+      <mov-slider
         name="zoomValue"
         id="zoomValue"
+        .value="${getSettingsValue("zoomValue")}"
         min="5"
         max="200"
         step="5"
-        list="zoomValueList"
+        show-tooltip
+        show-ticks
+        tick-step="50"
         @input="${changeDefaultZoomValue}"
-      />
-      <datalist id="zoomValueList">
-        <option value="5">5</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="75">75</option>
-        <option value="100">100</option>
-        <option value="125">125</option>
-        <option value="150">150</option>
-        <option value="175">175</option>
-        <option value="200">200</option>
-      </datalist>
+      ></mov-slider>
     </div>
   `;
 	}
@@ -10132,23 +10405,18 @@
           ${getSettingsValue("minZoom")}%
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue("minZoom")}"
+      <mov-slider
         name="minZoom"
         id="minZoom"
+        .value="${getSettingsValue("minZoom")}"
         min="25"
         max="100"
         step="5"
+        show-tooltip
+        show-ticks
+        tick-step="25"
         @input="${changeMinZoom}"
-        list="minZoomList"
-      />
-      <datalist id="minZoomList">
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="75">75</option>
-        <option value="100">100</option>
-      </datalist>
+      ></mov-slider>
     </div>
   `;
 	}
@@ -10169,22 +10437,18 @@
           ${getSettingsValue("zoomStep")}%
         </output>
       </span>
-      <input
-        type="range"
-        value="${getSettingsValue("zoomStep")}"
+      <mov-slider
         name="zoomStep"
         id="zoomStep"
+        .value="${getSettingsValue("zoomStep")}"
         min="10"
         max="50"
         step="5"
+        show-tooltip
+        show-ticks
+        tick-step="10"
         @input="${changeZoomStep}"
-        list="zoomStepList"
-      />
-      <datalist id="zoomStepList">
-        <option value="10">10</option>
-        <option value="30">30</option>
-        <option value="50">50</option>
-      </datalist>
+      ></mov-slider>
     </div>
   `;
 	}
@@ -11148,7 +11412,7 @@
 	};
 	//#endregion
 	//#region src/ui/styles/startButton.css?inline
-	var startButton_default = "#StartMOV {\r\n  all: revert;\r\n  backface-visibility: hidden;\r\n  font-size: 2rem;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  margin: 0 auto;\r\n  padding: 0.5rem 1rem;\r\n  text-align: center;\r\n  border: none;\r\n  border-radius: 10px;\r\n  min-height: 50px;\r\n  width: 80%;\r\n  position: fixed;\r\n  right: 0;\r\n  left: 0;\r\n  bottom: 0;\r\n  z-index: 105000;\r\n  transition: all 0.4s ease-in-out;\r\n  background-size: 300% 100%;\r\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\r\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\r\n}\r\n\r\n#StartMOV:hover {\r\n  background-position: 100% 0;\r\n  transition: all 0.4s ease-in-out;\r\n}\r\n\r\n#StartMOV:focus {\r\n  outline: none;\r\n}\r\n";
+	var startButton_default = "#StartMOV {\r\n  all: revert;\r\n  backface-visibility: hidden;\r\n  font-size: 2rem;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  margin: 0 auto;\r\n  padding: 0.5rem 1rem;\r\n  text-align: center;\r\n  border: none;\r\n  border-radius: 10px;\r\n  min-height: 50px;\r\n  width: 80%;\r\n  position: fixed;\r\n  right: 0;\r\n  left: 0;\r\n  bottom: 0;\r\n  z-index: 105000;\r\n  transition: all 0.4s ease-in-out;\r\n  background-size: 300% 100%;\r\n  background-image: linear-gradient(to right, #667eea, #764ba2, #6b8dd6, #8e37d7);\r\n  box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);\r\n}\r\n\r\n#StartMOV:hover {\r\n  background-position: 100% 0;\r\n  transition: all 0.4s ease-in-out;\r\n}\r\n\r\n#StartMOV:focus {\r\n  outline: none;\r\n}\r\n\r\n#pagesSliderVal {\r\n  display: block;\r\n  text-align: center;\r\n  margin-top: 15px;\r\n  font-weight: bold;\r\n}\r\n";
 	//#endregion
 	//#region src/ui/Startup.ts
 	/**
@@ -11241,10 +11505,11 @@
     `;
 		}
 		renderLateStartPrompt() {
-			let beginPage = this.begin;
-			let endPage = this.mangaPages;
-			const onSliderChange = (e) => {
-				[beginPage, endPage] = [e.detail.value1, e.detail.value2];
+			this.beginPage ??= this.begin;
+			this.endPage ??= this.mangaPages;
+			const onSliderInput = (e) => {
+				this.beginPage = e.detail.value[0];
+				this.endPage = e.detail.value[1];
 			};
 			return b$1`
       <mov-dialog
@@ -11259,26 +11524,26 @@
             id="pageInputGroup"
             style="padding: 1rem 0;"
           >
-            <tc-range-slider
+            <mov-slider
               id="pagesSlider"
-              theme="glass"
-              css-links="https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-themes.min.css"
-              min="1"
-              max="${this.mangaPages}"
-              round="0"
+              dual
+              show-tooltip
+              show-ticks
+              tick-step="${Math.max(25, Math.ceil(this.mangaPages / 250) * 25)}"
               step="1"
-              value1="${beginPage}"
-              value2="${endPage}"
-              data="${sequence(this.mangaPages).join(", ")}"
-              marks="true"
-              marks-count="11"
-              marks-values-count="11"
-              generate-labels="true"
-              slider-width="100%"
-              pointers-overlap="false"
-              generate-labels-text-color="var(--mov-color-on-loud)"
-              @change=${onSliderChange}
-            ></tc-range-slider>
+              .value=${[this.beginPage, this.endPage]}
+              min="0"
+              max="${this.mangaPages}"
+              @input=${onSliderInput}
+            ></mov-slider>
+            <output
+              id="pagesSliderVal"
+              class="RangeValue"
+              for="pagesSlider"
+            >
+              [${String(this.beginPage).padStart(3, "0")} ,
+              ${String(this.endPage).padStart(3, "0")}]
+            </output>
           </div>
         </div>
         <div
@@ -11292,7 +11557,7 @@
             Close
           </mov-button>
           <mov-button
-            @click=${() => this.handleLateStart(beginPage, endPage)}
+            @click=${() => this.handleLateStart(this.beginPage ?? 0, this.endPage ?? this.mangaPages)}
             style="--mov-color-fill-loud: ${colors.green[700]}; --mov-color-on-loud: white;"
           >
             Run
@@ -11315,6 +11580,8 @@
 		type: String,
 		reflect: true
 	})], MovStartup.prototype, "status", void 0);
+	__decorate([r$1()], MovStartup.prototype, "beginPage", void 0);
+	__decorate([r$1()], MovStartup.prototype, "endPage", void 0);
 	MovStartup = __decorate([t$1("script-startup")], MovStartup);
 	//#endregion
 	//#region src/utils/cleanup.ts
