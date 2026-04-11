@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.04.11.build-1220
+// @version       2026.04.11.build-1241
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -27,9 +27,6 @@
 // @require       https://cdn.jsdelivr.net/npm/bowser@2.14.1/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js
-// @require       https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/toolcool-range-slider.min.js
-// @require       https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-generated-labels.min.js
-// @require       https://cdn.jsdelivr.net/npm/toolcool-range-slider@4.0.28/dist/plugins/tcrs-marks.min.js
 // @include       /https?:\/\/(www.)?(asurascans|asuracomics).(com|net)\/.+/
 // @include       /https?:\/\/(?:www\.)?(?:fto|jto|hto|dto|mto|wto|bato|battwo|batotwo|comiko|batocomic|readtoto|zbato|xbato|mangatoto)\.(?:to|com|net|org)\/(chapter|title).*/
 // @include       /https?:\/\/(www\.)?(bilibilicomics).net\/episode\/.+/
@@ -2936,7 +2933,7 @@
 		return applyColorsToSvg(rawSvg, `icon-tabler-${_.kebabCase(iconKey.replace(/^Icon/, ""))}`);
 	});
 	//#endregion
-	//#region \0@oxc-project+runtime@0.123.0/helpers/decorate.js
+	//#region \0@oxc-project+runtime@0.124.0/helpers/decorate.js
 	function __decorate(decorators, target, key, desc) {
 		var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 		if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6283,8 +6280,6 @@
 			this.focusedThumb = null;
 			this.draggingThumb = null;
 			this.activeDrag = null;
-			this.lastRenderTime = 0;
-			this.renderThrottleMs = 16;
 			this._handlePointerMove = this._handlePointerMove.bind(this);
 			this._handlePointerUp = this._handlePointerUp.bind(this);
 		}
@@ -11618,7 +11613,7 @@
 		elements?.forEach(removeAllEventListeners);
 	};
 	//#endregion
-	//#region \0@oxc-project+runtime@0.123.0/helpers/taggedTemplateLiteral.js
+	//#region \0@oxc-project+runtime@0.124.0/helpers/taggedTemplateLiteral.js
 	function _taggedTemplateLiteral(e, t) {
 		return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } }));
 	}
