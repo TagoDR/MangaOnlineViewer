@@ -27,6 +27,7 @@ const meta: Meta = {
     showTooltip: { control: 'boolean' },
     showTicks: { control: 'boolean' },
     tickStep: { control: 'number' },
+    tickCount: { control: 'number' },
     helpText: { control: 'text' },
     errorMessage: { control: 'text' },
   },
@@ -47,6 +48,7 @@ const meta: Meta = {
       ?show-tooltip="${args.showTooltip}"
       ?show-ticks="${args.showTicks}"
       tick-step="${args.tickStep}"
+      tick-count="${args.tickCount}"
       help-text="${args.helpText}"
       error-message="${args.errorMessage}"
       @input=${(e: CustomEvent) => console.log('input', e.detail.value)}
@@ -99,7 +101,7 @@ export const WithTicks: StoryObj = {
     max: 100,
     value: 25,
     showTicks: true,
-    tickStep: 25,
+    tickCount: 5,
   },
 };
 

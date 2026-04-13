@@ -43,12 +43,6 @@
   min-height: 8rem;
 }
 
-/* Filled variant */
-:host([filled]) .mov-slider__thumb {
-  background: var(--mov-color-fill-loud);
-  border-color: var(--mov-color-fill-loud);
-}
-
 /* Progress */
 .mov-slider__progress {
   position: absolute;
@@ -293,4 +287,10 @@
   padding-bottom: 15px;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+/* Filled variant */
+:host([filled]) .mov-slider__thumb {
+  background: var(--mov-color-fill-loud);
+  border-color: var(--mov-color-fill-loud);
 }

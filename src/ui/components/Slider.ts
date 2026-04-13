@@ -38,7 +38,8 @@ export default class Slider extends LitElement {
 
   @property({ type: Boolean, attribute: 'show-tooltip' }) showTooltip = false;
   @property({ type: Boolean, attribute: 'show-ticks' }) showTicks = false;
-  @property({ type: Number, attribute: 'tick-step' }) tickStep = 25;
+  @property({ type: Number, attribute: 'tick-step' }) tickStep = 0;
+  @property({ type: Number, attribute: 'tick-count' }) tickCount = 0;
 
   @state() private focusedThumb: 'min' | 'max' | null = null;
   @state() private draggingThumb: 'min' | 'max' | 'single' | null = null;
@@ -194,13 +195,18 @@ export default class Slider extends LitElement {
     tickValues.add(this.min);
     tickValues.add(this.max);
 
-    if (this.tickStep > 0) {
-      const tickCount = Math.floor((this.max - this.min) / this.tickStep);
+    let step = this.tickStep;
+    if (this.tickCount > 1) {
+      step = Math.round((this.max - this.min) / (this.tickCount - 1));
+    }
+
+    if (step > 0) {
+      const tickCount = Math.floor((this.max - this.min) / step);
       if (tickCount <= 100) {
         for (let i = 1; i <= tickCount; i++) {
-          const val = this.min + i * this.tickStep;
+          const val = this.min + i * step;
           if (val < this.max) {
-            tickValues.add(val);
+            tickValues.add(Number(val.toFixed(10)));
           }
         }
       }

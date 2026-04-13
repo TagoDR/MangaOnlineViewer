@@ -154,7 +154,7 @@ export class MovStartup extends LitElement {
               dual
               show-tooltip
               show-ticks
-              tick-step="${Math.max(25, Math.ceil(this.mangaPages / 250) * 25)}"
+              tick-count="10"
               step="1"
               .value=${[this.beginPage, this.endPage]}
               min="0"

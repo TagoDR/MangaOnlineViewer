@@ -80,7 +80,7 @@ function lazyLoad() {
         step="5"
         show-tooltip
         show-ticks
-        tick-step="50"
+        tick-count="3"
         @input="${changeLazyStart}"
       ></mov-slider>
     </div>
@@ -216,7 +216,7 @@ function autoScroll() {
         step="1"
         show-tooltip
         show-ticks
-        tick-step="${Math.max(25, Math.ceil(window.innerHeight / 500) * 25)}"
+        tick-count="5"
         @input="${changeScrollHeight}"
       ></mov-slider>
     </div>

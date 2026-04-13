@@ -72,7 +72,7 @@ function zoomValue() {
         step="5"
         show-tooltip
         show-ticks
-        tick-step="50"
+        tick-count="5"
         @input="${changeDefaultZoomValue}"
       ></mov-slider>
     </div>
@@ -105,7 +105,7 @@ function minZoom() {
         step="5"
         show-tooltip
         show-ticks
-        tick-step="25"
+        tick-count="4"
         @input="${changeMinZoom}"
       ></mov-slider>
     </div>
@@ -138,7 +138,7 @@ function zoomStep() {
         step="5"
         show-tooltip
         show-ticks
-        tick-step="10"
+        tick-count="5"
         @input="${changeZoomStep}"
       ></mov-slider>
     </div>
