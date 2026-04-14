@@ -36,7 +36,7 @@
 }
 
 .bookmark-url {
-  font-size: 0.875rem;
+  font-size: 14px;
   text-decoration: none;
   display: block;
   white-space: nowrap;
@@ -51,7 +51,7 @@
 .bookmark-details {
   flex-shrink: 0;
   width: 90px;
-  font-size: 0.875rem;
+  font-size: 14px;
   text-align: right;
   color: color-mix(in oklab, var(--theme-body-text-color), transparent 30%);
 }

@@ -72,7 +72,7 @@
   line-height: 80vh;
   vertical-align: top;
   color: var(--theme-text-color);
-  font-size: 1rem;
+  font-size: 16px;
   min-width: 40vw;
   min-height: 50vh;
   max-width: 100%;
@@ -91,7 +91,7 @@
   white-space: pre-wrap;
   text-align: center;
   color: var(--theme-text-color);
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .PageFunctions {

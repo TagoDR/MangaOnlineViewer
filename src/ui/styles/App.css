@@ -12,6 +12,8 @@
 }
 
 :host {
+  all: initial;
+  display: block;
   box-sizing: border-box;
 }
 
@@ -21,6 +23,7 @@
   background-color: var(--theme-body-background);
   box-sizing: border-box;
   min-height: 100vh;
+  --mov-font-size-m: 16px;
 }
 
 #Chapter {

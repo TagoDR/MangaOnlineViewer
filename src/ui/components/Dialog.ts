@@ -100,7 +100,7 @@ export default class Dialog extends LitElement {
       background: none;
       border: none;
       cursor: pointer;
-      font-size: 1.5rem;
+      font-size: 24px;
       line-height: 1;
       padding: 0;
       color: inherit;

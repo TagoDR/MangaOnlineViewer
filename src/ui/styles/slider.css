@@ -156,7 +156,7 @@
   color: white;
   padding: 2px 8px;
   border-radius: 4px;
-  font-size: 0.875rem;
+  font-size: 14px;
   white-space: nowrap;
   pointer-events: none;
   opacity: 0;
@@ -211,7 +211,7 @@
 .mov-slider__tick-label {
   position: absolute;
   top: 12px;
-  font-size: 0.75rem;
+  font-size: 12px;
   color: var(--theme-text-color);
   opacity: 0.7;
   transform: translateX(-50%);
@@ -261,7 +261,7 @@
 .mov-form-control__helper,
 .mov-form-control__error {
   margin-top: 0.5rem;
-  font-size: 0.875rem;
+  font-size: 14px;
 }
 
 .mov-form-control__helper {

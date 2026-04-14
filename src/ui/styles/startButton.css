@@ -1,7 +1,7 @@
 #StartMOV {
   all: revert;
   backface-visibility: hidden;
-  font-size: 2rem;
+  font-size: 32px;
   color: #fff;
   cursor: pointer;
   margin: 0 auto;

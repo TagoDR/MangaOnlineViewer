@@ -113,21 +113,21 @@ export class FileInput extends LitElement {
     }
 
     .label-text {
-      font-size: 1.125rem;
+      font-size: 18px;
       font-weight: 600;
       margin-bottom: 0.5rem;
       color: var(--theme-text-color, #333);
     }
 
     .description-text {
-      font-size: 0.875rem;
+      font-size: 14px;
       color: var(--mov-color-on-quiet, #6c757d);
       margin-bottom: 1rem;
     }
 
     .file-list {
       margin-top: 1rem;
-      font-size: 0.875rem;
+      font-size: 14px;
       color: var(--theme-text-color, #333);
       width: 100%;
       display: flex;
@@ -177,13 +177,13 @@ export class FileInput extends LitElement {
     }
 
     label {
-      font-size: 0.875rem;
+      font-size: 14px;
       font-weight: 500;
       color: var(--theme-text-color, currentColor);
     }
 
     .help-text {
-      font-size: 0.75rem;
+      font-size: 12px;
       color: var(--mov-color-on-quiet, #6c757d);
       margin-top: 0.25rem;
     }

@@ -15,5 +15,5 @@ html[mov] body > *:not(manga-online-viewer, #nprogress) {
 
 html[mov] {
   all: unset;
-  font-size: 16px;
+  font-size: 16px !important;
 }

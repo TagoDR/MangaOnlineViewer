@@ -34,7 +34,7 @@ export class Switch extends LitElement {
     :host([size='small']) {
       --switch-width: 2.5rem;
       --switch-height: 1.25rem;
-      --knob-size: 1rem;
+      --knob-size: 16px;
     }
 
     :host([size='large']) {
@@ -101,7 +101,7 @@ export class Switch extends LitElement {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
+      font-size: 16px;
       font-weight: bold;
       font-family: Arial;
       color: #333;
@@ -117,19 +117,19 @@ export class Switch extends LitElement {
     }
 
     .icon {
-      width: 1rem;
-      height: 1rem;
+      width: 16px;
+      height: 16px;
       fill: none;
     }
 
     .text {
-      font-size: 0.75rem;
+      font-size: 12px;
       font-weight: bold;
       color: #333;
     }
 
     .hint {
-      font-size: 0.8rem;
+      font-size: 13px;
       opacity: 0.7;
       margin-top: 0.25rem;
     }

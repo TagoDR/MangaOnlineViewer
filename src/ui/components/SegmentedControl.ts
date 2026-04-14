@@ -122,7 +122,7 @@ export class SegmentedControl extends LitElement {
       flex-direction: row;
       gap: 0.25rem;
       padding: 0.5rem 0.75rem; /* Default padding (medium) */
-      font-size: 1rem; /* Default font-size (medium) */
+      font-size: 16px; /* Default font-size (medium) */
       box-sizing: border-box; /* Include padding/border in element's total width/height */
     }
 
@@ -135,11 +135,11 @@ export class SegmentedControl extends LitElement {
     /* Size Variations */
     .button.small {
       padding: 0.25rem 0.5rem;
-      font-size: 0.875rem;
+      font-size: 14px;
     }
     .button.large {
       padding: 0.75rem 1rem;
-      font-size: 1.125rem;
+      font-size: 18px;
     }
 
     /* Label Position Variations */

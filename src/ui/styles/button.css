@@ -1,7 +1,7 @@
 :host {
   display: inline-block;
   --mov-font-size-scale: 1;
-  --mov-font-size-m: calc(1rem * var(--mov-font-size-scale));
+  --mov-font-size-m: calc(16px * var(--mov-font-size-scale));
   --mov-font-size-s: round(calc(var(--mov-font-size-m) / 1.125), 1px);
   --mov-font-size-l: round(calc(var(--mov-font-size-m) * 1.125 * 1.125), 1px);
   --mov-border-width-s: 0.0625rem;
