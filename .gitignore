@@ -57,3 +57,6 @@ storybook-static
 agnosticui/
 .agnosticui-viewer/
 .aider*
+
+.gemini/
+gha-creds-*.json
