@@ -19,7 +19,6 @@ import Reader from './Reader.ts';
 import cssStyles from './styles';
 import { themesCSS } from './themes.ts';
 import './Startup.ts';
-import { choose } from 'lit-html/directives/choose.js';
 import type { IManga, LoadMode } from '../types';
 import { cleanUpElement } from '../utils/cleanup.ts';
 
@@ -95,12 +94,9 @@ export default class App extends LitElement {
       >
         ${
           manga
-            ? html`
-              <reader-header .manga=${manga}></reader-header>
+            ? html` <reader-header .manga=${manga}></reader-header>
               ${Reader(manga)}
-              <navbar-thumbnails
-                .mode=${getSettingsValue('navbar')}
-              ></navbar-thumbnails>
+              <navbar-thumbnails .mode=${getSettingsValue('navbar')}></navbar-thumbnails>
               <manga-pagination
                 .mode="${getSettingsValue('pagination')}"
                 .startPage=${manga.begin}
@@ -113,18 +109,14 @@ export default class App extends LitElement {
               <bookmark-panel></bookmark-panel>
               <settings-panel></settings-panel>
               <moaqz-toaster dismissable></moaqz-toaster>`
-            : html`
-              <script-startup
-                .mangaPages="${this.manga?.pages}"
-                begin="${this.manga?.begin}"
-                initialStatus="${choose(this.loadMode, [
-                  ['wait', () => 'initial-prompt'],
-                  ['never', () => 'late-start-button'],
-                ])}"
-                @start=${(e: CustomEvent) => {
-                  this.start(e.detail?.begin, e.detail?.end);
-                }}
-              ></script-startup>`
+            : html` <script-startup
+              .mangaPages="${this.manga?.pages}"
+              begin="${this.manga?.begin}"
+              status="${this.loadMode === 'never' ? 'late-start-button' : 'initial-prompt'}"
+              @start=${(e: CustomEvent) => {
+                this.start(e.detail?.begin, e.detail?.end);
+              }}
+            ></script-startup>`
         }
         ${
           dialog

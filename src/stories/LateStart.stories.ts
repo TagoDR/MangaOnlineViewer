@@ -2,9 +2,6 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { themesCSS } from '../ui/themes';
-import 'toolcool-range-slider/dist/plugins/tcrs-generated-labels.min.js';
-import 'toolcool-range-slider/dist/plugins/tcrs-marks.min';
-import 'toolcool-range-slider';
 import '../ui/Startup.ts';
 // Mock data for the story
 const MOCK_BEGIN = 10;

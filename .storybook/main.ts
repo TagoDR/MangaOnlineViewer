@@ -1,5 +1,4 @@
 import type { StorybookConfig } from '@storybook/web-components-vite';
-import { mergeConfig } from 'vite';
 
 /**
  * The main configuration for the Storybook instance.
@@ -25,11 +24,5 @@ const config: StorybookConfig = {
     name: '@storybook/web-components-vite',
     options: {},
   },
-  viteFinal: async config =>
-    mergeConfig(config, {
-      optimizeDeps: {
-        include: ['toolcool-range-slider'],
-      },
-    }),
 };
 export default config;
