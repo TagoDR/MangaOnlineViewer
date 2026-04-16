@@ -10,6 +10,7 @@ import exhentai from './exhentai';
 import freeadultcomix from './freeadultcomix';
 import fsicomics from './fsicomics';
 import gntai from './gntai';
+import hdoujin from './hdoujin';
 import hentai2read from './hentai2read';
 import hentaiera from './hentaiera';
 import hentaiforce from './hentaiforce';
@@ -48,6 +49,7 @@ const sites: ISite[] = [
   fsicomics,
   freeadultcomix,
   gntai,
+  hdoujin,
   hentai2read,
   hentaiera,
   hentaiforce,
