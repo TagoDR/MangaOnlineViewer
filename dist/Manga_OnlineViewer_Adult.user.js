@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.04.14.build-2219
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, HDoujin, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2026.04.16.build-2127
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -36,6 +36,7 @@
 // @include       /https?:\/\/(www\.)?fsicomics.com\/.+/
 // @include       /https?:\/\/(www\.)?freeadultcomix.com\/.+/
 // @include       /https?:\/\/(www\.)?gntai.net\/(?!(category|tags|autores))[^/]+\/.+/
+// @include       /https?:\/\/(www\.)?hdoujin\.org\/.+/
 // @include       /https?:\/\/(www\.)?hentai2read.com\/[^/]+\/\d+(.\d+)?\//
 // @include       /https?:\/\/(www\.)?hentaiera.com\/view\/.+\/\d+\/?/
 // @include       /https?:\/\/(www\.)?hentaiforce.net\/view\/.+\/\d+/
@@ -595,6 +596,34 @@
 		}
 	};
 	//#endregion
+	//#region src/adult/hdoujin.ts
+	var hdoujin = {
+		name: "HDoujin",
+		url: /https?:\/\/(www\.)?hdoujin\.org\/.+/,
+		homepage: "https://hdoujin.org/",
+		language: [Language.ENGLISH],
+		category: Category.HENTAI,
+		waitEle: "nav select option",
+		async run() {
+			const gallery = history.state.memo.gallery;
+			const size = gallery.resolution;
+			const { base, entries } = history.state.memo.data;
+			const src = entries.map((image) => `${base}/${image.path}?w=${size}`);
+			return {
+				title: gallery.title,
+				series: `/g/${gallery.id}/${gallery.key}/`,
+				pages: src.length,
+				prev: "#",
+				next: "#",
+				fetchOptions: {
+					method: "GET",
+					redirect: "follow"
+				},
+				listImages: src
+			};
+		}
+	};
+	//#endregion
 	//#region src/adult/hentai2read.ts
 	var hentai2read = {
 		name: "Hentai2Read",
@@ -1005,6 +1034,7 @@
 		fsicomics,
 		freeadultcomix,
 		gntai,
+		hdoujin,
 		hentai2read,
 		hentaiera,
 		hentaiforce,

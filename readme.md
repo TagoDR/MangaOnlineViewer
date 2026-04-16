@@ -99,6 +99,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [ExHentai](https://exhentai.org/) / [e-Hentai](https://e-hentai.org/) _[English]_ **Obs: May get your IP Banned, use with moderation**
 - [FSIComics](https://fsicomics.com/) _[English]_
 - [FreeAdultComix](https://www.freeadultcomix.com) _[English]_
+- [HDoujin](https://hdoujin.org/) _[English]_
 - [Hentai2Read](https://hentai2read.com/) _[English]_
 - [HentaiEra](https://hentaiera.com/) _[English]_
 - [HentaiForce](https://hentaiforce.net/) _[English]_
