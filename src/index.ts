@@ -5,8 +5,7 @@
  * This allows for rapid testing and development of the UI components without needing
  * to run the script on a live website.
  */
-
-import { html, render } from 'lit-html';
+import { html, render } from 'lit';
 import { preparePage } from './core/main.ts';
 import localhost from './main/localhost';
 import './ui/StandaloneLanding.ts';
@@ -19,17 +18,44 @@ import { isStandalone } from './utils/tampermonkey.ts';
     return;
   }
 
-  requiredScripts.forEach(script => {
-    import(script);
+  console.log('Loading required scripts...', requiredScripts);
+  await Promise.all(
+    requiredScripts.map(
+      src =>
+        new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = src;
+          script.onload = () => {
+            console.log(`Loaded: ${src}`);
+            resolve(null);
+          };
+          script.onerror = () => {
+            console.error(`Failed to load: ${src}`);
+            reject(new Error(`Failed to load script: ${src}`));
+          };
+          document.head.appendChild(script);
+        }),
+    ),
+  ).catch(err => {
+    console.error('Critical error loading scripts:', err);
   });
+  console.log('Scripts loaded, initializing application...');
 
   // Immediately render the main application UI with the mock data.
-  if (window.location.search === '') {
-    preparePage([{ ...localhost, start: 'always' }, await localhost.run()]);
-  } else {
-    render(
-      html`<standalone-landing ?test="${!isStandalone()}"></standalone-landing>`,
-      document.body,
-    );
+  try {
+    if (window.location.search === '') {
+      await preparePage([{ ...localhost, start: 'always' }, await localhost.run()]);
+    } else {
+      render(
+        html`<standalone-landing ?test="${!isStandalone()}"></standalone-landing>`,
+        document.body,
+      );
+    }
+  } catch (err) {
+    console.error('Initialization error:', err);
+    document.body.innerHTML = `<div style="color: red; padding: 20px;">
+      <h1>MangaOnlineViewer Initialization Error</h1>
+      <pre>${err instanceof Error ? err.stack : JSON.stringify(err)}</pre>
+    </div>`;
   }
 })();
