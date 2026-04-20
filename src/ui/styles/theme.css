@@ -1,0 +1,53 @@
+:root {
+  /* Theme Colors */
+  --theme-primary-color: #007bff; /* Example primary color */
+  --theme-primary-text-color: #ffffff; /* Example primary text color */
+  --theme-secondary-color: #6c757d; /* Example secondary color */
+  --theme-secondary-text-color: #ffffff; /* Example secondary text color */
+
+  /* Dark Theme */
+  --theme-body-background: #212529;
+  --theme-body-text-color: #f8f9fa;
+  --theme-text-color: #f8f9fa;
+  --theme-background-color: #212529;
+  --theme-hightlight-color: #343a40;
+  --theme-border-color: #495057;
+
+  /* Custom Color Scales (based on gradient) */
+  --mov-color-fill-quiet: #ced4da;
+  --mov-color-fill-normal: #adb5bd;
+  --mov-color-fill-loud: #007bff;
+  --mov-color-border-quiet: #adb5bd;
+  --mov-color-border-normal: #6c757d;
+  --mov-color-border-loud: #495057;
+  --mov-color-on-quiet: #343a40;
+  --mov-color-on-normal: #ffffff;
+  --mov-color-on-loud: #ffffff;
+
+  --mov-color-mix-hover: rgba(0, 0, 0, 0.08);
+  --mov-color-mix-active: rgba(0, 0, 0, 0.16);
+}
+
+.light {
+  /* Light Theme */
+  --theme-body-background: #f8f9fa;
+  --theme-body-text-color: #212529;
+  --theme-text-color: #212529;
+  --theme-background-color: #f8f9fa;
+  --theme-hightlight-color: #e9ecef;
+  --theme-border-color: #dee2e6;
+
+  /* Custom Color Scales (based on gradient) */
+  --mov-color-fill-quiet: #f8f9fa;
+  --mov-color-fill-normal: #e9ecef;
+  --mov-color-fill-loud: #007bff;
+  --mov-color-border-quiet: #e9ecef;
+  --mov-color-border-normal: #dee2e6;
+  --mov-color-border-loud: #adb5bd;
+  --mov-color-on-quiet: #6c757d;
+  --mov-color-on-normal: #ffffff;
+  --mov-color-on-loud: #ffffff;
+
+  --mov-color-mix-hover: rgba(0, 0, 0, 0.1);
+  --mov-color-mix-active: rgba(0, 0, 0, 0.2);
+}
