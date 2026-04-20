@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.04.16.build-2127
+// @version       2026.04.20.build-0110
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -3037,17 +3037,6 @@
 	* const myHtml = html`<div>Hello, World!</div>`;
 	*/
 	var html = concatenateTemplateLiteralTag;
-	/**
-	* A template literal tag used to identify CSS strings.
-	* This allows IDEs and tools like Prettier to apply proper syntax highlighting and formatting.
-	* @example
-	* const myCss = css`
-	*   .my-class {
-	*     color: blue;
-	*   }
-	* `;
-	*/
-	var css = concatenateTemplateLiteralTag;
 	//#endregion
 	//#region src/utils/css.ts
 	/**
@@ -11323,24 +11312,25 @@
 	* It imports individual CSS files as inline strings, defines base theme variables for light and dark modes,
 	* and combines them into a single CSS template literal that can be injected into the application's shadow DOM.
 	*/
-	var styles_default = css`
+	var styles_default = i$3`
   .PageContent .PageImg[src=''],
   .PageContent .PageImg:not([src]) {
-    background-image: url('${svgToUrl(IconPhoto$1)}');
+    background-image: url('${r$4(svgToUrl(IconPhoto$1))}');
   }
 
   .PageContent .PageImg.imgBroken {
-    background-image: url('${svgToUrl(IconPhotoOff$1)}');
+    background-image: url('${r$4(svgToUrl(IconPhotoOff$1))}');
   }
 
-  ${"/*  Simple Normalizer */\r\n#MangaOnlineViewer {\r\n  margin: 0;\r\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\r\n  font-size: 16px;\r\n  line-height: 20px;\r\n  color: var(--theme-body-text-color);\r\n  background-color: var(--theme-body-background);\r\n  padding: 0;\r\n}\r\n\r\na,\r\na:link,\r\na:visited,\r\na:active,\r\na:focus {\r\n  color: var(--theme-body-text-color);\r\n  text-decoration: none;\r\n}\r\n\r\nimg {\r\n  height: auto;\r\n  vertical-align: middle;\r\n  border: 0 none;\r\n}\r\n"}
-  ${":root:not(.light, .dark) {\r\n  --theme-body-background: #25262b;\r\n  --theme-body-text-color: #c1c2c5;\r\n  --theme-text-color: #c1c2c5;\r\n  --theme-primary-color: #1a1b1e;\r\n  --theme-primary-text-color: #c1c2c5;\r\n  --theme-background-color: #25262b;\r\n  --theme-hightlight-color: #2c2e33;\r\n  --theme-border-color: #373a40;\r\n  --theme-secondary-color: #2c2e33;\r\n  --theme-secondary-text-color: #c1c2c5;\r\n}\r\n\r\n:host {\r\n  all: initial;\r\n  display: block;\r\n  box-sizing: border-box;\r\n}\r\n\r\n#MangaOnlineViewer {\r\n  text-decoration: none;\r\n  color: var(--theme-body-text-color);\r\n  background-color: var(--theme-body-background);\r\n  box-sizing: border-box;\r\n  min-height: 100vh;\r\n  --mov-font-size-m: 16px;\r\n}\r\n\r\n#Chapter {\r\n  display: grid;\r\n  grid-template-columns: repeat(1, 1fr);\r\n  min-width: 225px;\r\n  box-sizing: border-box;\r\n}\r\n\r\n#Chapter.Vertical:has(+ #Navigation:not(.disabled)),\r\n#Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\r\n  padding-bottom: 31px;\r\n}\r\n\r\n#Chapter.Vertical .PageContent {\r\n  margin-bottom: 8px;\r\n  margin-top: 8px;\r\n}\r\n\r\n.closeButton {\r\n  width: fit-content;\r\n  height: fit-content;\r\n  position: absolute;\r\n  right: 10px;\r\n  top: 10px;\r\n}\r\n\r\n.overlay {\r\n  position: fixed;\r\n  display: none;\r\n  width: 100%;\r\n  height: 100%;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  z-index: 950;\r\n  cursor: pointer;\r\n}\r\n\r\n.overlay.visible {\r\n  display: block;\r\n}\r\n\r\nselect {\r\n  height: 20px;\r\n  margin: 2px;\r\n}\r\n\r\n:not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\r\n  max-width: 100%;\r\n  object-fit: contain;\r\n}\r\n\r\n.hideControls .PageFunctions {\r\n  visibility: hidden;\r\n}\r\n"}
-  ${".PageButton .icon-tabler {\r\n  height: 1rem;\r\n  width: 1rem;\r\n  vertical-align: sub;\r\n}\r\n\r\n.PageButton,\r\n.PageButton:visited,\r\n.PageButton:link {\r\n  cursor: pointer;\r\n  border-radius: 5px;\r\n  border-width: 1px;\r\n  border-style: solid;\r\n  padding: 2px;\r\n  min-height: 32px;\r\n  color: var(--mov-color-on-loud);\r\n  background-color: var(--mov-color-fill-loud);\r\n  border-color: var(--theme-border-color);\r\n  text-decoration: none;\r\n}\r\n\r\n.PageButton:active,\r\n.PageButton:hover {\r\n  opacity: 0.8;\r\n}\r\n\r\n.PageButton[selected] {\r\n  background-color: var(--mov-color-fill-normal);\r\n  color: var(--mov-color-on-normal);\r\n  border: 1px solid var(--theme-border-color);\r\n}\r\n\r\n.PageButton.hidden {\r\n  display: none;\r\n}\r\n\r\n.MangaPage {\r\n  width: 100%;\r\n  display: inline-block;\r\n  text-align: center;\r\n  line-height: 0;\r\n  min-height: 22px;\r\n  min-width: 100%;\r\n}\r\n\r\n.PageContent {\r\n  text-align: center;\r\n  display: inline-block;\r\n  overflow-x: auto;\r\n  max-width: 100%;\r\n  transition: all 0.3s ease-in-out;\r\n  height: 100%;\r\n  overflow-y: hidden;\r\n}\r\n\r\n.MangaPage.hide .PageContent {\r\n  height: 0;\r\n}\r\n\r\n.PageContent .PageImg[src=\"\"],\r\n.PageContent .PageImg:not([src]),\r\n.PageContent .PageImg.imgBroken {\r\n  width: 40vw;\r\n  height: 80vh;\r\n  display: inline-block;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: 20%;\r\n  background-color: var(--theme-hightlight-color);\r\n  position: relative;\r\n  text-align: center;\r\n  line-height: 80vh;\r\n  vertical-align: top;\r\n  color: var(--theme-text-color);\r\n  font-size: 16px;\r\n  min-width: 40vw;\r\n  min-height: 50vh;\r\n  max-width: 100%;\r\n  max-height: 100%;\r\n  margin: 0;\r\n}\r\n\r\n.PageContent .PageImg[src=\"\"]:before,\r\n.PageContent .PageImg:not([src]):before,\r\n.PageContent .PageImg.imgBroken:before {\r\n  content: attr(alt);\r\n  position: absolute;\r\n  top: 40%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  white-space: pre-wrap;\r\n  text-align: center;\r\n  color: var(--theme-text-color);\r\n  font-size: 16px;\r\n}\r\n\r\n.PageFunctions {\r\n  font-family: monospace;\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  align-items: center;\r\n  margin: 0;\r\n  padding: 0;\r\n  gap: 3px;\r\n  position: absolute;\r\n  right: 0;\r\n}\r\n\r\n.PageFunctions > .PageIndex {\r\n  background-color: var(--mov-color-fill-loud);\r\n  color: var(--mov-color-on-loud);\r\n  min-width: 20px;\r\n  text-align: center;\r\n  display: inline-block;\r\n  padding: 3px 5px;\r\n  line-height: 1rem;\r\n  border-radius: 5px;\r\n}\r\n\r\n.PageFunctions .PageButton {\r\n  padding: 3px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin: 0;\r\n  border-width: 0;\r\n  min-height: auto;\r\n  opacity: 0.5;\r\n}\r\n\r\n.PageFunctions:hover .PageButton {\r\n  opacity: 1;\r\n}\r\n\r\n.PageFunctions .PageButton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\n#Chapter.Vertical .separator {\r\n  display: flex;\r\n  align-items: center;\r\n  text-align: center;\r\n  font-style: italic;\r\n}\r\n\r\n#Chapter.Vertical .separator::before,\r\n#Chapter.Vertical .separator::after {\r\n  content: \"\";\r\n  flex: 1;\r\n  border-bottom: 1px solid var(--theme-text-color);\r\n}\r\n\r\n#Chapter.Vertical.separator:not(:empty)::before {\r\n  margin-right: 0.25em;\r\n}\r\n\r\n#Chapter.Vertical.separator:not(:empty)::after {\r\n  margin-left: 0.25em;\r\n}\r\n\r\n#Chapter:not(.separator) .separator,\r\n#Chapter:not(.Vertical) .separator {\r\n  display: none;\r\n}\r\n"}
-  ${"#Chapter.FluidLTR,\r\n#Chapter.FluidRTL {\r\n  display: flex;\r\n  overflow-x: auto;\r\n  min-width: auto;\r\n\r\n  .ZoomWidth {\r\n    display: none;\r\n  }\r\n\r\n  .PageImg {\r\n    min-width: unset;\r\n  }\r\n\r\n  .MangaPage {\r\n    width: initial;\r\n    min-width: fit-content;\r\n    position: relative;\r\n  }\r\n\r\n  .MangaPage.DoublePage {\r\n    grid-column: span 2;\r\n  }\r\n}\r\n\r\n#Chapter.FluidLTR {\r\n  flex-direction: row;\r\n\r\n  .MangaPage .PageFunctions {\r\n    right: auto;\r\n    left: 0;\r\n    direction: rtl;\r\n  }\r\n}\r\n\r\n#Chapter.FluidRTL {\r\n  flex-direction: row-reverse;\r\n}\r\n"}
-  ${"/* Book mode - Left to Right (Western comic/manga style) */\r\n#Chapter:where(.Book, .Manga) {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr;\r\n  grid-auto-flow: row;\r\n  width: 100%;\r\n  min-width: auto;\r\n  gap: 0;\r\n}\r\n\r\n#Chapter:where(.Book, .Manga) .MangaPage {\r\n  width: 100%;\r\n  display: block;\r\n  position: relative;\r\n  min-height: 22px;\r\n  overflow: hidden;\r\n}\r\n\r\n/* Default positioning for all controls in Book mode - top right */\r\n#Chapter:where(.Book, .Manga) .MangaPage .PageFunctions {\r\n  top: 0;\r\n  right: 0;\r\n  left: auto;\r\n  flex-direction: row;\r\n  border-radius: 0 0 0 4px;\r\n}\r\n\r\n/* Left-side images - controls at top left with reversed order */\r\n#Chapter:where(.Book, .Manga) .MangaPage.LeftPage .PageFunctions {\r\n  right: auto;\r\n  left: 0;\r\n  flex-direction: row-reverse;\r\n  border-radius: 0 0 4px 0;\r\n}\r\n\r\n#Chapter:where(.Book, .Manga) .MangaPage.DoublePage {\r\n  grid-column: span 2;\r\n}\r\n\r\n#Chapter:where(.Book, .Manga) .MangaPage .PageContent {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-shrink: 0;\r\n  overflow: hidden;\r\n}\r\n\r\n/* Left page - align image to the right (toward middle) */\r\n#Chapter:where(.Book, .Manga) .MangaPage.LeftPage .PageContent {\r\n  justify-content: flex-end;\r\n  padding-right: 0;\r\n}\r\n\r\n/* Right page - align image to the left (toward middle) */\r\n#Chapter:where(.Book, .Manga) .MangaPage.RightPage .PageContent {\r\n  justify-content: flex-start;\r\n  padding-left: 0;\r\n}\r\n\r\n/* Double page - center the image */\r\n#Chapter:where(.Book, .Manga) .MangaPage.DoublePage .PageContent {\r\n  justify-content: center;\r\n}\r\n\r\n/* Manga mode - Right to Left (Traditional manga/comic style) */\r\n#Chapter.Manga {\r\n  direction: rtl;\r\n}\r\n\r\n#Chapter.Manga .MangaPage {\r\n  direction: ltr; /* Reset text direction for page contents */\r\n}\r\n"}
-  ${"#Chapter.Gallery {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  justify-content: center;\r\n  gap: 10px;\r\n  padding: 10px;\r\n}\r\n\r\n.Gallery .MangaPage {\r\n  width: auto;\r\n  min-width: unset;\r\n  flex: 0 1 auto;\r\n}\r\n\r\n.Gallery .MangaPage .PageContent .PageImg {\r\n  min-width: unset;\r\n}\r\n\r\n.Gallery .PageFunctions,\r\n.Gallery .separator {\r\n  display: none;\r\n}\r\n"}
-  ${media_default}
-  ${"@-webkit-keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@-webkit-keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n@keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n.icon-tabler-loader-2,\r\n.animate-spin {\r\n  -webkit-animation: spin 1s linear infinite;\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n.animate-spin-reverse {\r\n  -webkit-animation: spin-reverse 1s linear infinite;\r\n  animation: spin-reverse 1s linear infinite;\r\n}\r\n"}
+  ${r$4(":root {\r\n  /* Theme Colors */\r\n  --theme-primary-color: #007bff; /* Example primary color */\r\n  --theme-primary-text-color: #ffffff; /* Example primary text color */\r\n  --theme-secondary-color: #6c757d; /* Example secondary color */\r\n  --theme-secondary-text-color: #ffffff; /* Example secondary text color */\r\n\r\n  /* Dark Theme */\r\n  --theme-body-background: #212529;\r\n  --theme-body-text-color: #f8f9fa;\r\n  --theme-text-color: #f8f9fa;\r\n  --theme-background-color: #212529;\r\n  --theme-hightlight-color: #343a40;\r\n  --theme-border-color: #495057;\r\n\r\n  /* Custom Color Scales (based on gradient) */\r\n  --mov-color-fill-quiet: #ced4da;\r\n  --mov-color-fill-normal: #adb5bd;\r\n  --mov-color-fill-loud: #007bff;\r\n  --mov-color-border-quiet: #adb5bd;\r\n  --mov-color-border-normal: #6c757d;\r\n  --mov-color-border-loud: #495057;\r\n  --mov-color-on-quiet: #343a40;\r\n  --mov-color-on-normal: #ffffff;\r\n  --mov-color-on-loud: #ffffff;\r\n\r\n  --mov-color-mix-hover: rgba(0, 0, 0, 0.08);\r\n  --mov-color-mix-active: rgba(0, 0, 0, 0.16);\r\n}\r\n\r\n.light {\r\n  /* Light Theme */\r\n  --theme-body-background: #f8f9fa;\r\n  --theme-body-text-color: #212529;\r\n  --theme-text-color: #212529;\r\n  --theme-background-color: #f8f9fa;\r\n  --theme-hightlight-color: #e9ecef;\r\n  --theme-border-color: #dee2e6;\r\n\r\n  /* Custom Color Scales (based on gradient) */\r\n  --mov-color-fill-quiet: #f8f9fa;\r\n  --mov-color-fill-normal: #e9ecef;\r\n  --mov-color-fill-loud: #007bff;\r\n  --mov-color-border-quiet: #e9ecef;\r\n  --mov-color-border-normal: #dee2e6;\r\n  --mov-color-border-loud: #adb5bd;\r\n  --mov-color-on-quiet: #6c757d;\r\n  --mov-color-on-normal: #ffffff;\r\n  --mov-color-on-loud: #ffffff;\r\n\r\n  --mov-color-mix-hover: rgba(0, 0, 0, 0.1);\r\n  --mov-color-mix-active: rgba(0, 0, 0, 0.2);\r\n}\r\n")}
+  ${r$4("/*  Simple Normalizer */\r\n#MangaOnlineViewer {\r\n  margin: 0;\r\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\r\n  font-size: 16px;\r\n  line-height: 20px;\r\n  color: var(--theme-body-text-color);\r\n  background-color: var(--theme-body-background);\r\n  padding: 0;\r\n}\r\n\r\na,\r\na:link,\r\na:visited,\r\na:active,\r\na:focus {\r\n  color: var(--theme-body-text-color);\r\n  text-decoration: none;\r\n}\r\n\r\nimg {\r\n  height: auto;\r\n  vertical-align: middle;\r\n  border: 0 none;\r\n}\r\n")}
+  ${r$4(":root:not(.light, .dark) {\r\n  --theme-body-background: #25262b;\r\n  --theme-body-text-color: #c1c2c5;\r\n  --theme-text-color: #c1c2c5;\r\n  --theme-primary-color: #1a1b1e;\r\n  --theme-primary-text-color: #c1c2c5;\r\n  --theme-background-color: #25262b;\r\n  --theme-hightlight-color: #2c2e33;\r\n  --theme-border-color: #373a40;\r\n  --theme-secondary-color: #2c2e33;\r\n  --theme-secondary-text-color: #c1c2c5;\r\n}\r\n\r\n:host {\r\n  all: initial;\r\n  display: block;\r\n  box-sizing: border-box;\r\n}\r\n\r\n#MangaOnlineViewer {\r\n  text-decoration: none;\r\n  color: var(--theme-body-text-color);\r\n  background-color: var(--theme-body-background);\r\n  box-sizing: border-box;\r\n  min-height: 100vh;\r\n  --mov-font-size-m: 16px;\r\n}\r\n\r\n#Chapter {\r\n  display: grid;\r\n  grid-template-columns: repeat(1, 1fr);\r\n  min-width: 225px;\r\n  box-sizing: border-box;\r\n}\r\n\r\n#Chapter.Vertical:has(+ #Navigation:not(.disabled)),\r\n#Chapter.WebComic:has(+ #Navigation:not(.disabled)) {\r\n  padding-bottom: 31px;\r\n}\r\n\r\n#Chapter.Vertical .PageContent {\r\n  margin-bottom: 8px;\r\n  margin-top: 8px;\r\n}\r\n\r\n.closeButton {\r\n  width: fit-content;\r\n  height: fit-content;\r\n  position: absolute;\r\n  right: 10px;\r\n  top: 10px;\r\n}\r\n\r\n.overlay {\r\n  position: fixed;\r\n  display: none;\r\n  width: 100%;\r\n  height: 100%;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.5);\r\n  z-index: 950;\r\n  cursor: pointer;\r\n}\r\n\r\n.overlay.visible {\r\n  display: block;\r\n}\r\n\r\nselect {\r\n  height: 20px;\r\n  margin: 2px;\r\n}\r\n\r\n:not(.FluidRTL, .FluidLTR).fitWidthIfOversize .PageContent .PageImg {\r\n  max-width: 100%;\r\n  object-fit: contain;\r\n}\r\n\r\n.hideControls .PageFunctions {\r\n  visibility: hidden;\r\n}\r\n")}
+  ${r$4(".PageButton .icon-tabler {\r\n  height: 1rem;\r\n  width: 1rem;\r\n  vertical-align: sub;\r\n}\r\n\r\n.PageButton,\r\n.PageButton:visited,\r\n.PageButton:link {\r\n  cursor: pointer;\r\n  border-radius: 5px;\r\n  border-width: 1px;\r\n  border-style: solid;\r\n  padding: 2px;\r\n  min-height: 32px;\r\n  color: var(--mov-color-on-loud);\r\n  background-color: var(--mov-color-fill-loud);\r\n  border-color: var(--theme-border-color);\r\n  text-decoration: none;\r\n}\r\n\r\n.PageButton:active,\r\n.PageButton:hover {\r\n  opacity: 0.8;\r\n}\r\n\r\n.PageButton[selected] {\r\n  background-color: var(--mov-color-fill-normal);\r\n  color: var(--mov-color-on-normal);\r\n  border: 1px solid var(--theme-border-color);\r\n}\r\n\r\n.PageButton.hidden {\r\n  display: none;\r\n}\r\n\r\n.MangaPage {\r\n  width: 100%;\r\n  display: inline-block;\r\n  text-align: center;\r\n  line-height: 0;\r\n  min-height: 22px;\r\n  min-width: 100%;\r\n}\r\n\r\n.PageContent {\r\n  text-align: center;\r\n  display: inline-block;\r\n  overflow-x: auto;\r\n  max-width: 100%;\r\n  transition: all 0.3s ease-in-out;\r\n  height: 100%;\r\n  overflow-y: hidden;\r\n}\r\n\r\n.MangaPage.hide .PageContent {\r\n  height: 0;\r\n}\r\n\r\n.PageContent .PageImg[src=\"\"],\r\n.PageContent .PageImg:not([src]),\r\n.PageContent .PageImg.imgBroken {\r\n  width: 40vw;\r\n  height: 80vh;\r\n  display: inline-block;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: 20%;\r\n  background-color: var(--theme-hightlight-color);\r\n  position: relative;\r\n  text-align: center;\r\n  line-height: 80vh;\r\n  vertical-align: top;\r\n  color: var(--theme-text-color);\r\n  font-size: 16px;\r\n  min-width: 40vw;\r\n  min-height: 50vh;\r\n  max-width: 100%;\r\n  max-height: 100%;\r\n  margin: 0;\r\n}\r\n\r\n.PageContent .PageImg[src=\"\"]:before,\r\n.PageContent .PageImg:not([src]):before,\r\n.PageContent .PageImg.imgBroken:before {\r\n  content: attr(alt);\r\n  position: absolute;\r\n  top: 40%;\r\n  left: 50%;\r\n  transform: translate(-50%, -50%);\r\n  white-space: pre-wrap;\r\n  text-align: center;\r\n  color: var(--theme-text-color);\r\n  font-size: 16px;\r\n}\r\n\r\n.PageFunctions {\r\n  font-family: monospace;\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  align-items: center;\r\n  margin: 0;\r\n  padding: 0;\r\n  gap: 3px;\r\n  position: absolute;\r\n  right: 0;\r\n}\r\n\r\n.PageFunctions > .PageIndex {\r\n  background-color: var(--mov-color-fill-loud);\r\n  color: var(--mov-color-on-loud);\r\n  min-width: 20px;\r\n  text-align: center;\r\n  display: inline-block;\r\n  padding: 3px 5px;\r\n  line-height: 1rem;\r\n  border-radius: 5px;\r\n}\r\n\r\n.PageFunctions .PageButton {\r\n  padding: 3px;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin: 0;\r\n  border-width: 0;\r\n  min-height: auto;\r\n  opacity: 0.5;\r\n}\r\n\r\n.PageFunctions:hover .PageButton {\r\n  opacity: 1;\r\n}\r\n\r\n.PageFunctions .PageButton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\n#Chapter.Vertical .separator {\r\n  display: flex;\r\n  align-items: center;\r\n  text-align: center;\r\n  font-style: italic;\r\n}\r\n\r\n#Chapter.Vertical .separator::before,\r\n#Chapter.Vertical .separator::after {\r\n  content: \"\";\r\n  flex: 1;\r\n  border-bottom: 1px solid var(--theme-text-color);\r\n}\r\n\r\n#Chapter.Vertical.separator:not(:empty)::before {\r\n  margin-right: 0.25em;\r\n}\r\n\r\n#Chapter.Vertical.separator:not(:empty)::after {\r\n  margin-left: 0.25em;\r\n}\r\n\r\n#Chapter:not(.separator) .separator,\r\n#Chapter:not(.Vertical) .separator {\r\n  display: none;\r\n}\r\n")}
+  ${r$4("#Chapter.FluidLTR,\r\n#Chapter.FluidRTL {\r\n  display: flex;\r\n  overflow-x: auto;\r\n  min-width: auto;\r\n\r\n  .ZoomWidth {\r\n    display: none;\r\n  }\r\n\r\n  .PageImg {\r\n    min-width: unset;\r\n  }\r\n\r\n  .MangaPage {\r\n    width: initial;\r\n    min-width: fit-content;\r\n    position: relative;\r\n  }\r\n\r\n  .MangaPage.DoublePage {\r\n    grid-column: span 2;\r\n  }\r\n}\r\n\r\n#Chapter.FluidLTR {\r\n  flex-direction: row;\r\n\r\n  .MangaPage .PageFunctions {\r\n    right: auto;\r\n    left: 0;\r\n    direction: rtl;\r\n  }\r\n}\r\n\r\n#Chapter.FluidRTL {\r\n  flex-direction: row-reverse;\r\n}\r\n")}
+  ${r$4("/* Book mode - Left to Right (Western comic/manga style) */\r\n#Chapter:where(.Book, .Manga) {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr;\r\n  grid-auto-flow: row;\r\n  width: 100%;\r\n  min-width: auto;\r\n  gap: 0;\r\n}\r\n\r\n#Chapter:where(.Book, .Manga) .MangaPage {\r\n  width: 100%;\r\n  display: block;\r\n  position: relative;\r\n  min-height: 22px;\r\n  overflow: hidden;\r\n}\r\n\r\n/* Default positioning for all controls in Book mode - top right */\r\n#Chapter:where(.Book, .Manga) .MangaPage .PageFunctions {\r\n  top: 0;\r\n  right: 0;\r\n  left: auto;\r\n  flex-direction: row;\r\n  border-radius: 0 0 0 4px;\r\n}\r\n\r\n/* Left-side images - controls at top left with reversed order */\r\n#Chapter:where(.Book, .Manga) .MangaPage.LeftPage .PageFunctions {\r\n  right: auto;\r\n  left: 0;\r\n  flex-direction: row-reverse;\r\n  border-radius: 0 0 4px 0;\r\n}\r\n\r\n#Chapter:where(.Book, .Manga) .MangaPage.DoublePage {\r\n  grid-column: span 2;\r\n}\r\n\r\n#Chapter:where(.Book, .Manga) .MangaPage .PageContent {\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-shrink: 0;\r\n  overflow: hidden;\r\n}\r\n\r\n/* Left page - align image to the right (toward middle) */\r\n#Chapter:where(.Book, .Manga) .MangaPage.LeftPage .PageContent {\r\n  justify-content: flex-end;\r\n  padding-right: 0;\r\n}\r\n\r\n/* Right page - align image to the left (toward middle) */\r\n#Chapter:where(.Book, .Manga) .MangaPage.RightPage .PageContent {\r\n  justify-content: flex-start;\r\n  padding-left: 0;\r\n}\r\n\r\n/* Double page - center the image */\r\n#Chapter:where(.Book, .Manga) .MangaPage.DoublePage .PageContent {\r\n  justify-content: center;\r\n}\r\n\r\n/* Manga mode - Right to Left (Traditional manga/comic style) */\r\n#Chapter.Manga {\r\n  direction: rtl;\r\n}\r\n\r\n#Chapter.Manga .MangaPage {\r\n  direction: ltr; /* Reset text direction for page contents */\r\n}\r\n")}
+  ${r$4("#Chapter.Gallery {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  justify-content: center;\r\n  gap: 10px;\r\n  padding: 10px;\r\n}\r\n\r\n.Gallery .MangaPage {\r\n  width: auto;\r\n  min-width: unset;\r\n  flex: 0 1 auto;\r\n}\r\n\r\n.Gallery .MangaPage .PageContent .PageImg {\r\n  min-width: unset;\r\n}\r\n\r\n.Gallery .PageFunctions,\r\n.Gallery .separator {\r\n  display: none;\r\n}\r\n")}
+  ${r$4(media_default)}
+  ${r$4("@-webkit-keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@keyframes spin {\r\n  to {\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n\r\n@-webkit-keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n@keyframes spin-reverse {\r\n  0% {\r\n    transform: rotate(360deg);\r\n  }\r\n\r\n  to {\r\n    transform: rotate(0);\r\n  }\r\n}\r\n\r\n.icon-tabler-loader-2,\r\n.animate-spin {\r\n  -webkit-animation: spin 1s linear infinite;\r\n  animation: spin 1s linear infinite;\r\n}\r\n\r\n.animate-spin-reverse {\r\n  -webkit-animation: spin-reverse 1s linear infinite;\r\n  animation: spin-reverse 1s linear infinite;\r\n}\r\n")}
 `;
 	//#endregion
 	//#region src/ui/themes.ts
@@ -11356,31 +11346,32 @@
 		const gradient = generateColorGradient(hex);
 		const text = getTextColor(hex);
 		const secondary = getSettingsValue("colorScheme") === "dark" ? gradient[8] : gradient[2];
-		return css`
+		const secondaryText = getTextColor(secondary);
+		return i$3`
     :where(:root),
-    ${selector}, .dark,
-    ${selector}.dark {
-      --theme-primary-color: ${hex};
-      --theme-primary-text-color: ${text};
-      --theme-secondary-color: ${secondary};
-      --theme-secondary-text-color: ${getTextColor(secondary)};
+    ${r$4(r$4(selector))}, .dark,
+    ${r$4(r$4(selector))}.dark {
+      --theme-primary-color: ${r$4(r$4(hex))};
+      --theme-primary-text-color: ${r$4(r$4(text))};
+      --theme-secondary-color: ${r$4(r$4(secondary))};
+      --theme-secondary-text-color: ${r$4(r$4(secondaryText))};
 
       color-scheme: dark;
-      --theme-body-background: ${colors.dark["600"]};
-      --theme-body-text-color: ${colors.dark["50"]};
-      --theme-text-color: ${colors.dark["50"]};
-      --theme-background-color: ${colors.dark["600"]};
-      --theme-hightlight-color: ${colors.dark["500"]};
-      --theme-border-color: ${colors.dark["400"]};
+      --theme-body-background: ${r$4(r$4(colors.dark["600"]))};
+      --theme-body-text-color: ${r$4(r$4(colors.dark["50"]))};
+      --theme-text-color: ${r$4(r$4(colors.dark["50"]))};
+      --theme-background-color: ${r$4(r$4(colors.dark["600"]))};
+      --theme-hightlight-color: ${r$4(r$4(colors.dark["500"]))};
+      --theme-border-color: ${r$4(r$4(colors.dark["400"]))};
 
-      --mov-color-fill-quiet: ${gradient[9]};
-      --mov-color-fill-normal: var(--theme-secondary-color, ${gradient[8]});
+      --mov-color-fill-quiet: ${r$4(r$4(gradient[9]))};
+      --mov-color-fill-normal: var(--theme-secondary-color, ${r$4(r$4(gradient[8]))});
       --mov-color-fill-loud: var(--theme-primary-color);
-      --mov-color-border-quiet: ${gradient[8]};
-      --mov-color-border-normal: ${gradient[7]};
-      --mov-color-border-loud: ${gradient[6]};
-      --mov-color-on-quiet: ${gradient[4]};
-      --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
+      --mov-color-border-quiet: ${r$4(r$4(gradient[8]))};
+      --mov-color-border-normal: ${r$4(r$4(gradient[7]))};
+      --mov-color-border-loud: ${r$4(r$4(gradient[6]))};
+      --mov-color-on-quiet: ${r$4(r$4(gradient[4]))};
+      --mov-color-on-normal: var(--theme-secondary-text-color, ${r$4(r$4(gradient[3]))});
       --mov-color-on-loud: var(--theme-primary-text-color, white);
 
       --mov-color-mix-hover: black 8%;
@@ -11388,23 +11379,23 @@
     }
 
     .light,
-    ${selector}.light {
+    ${r$4(r$4(selector))}.light {
       color-scheme: light;
-      --theme-body-background: ${colors.gray["50"]};
-      --theme-body-text-color: ${colors.gray["900"]};
-      --theme-text-color: ${colors.gray["900"]};
-      --theme-background-color: ${colors.gray["50"]};
-      --theme-hightlight-color: ${colors.gray["500"]};
-      --theme-border-color: ${colors.gray["100"]};
+      --theme-body-background: ${r$4(r$4(colors.gray["50"]))};
+      --theme-body-text-color: ${r$4(r$4(colors.gray["900"]))};
+      --theme-text-color: ${r$4(r$4(colors.gray["900"]))};
+      --theme-background-color: ${r$4(r$4(colors.gray["50"]))};
+      --theme-hightlight-color: ${r$4(r$4(colors.gray["500"]))};
+      --theme-border-color: ${r$4(r$4(colors.gray["100"]))};
 
-      --mov-color-fill-quiet: ${gradient[0]};
-      --mov-color-fill-normal: var(--theme-secondary-color, ${gradient[1]});
+      --mov-color-fill-quiet: ${r$4(r$4(gradient[0]))};
+      --mov-color-fill-normal: var(--theme-secondary-color, ${r$4(r$4(gradient[1]))});
       --mov-color-fill-loud: var(--theme-primary-color);
-      --mov-color-border-quiet: ${gradient[1]};
-      --mov-color-border-normal: ${gradient[2]};
-      --mov-color-border-loud: ${gradient[4]};
-      --mov-color-on-quiet: ${gradient[6]};
-      --mov-color-on-normal: var(--theme-secondary-text-color, ${gradient[3]});
+      --mov-color-border-quiet: ${r$4(r$4(gradient[1]))};
+      --mov-color-border-normal: ${r$4(r$4(gradient[2]))};
+      --mov-color-border-loud: ${r$4(r$4(gradient[4]))};
+      --mov-color-on-quiet: ${r$4(r$4(gradient[6]))};
+      --mov-color-on-normal: var(--theme-secondary-text-color, ${r$4(r$4(gradient[3]))});
       --mov-color-on-loud: var(--theme-primary-text-color, white);
 
       --mov-color-mix-hover: black 10%;
