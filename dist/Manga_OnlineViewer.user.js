@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.04.20.build-0110
+// @version       2026.04.20.build-0116
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -11349,29 +11349,29 @@
 		const secondaryText = getTextColor(secondary);
 		return i$3`
     :where(:root),
-    ${r$4(r$4(selector))}, .dark,
-    ${r$4(r$4(selector))}.dark {
-      --theme-primary-color: ${r$4(r$4(hex))};
-      --theme-primary-text-color: ${r$4(r$4(text))};
-      --theme-secondary-color: ${r$4(r$4(secondary))};
-      --theme-secondary-text-color: ${r$4(r$4(secondaryText))};
+    ${r$4(selector)}, .dark,
+    ${r$4(selector)}.dark {
+      --theme-primary-color: ${r$4(hex)};;
+      --theme-primary-text-color: ${r$4(text)};;
+      --theme-secondary-color: ${r$4(secondary)};;
+      --theme-secondary-text-color: ${r$4(secondaryText)};;
 
       color-scheme: dark;
-      --theme-body-background: ${r$4(r$4(colors.dark["600"]))};
-      --theme-body-text-color: ${r$4(r$4(colors.dark["50"]))};
-      --theme-text-color: ${r$4(r$4(colors.dark["50"]))};
-      --theme-background-color: ${r$4(r$4(colors.dark["600"]))};
-      --theme-hightlight-color: ${r$4(r$4(colors.dark["500"]))};
-      --theme-border-color: ${r$4(r$4(colors.dark["400"]))};
+      --theme-body-background: ${r$4(colors.dark["600"])};;
+      --theme-body-text-color: ${r$4(colors.dark["50"])};;
+      --theme-text-color: ${r$4(colors.dark["50"])};;
+      --theme-background-color: ${r$4(colors.dark["600"])};;
+      --theme-hightlight-color: ${r$4(colors.dark["500"])};;
+      --theme-border-color: ${r$4(colors.dark["400"])};;
 
-      --mov-color-fill-quiet: ${r$4(r$4(gradient[9]))};
-      --mov-color-fill-normal: var(--theme-secondary-color, ${r$4(r$4(gradient[8]))});
+      --mov-color-fill-quiet: ${r$4(gradient[9])};;
+      --mov-color-fill-normal: var(--theme-secondary-color, ${r$4(gradient[8])};);
       --mov-color-fill-loud: var(--theme-primary-color);
-      --mov-color-border-quiet: ${r$4(r$4(gradient[8]))};
-      --mov-color-border-normal: ${r$4(r$4(gradient[7]))};
-      --mov-color-border-loud: ${r$4(r$4(gradient[6]))};
-      --mov-color-on-quiet: ${r$4(r$4(gradient[4]))};
-      --mov-color-on-normal: var(--theme-secondary-text-color, ${r$4(r$4(gradient[3]))});
+      --mov-color-border-quiet: ${r$4(gradient[8])};;
+      --mov-color-border-normal: ${r$4(gradient[7])};;
+      --mov-color-border-loud: ${r$4(gradient[6])};;
+      --mov-color-on-quiet: ${r$4(gradient[4])};;
+      --mov-color-on-normal: var(--theme-secondary-text-color, ${r$4(gradient[3])};);
       --mov-color-on-loud: var(--theme-primary-text-color, white);
 
       --mov-color-mix-hover: black 8%;
@@ -11379,23 +11379,23 @@
     }
 
     .light,
-    ${r$4(r$4(selector))}.light {
+    ${r$4(selector)};.light {
       color-scheme: light;
-      --theme-body-background: ${r$4(r$4(colors.gray["50"]))};
-      --theme-body-text-color: ${r$4(r$4(colors.gray["900"]))};
-      --theme-text-color: ${r$4(r$4(colors.gray["900"]))};
-      --theme-background-color: ${r$4(r$4(colors.gray["50"]))};
-      --theme-hightlight-color: ${r$4(r$4(colors.gray["500"]))};
-      --theme-border-color: ${r$4(r$4(colors.gray["100"]))};
+      --theme-body-background: ${r$4(colors.gray["50"])};;
+      --theme-body-text-color: ${r$4(colors.gray["900"])};;
+      --theme-text-color: ${r$4(colors.gray["900"])};;
+      --theme-background-color: ${r$4(colors.gray["50"])};;
+      --theme-hightlight-color: ${r$4(colors.gray["500"])};;
+      --theme-border-color: ${r$4(colors.gray["100"])};;
 
-      --mov-color-fill-quiet: ${r$4(r$4(gradient[0]))};
-      --mov-color-fill-normal: var(--theme-secondary-color, ${r$4(r$4(gradient[1]))});
+      --mov-color-fill-quiet: ${r$4(gradient[0])};;
+      --mov-color-fill-normal: var(--theme-secondary-color, ${r$4(gradient[1])};);
       --mov-color-fill-loud: var(--theme-primary-color);
-      --mov-color-border-quiet: ${r$4(r$4(gradient[1]))};
-      --mov-color-border-normal: ${r$4(r$4(gradient[2]))};
-      --mov-color-border-loud: ${r$4(r$4(gradient[4]))};
-      --mov-color-on-quiet: ${r$4(r$4(gradient[6]))};
-      --mov-color-on-normal: var(--theme-secondary-text-color, ${r$4(r$4(gradient[3]))});
+      --mov-color-border-quiet: ${r$4(gradient[1])};;
+      --mov-color-border-normal: ${r$4(gradient[2])};;
+      --mov-color-border-loud: ${r$4(gradient[4])};;
+      --mov-color-on-quiet: ${r$4(gradient[6])};;
+      --mov-color-on-normal: var(--theme-secondary-text-color, ${r$4(gradient[3])};);
       --mov-color-on-loud: var(--theme-primary-text-color, white);
 
       --mov-color-mix-hover: black 10%;
