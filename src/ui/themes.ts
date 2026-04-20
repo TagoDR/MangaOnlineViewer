@@ -41,29 +41,29 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
 
   return css`
     :where(:root),
-    ${unsafeCSS(unsafeCSS(selector))}, .dark,
-    ${unsafeCSS(unsafeCSS(selector))}.dark {
-      --theme-primary-color: ${unsafeCSS(unsafeCSS(hex))};
-      --theme-primary-text-color: ${unsafeCSS(unsafeCSS(text))};
-      --theme-secondary-color: ${unsafeCSS(unsafeCSS(secondary))};
-      --theme-secondary-text-color: ${unsafeCSS(unsafeCSS(secondaryText))};
+    ${unsafeCSS(selector)}, .dark,
+    ${unsafeCSS(selector)}.dark {
+      --theme-primary-color: ${unsafeCSS(hex)};;
+      --theme-primary-text-color: ${unsafeCSS(text)};;
+      --theme-secondary-color: ${unsafeCSS(secondary)};;
+      --theme-secondary-text-color: ${unsafeCSS(secondaryText)};;
 
       color-scheme: dark;
-      --theme-body-background: ${unsafeCSS(unsafeCSS(colors.dark['600']))};
-      --theme-body-text-color: ${unsafeCSS(unsafeCSS(colors.dark['50']))};
-      --theme-text-color: ${unsafeCSS(unsafeCSS(colors.dark['50']))};
-      --theme-background-color: ${unsafeCSS(unsafeCSS(colors.dark['600']))};
-      --theme-hightlight-color: ${unsafeCSS(unsafeCSS(colors.dark['500']))};
-      --theme-border-color: ${unsafeCSS(unsafeCSS(colors.dark['400']))};
+      --theme-body-background: ${unsafeCSS(colors.dark['600'])};;
+      --theme-body-text-color: ${unsafeCSS(colors.dark['50'])};;
+      --theme-text-color: ${unsafeCSS(colors.dark['50'])};;
+      --theme-background-color: ${unsafeCSS(colors.dark['600'])};;
+      --theme-hightlight-color: ${unsafeCSS(colors.dark['500'])};;
+      --theme-border-color: ${unsafeCSS(colors.dark['400'])};;
 
-      --mov-color-fill-quiet: ${unsafeCSS(unsafeCSS(gradient[9]))};
-      --mov-color-fill-normal: var(--theme-secondary-color, ${unsafeCSS(unsafeCSS(gradient[8]))});
+      --mov-color-fill-quiet: ${unsafeCSS(gradient[9])};;
+      --mov-color-fill-normal: var(--theme-secondary-color, ${unsafeCSS(gradient[8])};);
       --mov-color-fill-loud: var(--theme-primary-color);
-      --mov-color-border-quiet: ${unsafeCSS(unsafeCSS(gradient[8]))};
-      --mov-color-border-normal: ${unsafeCSS(unsafeCSS(gradient[7]))};
-      --mov-color-border-loud: ${unsafeCSS(unsafeCSS(gradient[6]))};
-      --mov-color-on-quiet: ${unsafeCSS(unsafeCSS(gradient[4]))};
-      --mov-color-on-normal: var(--theme-secondary-text-color, ${unsafeCSS(unsafeCSS(gradient[3]))});
+      --mov-color-border-quiet: ${unsafeCSS(gradient[8])};;
+      --mov-color-border-normal: ${unsafeCSS(gradient[7])};;
+      --mov-color-border-loud: ${unsafeCSS(gradient[6])};;
+      --mov-color-on-quiet: ${unsafeCSS(gradient[4])};;
+      --mov-color-on-normal: var(--theme-secondary-text-color, ${unsafeCSS(gradient[3])};);
       --mov-color-on-loud: var(--theme-primary-text-color, white);
 
       --mov-color-mix-hover: black 8%;
@@ -71,23 +71,23 @@ const themesCSS = (selector: string = '#MangaOnlineViewer', hex = getSettingsVal
     }
 
     .light,
-    ${unsafeCSS(unsafeCSS(selector))}.light {
+    ${unsafeCSS(selector)};.light {
       color-scheme: light;
-      --theme-body-background: ${unsafeCSS(unsafeCSS(colors.gray['50']))};
-      --theme-body-text-color: ${unsafeCSS(unsafeCSS(colors.gray['900']))};
-      --theme-text-color: ${unsafeCSS(unsafeCSS(colors.gray['900']))};
-      --theme-background-color: ${unsafeCSS(unsafeCSS(colors.gray['50']))};
-      --theme-hightlight-color: ${unsafeCSS(unsafeCSS(colors.gray['500']))};
-      --theme-border-color: ${unsafeCSS(unsafeCSS(colors.gray['100']))};
+      --theme-body-background: ${unsafeCSS(colors.gray['50'])};;
+      --theme-body-text-color: ${unsafeCSS(colors.gray['900'])};;
+      --theme-text-color: ${unsafeCSS(colors.gray['900'])};;
+      --theme-background-color: ${unsafeCSS(colors.gray['50'])};;
+      --theme-hightlight-color: ${unsafeCSS(colors.gray['500'])};;
+      --theme-border-color: ${unsafeCSS(colors.gray['100'])};;
 
-      --mov-color-fill-quiet: ${unsafeCSS(unsafeCSS(gradient[0]))};
-      --mov-color-fill-normal: var(--theme-secondary-color, ${unsafeCSS(unsafeCSS(gradient[1]))});
+      --mov-color-fill-quiet: ${unsafeCSS(gradient[0])};;
+      --mov-color-fill-normal: var(--theme-secondary-color, ${unsafeCSS(gradient[1])};);
       --mov-color-fill-loud: var(--theme-primary-color);
-      --mov-color-border-quiet: ${unsafeCSS(unsafeCSS(gradient[1]))};
-      --mov-color-border-normal: ${unsafeCSS(unsafeCSS(gradient[2]))};
-      --mov-color-border-loud: ${unsafeCSS(unsafeCSS(gradient[4]))};
-      --mov-color-on-quiet: ${unsafeCSS(unsafeCSS(gradient[6]))};
-      --mov-color-on-normal: var(--theme-secondary-text-color, ${unsafeCSS(unsafeCSS(gradient[3]))});
+      --mov-color-border-quiet: ${unsafeCSS(gradient[1])};;
+      --mov-color-border-normal: ${unsafeCSS(gradient[2])};;
+      --mov-color-border-loud: ${unsafeCSS(gradient[4])};;
+      --mov-color-on-quiet: ${unsafeCSS(gradient[6])};;
+      --mov-color-on-normal: var(--theme-secondary-text-color, ${unsafeCSS(gradient[3])};);
       --mov-color-on-loud: var(--theme-primary-text-color, white);
 
       --mov-color-mix-hover: black 10%;
