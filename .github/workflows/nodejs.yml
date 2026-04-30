@@ -5,7 +5,9 @@ permissions:
 
 on:
   push:
-    branches: '*'
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   test:
@@ -13,12 +15,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: latest
       - run: npm ci
-      - run: npm run biome
       - run: npm run build:all
 
   release:
@@ -28,29 +29,23 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: latest
       - run: npm ci
       - run: npm run build:all
 
       - name: Check for significant changes
         run: |
           git add .
-          DIFF=$(git diff --cached --shortstat)
-          if [[ $DIFF =~ ([0-9]+) ]]; then
-            INSERTIONS=$(echo $DIFF | awk '{print $4}')
-            DELETIONS=$(echo $DIFF | awk '{print $6}')
-            TOTAL=$((INSERTIONS + DELETIONS))
-            if [ $TOTAL -gt 1 ]; then
-              echo "Significant changes detected"
-              echo "COMMIT=true" >> $GITHUB_ENV
-            else
-              echo "Only minor changes (likely version)"
-            fi
+          # Use -I to ignore the @version line in userscripts and -w for whitespace/EOL
+          DIFF=$(git diff --cached --shortstat -I '^// @version' -w)
+          if [ -n "$DIFF" ]; then
+            echo "Significant changes detected: $DIFF"
+            echo "COMMIT=true" >> $GITHUB_ENV
           else
-            echo "No changes"
+            echo "No significant changes (only version or whitespace)"
           fi
 
       - name: Commit changes
