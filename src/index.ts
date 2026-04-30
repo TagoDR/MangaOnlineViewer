@@ -55,7 +55,6 @@ import { isStandalone } from './utils/tampermonkey.ts';
     console.error('Initialization error:', err);
     document.body.innerHTML = `<div style="color: red; padding: 20px;">
       <h1>MangaOnlineViewer Initialization Error</h1>
-      <pre>${err instanceof Error ? err.stack : JSON.stringify(err)}</pre>
     </div>`;
   }
 })();

@@ -45,9 +45,7 @@
     }
   },
   "html": {
-    "formatter": {
-      "selfCloseVoidElements": "always"
-    }
+    "experimentalFullSupportEnabled": true
   },
   "overrides": [
     {
