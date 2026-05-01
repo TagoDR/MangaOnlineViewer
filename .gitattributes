@@ -4,6 +4,7 @@
 # Ensure specific types use CRLF
 *.ts text eol=crlf
 *.json text eol=crlf
+dist/*.html text eol=crlf
 *.html text eol=crlf
 *.css text eol=crlf
 *.svg text eol=crlf

@@ -36,6 +36,8 @@ export default defineConfig(({ mode }) => {
         {
           name: 'rename-index',
           closeBundle() {
+            const content = fs.readFileSync('./dist/index.html', 'utf-8');
+            fs.writeFileSync('./dist/index.html', content.replace(/(\r\n|\r?\n|\r\n?)/g, '\r\n'));
             fs.renameSync('./dist/index.html', './dist/Manga_Local_Viewer.html');
           },
         },
