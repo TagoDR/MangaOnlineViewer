@@ -6,7 +6,6 @@ import {
   isBruteforceManga,
   isImagesManga,
   isPagesManga,
-  type PageStatus,
 } from '../types';
 import { removeURLBookmark } from '../ui/events/bookmarks.ts';
 import { applyZoom } from '../ui/events/zoom.ts';
@@ -49,20 +48,25 @@ async function addImg(manga: IMangaImages | IMangaPages, index: number, imageSrc
   pool.add(async () => {
     let src = normalizeUrl(imageSrc);
     let blob: Blob | undefined;
-    let status: PageStatus = 'loaded';
     try {
       const response = await fetch(src, (manga as IMangaImages).fetchOptions);
       if (response.ok) {
-        blob = await response.blob();
-        src = await blobToDataURL(blob);
+        const contentType = response.headers.get('content-type');
+        if (contentType?.startsWith('image/')) {
+          blob = await response.blob();
+          src = await blobToDataURL(blob);
+        } else {
+          logScript('Fetched content is not an image', contentType);
+        }
       } else {
-        status = 'error';
+        logScript('Fetch failed with status', response.status);
       }
     } catch (e) {
       logScript('Failed to fetch image', e);
-      status = 'error';
     }
-    changeImage(index, () => ({ src, blob, status }));
+    // Final status update: if src is still the original URL, the <img> tag will try it.
+    // If it's a data URL, it's already pre-fetched.
+    changeImage(index, () => ({ src, blob, status: 'loaded' }));
     logScriptVerbose('Loaded Image:', index, 'Source:', src);
   });
   if (manga.pages === index) removeURLBookmark();
