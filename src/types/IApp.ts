@@ -55,6 +55,8 @@ export type Page = {
   doublePage?: boolean;
   /** The current loading status of the image. */
   status?: PageStatus;
+  /** Number of Reload attempts */
+  reload?: number;
 };
 
 /**

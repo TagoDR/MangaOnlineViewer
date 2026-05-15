@@ -26,21 +26,6 @@ function invalidateImageCache(src: string, repeat: number): string {
 }
 
 /**
- * Extracts the current reload attempt number from a URL's query string.
- * @internal
- * @param {string | undefined} src - The image source URL.
- * @returns {number} The next repeat value, defaulting to 1.
- */
-function getRepeatValue(src: string | undefined): number {
-  let repeat = 1;
-  const cache = src?.match(/forceReload=(\d+)$/);
-  if (cache?.at(1)) {
-    repeat = parseInt(cache[1], 10) + 1;
-  }
-  return repeat;
-}
-
-/**
  * Attempts to reload a broken image with a cache-busting parameter.
  * It will only attempt to reload up to 5 times.
  * @internal
@@ -48,16 +33,26 @@ function getRepeatValue(src: string | undefined): number {
  * @param {HTMLImageElement} img - The `<img>` element to reload.
  */
 function reloadImage(index: number, img: HTMLImageElement) {
-  logScript(`Reloading Page ${index}`, img);
-  const src = getAppStateValue('images')?.[index]?.src;
-  if (!src) return;
-  const repeat = getRepeatValue(src);
-  if (repeat > getSettingsValue('maxReload')) return;
+  const images = getAppStateValue('images');
+  const image = images?.[index];
+  if (!image?.src) return;
+
+  const repeat = (image.reload ?? 0) + 1;
+  if (repeat > getSettingsValue('maxReload')) {
+    logScript(`Stopped reloading Page ${index} after ${repeat} attempts`);
+    return;
+  }
+
+  logScript(`Reloading Page ${index} (Attempt ${repeat})`, img);
+
   img?.removeAttribute('src');
-  if (isBase64ImageUrl(src) || isObjectURL(src)) {
-    img?.setAttribute('src', src);
+  if (isBase64ImageUrl(image.src) || isObjectURL(image.src)) {
+    changeImage(index, () => ({ reload: repeat }));
+    img?.setAttribute('src', image.src);
   } else {
-    img?.setAttribute('src', invalidateImageCache(src, repeat));
+    const src = invalidateImageCache(image.src, repeat);
+    changeImage(index, () => ({ reload: repeat, src }));
+    img?.setAttribute('src', src);
   }
 }
 
