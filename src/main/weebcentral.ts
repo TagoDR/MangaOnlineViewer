@@ -7,25 +7,62 @@ const weebcentral: ISite = {
   homepage: 'https://weebcentral.com/',
   language: [Language.ENGLISH],
   category: Category.MANGA,
-  waitEle: 'main section .maw-w-full',
+  waitEle: 'section[hx-get*="/images"]',
   async run(): Promise<IManga> {
-    const src = [...document.querySelectorAll('main section .maw-w-full')].map(
-      elem => elem.getAttribute('src') ?? '',
-    );
-    const chaptersList = await fetch(
-      document.querySelector('main section a + button')?.getAttribute('hx-get') ?? '',
-    ).then(res => res.text());
+    if (document.documentElement.hasAttribute('mov')) {
+      return { pages: 0, listImages: [] };
+    }
+
+    const imagesSection = document.querySelector('section[hx-get*="/images"]');
+    const imagesUrlBase = imagesSection?.getAttribute('hx-get');
+    if (!imagesUrlBase) {
+      throw new Error('Images HTMX endpoint not found');
+    }
+    const imagesUrl = `${imagesUrlBase.replace(/&amp;/g, '&')}&reading_style=long_strip`;
+
+    const imagesHtml = await fetch(imagesUrl, {
+      headers: { 'HX-Request': 'true' },
+    }).then(res => res.text());
+
     const parser = new DOMParser();
+    const imagesDoc = parser.parseFromString(imagesHtml, 'text/html');
+    const src = [...imagesDoc.querySelectorAll('img')]
+      .map(img => img.getAttribute('src') || img.getAttribute('data-src') || '')
+      .filter(s => s && !s.includes('broken_image'))
+      .map(s => (s.startsWith('http') ? s : new URL(s, window.location.origin).href));
+
+    // Deduplicate and sort by filename number
+    const uniqueImages = [...new Set(src)].sort((a, b) => {
+      const ma = a.match(/-(\d+)\.[^.]+$/);
+      const mb = b.match(/-(\d+)\.[^.]+$/);
+      return (ma ? parseInt(ma[1], 10) : 0) - (mb ? parseInt(mb[1], 10) : 0);
+    });
+
+    const chapterSelectUrl = document
+      .querySelector('button[hx-get*="chapter-select"]')
+      ?.getAttribute('hx-get');
+    const chaptersList = await fetch(chapterSelectUrl ?? '', {
+      headers: { 'HX-Request': 'true' },
+    }).then(res => res.text());
+
     const chapters = parser.parseFromString(chaptersList, 'text/html');
+    const selectedChapter = chapters.querySelector('#selected_chapter');
+    const getAbsUrl = (path: string | null | undefined) =>
+      path ? (path.startsWith('http') ? path : new URL(path, window.location.origin).href) : null;
+
     return {
-      title: document.querySelector('title')?.textContent?.replace(/ | .+/, '').trim(),
-      series: document.querySelector('main section a')?.getAttribute('href'),
-      pages: src.length,
-      prev: chapters.querySelector('#selected_chapter')?.nextElementSibling?.getAttribute('href'),
-      next: chapters
-        .querySelector('#selected_chapter')
-        ?.previousElementSibling?.getAttribute('href'),
-      listImages: src,
+      title: document.title.split(' - ')[0].trim(),
+      series: getAbsUrl(document.querySelector('main section a.btn-ghost')?.getAttribute('href')),
+      pages: uniqueImages.length,
+      prev: getAbsUrl(selectedChapter?.nextElementSibling?.getAttribute('href')),
+      next: getAbsUrl(selectedChapter?.previousElementSibling?.getAttribute('href')),
+      listImages: uniqueImages,
+      fetchOptions: {
+        headers: {
+          'HX-Request': 'true',
+          Referer: window.location.href,
+        },
+      },
     };
   },
 };
