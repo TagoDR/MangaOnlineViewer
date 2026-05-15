@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, HDoujin, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.04.30.build-1833
+// @version       2026.05.15.build-2136
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -11601,21 +11601,22 @@
 		pool.add(async () => {
 			let src = normalizeUrl(imageSrc);
 			let blob;
-			let status = "loaded";
 			try {
 				const response = await fetch(src, manga.fetchOptions);
 				if (response.ok) {
-					blob = await response.blob();
-					src = await blobUtil.blobToDataURL(blob);
-				} else status = "error";
+					const contentType = response.headers.get("content-type");
+					if (contentType?.startsWith("image/")) {
+						blob = await response.blob();
+						src = await blobUtil.blobToDataURL(blob);
+					} else logScript("Fetched content is not an image", contentType);
+				} else logScript("Fetch failed with status", response.status);
 			} catch (e) {
 				logScript("Failed to fetch image", e);
-				status = "error";
 			}
 			changeImage(index, () => ({
 				src,
 				blob,
-				status
+				status: "loaded"
 			}));
 			logScriptVerbose("Loaded Image:", index, "Source:", src);
 		});
@@ -11821,18 +11822,6 @@
 		return `${url + (!url.includes("?") ? "?" : "&")}forceReload=${repeat}`;
 	}
 	/**
-	* Extracts the current reload attempt number from a URL's query string.
-	* @internal
-	* @param {string | undefined} src - The image source URL.
-	* @returns {number} The next repeat value, defaulting to 1.
-	*/
-	function getRepeatValue(src) {
-		let repeat = 1;
-		const cache = src?.match(/forceReload=(\d+)$/);
-		if (cache?.at(1)) repeat = parseInt(cache[1], 10) + 1;
-		return repeat;
-	}
-	/**
 	* Attempts to reload a broken image with a cache-busting parameter.
 	* It will only attempt to reload up to 5 times.
 	* @internal
@@ -11840,14 +11829,26 @@
 	* @param {HTMLImageElement} img - The `<img>` element to reload.
 	*/
 	function reloadImage(index, img) {
-		logScript(`Reloading Page ${index}`, img);
-		const src = getAppStateValue("images")?.[index]?.src;
-		if (!src) return;
-		const repeat = getRepeatValue(src);
-		if (repeat > getSettingsValue("maxReload")) return;
+		const image = getAppStateValue("images")?.[index];
+		if (!image?.src) return;
+		const repeat = (image.reload ?? 0) + 1;
+		if (repeat > getSettingsValue("maxReload")) {
+			logScript(`Stopped reloading Page ${index} after ${repeat} attempts`);
+			return;
+		}
+		logScript(`Reloading Page ${index} (Attempt ${repeat})`, img);
 		img?.removeAttribute("src");
-		if (isBase64ImageUrl(src) || isObjectURL(src)) img?.setAttribute("src", src);
-		else img?.setAttribute("src", invalidateImageCache(src, repeat));
+		if (isBase64ImageUrl(image.src) || isObjectURL(image.src)) {
+			changeImage(index, () => ({ reload: repeat }));
+			img?.setAttribute("src", image.src);
+		} else {
+			const src = invalidateImageCache(image.src, repeat);
+			changeImage(index, () => ({
+				reload: repeat,
+				src
+			}));
+			img?.setAttribute("src", src);
+		}
 	}
 	/**
 	* Event handler for the reload button on an individual page.

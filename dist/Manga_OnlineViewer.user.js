@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.04.30.build-1833
+// @version       2026.05.15.build-2136
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -10698,21 +10698,22 @@
 		pool.add(async () => {
 			let src = normalizeUrl(imageSrc);
 			let blob;
-			let status = "loaded";
 			try {
 				const response = await fetch(src, manga.fetchOptions);
 				if (response.ok) {
-					blob = await response.blob();
-					src = await blobUtil.blobToDataURL(blob);
-				} else status = "error";
+					const contentType = response.headers.get("content-type");
+					if (contentType?.startsWith("image/")) {
+						blob = await response.blob();
+						src = await blobUtil.blobToDataURL(blob);
+					} else logScript("Fetched content is not an image", contentType);
+				} else logScript("Fetch failed with status", response.status);
 			} catch (e) {
 				logScript("Failed to fetch image", e);
-				status = "error";
 			}
 			changeImage(index, () => ({
 				src,
 				blob,
-				status
+				status: "loaded"
 			}));
 			logScriptVerbose("Loaded Image:", index, "Source:", src);
 		});
@@ -10941,18 +10942,6 @@
 		return `${url + (!url.includes("?") ? "?" : "&")}forceReload=${repeat}`;
 	}
 	/**
-	* Extracts the current reload attempt number from a URL's query string.
-	* @internal
-	* @param {string | undefined} src - The image source URL.
-	* @returns {number} The next repeat value, defaulting to 1.
-	*/
-	function getRepeatValue(src) {
-		let repeat = 1;
-		const cache = src?.match(/forceReload=(\d+)$/);
-		if (cache?.at(1)) repeat = parseInt(cache[1], 10) + 1;
-		return repeat;
-	}
-	/**
 	* Attempts to reload a broken image with a cache-busting parameter.
 	* It will only attempt to reload up to 5 times.
 	* @internal
@@ -10960,14 +10949,26 @@
 	* @param {HTMLImageElement} img - The `<img>` element to reload.
 	*/
 	function reloadImage(index, img) {
-		logScript(`Reloading Page ${index}`, img);
-		const src = getAppStateValue("images")?.[index]?.src;
-		if (!src) return;
-		const repeat = getRepeatValue(src);
-		if (repeat > getSettingsValue("maxReload")) return;
+		const image = getAppStateValue("images")?.[index];
+		if (!image?.src) return;
+		const repeat = (image.reload ?? 0) + 1;
+		if (repeat > getSettingsValue("maxReload")) {
+			logScript(`Stopped reloading Page ${index} after ${repeat} attempts`);
+			return;
+		}
+		logScript(`Reloading Page ${index} (Attempt ${repeat})`, img);
 		img?.removeAttribute("src");
-		if (isBase64ImageUrl(src) || isObjectURL(src)) img?.setAttribute("src", src);
-		else img?.setAttribute("src", invalidateImageCache(src, repeat));
+		if (isBase64ImageUrl(image.src) || isObjectURL(image.src)) {
+			changeImage(index, () => ({ reload: repeat }));
+			img?.setAttribute("src", image.src);
+		} else {
+			const src = invalidateImageCache(image.src, repeat);
+			changeImage(index, () => ({
+				reload: repeat,
+				src
+			}));
+			img?.setAttribute("src", src);
+		}
 	}
 	/**
 	* Event handler for the reload button on an individual page.
@@ -11958,6 +11959,22 @@
 			};
 		}
 	};
+	var __vitePreload = function preload(baseModule, deps, importerUrl) {
+		let promise = Promise.resolve();
+		function handlePreloadError(err) {
+			const e = new Event("vite:preloadError", { cancelable: true });
+			e.payload = err;
+			window.dispatchEvent(e);
+			if (!e.defaultPrevented) throw err;
+		}
+		return promise.then((res) => {
+			for (const item of res || []) {
+				if (item.status !== "rejected") continue;
+				handlePreloadError(item.reason);
+			}
+			return baseModule().catch(handlePreloadError);
+		});
+	};
 	//#endregion
 	//#region src/main/comix.ts
 	var comix = {
@@ -11966,17 +11983,42 @@
 		url: /https?:\/\/comix\.to\/(title|comic)\/.+\/.+/,
 		language: Language.ENGLISH,
 		category: Category.COMIC,
-		run: () => {
-			const content = [...document.querySelectorAll("script")].find((script) => script.textContent?.includes("self.__next_f.push") && script.textContent?.includes("images"))?.textContent || "";
-			const jsonStr = content.substring(content.indexOf("\"") + 3, content.lastIndexOf("\"") - 2);
-			const src = JSON.parse(jsonStr.replaceAll(`\\`, ""))[3].chapter.images.map((img) => img.url);
+		waitEle: "#initial-data",
+		async run() {
+			const initialData = JSON.parse(document.getElementById("initial-data")?.textContent || "{}");
+			const { mangaHid, chapterId } = initialData.read || {};
+			const idFromUrl = window.location.pathname.match(/\/(?:title|comic)\/[^/]+\/(\d+)/)?.[1];
+			const finalChapterId = chapterId || idFromUrl;
+			if (!finalChapterId) throw new Error("Chapter ID not found");
+			const mainScript = [...document.querySelectorAll("script[src]")].find((s) => s.getAttribute("src")?.includes("/dist/main-"))?.getAttribute("src");
+			if (!mainScript) throw new Error("Main script not found");
+			const mod = await __vitePreload(() => import(mainScript), void 0);
+			const api = mod.I || mod.$;
+			const [chapterData, chaptersData] = await Promise.all([api.get(`/chapters/${finalChapterId}`), api.get(`/manga/${mangaHid}/chapters?limit=100`)]);
+			const pages = chapterData.pages || {};
+			const items = pages.items || chapterData.images || [];
+			const images = (Array.isArray(items) ? items : []).map((img) => {
+				const url = typeof img === "string" ? img : img.url;
+				return url?.startsWith("http") ? url : `${pages.baseUrl || ""}/${url?.trimStart() || ""}`;
+			});
+			const mangaDetailKey = Object.keys(initialData.queries || {}).find((k) => k.includes("\"manga\",\"detail\""));
+			const mangaDetail = mangaDetailKey ? initialData.queries[mangaDetailKey] : null;
+			const chapters = chaptersData.items || chaptersData || [];
+			const currentIdx = chapters.findIndex((c) => String(c.id) === String(finalChapterId)) ?? -1;
+			const prevChapter = currentIdx !== -1 ? chapters[currentIdx + 1] : null;
+			const nextChapter = currentIdx !== -1 ? chapters[currentIdx - 1] : null;
+			const type = window.location.pathname.split("/")[1] || "title";
+			const getChapterUrl = (c) => {
+				if (!c) return null;
+				return `/${type}/${mangaHid}/${c.id}-chapter-${c.number}`;
+			};
 			return {
-				title: document.querySelector("h1.page-title")?.textContent?.trim(),
-				series: document.querySelector(".breadcrumbs a[href*=\"/title/\"], .breadcrumbs a[href*=\"/comic/\"]")?.getAttribute("href"),
-				pages: src.length,
-				prev: document.querySelector("a.prev-chapter")?.getAttribute("href"),
-				next: document.querySelector("a.next-chapter")?.getAttribute("href"),
-				listImages: src
+				title: mangaDetail?.title || document.title.split(" · ")[0],
+				series: mangaDetail?.url || `/${type}/${mangaHid}`,
+				pages: images.length,
+				prev: getChapterUrl(prevChapter),
+				next: getChapterUrl(nextChapter),
+				listImages: images
 			};
 		}
 	};
@@ -12218,7 +12260,7 @@
 			return {
 				title: "Placeholder Manga Loaded",
 				series: "?reload",
-				pages: num,
+				pages: 0,
 				begin: 1,
 				prev: "?pages=50",
 				next: "?pages=1",
@@ -13023,18 +13065,38 @@
 			homepage: "https://weebcentral.com/",
 			language: [Language.ENGLISH],
 			category: Category.MANGA,
-			waitEle: "main section .maw-w-full",
+			waitEle: "section[hx-get*=\"/images\"]",
 			async run() {
-				const src = [...document.querySelectorAll("main section .maw-w-full")].map((elem) => elem.getAttribute("src") ?? "");
-				const chaptersList = await fetch(document.querySelector("main section a + button")?.getAttribute("hx-get") ?? "").then((res) => res.text());
-				const chapters = new DOMParser().parseFromString(chaptersList, "text/html");
+				if (document.documentElement.hasAttribute("mov")) return {
+					pages: 0,
+					listImages: []
+				};
+				const imagesUrlBase = document.querySelector("section[hx-get*=\"/images\"]")?.getAttribute("hx-get");
+				if (!imagesUrlBase) throw new Error("Images HTMX endpoint not found");
+				const imagesUrl = `${imagesUrlBase.replace(/&amp;/g, "&")}&reading_style=long_strip`;
+				const imagesHtml = await fetch(imagesUrl, { headers: { "HX-Request": "true" } }).then((res) => res.text());
+				const parser = new DOMParser();
+				const src = [...parser.parseFromString(imagesHtml, "text/html").querySelectorAll("img")].map((img) => img.getAttribute("src") || img.getAttribute("data-src") || "").filter((s) => s && !s.includes("broken_image")).map((s) => s.startsWith("http") ? s : new URL(s, window.location.origin).href);
+				const uniqueImages = [...new Set(src)].sort((a, b) => {
+					const ma = a.match(/-(\d+)\.[^.]+$/);
+					const mb = b.match(/-(\d+)\.[^.]+$/);
+					return (ma ? parseInt(ma[1], 10) : 0) - (mb ? parseInt(mb[1], 10) : 0);
+				});
+				const chapterSelectUrl = document.querySelector("button[hx-get*=\"chapter-select\"]")?.getAttribute("hx-get");
+				const chaptersList = await fetch(chapterSelectUrl ?? "", { headers: { "HX-Request": "true" } }).then((res) => res.text());
+				const selectedChapter = parser.parseFromString(chaptersList, "text/html").querySelector("#selected_chapter");
+				const getAbsUrl = (path) => path ? path.startsWith("http") ? path : new URL(path, window.location.origin).href : null;
 				return {
-					title: document.querySelector("title")?.textContent?.replace(/ | .+/, "").trim(),
-					series: document.querySelector("main section a")?.getAttribute("href"),
-					pages: src.length,
-					prev: chapters.querySelector("#selected_chapter")?.nextElementSibling?.getAttribute("href"),
-					next: chapters.querySelector("#selected_chapter")?.previousElementSibling?.getAttribute("href"),
-					listImages: src
+					title: document.title.split(" - ")[0].trim(),
+					series: getAbsUrl(document.querySelector("main section a.btn-ghost")?.getAttribute("href")),
+					pages: uniqueImages.length,
+					prev: getAbsUrl(selectedChapter?.nextElementSibling?.getAttribute("href")),
+					next: getAbsUrl(selectedChapter?.previousElementSibling?.getAttribute("href")),
+					listImages: uniqueImages,
+					fetchOptions: { headers: {
+						"HX-Request": "true",
+						Referer: window.location.href
+					} }
 				};
 			}
 		},
