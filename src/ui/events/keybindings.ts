@@ -211,6 +211,7 @@ function keybindings() {
     hotkeys(
       getSettingsValue('keybinds')[key]?.join(',') ?? '',
       _.throttle(event => {
+        if (getAppStateValue('panel') === 'keybindingsEditor') return;
         event.preventDefault();
         event.stopImmediatePropagation();
         event.stopPropagation();
