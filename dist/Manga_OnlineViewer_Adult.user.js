@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, HDoujin, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.05.15.build-2136
+// @version       2026.05.30.build-1348
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -1714,17 +1714,12 @@
 		_$litType$: t,
 		strings: i,
 		values: s
-	}), b$1 = x(1);
-	x(2);
-	x(3);
-	//#endregion
-	//#region node_modules/lit-html/lit-html.js
+	}), b$1 = x(1), E = Symbol.for("lit-noChange"), A = Symbol.for("lit-nothing"), C = /* @__PURE__ */ new WeakMap(), P = l$2.createTreeWalker(l$2, 129);
 	/**
 	* @license
 	* Copyright 2017 Google LLC
 	* SPDX-License-Identifier: BSD-3-Clause
 	*/
-	var E = Symbol.for("lit-noChange"), A = Symbol.for("lit-nothing"), C = /* @__PURE__ */ new WeakMap(), P = l$2.createTreeWalker(l$2, 129);
 	function V(t, i) {
 		if (!u$2(t) || !t.hasOwnProperty("raw")) throw Error("invalid template strings array");
 		return void 0 !== e$9 ? e$9.createHTML(i) : i;
@@ -1970,7 +1965,7 @@
 		B: I,
 		F: Z
 	}, B = t$5.litHtmlPolyfillSupport;
-	B?.(S$1, k), (t$5.litHtmlVersions ??= []).push("3.3.2");
+	B?.(S$1, k), (t$5.litHtmlVersions ??= []).push("3.3.3");
 	var D = (t, i, s) => {
 		const e = s?.renderBefore ?? i;
 		let h = e._$litPart$;
@@ -1980,6 +1975,11 @@
 		}
 		return h._$AI(t), h;
 	}, { I: t$4 } = j$1, r$6 = (o) => void 0 === o.strings;
+	/**
+	* @license
+	* Copyright 2020 Google LLC
+	* SPDX-License-Identifier: BSD-3-Clause
+	*/
 	//#endregion
 	//#region node_modules/lit-html/directive.js
 	/**
@@ -2084,10 +2084,10 @@
 		}
 		update(i, [s]) {
 			const e = s !== this.G;
-			return e && void 0 !== this.G && this.rt(void 0), (e || this.lt !== this.ct) && (this.G = s, this.ht = i.options?.host, this.rt(this.ct = i.element)), A;
+			return e && this.rt(void 0), (e || this.lt !== this.ct) && (this.G = s, this.ht = i.options?.host, this.rt(this.ct = i.element)), A;
 		}
 		rt(t) {
-			if (this.isConnected || (t = void 0), "function" == typeof this.G) {
+			if (void 0 !== this.G) if (this.isConnected || (t = void 0), "function" == typeof this.G) {
 				const i = this.ht ?? globalThis;
 				let s = o$10.get(i);
 				void 0 === s && (s = /* @__PURE__ */ new WeakMap(), o$10.set(i, s)), void 0 !== s.get(this.G) && this.G.call(this.ht, void 0), s.set(this.G, t), void 0 !== t && this.G.call(this.ht, t);
@@ -3973,7 +3973,7 @@
 		return applyColorsToSvg(rawSvg, `icon-tabler-${_.kebabCase(iconKey.replace(/^Icon/, ""))}`);
 	});
 	//#endregion
-	//#region \0@oxc-project+runtime@0.127.0/helpers/decorate.js
+	//#region \0@oxc-project+runtime@0.132.0/helpers/decorate.js
 	function __decorate(decorators, target, key, desc) {
 		var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 		if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4430,7 +4430,8 @@
 			VIEW_MODE_GALLERY: ["G"],
 			SCROLL_START: ["space"],
 			INCREASE_SPEED: ["."],
-			DECREASE_SPEED: [","]
+			DECREASE_SPEED: [","],
+			TOGGLE_CONTROLS: ["L"]
 		}
 	};
 	/**
@@ -5294,7 +5295,7 @@
 	* @license
 	* Copyright 2018 Google LLC
 	* SPDX-License-Identifier: BSD-3-Clause
-	*/ var n = "important", i = " !" + n, o$2 = e$7(class extends i$4 {
+	*/ var n = "important", i = " !important", o$2 = e$7(class extends i$4 {
 		constructor(t) {
 			if (super(t), t.type !== t$3.ATTRIBUTE || "style" !== t.name || t.strings?.length > 2) throw Error("The `styleMap` directive must be used in the `style` attribute and must be the only part in the attribute.");
 		}
@@ -8569,9 +8570,15 @@
 	function updateViewMode(mode) {
 		return () => {
 			setSettingsValue("viewMode", mode);
-			if (mode.startsWith("Fluid")) {
+			if ([
+				"FluidLTR",
+				"FluidRTL",
+				"Book",
+				"Manga"
+			].includes(mode)) {
 				setSettingsValue("zoomMode", "height");
 				setSettingsValue("header", "click");
+				applyZoom("height");
 			} else {
 				refreshSettings("zoomMode");
 				refreshSettings("zoomValue");
@@ -8729,6 +8736,9 @@
 		},
 		DECREASE_SPEED() {
 			changeAutoScrollSpeed(-1);
+		},
+		TOGGLE_CONTROLS() {
+			changeSettingsValue("hidePageControls", (b) => !b);
 		}
 	};
 	/**
@@ -8746,6 +8756,7 @@
 		hotkeys.unbind();
 		_.keys(getSettingsValue("keybinds")).forEach((key) => {
 			hotkeys(getSettingsValue("keybinds")[key]?.join(",") ?? "", _.throttle((event) => {
+				if (getAppStateValue("panel") === "keybindingsEditor") return;
 				event.preventDefault();
 				event.stopImmediatePropagation();
 				event.stopPropagation();
@@ -10078,7 +10089,7 @@
 	}
 	//#endregion
 	//#region src/ui/styles/header.css?inline
-	var header_default = "#Header {\r\n  display: flex;\r\n  justify-content: space-around;\r\n  align-items: center;\r\n  flex-flow: row nowrap;\r\n  gap: 10px;\r\n  padding: 0 20px;\r\n  transition: transform 0.3s ease-in;\r\n  position: sticky;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  background-color: var(--theme-background-color);\r\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\r\n  z-index: 900;\r\n}\r\n\r\n#Header.click {\r\n  padding-left: 60px;\r\n}\r\n\r\n@keyframes headroom {\r\n  from {\r\n    transform: translateY(-100%);\r\n  }\r\n  to {\r\n    transform: translateY(0%);\r\n  }\r\n}\r\n\r\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\r\n  animation: headroom 0.3s ease-in reverse;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.scroll.headroom-hide:not(.visible) {\r\n  animation: none;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.scroll.headroom-show,\r\n#Header.headroom-end,\r\n#Header.visible {\r\n  animation: headroom 0.3s ease-in;\r\n  transform: translateY(0%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.headroom-top {\r\n  animation: none;\r\n}\r\n\r\n#Header.fixed {\r\n  position: sticky;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#Header.simple {\r\n  position: static;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#menu {\r\n  position: fixed;\r\n  z-index: 1;\r\n  color: var(--theme-body-text-color);\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n#menu:not(.click),\r\n#menu.hide {\r\n  display: none;\r\n}\r\n\r\n#menu.click {\r\n  z-index: 901;\r\n  top: 0;\r\n  left: 0;\r\n}\r\n\r\n#Toolbar {\r\n  order: 1;\r\n}\r\n\r\n#GlobalFunctions {\r\n  order: 4;\r\n}\r\n\r\n#ViewerTitle {\r\n  order: 2;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n#ZoomControl {\r\n  order: 3;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  gap: 3px;\r\n  padding: 10px 5px;\r\n  min-width: 100px;\r\n}\r\n\r\n#MangaTitle {\r\n  padding: 2px;\r\n  margin: 0;\r\n  font-size: 19px;\r\n  font-weight: 400;\r\n  word-wrap: anywhere;\r\n  white-space: nowrap;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  min-width: 200px;\r\n  max-width: 40vw;\r\n}\r\n";
+	var header_default = "#Header {\r\n  display: flex;\r\n  justify-content: space-around;\r\n  align-items: center;\r\n  flex-flow: row nowrap;\r\n  gap: 10px;\r\n  padding: 0 20px;\r\n  transition: transform 0.3s ease-in;\r\n  position: sticky;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  background-color: var(--theme-background-color);\r\n  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);\r\n  z-index: 900;\r\n}\r\n\r\n#Header.click {\r\n  padding-left: 60px;\r\n}\r\n\r\n@keyframes headroom {\r\n  from {\r\n    transform: translateY(-100%);\r\n  }\r\n  to {\r\n    transform: translateY(0%);\r\n  }\r\n}\r\n\r\n#Header:not(.visible, .headroom-top, .fixed, .simple) {\r\n  animation: headroom 0.3s ease-in reverse;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.scroll.headroom-hide:not(.visible) {\r\n  animation: none;\r\n  transform: translateY(-100%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.scroll.headroom-show,\r\n#Header.headroom-end,\r\n#Header.visible {\r\n  animation: headroom 0.3s ease-in;\r\n  transform: translateY(0%);\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n#Header.headroom-top {\r\n  animation: none;\r\n}\r\n\r\n#Header.fixed {\r\n  position: sticky;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#Header.simple {\r\n  position: static;\r\n  animation: none;\r\n  top: 0;\r\n  transform: translateY(0%);\r\n}\r\n\r\n#menu {\r\n  position: fixed;\r\n  z-index: 1;\r\n  color: var(--theme-body-text-color);\r\n  height: 40px;\r\n  width: 40px;\r\n}\r\n\r\n#menu:not(.click),\r\n#menu.hide {\r\n  display: none;\r\n}\r\n\r\n#menu.click {\r\n  z-index: 901;\r\n  top: 25px;\r\n  left: 5px;\r\n  opacity: 0.8;\r\n}\r\n\r\n#Toolbar {\r\n  order: 1;\r\n}\r\n\r\n#GlobalFunctions {\r\n  order: 4;\r\n}\r\n\r\n#ViewerTitle {\r\n  order: 2;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n#ZoomControl {\r\n  order: 3;\r\n  display: flex;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  gap: 3px;\r\n  padding: 10px 5px;\r\n  min-width: 100px;\r\n}\r\n\r\n#MangaTitle {\r\n  padding: 2px;\r\n  margin: 0;\r\n  font-size: 19px;\r\n  font-weight: 400;\r\n  word-wrap: anywhere;\r\n  white-space: nowrap;\r\n  overflow: hidden;\r\n  text-overflow: ellipsis;\r\n  min-width: 200px;\r\n  max-width: 40vw;\r\n}\r\n";
 	//#endregion
 	//#region src/ui/styles/media.css?inline
 	var media_default = "#Header.mobile,\r\n#Header.tablet {\r\n  display: flex;\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  gap: 0;\r\n  justify-content: center;\r\n}\r\n\r\n.mobile #ViewerTitle,\r\n.tablet #ViewerTitle {\r\n  order: 4;\r\n  min-height: auto;\r\n}\r\n\r\n.mobile #GlobalFunctions,\r\n.tablet #GlobalFunctions {\r\n  order: 2;\r\n}\r\n\r\n.mobile #Toolbar,\r\n.tablet #Toolbar {\r\n  order: 1;\r\n}\r\n\r\n#Header.mobile {\r\n  flex-direction: row;\r\n  flex-wrap: wrap;\r\n  justify-content: center;\r\n  align-items: center;\r\n}\r\n\r\n#Header.mobile.click + #Chapter:not(.webcomic, .vertical) {\r\n  position: sticky;\r\n}\r\n\r\n.tablet #MangaTitle,\r\n.mobile #MangaTitle {\r\n  max-width: 90vw;\r\n}\r\n\r\n.mobile #ViewerTitle {\r\n  order: 3;\r\n  margin-top: 0;\r\n  height: auto;\r\n  padding: 0;\r\n}\r\n\r\n.mobile #GlobalFunctions,\r\n.tablet #GlobalFunctions {\r\n  order: 2;\r\n}\r\n\r\n.mobile .PageFunctions {\r\n  padding: 0;\r\n}\r\n\r\n.mobile .PageFunctions .PageButton.Bookmark {\r\n  opacity: 1;\r\n}\r\n\r\n.mobile #GlobalFunctions #ZoomSlider,\r\n.tablet #GlobalFunctions #ZoomSlider,\r\n.mobile .PageFunctions .PageButton:not(.Bookmark),\r\n.tablet #Counters,\r\n.mobile #ZoomControl,\r\n.mobile #ZoomDropdown,\r\n.mobile #ViewDropdown,\r\n.mobile #FileDropdown :where(:nth-child(3), :nth-child(4)),\r\n.mobile #BookMode,\r\n.mobile #MangaMode,\r\n.tablet #BookMode,\r\n.tablet #MangaMode {\r\n  display: none;\r\n}\r\n";
@@ -10202,7 +10213,7 @@
                 slot="icon"
                 name="IconListNumbers"
               ></mov-icon>
-              ${getLocaleString("TOGGLE_CONTROLS")}
+              ${getLocaleString("TOGGLE_CONTROLS")} ${renderKeybind("TOGGLE_CONTROLS")}
             </mov-dropdown-item>
           </mov-dropdown>
 
@@ -12493,7 +12504,7 @@
 		elements?.forEach(removeAllEventListeners);
 	};
 	//#endregion
-	//#region \0@oxc-project+runtime@0.127.0/helpers/taggedTemplateLiteral.js
+	//#region \0@oxc-project+runtime@0.132.0/helpers/taggedTemplateLiteral.js
 	function _taggedTemplateLiteral(e, t) {
 		return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } }));
 	}
