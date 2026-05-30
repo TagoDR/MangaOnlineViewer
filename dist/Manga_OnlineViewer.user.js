@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.05.30.build-1348
+// @version       2026.05.30.build-1416
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -60,7 +60,7 @@
 // @include       /https?:\/\/qimanhwa\.com\/series\/[^/]+\/chapter-.+/
 // @include       /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/
 // @include       /https?:\/\/(www\.)?reaperscans\.com\/series\/.+\/chapter.+/
-// @include       /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/
+// @include       /https?:\/\/(www\.)?(.+)\.(com|org|app)\/(viewer|news|view_uploads|reader|library)\/.+/
 // @include       /https?:\/\/(www\.)?webnovel.com\/comic\/.+/
 // @include       /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/
 // @include       /https?:\/\/(www\.)?(weebcentral).com\/chapters\/.+/
@@ -12938,32 +12938,35 @@
 	};
 	//#endregion
 	//#region src/main/tmofans.ts
+	function runTMO() {
+		const images = [...document.querySelectorAll(".img-container img, .viewer-container img, .content-image, .viewer-image, .img-fluid, .reader-img-wrap img, .viewer-img, #viewer-container img, .viewer-page")];
+		const pages = [...document.querySelectorAll("div.container:nth-child(4) select#viewer-pages-select option, #viewer-pages-select option, select#chapter-pages option, select#pages option")];
+		const num = images.length > 1 ? images.length : pages.length;
+		return {
+			title: document.querySelector("title")?.textContent?.trim(),
+			series: (document.querySelector("a[title=\"Volver\"]") ?? document.querySelector(".breadcrumb-item:nth-child(2) a") ?? document.querySelector(".book-name a") ?? document.querySelector(".breadcrumb-item a"))?.getAttribute("href"),
+			pages: num || 1,
+			prev: (document.querySelector(".chapter-prev a") ?? document.querySelector(".prev_page") ?? document.querySelector("a.prev-chapter") ?? document.querySelector(".chapter-prev-btn"))?.getAttribute("href"),
+			next: (document.querySelector(".chapter-next a") ?? document.querySelector(".next_page") ?? document.querySelector("a.next-chapter") ?? document.querySelector(".chapter-next-btn"))?.getAttribute("href"),
+			...images.length <= 1 && pages.length > 1 ? { listPages: Array(pages.length).fill(0).map((_, i) => `${window.location.href.replace(/\/\d+$/, "")}/${i + 1}`) } : { listImages: images.map((item) => item.getAttribute("data-src") ?? item.getAttribute("data-original") ?? item.getAttribute("src") ?? "") },
+			img: "#viewer-container img, .viewer-page, .img-container img, .content-image, .viewer-image, .reader-img-wrap img, .viewer-img",
+			before() {
+				if (window.location.pathname.includes("paginated")) window.location.pathname = window.location.pathname.replace(/paginated.*/, "cascade");
+				if (window.location.pathname.includes("view_uploads")) {
+					const btn = document.querySelector("a.btn.btn-primary, .btn-primary a, a.btn-block");
+					if (btn) btn.click();
+				}
+			}
+		};
+	}
 	var tmofans = {
 		name: "TuMangaOnline",
-		url: /https?:\/\/(www\.)?(.+).com\/(viewer|news)\/.+\/(paginated|cascade)/,
-		homepage: "https://lectortmo.com/",
+		url: /https?:\/\/(www\.)?(.+)\.(com|org|app)\/(viewer|news|view_uploads|reader|library)\/.+/,
+		homepage: "https://zonatmo.org/",
 		language: [Language.SPANISH],
 		category: Category.MANGA,
 		run() {
-			const images = [...document.querySelectorAll(".img-container img, .viewer-container img")];
-			const pages = [...document.querySelectorAll("div.container:nth-child(4) select#viewer-pages-select option")];
-			const num = images.length > 1 ? images.length : pages.length;
-			const manga = {
-				title: document.querySelector("title")?.textContent?.trim(),
-				series: document.querySelector("a[title=\"Volver\"]")?.getAttribute("href"),
-				pages: num,
-				prev: document.querySelector(".chapter-prev a")?.getAttribute("href"),
-				next: document.querySelector(".chapter-next a")?.getAttribute("href")
-			};
-			if (images.length > 1) return {
-				...manga,
-				listImages: images.map((item) => item.getAttribute("data-src") ?? "")
-			};
-			return {
-				...manga,
-				listPages: Array(pages.length).fill(0).map((_, i) => `${window.location.href.replace(/\/\d+$/, "")}/${i + 1}`),
-				img: "#viewer-container img, .viewer-page"
-			};
+			return runTMO();
 		}
 	};
 	//#endregion

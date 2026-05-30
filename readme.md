@@ -82,7 +82,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
 - [OlympusBiblioteca](https://olympusbiblioteca.com/) _[Spanish]_
-- [TuMangaOnline](https://lectortmo.com/) _[Spanish]_
+- [TuMangaOnline](https://zonatmo.org/) _[Spanish]_
 
 ## Supported Comic Sites
 
@@ -130,7 +130,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [Dragon Translation](https://dragontranslation.net/es) _[Spanish]_
 - [GNTAI.net](https://www.gntai.net/) _[Spanish]_
 - [PornComicsHD](https://porncomicshd.com/es) _[Spanish]_
-- [TMOHentai](https://tmohentai.com/) _[Spanish]_
+- [TMOHentai](https://tmohentai.app/) _[Spanish]_
 - [vermangasporno](https://vermangasporno.com/) / [vercomicsporno](https://vercomicsporno.com/) _[Spanish]_
 
 ## HotKeys
