@@ -12,9 +12,10 @@ import { applyZoom } from './zoom.ts';
 export function updateViewMode(mode: ViewMode) {
   return () => {
     setSettingsValue('viewMode', mode);
-    if (mode.startsWith('Fluid')) {
+    if (['FluidLTR', 'FluidRTL', 'Book', 'Manga'].includes(mode)) {
       setSettingsValue('zoomMode', 'height');
       setSettingsValue('header', 'click');
+      applyZoom('height');
     } else {
       // Revert to the user's saved preferences when leaving fluid mode
       refreshSettings('zoomMode');
