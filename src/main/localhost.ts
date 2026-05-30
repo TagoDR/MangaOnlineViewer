@@ -14,7 +14,7 @@ const localhost: ISite = {
     return {
       title: 'Placeholder Manga Loaded',
       series: '?reload',
-      pages: import.meta.env.hot || import.meta.env.MODE === 'standalone' ? num : 0,
+      pages: document.title === 'MangaOnlineViewer Script' ? num : 0,
       begin: 1,
       prev: '?pages=50',
       next: '?pages=1',
