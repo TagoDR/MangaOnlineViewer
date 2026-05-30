@@ -166,7 +166,7 @@ export class Header extends LitElement {
                 slot="icon"
                 name="IconListNumbers"
               ></mov-icon>
-              ${getLocaleString('TOGGLE_CONTROLS')}
+              ${getLocaleString('TOGGLE_CONTROLS')} ${renderKeybind('TOGGLE_CONTROLS')}
             </mov-dropdown-item>
           </mov-dropdown>
 

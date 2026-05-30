@@ -3,6 +3,7 @@ import hotkeys from 'hotkeys-js';
 import _ from 'lodash';
 import {
   changeAppStateValue,
+  changeSettingsValue,
   getAppStateValue,
   getSettingsValue,
   setAppStateValue,
@@ -191,6 +192,9 @@ const actions: Record<string, () => void> = {
   },
   DECREASE_SPEED() {
     changeAutoScrollSpeed(-1);
+  },
+  TOGGLE_CONTROLS() {
+    changeSettingsValue('hidePageControls', b => !b);
   },
 };
 

@@ -78,6 +78,7 @@ export const defaultSettings: ISettings = {
     SCROLL_START: ['space'],
     INCREASE_SPEED: ['.'],
     DECREASE_SPEED: [','],
+    TOGGLE_CONTROLS: ['L'],
   },
 };
 
