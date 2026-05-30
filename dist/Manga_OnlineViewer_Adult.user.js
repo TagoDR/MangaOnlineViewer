@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, HDoujin, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.05.30.build-1416
+// @version       2026.05.30.build-1451
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -1023,186 +1023,6 @@
 		category: Category.HENTAI
 	};
 	//#endregion
-	//#region src/adult/multporn.ts
-	var multporn = {
-		name: "MultPorn",
-		url: /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/,
-		homepage: "https://multporn.net/",
-		language: [Language.ENGLISH],
-		category: Category.HENTAI,
-		async run() {
-			const url = /"configUrl":"(.+?)",/.exec(document.head.textContent)?.at(1)?.replaceAll("\\", "") ?? "";
-			const images = [...(await fetch(url).then(async (res) => res.text()).then((html) => new DOMParser().parseFromString(html, "text/xml"))).querySelectorAll("image")];
-			return {
-				title: document.querySelector("#page-title")?.textContent?.trim(),
-				pages: images.length,
-				prev: "#",
-				next: "#",
-				listImages: images.map((img) => img.getAttribute("imageURL") ?? "")
-			};
-		}
-	};
-	//#endregion
-	//#region src/adult/myhentaigallery.ts
-	var myhentaigallery = {
-		name: "MyHentaiGallery",
-		url: /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/,
-		homepage: "https://www.myhentaigallery.com",
-		language: [Language.ENGLISH],
-		category: Category.HENTAI,
-		run() {
-			const lastPage = document.getElementById("js__pagination__next")?.parentElement?.previousElementSibling?.querySelector("a");
-			const num = parseInt(lastPage?.textContent ?? "", 10);
-			return {
-				title: document.querySelector("title")?.textContent?.trim(),
-				series: document.querySelector(".back-to-gallery a")?.getAttribute("href"),
-				pages: num,
-				prev: "#",
-				next: "#",
-				listPages: Array(num).fill(0).map((_, i) => window.location.href.replace(/\/\d+$/, `/${i + 1}`)),
-				img: ".gallery-slide img"
-			};
-		}
-	};
-	//#endregion
-	//#region src/adult/nhentainet.ts
-	var nhentainet = {
-		name: ["nHentai.net"],
-		url: /https?:\/\/(www\.)?(nhentai).(net|xxx|com|to)\/g\/.+/,
-		homepage: ["https://nhentai.net/"],
-		language: [Language.ENGLISH],
-		category: Category.HENTAI,
-		waitEle: "#image-container img",
-		async run() {
-			const cdn = await fetch("https://nhentai.net/api/v2/config").then(async (res) => res.json());
-			const api = await fetch(`https://nhentai.net/api/v2/galleries/${window.location.pathname.split("/")[2]}`).then(async (res) => res.json());
-			return {
-				title: document.querySelector("title")?.textContent?.split("- Page")[0].trim(),
-				series: document.querySelector(".go-back")?.getAttribute("href"),
-				pages: api.pages.length,
-				prev: "#",
-				next: "#",
-				listImages: api.pages.map((img) => `${cdn.image_servers[Math.floor(Math.random() * cdn.image_servers.length)]}/${img.path}`)
-			};
-		}
-	};
-	//#endregion
-	//#region src/adult/porncomicshd.ts
-	var porncomicshd = {
-		name: "PornComicsHD",
-		url: /https?:\/\/(www\.)?porncomicshd.com\/es.*/,
-		homepage: "https://porncomicshd.com/es",
-		language: [Language.SPANISH],
-		category: Category.HENTAI,
-		waitEle: "app-comic-reader img",
-		async run() {
-			const img = [...document.querySelectorAll("app-comic-reader img")];
-			return {
-				title: document.querySelector("h1")?.textContent?.trim(),
-				pages: img.length,
-				prev: "#",
-				next: "#",
-				lazy: false,
-				listImages: img.map((i) => i.getAttribute("src") ?? "")
-			};
-		}
-	};
-	//#endregion
-	//#region src/adult/pururin.ts
-	var pururin = {
-		name: "Pururin",
-		url: /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/,
-		homepage: "https://pururin.me/",
-		language: [Language.ENGLISH],
-		category: Category.HENTAI,
-		waitAttr: [".img-viewer img", "src"],
-		run() {
-			const src = document.querySelector(".img-viewer img")?.getAttribute("src") ?? "";
-			const num = [...document.querySelectorAll(".img-select option")];
-			return {
-				title: document.querySelector(".title")?.textContent?.trim(),
-				series: document.querySelector(".breadcrumb-item:nth-child(4) a")?.getAttribute("href"),
-				pages: num.length,
-				prev: "#",
-				next: "#",
-				listImages: num.map((_, i) => src.replace(/\/\d+\./, `/${i + 1}.`))
-			};
-		}
-	};
-	//#endregion
-	//#region src/adult/schalenetwork.ts
-	var schalenetwork = {
-		name: "SchaleNetwork",
-		url: /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/,
-		homepage: "https://schale.network/",
-		language: [Language.ENGLISH],
-		category: Category.HENTAI,
-		waitEle: "nav select option",
-		async run() {
-			const gallery = history.state.memo.gallery;
-			const size = gallery.resolution;
-			const { base, entries } = history.state.memo.data;
-			const src = entries.map((image) => `${base}/${image.path}?w=${size}`);
-			return {
-				title: gallery.title,
-				series: `/g/${gallery.id}/${gallery.key}/`,
-				pages: src.length,
-				prev: "#",
-				next: "#",
-				fetchOptions: {
-					method: "GET",
-					redirect: "follow"
-				},
-				listImages: src
-			};
-		}
-	};
-	//#endregion
-	//#region src/adult/simplyhentai.ts
-	var simplyhentai = {
-		name: "Simply-Hentai",
-		url: /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/,
-		homepage: "https://simply-hentai.com/",
-		language: [Language.ENGLISH],
-		category: Category.HENTAI,
-		waitEle: "#__NEXT_DATA__",
-		async run() {
-			const images = JSON.parse(document.querySelector("#__NEXT_DATA__")?.innerHTML ?? "").props.pageProps.data.pages.map((img) => img.sizes.full);
-			return {
-				title: document.querySelector(".content-headline a")?.textContent?.trim(),
-				series: document.querySelector(".content-headline a")?.getAttribute("href"),
-				pages: images.length,
-				prev: "#",
-				next: "#",
-				listImages: images
-			};
-		}
-	};
-	//#endregion
-	//#region src/main/tmofans.ts
-	function runTMO() {
-		const images = [...document.querySelectorAll(".img-container img, .viewer-container img, .content-image, .viewer-image, .img-fluid, .reader-img-wrap img, .viewer-img, #viewer-container img, .viewer-page")];
-		const pages = [...document.querySelectorAll("div.container:nth-child(4) select#viewer-pages-select option, #viewer-pages-select option, select#chapter-pages option, select#pages option")];
-		const num = images.length > 1 ? images.length : pages.length;
-		return {
-			title: document.querySelector("title")?.textContent?.trim(),
-			series: (document.querySelector("a[title=\"Volver\"]") ?? document.querySelector(".breadcrumb-item:nth-child(2) a") ?? document.querySelector(".book-name a") ?? document.querySelector(".breadcrumb-item a"))?.getAttribute("href"),
-			pages: num || 1,
-			prev: (document.querySelector(".chapter-prev a") ?? document.querySelector(".prev_page") ?? document.querySelector("a.prev-chapter") ?? document.querySelector(".chapter-prev-btn"))?.getAttribute("href"),
-			next: (document.querySelector(".chapter-next a") ?? document.querySelector(".next_page") ?? document.querySelector("a.next-chapter") ?? document.querySelector(".chapter-next-btn"))?.getAttribute("href"),
-			...images.length <= 1 && pages.length > 1 ? { listPages: Array(pages.length).fill(0).map((_, i) => `${window.location.href.replace(/\/\d+$/, "")}/${i + 1}`) } : { listImages: images.map((item) => item.getAttribute("data-src") ?? item.getAttribute("data-original") ?? item.getAttribute("src") ?? "") },
-			img: "#viewer-container img, .viewer-page, .img-container img, .content-image, .viewer-image, .reader-img-wrap img, .viewer-img",
-			before() {
-				if (window.location.pathname.includes("paginated")) window.location.pathname = window.location.pathname.replace(/paginated.*/, "cascade");
-				if (window.location.pathname.includes("view_uploads")) {
-					const btn = document.querySelector("a.btn.btn-primary, .btn-primary a, a.btn-block");
-					if (btn) btn.click();
-				}
-			}
-		};
-	}
-	Language.SPANISH, Category.MANGA;
-	//#endregion
 	//#region src/adult/index.ts
 	var sites = [
 		akumamoe,
@@ -1227,23 +1047,181 @@
 		imhentai,
 		kingcomix,
 		luscious,
-		multporn,
-		myhentaigallery,
-		nhentainet,
-		ninehentai,
-		porncomicshd,
-		pururin,
-		schalenetwork,
-		simplyhentai,
 		{
+			name: "MultPorn",
+			url: /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/,
+			homepage: "https://multporn.net/",
+			language: [Language.ENGLISH],
+			category: Category.HENTAI,
+			async run() {
+				const url = /"configUrl":"(.+?)",/.exec(document.head.textContent)?.at(1)?.replaceAll("\\", "") ?? "";
+				const images = [...(await fetch(url).then(async (res) => res.text()).then((html) => new DOMParser().parseFromString(html, "text/xml"))).querySelectorAll("image")];
+				return {
+					title: document.querySelector("#page-title")?.textContent?.trim(),
+					pages: images.length,
+					prev: "#",
+					next: "#",
+					listImages: images.map((img) => img.getAttribute("imageURL") ?? "")
+				};
+			}
+		},
+		{
+			name: "MyHentaiGallery",
+			url: /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/,
+			homepage: "https://www.myhentaigallery.com",
+			language: [Language.ENGLISH],
+			category: Category.HENTAI,
+			run() {
+				const lastPage = document.getElementById("js__pagination__next")?.parentElement?.previousElementSibling?.querySelector("a");
+				const num = parseInt(lastPage?.textContent ?? "", 10);
+				return {
+					title: document.querySelector("title")?.textContent?.trim(),
+					series: document.querySelector(".back-to-gallery a")?.getAttribute("href"),
+					pages: num,
+					prev: "#",
+					next: "#",
+					listPages: Array(num).fill(0).map((_, i) => window.location.href.replace(/\/\d+$/, `/${i + 1}`)),
+					img: ".gallery-slide img"
+				};
+			}
+		},
+		{
+			name: ["nHentai.net"],
+			url: /https?:\/\/(www\.)?(nhentai).(net|xxx|com|to)\/g\/.+/,
+			homepage: ["https://nhentai.net/"],
+			language: [Language.ENGLISH],
+			category: Category.HENTAI,
+			waitEle: "#image-container img",
+			async run() {
+				const cdn = await fetch("https://nhentai.net/api/v2/config").then(async (res) => res.json());
+				const api = await fetch(`https://nhentai.net/api/v2/galleries/${window.location.pathname.split("/")[2]}`).then(async (res) => res.json());
+				return {
+					title: document.querySelector("title")?.textContent?.split("- Page")[0].trim(),
+					series: document.querySelector(".go-back")?.getAttribute("href"),
+					pages: api.pages.length,
+					prev: "#",
+					next: "#",
+					listImages: api.pages.map((img) => `${cdn.image_servers[Math.floor(Math.random() * cdn.image_servers.length)]}/${img.path}`)
+				};
+			}
+		},
+		ninehentai,
+		{
+			name: "PornComicsHD",
+			url: /https?:\/\/(www\.)?porncomicshd.com\/es.*/,
+			homepage: "https://porncomicshd.com/es",
+			language: [Language.SPANISH],
+			category: Category.HENTAI,
+			waitEle: "app-comic-reader img",
+			async run() {
+				const img = [...document.querySelectorAll("app-comic-reader img")];
+				return {
+					title: document.querySelector("h1")?.textContent?.trim(),
+					pages: img.length,
+					prev: "#",
+					next: "#",
+					lazy: false,
+					listImages: img.map((i) => i.getAttribute("src") ?? "")
+				};
+			}
+		},
+		{
+			name: "Pururin",
+			url: /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/,
+			homepage: "https://pururin.me/",
+			language: [Language.ENGLISH],
+			category: Category.HENTAI,
+			waitAttr: [".img-viewer img", "src"],
+			run() {
+				const src = document.querySelector(".img-viewer img")?.getAttribute("src") ?? "";
+				const num = [...document.querySelectorAll(".img-select option")];
+				return {
+					title: document.querySelector(".title")?.textContent?.trim(),
+					series: document.querySelector(".breadcrumb-item:nth-child(4) a")?.getAttribute("href"),
+					pages: num.length,
+					prev: "#",
+					next: "#",
+					listImages: num.map((_, i) => src.replace(/\/\d+\./, `/${i + 1}.`))
+				};
+			}
+		},
+		{
+			name: "SchaleNetwork",
+			url: /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/,
+			homepage: "https://schale.network/",
+			language: [Language.ENGLISH],
+			category: Category.HENTAI,
+			waitEle: "nav select option",
+			async run() {
+				const gallery = history.state.memo.gallery;
+				const size = gallery.resolution;
+				const { base, entries } = history.state.memo.data;
+				const src = entries.map((image) => `${base}/${image.path}?w=${size}`);
+				return {
+					title: gallery.title,
+					series: `/g/${gallery.id}/${gallery.key}/`,
+					pages: src.length,
+					prev: "#",
+					next: "#",
+					fetchOptions: {
+						method: "GET",
+						redirect: "follow"
+					},
+					listImages: src
+				};
+			}
+		},
+		{
+			name: "Simply-Hentai",
+			url: /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/,
+			homepage: "https://simply-hentai.com/",
+			language: [Language.ENGLISH],
+			category: Category.HENTAI,
+			waitEle: "#__NEXT_DATA__",
+			async run() {
+				const images = JSON.parse(document.querySelector("#__NEXT_DATA__")?.innerHTML ?? "").props.pageProps.data.pages.map((img) => img.sizes.full);
+				return {
+					title: document.querySelector(".content-headline a")?.textContent?.trim(),
+					series: document.querySelector(".content-headline a")?.getAttribute("href"),
+					pages: images.length,
+					prev: "#",
+					next: "#",
+					listImages: images
+				};
+			}
+		},
+		{
+			name: "TuMangaOnline",
+			url: /https?:\/\/(www\.)?zonatmo\.(com|org|app)\/(viewer|news|view_uploads|reader|library)\/.+/,
+			homepage: "https://zonatmo.org/",
+			language: [Language.SPANISH],
+			category: Category.MANGA,
+			run() {
+				const images = [...document.querySelectorAll(".img-container img, .viewer-container img, .content-image, .viewer-image, .img-fluid, .reader-img-wrap img, .viewer-img, #viewer-container img, .viewer-page")];
+				const pages = [...document.querySelectorAll("div.container:nth-child(4) select#viewer-pages-select option, #viewer-pages-select option, select#chapter-pages option, select#pages option")];
+				const num = images.length > 1 ? images.length : pages.length;
+				return {
+					title: document.querySelector("title")?.textContent?.trim(),
+					series: (document.querySelector("a[title=\"Volver\"]") ?? document.querySelector(".breadcrumb-item:nth-child(2) a") ?? document.querySelector(".book-name a") ?? document.querySelector(".breadcrumb-item a"))?.getAttribute("href"),
+					pages: num || 1,
+					prev: (document.querySelector(".chapter-prev a") ?? document.querySelector(".prev_page") ?? document.querySelector("a.prev-chapter") ?? document.querySelector(".chapter-prev-btn"))?.getAttribute("href"),
+					next: (document.querySelector(".chapter-next a") ?? document.querySelector(".next_page") ?? document.querySelector("a.next-chapter") ?? document.querySelector(".chapter-next-btn"))?.getAttribute("href"),
+					...images.length <= 1 && pages.length > 1 ? { listPages: Array(pages.length).fill(0).map((_, i) => `${window.location.href.replace(/\/\d+$/, "")}/${i + 1}`) } : { listImages: images.map((item) => item.getAttribute("data-src") ?? item.getAttribute("data-original") ?? item.getAttribute("src") ?? "") },
+					img: "#viewer-container img, .viewer-page, .img-container img, .content-image, .viewer-image, .reader-img-wrap img, .viewer-img",
+					before() {
+						if (window.location.pathname.includes("paginated")) window.location.pathname = window.location.pathname.replace(/paginated.*/, "cascade");
+						if (window.location.pathname.includes("view_uploads")) {
+							const btn = document.querySelector("a.btn.btn-primary, .btn-primary a, a.btn-block");
+							if (btn) btn.click();
+						}
+					}
+				};
+			},
 			name: "TMOHentai",
 			url: /https?:\/\/(www\.)?tmohentai\.(com|app)\/(reader|library|view_uploads)\/.+/,
 			homepage: "https://tmohentai.app/",
 			language: [Language.SPANISH],
-			category: Category.HENTAI,
-			run() {
-				return runTMO();
-			}
+			category: Category.HENTAI
 		},
 		threehentai,
 		{
