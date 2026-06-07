@@ -56,7 +56,9 @@ async function start(sites: ISite[]): Promise<void> {
   const sitePromises = foundSites.map(async (site): Promise<[ISite, IManga]> => {
     logScript(`Testing site: ${site.name}`);
     await runSiteTests(site);
+    logScriptVerbose(site.name, 'Passed');
     const manga = await site.run();
+    logScriptVerbose('Processed site:', site, manga);
     if (manga.pages > 0) {
       return [site, manga];
     }
@@ -65,6 +67,7 @@ async function start(sites: ISite[]): Promise<void> {
 
   try {
     const result = await Promise.any(sitePromises);
+    logScriptVerbose('Going with', result[0].name);
     preparePage(result);
   } catch (error) {
     if (error instanceof AggregateError) {
