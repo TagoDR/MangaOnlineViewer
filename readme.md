@@ -46,6 +46,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [Batoto](https://rentry.co/batoto) _[English]_
 - [BilibiliComics](https://www.bilibilicomics.net/) _[English]_
 - [Comick](https://comick.io/) _[English]_
+- [Comix.to](https://comix.to/) _[English]_
 - [Dynasty-Scans](https://dynasty-scans.com/) _[English]_
 - [Flame Comics](https://flamecomics.xyz/) _[English]_
 - [Kagane](https://kagane.org/) _[English]_
@@ -86,7 +87,6 @@ Download the standalone HTML file from the link below. Open it in your browser t
 
 ## Supported Comic Sites
 
-- [Comix.to](https://comix.to/) _[English]_
 - [ReadComicsOnline](https://readcomicsonline.ru/) _[English]_
 
 ## Supported Hentai Sites

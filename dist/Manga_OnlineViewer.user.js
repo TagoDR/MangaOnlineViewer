@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, OlympusBiblioteca, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.05.30.build-1451
+// @version       2026.06.07.build-1433
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -11774,12 +11774,16 @@
 		const sitePromises = foundSites.map(async (site) => {
 			logScript(`Testing site: ${site.name}`);
 			await runSiteTests(site);
+			logScriptVerbose(site.name, "Passed");
 			const manga = await site.run();
+			logScriptVerbose("Processed site:", site, manga);
 			if (manga.pages > 0) return [site, manga];
 			throw new Error(`${site.name} found ${manga.pages} pages`);
 		});
 		try {
-			preparePage(await Promise.any(sitePromises));
+			const result = await Promise.any(sitePromises);
+			logScriptVerbose("Going with", result[0].name);
+			preparePage(result);
 		} catch (error) {
 			if (error instanceof AggregateError) {
 				logScript("All sites failed to run:");
@@ -11970,66 +11974,366 @@
 			};
 		}
 	};
-	var __vitePreload = function preload(baseModule, deps, importerUrl) {
-		let promise = Promise.resolve();
-		function handlePreloadError(err) {
-			const e = new Event("vite:preloadError", { cancelable: true });
-			e.payload = err;
-			window.dispatchEvent(e);
-			if (!e.defaultPrevented) throw err;
+	//#endregion
+	//#region src/utils/bruteforce.ts
+	/**
+	* Converts a blob URL to a self-contained data URL.
+	* Very useful for offline stability and portability of blob-based images.
+	*
+	* @param blobUrl - The blob URL to convert.
+	* @returns A promise that resolves to the data URL or the original blob URL on failure.
+	*/
+	async function blobUrlToDataUrl(blobUrl) {
+		try {
+			const blob = await (await fetch(blobUrl)).blob();
+			return new Promise((resolve, reject) => {
+				const reader = new FileReader();
+				reader.onloadend = () => resolve(reader.result);
+				reader.onerror = reject;
+				reader.readAsDataURL(blob);
+			});
+		} catch (e) {
+			console.error(`Failed to convert blob URL ${blobUrl} to data URL:`, e);
+			return blobUrl;
 		}
-		return promise.then((res) => {
-			for (const item of res || []) {
-				if (item.status !== "rejected") continue;
-				handlePreloadError(item.reason);
+	}
+	/**
+	* A brute-force method that scrolls page-by-page sequentially, waiting for each image to load
+	* and descramble before collecting its source. Shows a progress overlay during the process.
+	*
+	* @param expectedPagesCount - The total number of pages to collect.
+	* @param isReaderImage - A predicate to identify if an image element is a reader page.
+	* @param isValidSource - A predicate to check if the image has loaded a valid (descrambled) source.
+	* @returns A promise resolving to an array of collected image URLs (with blob URLs converted to data URLs).
+	*/
+	async function bruteforceScroll(expectedPagesCount, isReaderImage, isValidSource) {
+		const overlay = document.createElement("div");
+		overlay.style.cssText = "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(33, 37, 41, 0.95); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-family: sans-serif; font-size: 20px;";
+		overlay.innerHTML = `
+    <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">MangaOnlineViewer</div>
+    <div id="mov-loading-text">Preparing pages...</div>
+    <div style="margin-top: 20px; width: 200px; height: 6px; background: #495057; border-radius: 3px; overflow: hidden;">
+      <div id="mov-loading-bar" style="width: 0; height: 100%; background: #37b24d; transition: width 0.1s;"></div>
+    </div>
+  `;
+		document.body.appendChild(overlay);
+		const updateProgress = (collected, total) => {
+			const pct = total > 0 ? Math.round(collected / total * 100) : 0;
+			const textEl = document.getElementById("mov-loading-text");
+			const barEl = document.getElementById("mov-loading-bar");
+			if (textEl) textEl.textContent = `Scrolling and waiting for pages to load: ${collected} / ${total || "?"}`;
+			if (barEl) barEl.style.width = total > 0 ? `${pct}%` : "50%";
+		};
+		updateProgress(0, expectedPagesCount);
+		const origScrollY = window.scrollY;
+		const collectedUrls = [];
+		try {
+			for (let i = 0; i < expectedPagesCount; i++) {
+				let imgElement = null;
+				let elapsedImage = 0;
+				while (elapsedImage < 5e3) {
+					const readerImages = [...document.querySelectorAll("img")].filter(isReaderImage);
+					if (readerImages[i]) {
+						imgElement = readerImages[i];
+						break;
+					}
+					await new Promise((resolve) => setTimeout(resolve, 100));
+					elapsedImage += 100;
+				}
+				if (!imgElement) {
+					logScript(`Failed to find image element for page ${i + 1}`);
+					continue;
+				}
+				imgElement.scrollIntoView({
+					behavior: "auto",
+					block: "center"
+				});
+				let elapsedLoad = 0;
+				let validSrc = "";
+				while (elapsedLoad < 5e3) {
+					const src = imgElement.src || imgElement.getAttribute("src") || "";
+					if (src && isValidSource(src) && (imgElement.naturalWidth > 250 || imgElement.complete)) {
+						const w = imgElement.naturalWidth || imgElement.width || 0;
+						if (w === 0 || w >= 250) {
+							validSrc = src;
+							break;
+						}
+					}
+					await new Promise((resolve) => setTimeout(resolve, 100));
+					elapsedLoad += 100;
+				}
+				if (validSrc) collectedUrls.push(validSrc);
+				else {
+					logScript(`Timeout waiting for image ${i + 1} to load`);
+					collectedUrls.push(imgElement.src || imgElement.getAttribute("src") || "");
+				}
+				updateProgress(collectedUrls.length, expectedPagesCount);
 			}
-			return baseModule().catch(handlePreloadError);
-		});
-	};
+		} finally {
+			window.scrollTo(0, origScrollY);
+			overlay.remove();
+		}
+		if (collectedUrls.length === 0) throw new Error("No images collected from the page");
+		return await Promise.all(collectedUrls.map(async (url) => {
+			if (url.startsWith("blob:")) return await blobUrlToDataUrl(url);
+			return url;
+		}));
+	}
 	//#endregion
 	//#region src/main/comix.ts
+	/** biome-ignore-all lint/suspicious/noExplicitAny: brute force */
+	var chapterPagesData = null;
+	if (typeof window !== "undefined" && window.location.hostname.includes("comix.to")) {
+		const originalParse = JSON.parse;
+		JSON.parse = (text, reviver) => {
+			const parsed = originalParse(text, reviver);
+			try {
+				if (parsed?.result?.pages) {
+					chapterPagesData = parsed.result.pages;
+					logScript("Intercepted chapter pages data from JSON.parse", chapterPagesData);
+				}
+			} catch (_e) {}
+			return parsed;
+		};
+	}
+	function findQueryData() {
+		const root = document.querySelector("#app-root");
+		if (!root) return null;
+		const fiberKey = Object.keys(root).find((key) => key.startsWith("__reactContainer") || key.startsWith("__reactFiber"));
+		if (!fiberKey) return null;
+		const stack = [root[fiberKey]];
+		while (stack.length > 0) {
+			const curr = stack.pop();
+			if (!curr) continue;
+			if (curr.stateNode?.props) {
+				const client = curr.stateNode.props.client;
+				if (client && typeof client.getQueryCache === "function") {
+					const queries = client.getQueryCache().getAll();
+					for (const q of queries) {
+						const data = q.state.data;
+						if (data?.result?.pages) return data.result.pages;
+					}
+				}
+			}
+			if (curr.memoizedProps) {
+				const client = curr.memoizedProps.client || curr.memoizedProps.value;
+				if (client && typeof client.getQueryCache === "function") {
+					const queries = client.getQueryCache().getAll();
+					for (const q of queries) {
+						const data = q.state.data;
+						if (data?.result?.pages) return data.result.pages;
+					}
+				}
+			}
+			if (curr.child) stack.push(curr.child);
+			if (curr.sibling) stack.push(curr.sibling);
+		}
+		return null;
+	}
+	function findChapterListFromCache() {
+		const root = document.querySelector("#app-root");
+		if (!root) return null;
+		const fiberKey = Object.keys(root).find((key) => key.startsWith("__reactContainer") || key.startsWith("__reactFiber"));
+		if (!fiberKey) return null;
+		const stack = [root[fiberKey]];
+		while (stack.length > 0) {
+			const curr = stack.pop();
+			if (!curr) continue;
+			const checkClient = (client) => {
+				if (client && typeof client.getQueryCache === "function") {
+					const queries = client.getQueryCache().getAll();
+					for (const q of queries) {
+						const data = q.state.data;
+						if (data) {
+							if (Array.isArray(data) && data.length > 0 && (data[0].chapterNumber !== void 0 || data[0].number !== void 0)) return data;
+							if (data.result && Array.isArray(data.result.items) && data.result.items.length > 0) {
+								const first = data.result.items[0];
+								if (first.chapterNumber !== void 0 || first.number !== void 0 || first.mangaId !== void 0) return data.result.items;
+							}
+						}
+					}
+				}
+				return null;
+			};
+			if (curr.stateNode?.props) {
+				const res = checkClient(curr.stateNode.props.client);
+				if (res) return res;
+			}
+			if (curr.memoizedProps) {
+				const res = checkClient(curr.memoizedProps.client || curr.memoizedProps.value);
+				if (res) return res;
+			}
+			if (curr.child) stack.push(curr.child);
+			if (curr.sibling) stack.push(curr.sibling);
+		}
+		return null;
+	}
+	function getPageCountFromSelect() {
+		const select = document.querySelector("select[aria-label*=\"page\" i], select[class*=\"page\" i], select[id*=\"page\" i]");
+		if (select) return select.querySelectorAll("option").length;
+		return 0;
+	}
+	function findPageCountFromDOM() {
+		const elements = [...document.querySelectorAll("span, div, button, option")];
+		for (const el of elements) {
+			const text = el.textContent || "";
+			const match = /^\s*1\s*(?:\/|of)\s*(\d+)\s*$/i.exec(text.trim());
+			if (match) {
+				const num = parseInt(match[1], 10);
+				if (num > 0 && num < 500) return num;
+			}
+		}
+		return 0;
+	}
+	function getPrevNextLinks() {
+		const links = [...document.querySelectorAll("a")];
+		let next = null;
+		let prev = null;
+		for (const a of links) {
+			const href = a.getAttribute("href");
+			if (!href?.includes("/title/") || !/\/\d+-chapter-/.test(href)) continue;
+			const text = (a.textContent || "").toLowerCase().trim();
+			const ariaLabel = (a.getAttribute("aria-label") || "").toLowerCase();
+			if (text.includes("next") || ariaLabel.includes("next") || a.querySelector("[class*=\"next\"]") || a.querySelector("[class*=\"right\"]")) next = href;
+			if (text.includes("prev") || text.includes("previous") || ariaLabel.includes("prev") || ariaLabel.includes("previous") || a.querySelector("[class*=\"prev\"]") || a.querySelector("[class*=\"left\"]")) prev = href;
+		}
+		return {
+			prev,
+			next
+		};
+	}
+	function getNavigationFromLinks() {
+		const links = [...document.querySelectorAll("a")];
+		const chapterLinks = [];
+		for (const a of links) {
+			const href = a.getAttribute("href");
+			if (!href?.includes("/title/") || !/\/\d+-chapter-/.test(href)) continue;
+			const match = /-chapter-(\d+(\.\d+)?)/.exec(href);
+			if (match) chapterLinks.push({
+				href,
+				num: parseFloat(match[1])
+			});
+		}
+		if (chapterLinks.length === 0) return {
+			prev: null,
+			next: null
+		};
+		const seen = /* @__PURE__ */ new Set();
+		const uniqueChapters = chapterLinks.filter((item) => {
+			const path = item.href.split("#")[0].split("?")[0];
+			if (seen.has(path)) return false;
+			seen.add(path);
+			return true;
+		});
+		uniqueChapters.sort((a, b) => a.num - b.num);
+		const currentCleanPath = window.location.pathname.split("#")[0].split("?")[0];
+		const idx = uniqueChapters.findIndex((item) => item.href.includes(currentCleanPath) || currentCleanPath.includes(item.href));
+		let prev = null;
+		let next = null;
+		if (idx !== -1) {
+			if (idx > 0) prev = uniqueChapters[idx - 1].href;
+			if (idx < uniqueChapters.length - 1) next = uniqueChapters[idx + 1].href;
+		}
+		return {
+			prev,
+			next
+		};
+	}
+	function getPrevNext() {
+		const { prev, next } = getPrevNextLinks();
+		if (prev || next) return {
+			prev,
+			next
+		};
+		return getNavigationFromLinks();
+	}
+	function isReaderImage(img) {
+		if (!img.closest("#app-root") && !img.closest(".rpage-body")) return false;
+		const src = img.src || img.getAttribute("src") || "";
+		if (!src) return false;
+		if (src.includes("avatar") || src.includes("logo") || src.includes("icon") || src.includes("placeholder")) return false;
+		if (src.startsWith("data:image/svg+xml")) return false;
+		const w = img.naturalWidth || img.width || 0;
+		return !(w > 0 && w < 250);
+	}
+	function isValidSource(src) {
+		if (!src) return false;
+		if (src.includes("placeholder") || src.startsWith("data:image/svg+xml") || src.includes("loading")) return false;
+		return src.startsWith("data:") || src.startsWith("blob:") || src.includes("comix.to") || src.includes("static.comix.to") || src.includes("wowpic");
+	}
 	var comix = {
 		name: "Comix.to",
 		homepage: "https://comix.to/",
 		url: /https?:\/\/comix\.to\/(title|comic)\/.+\/.+/,
 		language: Language.ENGLISH,
-		category: Category.COMIC,
-		waitEle: "#initial-data",
+		category: Category.MANGA,
 		async run() {
-			const initialData = JSON.parse(document.getElementById("initial-data")?.textContent || "{}");
-			const { mangaHid, chapterId } = initialData.read || {};
-			const idFromUrl = window.location.pathname.match(/\/(?:title|comic)\/[^/]+\/(\d+)/)?.[1];
-			const finalChapterId = chapterId || idFromUrl;
-			if (!finalChapterId) throw new Error("Chapter ID not found");
-			const mainScript = [...document.querySelectorAll("script[src]")].find((s) => s.getAttribute("src")?.includes("/dist/main-"))?.getAttribute("src");
-			if (!mainScript) throw new Error("Main script not found");
-			const mod = await __vitePreload(() => import(mainScript), void 0);
-			const api = mod.I || mod.$;
-			const [chapterData, chaptersData] = await Promise.all([api.get(`/chapters/${finalChapterId}`), api.get(`/manga/${mangaHid}/chapters?limit=100`)]);
-			const pages = chapterData.pages || {};
-			const items = pages.items || chapterData.images || [];
-			const images = (Array.isArray(items) ? items : []).map((img) => {
-				const url = typeof img === "string" ? img : img.url;
-				return url?.startsWith("http") ? url : `${pages.baseUrl || ""}/${url?.trimStart() || ""}`;
-			});
-			const mangaDetailKey = Object.keys(initialData.queries || {}).find((k) => k.includes("\"manga\",\"detail\""));
-			const mangaDetail = mangaDetailKey ? initialData.queries[mangaDetailKey] : null;
-			const chapters = chaptersData.items || chaptersData || [];
-			const currentIdx = chapters.findIndex((c) => String(c.id) === String(finalChapterId)) ?? -1;
-			const prevChapter = currentIdx !== -1 ? chapters[currentIdx + 1] : null;
-			const nextChapter = currentIdx !== -1 ? chapters[currentIdx - 1] : null;
-			const type = window.location.pathname.split("/")[1] || "title";
-			const getChapterUrl = (c) => {
-				if (!c) return null;
-				return `/${type}/${mangaHid}/${c.id}-chapter-${c.number}`;
-			};
+			let elapsed = 0;
+			let pagesData = null;
+			let chapterList = null;
+			while (elapsed < 5e3) {
+				if (!pagesData) pagesData = findQueryData();
+				if (!chapterList) chapterList = findChapterListFromCache();
+				if (pagesData && chapterList) break;
+				await new Promise((resolve) => setTimeout(resolve, 100));
+				elapsed += 100;
+			}
+			if (!pagesData && chapterPagesData) pagesData = chapterPagesData;
+			let expectedPagesCount = pagesData?.items?.length || 0;
+			if (expectedPagesCount === 0) expectedPagesCount = getPageCountFromSelect();
+			if (expectedPagesCount === 0) expectedPagesCount = findPageCountFromDOM();
+			if (expectedPagesCount === 0) expectedPagesCount = [...document.querySelectorAll("#app-root img, .rpage-body img")].filter(isReaderImage).length || 40;
+			logScript(`Identified expected page count: ${expectedPagesCount}`);
+			const listImages = await bruteforceScroll(expectedPagesCount, isReaderImage, isValidSource);
+			const initialDataEl = document.getElementById("initial-data");
+			const initialData = initialDataEl ? JSON.parse(initialDataEl.textContent || "{}") : {};
+			let title = "";
+			let series = "";
+			if (initialData.queries) for (const key of Object.keys(initialData.queries)) {
+				const queryData = initialData.queries[key];
+				if (queryData?.title && queryData.url) {
+					title = queryData.title;
+					series = queryData.url;
+					break;
+				}
+			}
+			if (!title) title = document.querySelector("title")?.textContent?.trim() || "";
+			if (!series) series = document.querySelector("a[href^=\"/title/\"]:not([href*=\"-chapter-\"])")?.getAttribute("href") || "";
+			let prev = null;
+			let next = null;
+			const slugMatch = /\/title\/([^/]+)/.exec(window.location.pathname);
+			const mangaSlug = slugMatch ? slugMatch[1] : "";
+			const chapterMatch = /\/(\d+)-chapter-/.exec(window.location.pathname);
+			const currentChapterId = chapterMatch ? parseInt(chapterMatch[1], 10) : 0;
+			if (chapterList && currentChapterId && mangaSlug) {
+				const getNum = (ch) => parseFloat(ch.number ?? ch.chapterNumber ?? "0");
+				const sortedChapters = [...chapterList].sort((a, b) => getNum(a) - getNum(b));
+				const idx = sortedChapters.findIndex((ch) => parseInt(ch.id, 10) === currentChapterId);
+				if (idx !== -1) {
+					if (idx > 0) {
+						const prevCh = sortedChapters[idx - 1];
+						const prevNum = prevCh.number ?? prevCh.chapterNumber;
+						prev = `/title/${mangaSlug}/${prevCh.id}-chapter-${prevNum}`;
+					}
+					if (idx < sortedChapters.length - 1) {
+						const nextCh = sortedChapters[idx + 1];
+						const nextNum = nextCh.number ?? nextCh.chapterNumber;
+						next = `/title/${mangaSlug}/${nextCh.id}-chapter-${nextNum}`;
+					}
+				}
+			}
+			if (!prev && !next) {
+				const nav = getPrevNext();
+				prev = nav.prev;
+				next = nav.next;
+			}
 			return {
-				title: mangaDetail?.title || document.title.split(" · ")[0],
-				series: mangaDetail?.url || `/${type}/${mangaHid}`,
-				pages: images.length,
-				prev: getChapterUrl(prevChapter),
-				next: getChapterUrl(nextChapter),
-				listImages: images
+				title,
+				series,
+				pages: listImages.length,
+				prev,
+				next,
+				listImages
 			};
 		}
 	};

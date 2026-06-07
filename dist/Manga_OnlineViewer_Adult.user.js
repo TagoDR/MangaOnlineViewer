@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, HDoujin, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.05.30.build-1451
+// @version       2026.06.07.build-1433
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -205,6 +205,179 @@
 				next: "#",
 				listImages: _.keys(unsafeWindow.readerPages.pages).map((img) => unsafeWindow.readerPages.baseUriImg.replace("%s", unsafeWindow.readerPages.pages[img].f))
 			};
+		}
+	};
+	//#endregion
+	//#region src/utils/tampermonkey.ts
+	/** biome-ignore-all lint/suspicious/noExplicitAny: the values truly does not matter */
+	/**
+	* Safely exposes a value to the window object, targeting `unsafeWindow` in userscript environments
+	* and falling back to the standard `window` object.
+	* @param {string} key - The key to assign the value to on the window object.
+	* @param {any} content - The value to expose.
+	*/
+	function giveToWindow(key, content) {
+		if (typeof unsafeWindow !== "undefined") unsafeWindow[key] = content;
+		if (typeof window !== "undefined") window[key] = content;
+	}
+	/**
+	* The primary logging function for the userscript, which prefixes all messages with a standard header.
+	* @param {...any} text - The content to be logged.
+	* @returns {any[]} The logged content.
+	*/
+	function logScript(...text) {
+		console.log(`MangaOnlineViewer-adult: `, ...text);
+		return text;
+	}
+	/**
+	* A verbose logging function that only outputs messages when in a development environment.
+	* @param {...any} text - The content to be logged.
+	* @returns {any[]} The logged content.
+	*/
+	function logScriptVerbose(...text) {
+		if (["dev", "development"].includes("adult")) console.info("MangaOnlineViewer: ", ...text);
+		return text;
+	}
+	/**
+	* A safe wrapper for `GM_deleteValue`.
+	* @param {string} name - The key of the value to remove.
+	*/
+	function removeValueGM(name) {
+		if (typeof GM_deleteValue !== "undefined") GM_deleteValue(name);
+		else logScriptVerbose("Fake Removing: ", name);
+	}
+	/**
+	* A shim for the `GM_info` object, providing fallback data for non-userscript environments.
+	*/
+	var getInfoGM = typeof GM_info !== "undefined" ? GM_info : {
+		scriptHandler: "Console",
+		script: {
+			name: "Debug",
+			version: "Testing"
+		}
+	};
+	/**
+	* A safe wrapper for `GM_getValue`.
+	* @param {string} name - The key of the value to retrieve.
+	* @param {any} [defaultValue=null] - The default value to return if the key does not exist.
+	* @returns {any} The retrieved value or the default.
+	*/
+	function getValueGM(name, defaultValue) {
+		if (typeof GM_getValue !== "undefined") return GM_getValue(name, defaultValue);
+		logScriptVerbose("Fake Getting: ", name, " = ", defaultValue);
+		return defaultValue;
+	}
+	/**
+	* Retrieves a value from storage and parses it as JSON.
+	* @param {string} name - The key of the value to retrieve.
+	* @param {any} [defaultValue=null] - The default value to return if the key does not exist.
+	* @returns {any} The parsed JSON object or the default value.
+	*/
+	function getJsonGM(name, defaultValue) {
+		const result = getValueGM(name, defaultValue);
+		if (typeof result === "string" && result.trim() !== "") try {
+			return JSON.parse(result);
+		} catch (e) {
+			logScript("Failed to parse JSON from storage", name, e);
+			return defaultValue;
+		}
+		return result;
+	}
+	/**
+	* Retrieves the global settings object from storage.
+	* @param {ISettings} [defaultSettings] - The default settings to return if none are found.
+	* @returns {Partial<ISettings>} The global settings object.
+	*/
+	function getGlobalSettings(defaultSettings) {
+		return getJsonGM("settings", defaultSettings);
+	}
+	/**
+	* Retrieves the site-specific (local) settings object from storage.
+	* @param {ISettings} [defaultSettings] - The default settings to return if none are found.
+	* @returns {Partial<ISettings>} The local settings object.
+	*/
+	function getLocalSettings(defaultSettings) {
+		return getJsonGM(window.location.hostname, defaultSettings);
+	}
+	/**
+	* A safe wrapper for `GM_setValue`.
+	* @param {string} name - The key for the value to be stored.
+	* @param {any} value - The value to store.
+	* @returns {string} The string representation of the stored value.
+	*/
+	function setValueGM(name, value) {
+		if (typeof GM_setValue !== "undefined") {
+			GM_setValue(name, value);
+			logScript("Setting: ", name, " = ", value);
+			return value.toString();
+		}
+		logScriptVerbose("Fake Setting: ", name, " = ", value);
+		return String(value);
+	}
+	/**
+	* Saves the global settings object to storage.
+	* @param {Partial<ISettings>} value - The settings object to save.
+	* @returns {string} The string representation of the saved object.
+	*/
+	function saveGlobalSettings(value) {
+		return setValueGM("settings", value);
+	}
+	/**
+	* Saves the site-specific (local) settings object to storage.
+	* @param {Partial<ISettings>} value - The settings object to save.
+	* @returns {string} The string representation of the saved object.
+	*/
+	function saveLocalSettings(value) {
+		return setValueGM(window.location.hostname, value);
+	}
+	/**
+	* Attempts to parse the browser name and version from the user agent string.
+	* @returns {string} The browser name and version (e.g., "Chrome 108").
+	*/
+	function getBrowser() {
+		const result = bowser.getParser(window.navigator.userAgent).getBrowser();
+		return `${result.name} ${result.version}`;
+	}
+	/**
+	* Gets the name of the userscript engine (e.g., 'Tampermonkey', 'Greasemonkey').
+	* @returns {string} The name of the script handler.
+	*/
+	function getEngine() {
+		return getInfoGM.scriptHandler ?? "Greasemonkey";
+	}
+	/**
+	* Determines the type of device based on the user agent and screen size.
+	* @returns {Device} The device type: 'mobile', 'tablet', or 'desktop'.
+	*/
+	var getDevice = () => {
+		const device = bowser.getParser(window.navigator.userAgent).getPlatformType(true);
+		if (device === "mobile" || window.matchMedia("screen and (max-width: 600px)").matches) return "mobile";
+		if (device === "tablet" || window.matchMedia("screen and (max-width: 992px)").matches) return "tablet";
+		return "desktop";
+	};
+	/**
+	* A convenience function to check if the current device is a mobile or tablet.
+	* @returns {boolean} `true` if the device is a mobile or tablet, `false` otherwise.
+	*/
+	var isMobile = () => getDevice() === "mobile" || getDevice() === "tablet";
+	/**
+	* Checks if the script is running in standalone mode (single HTML file).
+	* @returns {boolean} `true` if in standalone mode, `false` otherwise.
+	*/
+	var isStandalone = () => window.location.protocol === "file:" || window.location.pathname.endsWith("Manga_Local_Viewer.html");
+	/**
+	* Sets up a listener for changes to a GM storage value, triggering a callback when the value is changed in another tab.
+	* @param {(newSettings: Partial<ISettings>) => void} fn - The callback function to execute with the new settings.
+	* @param {string} [gmValue='settings'] - The key of the GM value to listen to (e.g., 'settings' or a hostname).
+	* @returns {number | undefined} The listener ID from `GM_addValueChangeListener`, or `undefined` if not available.
+	*/
+	var settingsChangeListener = (fn, gmValue = "settings") => {
+		if (typeof GM_addValueChangeListener !== "undefined") try {
+			return GM_addValueChangeListener(gmValue, (_name, _oldValue, newValue, remote) => {
+				if (remote) fn(newValue);
+			});
+		} catch (e) {
+			logScript("Failed to add settings listener", e);
 		}
 	};
 	//#endregion
@@ -1347,179 +1520,6 @@
 		},
 		madarawph
 	];
-	//#endregion
-	//#region src/utils/tampermonkey.ts
-	/** biome-ignore-all lint/suspicious/noExplicitAny: the values truly does not matter */
-	/**
-	* Safely exposes a value to the window object, targeting `unsafeWindow` in userscript environments
-	* and falling back to the standard `window` object.
-	* @param {string} key - The key to assign the value to on the window object.
-	* @param {any} content - The value to expose.
-	*/
-	function giveToWindow(key, content) {
-		if (typeof unsafeWindow !== "undefined") unsafeWindow[key] = content;
-		if (typeof window !== "undefined") window[key] = content;
-	}
-	/**
-	* The primary logging function for the userscript, which prefixes all messages with a standard header.
-	* @param {...any} text - The content to be logged.
-	* @returns {any[]} The logged content.
-	*/
-	function logScript(...text) {
-		console.log(`MangaOnlineViewer-adult: `, ...text);
-		return text;
-	}
-	/**
-	* A verbose logging function that only outputs messages when in a development environment.
-	* @param {...any} text - The content to be logged.
-	* @returns {any[]} The logged content.
-	*/
-	function logScriptVerbose(...text) {
-		if (["dev", "development"].includes("adult")) console.info("MangaOnlineViewer: ", ...text);
-		return text;
-	}
-	/**
-	* A safe wrapper for `GM_deleteValue`.
-	* @param {string} name - The key of the value to remove.
-	*/
-	function removeValueGM(name) {
-		if (typeof GM_deleteValue !== "undefined") GM_deleteValue(name);
-		else logScriptVerbose("Fake Removing: ", name);
-	}
-	/**
-	* A shim for the `GM_info` object, providing fallback data for non-userscript environments.
-	*/
-	var getInfoGM = typeof GM_info !== "undefined" ? GM_info : {
-		scriptHandler: "Console",
-		script: {
-			name: "Debug",
-			version: "Testing"
-		}
-	};
-	/**
-	* A safe wrapper for `GM_getValue`.
-	* @param {string} name - The key of the value to retrieve.
-	* @param {any} [defaultValue=null] - The default value to return if the key does not exist.
-	* @returns {any} The retrieved value or the default.
-	*/
-	function getValueGM(name, defaultValue) {
-		if (typeof GM_getValue !== "undefined") return GM_getValue(name, defaultValue);
-		logScriptVerbose("Fake Getting: ", name, " = ", defaultValue);
-		return defaultValue;
-	}
-	/**
-	* Retrieves a value from storage and parses it as JSON.
-	* @param {string} name - The key of the value to retrieve.
-	* @param {any} [defaultValue=null] - The default value to return if the key does not exist.
-	* @returns {any} The parsed JSON object or the default value.
-	*/
-	function getJsonGM(name, defaultValue) {
-		const result = getValueGM(name, defaultValue);
-		if (typeof result === "string" && result.trim() !== "") try {
-			return JSON.parse(result);
-		} catch (e) {
-			logScript("Failed to parse JSON from storage", name, e);
-			return defaultValue;
-		}
-		return result;
-	}
-	/**
-	* Retrieves the global settings object from storage.
-	* @param {ISettings} [defaultSettings] - The default settings to return if none are found.
-	* @returns {Partial<ISettings>} The global settings object.
-	*/
-	function getGlobalSettings(defaultSettings) {
-		return getJsonGM("settings", defaultSettings);
-	}
-	/**
-	* Retrieves the site-specific (local) settings object from storage.
-	* @param {ISettings} [defaultSettings] - The default settings to return if none are found.
-	* @returns {Partial<ISettings>} The local settings object.
-	*/
-	function getLocalSettings(defaultSettings) {
-		return getJsonGM(window.location.hostname, defaultSettings);
-	}
-	/**
-	* A safe wrapper for `GM_setValue`.
-	* @param {string} name - The key for the value to be stored.
-	* @param {any} value - The value to store.
-	* @returns {string} The string representation of the stored value.
-	*/
-	function setValueGM(name, value) {
-		if (typeof GM_setValue !== "undefined") {
-			GM_setValue(name, value);
-			logScript("Setting: ", name, " = ", value);
-			return value.toString();
-		}
-		logScriptVerbose("Fake Setting: ", name, " = ", value);
-		return String(value);
-	}
-	/**
-	* Saves the global settings object to storage.
-	* @param {Partial<ISettings>} value - The settings object to save.
-	* @returns {string} The string representation of the saved object.
-	*/
-	function saveGlobalSettings(value) {
-		return setValueGM("settings", value);
-	}
-	/**
-	* Saves the site-specific (local) settings object to storage.
-	* @param {Partial<ISettings>} value - The settings object to save.
-	* @returns {string} The string representation of the saved object.
-	*/
-	function saveLocalSettings(value) {
-		return setValueGM(window.location.hostname, value);
-	}
-	/**
-	* Attempts to parse the browser name and version from the user agent string.
-	* @returns {string} The browser name and version (e.g., "Chrome 108").
-	*/
-	function getBrowser() {
-		const result = bowser.getParser(window.navigator.userAgent).getBrowser();
-		return `${result.name} ${result.version}`;
-	}
-	/**
-	* Gets the name of the userscript engine (e.g., 'Tampermonkey', 'Greasemonkey').
-	* @returns {string} The name of the script handler.
-	*/
-	function getEngine() {
-		return getInfoGM.scriptHandler ?? "Greasemonkey";
-	}
-	/**
-	* Determines the type of device based on the user agent and screen size.
-	* @returns {Device} The device type: 'mobile', 'tablet', or 'desktop'.
-	*/
-	var getDevice = () => {
-		const device = bowser.getParser(window.navigator.userAgent).getPlatformType(true);
-		if (device === "mobile" || window.matchMedia("screen and (max-width: 600px)").matches) return "mobile";
-		if (device === "tablet" || window.matchMedia("screen and (max-width: 992px)").matches) return "tablet";
-		return "desktop";
-	};
-	/**
-	* A convenience function to check if the current device is a mobile or tablet.
-	* @returns {boolean} `true` if the device is a mobile or tablet, `false` otherwise.
-	*/
-	var isMobile = () => getDevice() === "mobile" || getDevice() === "tablet";
-	/**
-	* Checks if the script is running in standalone mode (single HTML file).
-	* @returns {boolean} `true` if in standalone mode, `false` otherwise.
-	*/
-	var isStandalone = () => window.location.protocol === "file:" || window.location.pathname.endsWith("Manga_Local_Viewer.html");
-	/**
-	* Sets up a listener for changes to a GM storage value, triggering a callback when the value is changed in another tab.
-	* @param {(newSettings: Partial<ISettings>) => void} fn - The callback function to execute with the new settings.
-	* @param {string} [gmValue='settings'] - The key of the GM value to listen to (e.g., 'settings' or a hostname).
-	* @returns {number | undefined} The listener ID from `GM_addValueChangeListener`, or `undefined` if not available.
-	*/
-	var settingsChangeListener = (fn, gmValue = "settings") => {
-		if (typeof GM_addValueChangeListener !== "undefined") try {
-			return GM_addValueChangeListener(gmValue, (_name, _oldValue, newValue, remote) => {
-				if (remote) fn(newValue);
-			});
-		} catch (e) {
-			logScript("Failed to add settings listener", e);
-		}
-	};
 	//#endregion
 	//#region src/core/check.ts
 	/**
@@ -12666,12 +12666,16 @@
 		const sitePromises = foundSites.map(async (site) => {
 			logScript(`Testing site: ${site.name}`);
 			await runSiteTests(site);
+			logScriptVerbose(site.name, "Passed");
 			const manga = await site.run();
+			logScriptVerbose("Processed site:", site, manga);
 			if (manga.pages > 0) return [site, manga];
 			throw new Error(`${site.name} found ${manga.pages} pages`);
 		});
 		try {
-			preparePage(await Promise.any(sitePromises));
+			const result = await Promise.any(sitePromises);
+			logScriptVerbose("Going with", result[0].name);
+			preparePage(result);
 		} catch (error) {
 			if (error instanceof AggregateError) {
 				logScript("All sites failed to run:");
