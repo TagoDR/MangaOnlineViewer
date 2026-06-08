@@ -82,7 +82,7 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [M440](https://m440.in/) _[Spanish]_
 - [MangaOni](https://manga-oni.com/) _[Spanish]_
 - [ManhwaWeb](https://manhwaweb.com/) _[Spanish]_
-- [OlympusBiblioteca](https://olympusbiblioteca.com/) _[Spanish]_
+- [Olympus](https://olympusxyz.com/) _[Spanish]_
 - [TuMangaOnline](https://zonatmo.org/) _[Spanish]_
 
 ## Supported Comic Sites
