@@ -1,10 +1,10 @@
-// == OlympusBiblioteca ============================================================================
+// == Olympus ======================================================================================
 import { Category, type IManga, type ISite, Language } from '../types';
 
-const olympusbiblioteca: ISite = {
-  name: 'OlympusBiblioteca',
-  url: /https?:\/\/(www\.)?olympusbiblioteca.com\/capitulo\/\d+\/.+/,
-  homepage: 'https://olympusbiblioteca.com/',
+const olympus: ISite = {
+  name: 'Olympus',
+  url: /https?:\/\/(www\.)?olympusxyz.com\/capitulo\/\d+\/.+/,
+  homepage: 'https://olympusxyz.com/',
   language: [Language.SPANISH],
   category: Category.MANGA,
   run(): IManga {
@@ -19,4 +19,4 @@ const olympusbiblioteca: ISite = {
     };
   },
 };
-export default olympusbiblioteca;
+export default olympus;

@@ -31,7 +31,7 @@ import mangatown from './mangatown';
 import manhwaweb from './manhwaweb';
 import mgeko from './mgeko';
 import nineanime from './nineanime';
-import olympusbiblioteca from './olympusbiblioteca';
+import olympus from './olympus.ts';
 import qimanhwa from './qimanhwa';
 import readcomicsonline from './readcomicsonline';
 import reaperscans from './reaperscans';
@@ -73,7 +73,7 @@ const sites: ISite[] = [
   manhwaweb,
   mgeko,
   nineanime,
-  olympusbiblioteca,
+  olympus,
   qimanhwa,
   readcomicsonline,
   reaperscans,
