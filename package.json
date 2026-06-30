@@ -38,7 +38,7 @@
     "tslib": "^2.8.1",
     "typescript": "^6.0.3",
     "userscript-metadata-generator": "^0.2.4",
-    "vite": "^8.0.14",
+    "vite": "^8.1.1",
     "vite-plugin-banner": "^0.8.1",
     "vite-plugin-biome": "^1.2.0",
     "vite-plugin-singlefile": "^2.3.3",
