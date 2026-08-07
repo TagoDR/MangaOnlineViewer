@@ -4,6 +4,8 @@ import _ from 'lodash';
 import { computed, map } from 'nanostores';
 import locales from '../locales';
 import {
+  type Device,
+  type DeviceMode,
   type IApp,
   type IBookmark,
   type ILocale,
@@ -38,6 +40,7 @@ import {
 export const defaultSettings: ISettings = {
   bookmarks: [],
   colorScheme: 'dark',
+  deviceMode: 'auto',
   downloadZip: false,
   enabled: false,
   fitWidthIfOversize: true,
@@ -273,6 +276,17 @@ export const locale = computed(
 );
 
 /**
+ * Computes the effective device type based on the `deviceMode` setting.
+ * If the setting is 'auto', the device is detected automatically; otherwise, the forced value is used.
+ * @param {DeviceMode} [mode] - The device mode setting. Defaults to the current setting value.
+ * @returns {Device} The effective device type.
+ */
+export function getEffectiveDevice(mode: DeviceMode = getSettingsValue('deviceMode')): Device {
+  if (mode === 'auto') return getDevice();
+  return mode;
+}
+
+/**
  * The reactive store for the application's volatile state, like current page, scroll state, etc.
  * This state is not persisted.
  * @type {import('nanostores').MapStore<IApp>}
@@ -281,7 +295,7 @@ export const appState = map<IApp>({
   autoScroll: false,
   chapter: createRef(),
   currentPage: 0,
-  device: getDevice(),
+  device: getEffectiveDevice(),
   manga: undefined,
   panel: 'none',
   scrollToPage: undefined,

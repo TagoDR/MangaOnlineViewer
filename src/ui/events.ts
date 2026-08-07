@@ -1,6 +1,5 @@
 import _ from 'lodash';
-import { getAppStateValue, setAppStateValue } from '../core/settings.ts';
-import { getDevice } from '../utils/tampermonkey.ts';
+import { getAppStateValue, getEffectiveDevice, setAppStateValue } from '../core/settings.ts';
 import { waitForFunc } from '../utils/waitFor.ts';
 import autoscroll from './events/autoscroll';
 import trackCurrentPage from './events/currentpage';
@@ -12,7 +11,7 @@ import { applyZoom } from './events/zoom.ts';
  * It recalculates the zoom to ensure the content fits the new window dimensions.
  */
 export const updateOnResize = _.debounce(() => {
-  setAppStateValue('device', getDevice());
+  setAppStateValue('device', getEffectiveDevice());
   applyZoom();
 }, 200);
 

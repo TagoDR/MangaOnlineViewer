@@ -27,6 +27,15 @@ export type ViewMode =
 export type LoadMode = 'wait' | 'always' | 'never';
 
 /**
+ * Defines the device mode for the viewer.
+ * - `auto`: Automatically detect the device type.
+ * - `desktop`: Force desktop mode.
+ * - `tablet`: Force tablet mode.
+ * - `mobile`: Force mobile mode.
+ */
+export type DeviceMode = 'auto' | 'desktop' | 'tablet' | 'mobile';
+
+/**
  * Defines the color scheme for the UI.
  */
 export type ColorScheme = 'dark' | 'light';
@@ -78,6 +87,8 @@ export type ISettings = {
   colorScheme: ColorScheme;
   /** Whether to automatically download chapters as a ZIP file. */
   downloadZip: boolean;
+  /** The device mode to force, or 'auto' to detect automatically. */
+  deviceMode: DeviceMode;
   /** Whether the script is enabled, locally for a specific site, or globally. */
   enabled: boolean;
   /** Whether to automatically fit oversized images to the screen width. */

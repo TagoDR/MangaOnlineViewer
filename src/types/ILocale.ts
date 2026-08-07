@@ -18,6 +18,11 @@ export type ILocale = {
   THEME_HUE: string;
   THEME_SHADE: string;
   DEFAULT_LOAD_MODE: string;
+  DEVICE_MODE: string;
+  DEVICE_MODE_AUTO: string;
+  DEVICE_MODE_DESKTOP: string;
+  DEVICE_MODE_TABLET: string;
+  DEVICE_MODE_MOBILE: string;
   LOAD_MODE_NORMAL: string;
   LOAD_MODE_ALWAYS: string;
   LOAD_MODE_NEVER: string;

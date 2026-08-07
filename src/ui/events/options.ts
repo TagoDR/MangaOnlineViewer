@@ -1,10 +1,19 @@
 import {
   changeSettingsValue,
+  getEffectiveDevice,
   getLocaleString,
   saveSettingsValue,
+  setAppStateValue,
   toggleLocalSettings,
 } from '../../core/settings';
-import type { HeaderMode, LoadMode, LoadSpeed, NavbarMode, PaginationMode } from '../../types';
+import type {
+  DeviceMode,
+  HeaderMode,
+  LoadMode,
+  LoadSpeed,
+  NavbarMode,
+  PaginationMode,
+} from '../../types';
 import { replaceStyleSheet } from '../../utils/css';
 
 import { showInfoDialog } from '../components/Dialog.ts';
@@ -179,4 +188,14 @@ export function changeAutoScrollSpeed(sign: 1 | -1) {
     if (speed >= max) return max;
     return speed;
   });
+}
+
+/**
+ * Event handler to change and save the device mode. Also updates the effective device in the app state.
+ * @param {Event} event - The change event from the device mode selector.
+ */
+export function changeDeviceMode(event: Event) {
+  const mode = (event.currentTarget as HTMLInputElement).value as DeviceMode;
+  saveSettingsValue('deviceMode', mode);
+  setAppStateValue('device', getEffectiveDevice(mode));
 }
