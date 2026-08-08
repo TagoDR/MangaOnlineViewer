@@ -10,22 +10,22 @@ import {
   getSettingsValue,
   locale,
   settings,
-} from '../core/settings';
-import type { IManga } from '../types';
+} from '../core/settings.ts';
+import type { IManga } from '../types/index.ts';
 import './components/Slider.ts';
 import './components/ButtonGroup.ts';
 import { HeadroomController } from './controllers/headroom.ts';
 import { TitleController } from './controllers/title.ts';
-import { toggleAutoScroll } from './events/autoscroll';
-import { buttonBookmarksOpen } from './events/bookmarks';
+import { toggleAutoScroll } from './events/autoscroll.ts';
+import { buttonBookmarksOpen } from './events/bookmarks.ts';
 import {
   buttonGlobalHideImageControls,
   buttonRedirectURL,
   buttonStartDownload,
-} from './events/globals';
-import { buttonKeybindingsOpen, buttonSettingsOpen } from './events/panels';
-import { updateViewMode } from './events/viewmode';
-import { changeGlobalZoom, changeZoom, changeZoomByStep } from './events/zoom';
+} from './events/globals.ts';
+import { buttonKeybindingsOpen, buttonSettingsOpen } from './events/panels.ts';
+import { updateViewMode } from './events/viewmode.ts';
+import { changeGlobalZoom, changeZoom, changeZoomByStep } from './events/zoom.ts';
 import './components/ToggleButton.ts';
 import styles from './styles/header.css?inline';
 import media from './styles/media.css?inline';

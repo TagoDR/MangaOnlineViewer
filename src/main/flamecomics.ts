@@ -1,6 +1,6 @@
 // == Flame Comics =================================================================================
 import _ from 'lodash';
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const flamecomics: ISite = {
   name: 'Flame Comics',

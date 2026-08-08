@@ -1,5 +1,5 @@
 // == Madara WordPress Plugin ======================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const imageRegex = /^([\t\n])*(https?:\/\/)?.+\.(jpg|jpeg|png|gif|bmp|webp).*$/;
 

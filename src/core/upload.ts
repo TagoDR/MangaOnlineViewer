@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
-import localhost from '../main/localhost';
-import { logScript } from '../utils/tampermonkey';
+import localhost from '../main/localhost.ts';
+import { logScript } from '../utils/tampermonkey.ts';
 import { preparePage } from './main.ts';
 
 const fileTypes = [

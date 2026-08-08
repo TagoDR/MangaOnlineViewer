@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import './Icon.ts';
 
-import { appendStyleSheet } from '../../utils/css';
+import { appendStyleSheet } from '../../utils/css.ts';
 import styles from '../styles/toast.css?inline';
 
 declare global {

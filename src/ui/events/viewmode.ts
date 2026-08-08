@@ -1,5 +1,5 @@
-import { refreshSettings, saveSettingsValue, setSettingsValue } from '../../core/settings';
-import type { ViewMode } from '../../types';
+import { refreshSettings, saveSettingsValue, setSettingsValue } from '../../core/settings.ts';
+import type { ViewMode } from '../../types/index.ts';
 import { applyZoom } from './zoom.ts';
 
 /**

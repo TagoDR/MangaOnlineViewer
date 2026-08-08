@@ -3,10 +3,10 @@
  * This script is used for local development and testing. It combines both the main (SFW)
  * and adult (NSFW) site lists to allow for comprehensive testing across all supported websites.
  */
-import adult from './adult';
-import start from './core/main';
-import main from './main';
-import { logScript } from './utils/tampermonkey';
+import adult from './adult/index.ts';
+import start from './core/main.ts';
+import main from './main/index.ts';
+import { logScript } from './utils/tampermonkey.ts';
 
 // Combine all sites for development purposes.
 const sites = [...main.slice(0, -3), ...adult, ...main.slice(-3)];

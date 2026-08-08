@@ -1,4 +1,4 @@
-import { logScript } from './tampermonkey';
+import { logScript } from './tampermonkey.ts';
 
 /**
  * Fetches content from a URL and parses it as a DOM document.

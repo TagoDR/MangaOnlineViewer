@@ -1,7 +1,7 @@
 import { css, html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { setAppStateValue } from '../../core/settings.ts';
-import type { PaginationMode } from '../../types';
+import type { PaginationMode } from '../../types/index.ts';
 import { isNothing } from '../../utils/checks.ts';
 import { buttonRedirectURL } from '../events/globals.ts';
 import { selectGoToPage } from '../events/navigation.ts';

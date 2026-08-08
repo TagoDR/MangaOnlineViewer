@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { setSettingsValue } from '../core/settings';
-import type { IMangaImages } from '../types';
-import '../ui/Header';
+import { setSettingsValue } from '../core/settings.ts';
+import type { IMangaImages } from '../types/index.ts';
+import '../ui/Header.ts';
 import localhost from '../main/localhost.ts';
-import styles from '../ui/styles'; // Register the component
+import styles from '../ui/styles/index.ts'; // Register the component
 
 // Mock data required by the App component and its children
 const mockManga = localhost.run() as IMangaImages;

@@ -13,10 +13,10 @@ import viteBanner from 'vite-plugin-banner';
 import biomePlugin from 'vite-plugin-biome';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 import svgLoader from 'vite-svg-loader';
-import metaAdult from './src/meta/meta-adult';
-import metaDev from './src/meta/meta-dev';
-import metaMain from './src/meta/meta-main';
-import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme';
+import metaAdult from './src/meta/meta-adult.ts';
+import metaDev from './src/meta/meta-dev.ts';
+import metaMain from './src/meta/meta-main.ts';
+import { bookmarklet, comicSites, hentaiSites, mangaSites } from './src/meta/readme.ts';
 
 const didChange = (filePath: string, content: string) =>
   !fs.existsSync(filePath) ||

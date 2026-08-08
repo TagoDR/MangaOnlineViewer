@@ -1,5 +1,5 @@
 // == 9Hentai ======================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const ninehentai: ISite = {
   name: '9Hentai',

@@ -1,5 +1,5 @@
 // == ZeroScans ====================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const zeroscans: ISite = {
   name: 'ZeroScans',

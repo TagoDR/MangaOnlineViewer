@@ -1,6 +1,6 @@
 // == HentaiFox ====================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
-import { extensionByCode } from '../utils/urls';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
+import { extensionByCode } from '../utils/urls.ts';
 
 const hentaifox: ISite = {
   name: 'HentaiFox',

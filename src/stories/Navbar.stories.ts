@@ -8,9 +8,9 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement, type PropertyValueMap } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import _ from 'lodash';
-import { appState, getAppStateValue, setAppStateValue } from '../core/settings';
+import { appState, getAppStateValue, setAppStateValue } from '../core/settings.ts';
 import localhost from '../main/localhost.ts';
-import type { IMangaImages, NavbarMode, Page } from '../types';
+import type { IMangaImages, NavbarMode, Page } from '../types/index.ts';
 import '../ui/Navbar.ts';
 
 // Mock manga data for the stories

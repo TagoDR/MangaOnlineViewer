@@ -6,8 +6,8 @@ import {
   saveSettingsValue,
   setAppStateValue,
   setSettingsValue,
-} from '../../core/settings';
-import type { Page, ZoomMode } from '../../types';
+} from '../../core/settings.ts';
+import type { Page, ZoomMode } from '../../types/index.ts';
 import { logScript } from '../../utils/tampermonkey.ts';
 
 function getAvailableWidth(): number {

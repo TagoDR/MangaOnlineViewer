@@ -1,5 +1,5 @@
 // == Doujin-Moe Non-members =======================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const doujinmoe: ISite = {
   name: 'DoujinMoeNM',

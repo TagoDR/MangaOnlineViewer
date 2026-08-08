@@ -1,5 +1,5 @@
-import { logScript } from './tampermonkey';
-import { waitForAtb, waitWithTimer } from './waitFor';
+import { logScript } from './tampermonkey.ts';
+import { waitForAtb, waitWithTimer } from './waitFor.ts';
 
 /**
  * A last-resort method to scrape image URLs by simulating user interaction.

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, nothing, render } from 'lit';
-import { getIconName } from '../../ui/components/Dialog';
-import '../../ui/components/Icon';
-import '../../ui/components/Button';
-import { getLocaleString } from '../../core/settings';
+import { getIconName } from '../../ui/components/Dialog.ts';
+import '../../ui/components/Icon.ts';
+import '../../ui/components/Button.ts';
+import { getLocaleString } from '../../core/settings.ts';
 
 const meta: Meta = {
   title: 'Components/Dialog',

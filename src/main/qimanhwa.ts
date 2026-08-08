@@ -1,6 +1,6 @@
 // == QiManhwa ===================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
-import { findClosestByContentEq } from '../utils/find';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
+import { findClosestByContentEq } from '../utils/find.ts';
 
 const qimanhwa: ISite = {
   name: 'QiManhwa',

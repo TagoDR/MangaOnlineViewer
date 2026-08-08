@@ -1,5 +1,5 @@
 // == Kagane =======================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 interface ChapterData {
   id: string;

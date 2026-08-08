@@ -2,7 +2,7 @@ import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { ref } from 'lit/directives/ref.js';
 import { getAppStateValue, getSettingsValue } from '../core/settings.ts';
-import type { IManga } from '../types';
+import type { IManga } from '../types/index.ts';
 import {
   transformScrollToHorizontal,
   transformScrollToHorizontalReverse,

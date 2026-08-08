@@ -1,5 +1,5 @@
-import sites from '../adult';
-import { requiredScripts } from '../core/externals';
+import sites from '../adult/index.ts';
+import { requiredScripts } from '../core/externals.ts';
 
 /**
  * Tampermonkey metadata block for the adult (NSFW) version of the script.

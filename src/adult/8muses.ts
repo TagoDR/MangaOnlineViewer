@@ -1,6 +1,6 @@
 // == 8Muses =======================================================================================
-import { Category, type IMangaImages, type ISite, Language } from '../types';
-import { bruteforce } from '../utils/bruteforce';
+import { Category, type IMangaImages, type ISite, Language } from '../types/index.ts';
+import { bruteforce } from '../utils/bruteforce.ts';
 
 const eightMuses: ISite = {
   name: ['8Muses.com', '8Muses.io'],

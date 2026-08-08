@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import '../ui/components/Pagination.ts';
-import type { PaginationMode } from '../types';
+import type { PaginationMode } from '../types/index.ts';
 
 export default {
   title: 'Components/Pagination',

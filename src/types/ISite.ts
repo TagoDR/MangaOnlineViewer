@@ -1,4 +1,4 @@
-import type { IManga } from './IManga';
+import type { IManga } from './IManga.ts';
 
 /**
  * Enumeration of supported content languages.

@@ -2,7 +2,7 @@ import { logger } from '@nanostores/logger';
 import { createRef } from 'lit/directives/ref.js';
 import _ from 'lodash';
 import { computed, map } from 'nanostores';
-import locales from '../locales';
+import locales from '../locales/index.ts';
 import {
   type Device,
   type DeviceMode,
@@ -14,10 +14,10 @@ import {
   type ISettingsKey,
   isKey,
   type Page,
-} from '../types';
+} from '../types/index.ts';
 import { toast } from '../ui/components/Toast.ts';
-import { isNothing } from '../utils/checks';
-import diffObj from '../utils/diffObj';
+import { isNothing } from '../utils/checks.ts';
+import diffObj from '../utils/diffObj.ts';
 import {
   getDevice,
   getGlobalSettings,
@@ -31,7 +31,7 @@ import {
   saveGlobalSettings,
   saveLocalSettings,
   settingsChangeListener,
-} from '../utils/tampermonkey';
+} from '../utils/tampermonkey.ts';
 
 /**
  * Default settings for the script.

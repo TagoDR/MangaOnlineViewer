@@ -1,7 +1,7 @@
 // == Imhentai =====================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
-import { extensionByCode } from '../utils/urls';
-import { waitForVar } from '../utils/waitFor';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
+import { extensionByCode } from '../utils/urls.ts';
+import { waitForVar } from '../utils/waitFor.ts';
 
 const imhentai: ISite = {
   name: 'Imhentai',

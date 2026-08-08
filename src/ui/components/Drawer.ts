@@ -1,6 +1,6 @@
 import { css, html, LitElement, type PropertyValueMap } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { IconX } from '../icons';
+import { IconX } from '../icons/index.ts';
 
 declare global {
   interface HTMLElementTagNameMap {

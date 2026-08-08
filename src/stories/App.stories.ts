@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { appState, settings } from '../core/settings';
+import { appState, settings } from '../core/settings.ts';
 
 // Import the component and all its dependencies to ensure they are registered
-import '../ui';
+import '../ui/index.ts';
 import localhost from '../main/localhost.ts';
-import type { IMangaImages } from '../types';
+import type { IMangaImages } from '../types/index.ts';
 
 // Mock data required by the App component and its children
 // @ts-expect-error

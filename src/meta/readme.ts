@@ -1,7 +1,7 @@
-import adult from '../adult';
-import { requiredScripts } from '../core/externals';
-import main from '../main';
-import type { ISite } from '../types';
+import adult from '../adult/index.ts';
+import { requiredScripts } from '../core/externals.ts';
+import main from '../main/index.ts';
+import type { ISite } from '../types/index.ts';
 
 const sites = [...main, ...adult];
 /**

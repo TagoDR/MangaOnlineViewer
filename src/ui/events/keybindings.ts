@@ -7,8 +7,8 @@ import {
   getAppStateValue,
   getSettingsValue,
   setAppStateValue,
-} from '../../core/settings';
-import { isStandalone, logScript } from '../../utils/tampermonkey';
+} from '../../core/settings.ts';
+import { isStandalone, logScript } from '../../utils/tampermonkey.ts';
 import { toggleAutoScroll } from './autoscroll.ts';
 import { changeAutoScrollSpeed } from './options.ts';
 import { updateViewMode } from './viewmode.ts';

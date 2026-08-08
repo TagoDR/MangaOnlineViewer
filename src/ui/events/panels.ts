@@ -1,7 +1,7 @@
 import type { Ref } from 'lit/directives/ref.js';
 import _ from 'lodash';
-import { saveSettingsValue, setAppStateValue } from '../../core/settings';
-import keybindings from './keybindings';
+import { saveSettingsValue, setAppStateValue } from '../../core/settings.ts';
+import keybindings from './keybindings.ts';
 
 /**
  * Event handler to close any currently open panel by setting the application state.

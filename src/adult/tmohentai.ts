@@ -1,7 +1,7 @@
 // == TMOHentai ====================================================================================
 
-import TMO from '../main/tmofans';
-import { Category, type ISite, Language } from '../types';
+import TMO from '../main/tmofans.ts';
+import { Category, type ISite, Language } from '../types/index.ts';
 
 const tmohhentai: ISite = {
   ...TMO,

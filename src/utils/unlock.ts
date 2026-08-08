@@ -1,5 +1,5 @@
-import { logScript } from './tampermonkey';
-import { awaitElement } from './userscript';
+import { logScript } from './tampermonkey.ts';
+import { awaitElement } from './userscript.ts';
 
 /**
  * Monkey-patches `Element.prototype.attachShadow` to force all shadow DOMs into 'open' mode.

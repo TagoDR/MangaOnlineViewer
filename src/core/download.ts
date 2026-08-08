@@ -2,8 +2,8 @@ import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import { html } from 'lit';
 import _ from 'lodash';
-import type { Page } from '../types';
-import { logScript } from '../utils/tampermonkey';
+import type { Page } from '../types/index.ts';
+import { logScript } from '../utils/tampermonkey.ts';
 import { getAppStateValue, getLocaleString, setAppStateValue } from './settings.ts';
 
 /**

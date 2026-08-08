@@ -1,6 +1,6 @@
 import { css, unsafeCSS } from 'lit';
-import { getSettingsValue } from '../core/settings';
-import colors, { getTextColor } from '../utils/colors';
+import { getSettingsValue } from '../core/settings.ts';
+import colors, { getTextColor } from '../utils/colors.ts';
 import { generateColorGradient } from '../utils/palettes.ts';
 
 /**

@@ -2,20 +2,19 @@ import type { Preview } from '@storybook/web-components-vite';
 import { css, html, LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { themes } from 'storybook/theming';
-import '../src/ui';
+import '../src/ui/index.ts';
 import { useStores } from '@nanostores/lit';
 import { styleMap } from 'lit-html/directives/style-map.js';
 import _ from 'lodash';
 import { appState, getSettingsValue, locale, settings } from '../src/core/settings.ts';
 import { changeTheme } from '../src/ui/events/theming.ts';
-import cssStyles from '../src/ui/styles';
 import externalCSS from '../src/ui/styles/externalStyle.ts';
+import cssStyles from '../src/ui/styles/index.ts';
 import { themesCSS } from '../src/ui/themes.ts';
 import colors, { sample } from '../src/utils/colors.ts';
 
 @customElement('theme-wrapper')
 @useStores(settings, locale, appState)
-// @ts-expect-error
 // biome-ignore lint/correctness/noUnusedVariables: helperClass
 class ThemeWrapper extends LitElement {
   static readonly styles = [

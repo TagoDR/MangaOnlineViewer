@@ -37,7 +37,7 @@ import {
   IconZoomCancel,
   IconZoomIn,
   IconZoomOut,
-} from './icons';
+} from './icons/index.ts';
 
 /**
  * Calculates the inline styles for a manga page's image based on the current zoom settings.

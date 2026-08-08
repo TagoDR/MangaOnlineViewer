@@ -5,7 +5,7 @@ import {
   saveSettingsValue,
   setAppStateValue,
   toggleLocalSettings,
-} from '../../core/settings';
+} from '../../core/settings.ts';
 import type {
   DeviceMode,
   HeaderMode,
@@ -13,8 +13,8 @@ import type {
   LoadSpeed,
   NavbarMode,
   PaginationMode,
-} from '../../types';
-import { replaceStyleSheet } from '../../utils/css';
+} from '../../types/index.ts';
+import { replaceStyleSheet } from '../../utils/css.ts';
 
 import { showInfoDialog } from '../components/Dialog.ts';
 

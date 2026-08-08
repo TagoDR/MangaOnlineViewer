@@ -1,4 +1,4 @@
-import type { LoadSpeed } from '../types';
+import type { LoadSpeed } from '../types/index.ts';
 
 type Task = () => Promise<void>;
 

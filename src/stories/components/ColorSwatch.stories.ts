@@ -4,8 +4,8 @@ import { customElement } from 'lit/decorators.js';
 import _ from 'lodash';
 import { appState, getSettingsValue, locale, settings } from '../../core/settings.ts';
 import { changeTheme } from '../../ui/events/theming.ts';
-import { sample } from '../../utils/colors';
-import '../../ui/components/ColorSwatch';
+import { sample } from '../../utils/colors.ts';
+import '../../ui/components/ColorSwatch.ts';
 import { useStores } from '@nanostores/lit';
 
 /**

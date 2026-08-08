@@ -6,7 +6,7 @@ import {
   isBruteforceManga,
   isImagesManga,
   isPagesManga,
-} from '../types';
+} from '../types/index.ts';
 import { removeURLBookmark } from '../ui/events/bookmarks.ts';
 import { applyZoom } from '../ui/events/zoom.ts';
 import { getElementAttribute } from '../utils/request.ts';

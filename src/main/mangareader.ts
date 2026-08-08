@@ -1,5 +1,5 @@
 // == MangaReader ==================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 declare let imgReverser: (url: string) => Promise<HTMLCanvasElement>;
 

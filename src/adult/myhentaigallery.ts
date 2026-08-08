@@ -1,5 +1,5 @@
 // == MyHentaiGallery ==============================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const myhentaigallery: ISite = {
   name: 'MyHentaiGallery',

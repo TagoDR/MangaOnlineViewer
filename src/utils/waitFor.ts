@@ -1,4 +1,4 @@
-import { isNothing } from './checks';
+import { isNothing } from './checks.ts';
 
 /**
  * Waits for an element matching the given selector to appear in the DOM.

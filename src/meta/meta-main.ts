@@ -1,5 +1,5 @@
-import { requiredScripts } from '../core/externals';
-import sites from '../main';
+import { requiredScripts } from '../core/externals.ts';
+import sites from '../main/index.ts';
 
 /**
  * Tampermonkey metadata block for the main (SFW) version of the script.

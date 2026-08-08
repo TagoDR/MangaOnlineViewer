@@ -1,4 +1,4 @@
-import { html } from './code-tag';
+import { html } from './code-tag.ts';
 
 /**
  * Creates a <style> element with the specified ID and content.

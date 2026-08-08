@@ -5,7 +5,7 @@
  */
 
 import { css, unsafeCSS } from 'lit';
-import { svgToUrl } from '../../utils/svgs';
+import { svgToUrl } from '../../utils/svgs.ts';
 import { IconPhoto, IconPhotoOff } from '../icons/StyledIcons.ts';
 import styles from './App.css?inline';
 import animation from './animation.css?inline';

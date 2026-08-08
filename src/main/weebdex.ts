@@ -1,7 +1,7 @@
 // == WeebDex ======================================================================================
 
 import _ from 'lodash';
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const weebdex: ISite = {
   name: 'WeebDex',

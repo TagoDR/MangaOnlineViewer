@@ -1,4 +1,4 @@
-import { isNothing } from '../utils/checks';
+import { isNothing } from '../utils/checks.ts';
 
 /**
  * Defines the base properties that are common to all manga loading strategies.

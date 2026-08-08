@@ -1,6 +1,6 @@
 // == MangaStream WordPress Plugin =================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
-import { findByContentEq } from '../utils/find';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
+import { findByContentEq } from '../utils/find.ts';
 
 const mangastreamwp: ISite = {
   name: [

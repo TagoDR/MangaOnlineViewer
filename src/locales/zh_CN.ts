@@ -1,5 +1,5 @@
 // Translation by lhj5426
-import type { ILocale } from '../types';
+import type { ILocale } from '../types/index.ts';
 
 /**
  * Chinese (Simplified) localization.

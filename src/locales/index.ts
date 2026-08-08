@@ -1,10 +1,10 @@
-import type { ILocale } from '../types';
-import de_DE from './de_DE';
-import en_US from './en_US';
-import es_ES from './es_ES';
-import fr_FR from './fr_FR';
-import pt_BR from './pt_BR';
-import zh_CN from './zh_CN';
+import type { ILocale } from '../types/index.ts';
+import de_DE from './de_DE.ts';
+import en_US from './en_US.ts';
+import es_ES from './es_ES.ts';
+import fr_FR from './fr_FR.ts';
+import pt_BR from './pt_BR.ts';
+import zh_CN from './zh_CN.ts';
 
 /**
  * An array containing all available localizations for the application.

@@ -1,5 +1,5 @@
 // == Ver Mangas Porno =============================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const vercomicsporno: ISite = {
   name: ['vermangasporno', 'vercomicsporno'],

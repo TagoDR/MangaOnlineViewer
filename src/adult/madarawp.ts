@@ -1,6 +1,6 @@
 // == Madara WordPress Plugin ======================================================================
-import madarawp from '../main/madarawp';
-import { Category, type ISite } from '../types';
+import madarawp from '../main/madarawp.ts';
+import { Category, type ISite } from '../types/index.ts';
 
 const madarawph: ISite = {
   ...madarawp,

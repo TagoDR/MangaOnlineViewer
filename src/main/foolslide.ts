@@ -1,5 +1,5 @@
 // == FoOlSlide ====================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const foolslide: ISite = {
   name: ['FoOlSlide', 'Kireicake'],

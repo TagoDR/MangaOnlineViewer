@@ -1,8 +1,8 @@
 // == Comix =======================================================================================
 /** biome-ignore-all lint/suspicious/noExplicitAny: brute force */
-import { Category, type IManga, type ISite, Language } from '../types';
-import { bruteforceScroll } from '../utils/bruteforce';
-import { logScript } from '../utils/tampermonkey';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
+import { bruteforceScroll } from '../utils/bruteforce.ts';
+import { logScript } from '../utils/tampermonkey.ts';
 
 let chapterPagesData: any = null;
 

@@ -1,5 +1,5 @@
 // == Hentai2Read ==================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const hentai2read: ISite = {
   name: 'Hentai2Read',

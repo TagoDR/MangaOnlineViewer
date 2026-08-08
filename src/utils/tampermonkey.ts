@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: the values truly does not matter */
 
 import Bowser from 'bowser';
-import type { Device, ISettings } from '../types';
+import type { Device, ISettings } from '../types/index.ts';
 
 /**
  * Safely exposes a value to the window object, targeting `unsafeWindow` in userscript environments

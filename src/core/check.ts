@@ -1,6 +1,6 @@
-import type { ISite } from '../types';
-import { logScript } from '../utils/tampermonkey';
-import { waitForAtb, waitForElm, waitForFunc, waitForVar } from '../utils/waitFor';
+import type { ISite } from '../types/index.ts';
+import { logScript } from '../utils/tampermonkey.ts';
+import { waitForAtb, waitForElm, waitForFunc, waitForVar } from '../utils/waitFor.ts';
 
 /**
  * A generic helper function to run a test condition.

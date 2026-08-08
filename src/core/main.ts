@@ -1,4 +1,4 @@
-import type { IManga, ISite } from '../types';
+import type { IManga, ISite } from '../types/index.ts';
 import {
   getBrowser,
   getDevice,
@@ -6,10 +6,10 @@ import {
   getInfoGM,
   logScript,
   logScriptVerbose,
-} from '../utils/tampermonkey';
-import { runSiteTests } from './check';
-import { getSettingsValue, isBookmarked } from './settings';
-import '../ui';
+} from '../utils/tampermonkey.ts';
+import { runSiteTests } from './check.ts';
+import { getSettingsValue, isBookmarked } from './settings.ts';
+import '../ui/index.ts';
 import type App from '../ui/App.ts';
 import externalCSS from '../ui/styles/externalStyle.ts';
 import { wrapStyle } from '../utils/css.ts';

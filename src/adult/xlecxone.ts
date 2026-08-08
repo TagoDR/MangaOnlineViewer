@@ -1,5 +1,5 @@
 // == XlecxOne =====================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const xlecxone: ISite = {
   name: 'XlecxOne',

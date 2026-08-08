@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { getAppStateValue, getEffectiveDevice, setAppStateValue } from '../core/settings.ts';
 import { waitForFunc } from '../utils/waitFor.ts';
-import autoscroll from './events/autoscroll';
-import trackCurrentPage from './events/currentpage';
-import keybindings from './events/keybindings';
+import autoscroll from './events/autoscroll.ts';
+import trackCurrentPage from './events/currentpage.ts';
+import keybindings from './events/keybindings.ts';
 import { applyZoom } from './events/zoom.ts';
 
 /**

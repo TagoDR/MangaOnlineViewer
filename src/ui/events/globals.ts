@@ -1,7 +1,7 @@
 import { sanitizeUrl } from '@braintree/sanitize-url';
-import generateZip from '../../core/download';
+import generateZip from '../../core/download.ts';
 import { changeSettingsValue, getAppStateValue } from '../../core/settings.ts';
-import { isStandalone, logScript } from '../../utils/tampermonkey';
+import { isStandalone, logScript } from '../../utils/tampermonkey.ts';
 
 /**
  * Event handler to initiate the download of the chapter as a ZIP file.

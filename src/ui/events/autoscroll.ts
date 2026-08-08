@@ -5,8 +5,8 @@
  */
 
 import _ from 'lodash';
-import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
-import { logScript } from '../../utils/tampermonkey';
+import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings.ts';
+import { logScript } from '../../utils/tampermonkey.ts';
 
 /**
  * The core scrolling animation loop.

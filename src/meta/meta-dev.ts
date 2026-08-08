@@ -1,6 +1,6 @@
-import adult from '../adult';
-import { requiredScripts } from '../core/externals';
-import main from '../main';
+import adult from '../adult/index.ts';
+import { requiredScripts } from '../core/externals.ts';
+import main from '../main/index.ts';
 
 const sites = [...main, ...adult];
 

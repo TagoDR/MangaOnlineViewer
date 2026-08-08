@@ -60,3 +60,5 @@ agnosticui/
 
 .gemini/
 gha-creds-*.json
+/dist/tsconfig.tsbuildinfo
+/qodana.yaml

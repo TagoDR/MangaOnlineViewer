@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { type ToastPlacement, toast } from '../ui/components/Toast';
+import { type ToastPlacement, toast } from '../ui/components/Toast.ts';
 
 export default {
   title: 'Components/Toast',

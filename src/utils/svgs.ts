@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { html } from './code-tag';
-import colors from './colors';
+import { html } from './code-tag.ts';
+import colors from './colors.ts';
 
 /**
  * Converts a raw SVG string into a data URL that can be used in CSS or as an image source.

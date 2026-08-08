@@ -1,9 +1,9 @@
 export * from './IApp.ts';
-export * from './IBookmark';
-export * from './ILocale';
-export * from './IManga';
-export * from './ISettings';
-export * from './ISite';
+export * from './IBookmark.ts';
+export * from './ILocale.ts';
+export * from './IManga.ts';
+export * from './ISettings.ts';
+export * from './ISite.ts';
 
 /**
  * A type guard to check if a given key exists on an object in a type-safe way.

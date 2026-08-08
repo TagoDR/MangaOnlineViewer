@@ -1,4 +1,4 @@
-import type { IBookmark } from './IBookmark';
+import type { IBookmark } from './IBookmark.ts';
 
 /**
  * Defines the available reading modes for the viewer.

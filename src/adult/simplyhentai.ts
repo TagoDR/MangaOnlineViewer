@@ -1,5 +1,5 @@
 // == Simply-Hentai ================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const simplyhentai: ISite = {
   name: 'Simply-Hentai',

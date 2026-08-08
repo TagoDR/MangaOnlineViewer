@@ -4,7 +4,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import _ from 'lodash';
-import colors, { getTextColor } from '../../utils/colors';
+import colors, { getTextColor } from '../../utils/colors.ts';
 
 declare global {
   interface HTMLElementTagNameMap {

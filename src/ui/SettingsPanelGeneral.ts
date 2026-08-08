@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { getLocaleString, getSettingsValue, isSettingsLocal } from '../core/settings.ts';
-import locales from '../locales';
+import locales from '../locales/index.ts';
 import { changeDeviceMode, changeLocale, changeSettingsScope } from './events/options.ts';
 import './components/SegmentedControl.ts';
 

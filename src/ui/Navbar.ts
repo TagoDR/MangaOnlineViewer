@@ -4,13 +4,13 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
 import _ from 'lodash';
-import { appState, getAppStateValue, getLocaleString, locale, settings } from '../core/settings.js';
-import type { NavbarMode } from '../types';
-import sequence from '../utils/sequence';
+import { appState, getAppStateValue, getLocaleString, locale, settings } from '../core/settings.ts';
+import type { NavbarMode } from '../types/index.ts';
+import sequence from '../utils/sequence.ts';
 import { svgToUrl } from '../utils/svgs.ts';
 import { transformScrollToHorizontal } from './events/common.ts';
 import { clickThumbnail } from './events/navigation.ts';
-import { IconCategory } from './icons';
+import { IconCategory } from './icons/index.ts';
 import { IconPhoto, IconPhotoOff } from './icons/StyledIcons.ts';
 import styles from './styles/navbar.css?inline';
 

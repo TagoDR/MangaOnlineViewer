@@ -1,5 +1,5 @@
 // == FreeAdultComix ===============================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const freeadultcomix: ISite = {
   name: 'FreeAdultComix',

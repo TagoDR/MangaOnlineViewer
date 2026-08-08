@@ -2,7 +2,7 @@ import { css, html, LitElement, type PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit-html/directives/style-map.js';
 import { getTextColor } from '../../utils/colors.ts';
-import { IconCheck } from '../icons';
+import { IconCheck } from '../icons/index.ts';
 
 declare global {
   interface HTMLElementTagNameMap {

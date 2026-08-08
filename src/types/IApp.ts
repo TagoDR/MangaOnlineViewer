@@ -1,6 +1,6 @@
 import type { TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
-import type { IManga } from './IManga';
+import type { IManga } from './IManga.ts';
 
 /**
  * Defines the possible states for the slide-out panels in the UI.

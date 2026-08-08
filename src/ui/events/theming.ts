@@ -1,4 +1,4 @@
-import { getSettingsValue, saveSettingsValue } from '../../core/settings';
+import { getSettingsValue, saveSettingsValue } from '../../core/settings.ts';
 
 /**
  * Toggles the color scheme between 'dark' and 'light' and applies the corresponding class to the root element.

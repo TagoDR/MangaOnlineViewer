@@ -1,6 +1,6 @@
 // == Batoto =======================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
-import { findClosestByContentEnds, findClosestByContentStarts } from '../utils/find';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
+import { findClosestByContentEnds, findClosestByContentStarts } from '../utils/find.ts';
 
 const batoto: ISite = {
   name: 'Batoto',

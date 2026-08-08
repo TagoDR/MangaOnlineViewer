@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { themesCSS } from '../ui/themes';
+import { themesCSS } from '../ui/themes.ts';
 import '../ui/Startup.ts';
 
 // Mock data for the story

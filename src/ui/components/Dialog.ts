@@ -1,7 +1,7 @@
 import { css, html, LitElement, type PropertyValueMap } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { IconX } from '../icons';
-import './Icon';
+import { IconX } from '../icons/index.ts';
+import './Icon.ts';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 declare global {

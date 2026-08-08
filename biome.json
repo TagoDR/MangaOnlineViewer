@@ -27,7 +27,8 @@
     "rules": {
       "preset": "recommended",
       "correctness": {
-        "noUnusedVariables": "warn"
+        "noUnusedVariables": "warn",
+        "useImportExtensions": "error"
       },
       "a11y": {
         "noSvgWithoutTitle": "off"

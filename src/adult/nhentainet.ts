@@ -1,5 +1,5 @@
 // == nHentai.net ==================================================================================
-import { Category, type IManga, type ISite, Language } from '../types';
+import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const nhentainet: ISite = {
   name: ['nHentai.net'],

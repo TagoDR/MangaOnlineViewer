@@ -1,7 +1,7 @@
 import { blobToDataURL } from 'blob-util';
 import _ from 'lodash';
-import { logScript } from './tampermonkey';
-import { isBase64ImageUrl, isObjectURL } from './urls';
+import { logScript } from './tampermonkey.ts';
+import { isBase64ImageUrl, isObjectURL } from './urls.ts';
 
 /**
  * Defines the configuration options for the lazy loader.

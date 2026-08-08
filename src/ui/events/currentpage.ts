@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings';
+import { getAppStateValue, getSettingsValue, setAppStateValue } from '../../core/settings.ts';
 
 /**
  * Computes which page is currently considered "active" in the viewport.

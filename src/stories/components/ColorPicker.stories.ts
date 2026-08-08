@@ -3,10 +3,10 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import _ from 'lodash';
-import { appState, getSettingsValue, locale, settings } from '../../core/settings';
+import { appState, getSettingsValue, locale, settings } from '../../core/settings.ts';
 import type ColorPicker from '../../ui/components/ColorPicker.ts';
 import '../../ui/components/ColorPicker.ts';
-import { changeTheme } from '../../ui/events/theming';
+import { changeTheme } from '../../ui/events/theming.ts';
 import colors from '../../utils/colors.ts';
 
 // Wrapper for the Live Theme Preview story

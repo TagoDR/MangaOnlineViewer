@@ -1,8 +1,8 @@
 import { css, html, LitElement, type PropertyValueMap } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { getTextColor } from '../../utils/colors';
+import { getTextColor } from '../../utils/colors.ts';
 import { generateColorGradient } from '../../utils/palettes.ts';
-import { IconCheck } from '../icons';
+import { IconCheck } from '../icons/index.ts';
 
 declare global {
   interface HTMLElementTagNameMap {

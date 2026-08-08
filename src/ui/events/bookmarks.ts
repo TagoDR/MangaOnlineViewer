@@ -4,10 +4,10 @@ import {
   getLocaleString,
   isBookmarked,
   setAppStateValue,
-} from '../../core/settings';
-import type { IBookmark } from '../../types';
-import { isNothing } from '../../utils/checks';
-import { logScript } from '../../utils/tampermonkey';
+} from '../../core/settings.ts';
+import type { IBookmark } from '../../types/index.ts';
+import { isNothing } from '../../utils/checks.ts';
+import { logScript } from '../../utils/tampermonkey.ts';
 import { toast } from '../components/Toast.ts';
 
 /**

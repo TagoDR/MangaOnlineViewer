@@ -1,7 +1,7 @@
 import { css, html, LitElement, type TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { IconCheck, IconX } from '../icons';
+import { IconCheck, IconX } from '../icons/index.ts';
 
 /**
  * Custom switch

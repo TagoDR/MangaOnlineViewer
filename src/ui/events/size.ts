@@ -3,7 +3,7 @@ import {
   getSettingsValue,
   navbarSize,
   setAppStateValue,
-} from '../../core/settings';
+} from '../../core/settings.ts';
 
 /**
  * Event handler to zoom in on an individual page by a percentage step.

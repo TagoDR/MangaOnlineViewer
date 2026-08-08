@@ -16,10 +16,10 @@ import {
 } from '../core/settings.ts';
 import events from './events.ts';
 import Reader from './Reader.ts';
-import cssStyles from './styles';
+import cssStyles from './styles/index.ts';
 import { themesCSS } from './themes.ts';
 import './Startup.ts';
-import type { IManga, LoadMode } from '../types';
+import type { IManga, LoadMode } from '../types/index.ts';
 import { cleanUpElement } from '../utils/cleanup.ts';
 
 /**

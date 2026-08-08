@@ -7,7 +7,7 @@
  */
 import { html, render } from 'lit';
 import { preparePage } from './core/main.ts';
-import localhost from './main/localhost';
+import localhost from './main/localhost.ts';
 import './ui/StandaloneLanding.ts';
 import { requiredScripts } from './core/externals.ts';
 import { isStandalone } from './utils/tampermonkey.ts';
