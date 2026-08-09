@@ -65,8 +65,10 @@ Download the standalone HTML file from the link below. Open it in your browser t
 - [MangaTown](https://www.mangatown.com/) _[English]_
 - [MangaGeko.com](https://www.mgeko.com/) / [MangaGeko.cc](https://www.mgeko.cc/) _[English]_
 - [NineAnime](https://www.nineanime.com/) _[English]_
+- [Qi Manga](https://qimanga.com/) _[English]_
 - [QiManhwa](https://qimanhwa.com/) _[English]_
 - [ReaperScans](https://reaperscans.com/) _[English]_
+- [ReiManga](https://reimanga.com/) _[English]_
 - [WebNovel](https://www.webnovel.com/) _[English]_
 - [WebToons](https://www.webtoons.com/) _[English]_
 - [WeebCentral](https://weebcentral.com/) _[English]_

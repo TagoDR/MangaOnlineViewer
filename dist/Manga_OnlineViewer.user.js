@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, DemonicScans, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, Olympus, QiManhwa, ReadComicsOnline, ReaperScans, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.07.25.build-1335
+// @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, DemonicScans, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, Olympus, Qi Manga, QiManhwa, ReadComicsOnline, ReaperScans, ReiManga, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
+// @version       2026.08.09.build-0000
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -58,9 +58,11 @@
 // @include       /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/
 // @include       /https?:\/\/(www\.)?nineanime.com\/chapter\/.+/
 // @include       /https?:\/\/(www\.)?olympusxyz.com\/capitulo\/\d+\/.+/
+// @include       /https?:\/\/(www\.)?qimanga\.com\/series\/[^/]+\/chapter-.+/
 // @include       /https?:\/\/qimanhwa\.com\/series\/[^/]+\/chapter-.+/
 // @include       /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/
 // @include       /https?:\/\/(www\.)?reaperscans\.com\/series\/.+\/chapter.+/
+// @include       /https?:\/\/(www\.)?reimanga\.com\/manga\/[^/]+-\d+\/\d+/
 // @include       /https?:\/\/(www\.)?zonatmo\.(com|org|app)\/(viewer|news|view_uploads|reader|library)\/.+/
 // @include       /https?:\/\/(www\.)?webnovel.com\/comic\/.+/
 // @include       /https?:\/\/(www\.)?webtoons.com\/.+viewer.+/
@@ -1081,6 +1083,11 @@
 			THEME_HUE: "Color Hue",
 			THEME_SHADE: "Color Shade",
 			DEFAULT_LOAD_MODE: "Default Load Mode",
+			DEVICE_MODE: "Device Mode",
+			DEVICE_MODE_AUTO: "Auto",
+			DEVICE_MODE_DESKTOP: "Desktop",
+			DEVICE_MODE_TABLET: "Tablet",
+			DEVICE_MODE_MOBILE: "Mobile",
 			LOAD_MODE_NORMAL: "Normal(Wait 3 sec)",
 			LOAD_MODE_ALWAYS: "Always(Immediately)",
 			LOAD_MODE_NEVER: "Never(Manually)",
@@ -1216,6 +1223,11 @@
 			THEME_HUE: "Matiz del color",
 			THEME_SHADE: "Saturación del color",
 			DEFAULT_LOAD_MODE: "Modo de carga por defecto",
+			DEVICE_MODE: "Modo de dispositivo",
+			DEVICE_MODE_AUTO: "Automático",
+			DEVICE_MODE_DESKTOP: "Escritorio",
+			DEVICE_MODE_TABLET: "Tableta",
+			DEVICE_MODE_MOBILE: "Móvil",
 			LOAD_MODE_NORMAL: "Normal (Espera 3s)",
 			LOAD_MODE_ALWAYS: "Siempre (Inmediatamente)",
 			LOAD_MODE_NEVER: "Nunca (Manualmente)",
@@ -1351,6 +1363,11 @@
 			THEME_HUE: "Tom da Cor",
 			THEME_SHADE: "Saturação da Cor",
 			DEFAULT_LOAD_MODE: "Forma de Carregamento Padrão",
+			DEVICE_MODE: "Modo de Dispositivo",
+			DEVICE_MODE_AUTO: "Automático",
+			DEVICE_MODE_DESKTOP: "Desktop",
+			DEVICE_MODE_TABLET: "Tablet",
+			DEVICE_MODE_MOBILE: "Celular",
 			LOAD_MODE_NORMAL: "Normal(Esperando 3 sec)",
 			LOAD_MODE_ALWAYS: "Sempre(Imediatamente)",
 			LOAD_MODE_NEVER: "Nunca(Manualmente)",
@@ -1486,6 +1503,11 @@
 			THEME_HUE: "色相",
 			THEME_SHADE: "色度",
 			DEFAULT_LOAD_MODE: "默认加载模式",
+			DEVICE_MODE: "设备模式",
+			DEVICE_MODE_AUTO: "自动",
+			DEVICE_MODE_DESKTOP: "桌面",
+			DEVICE_MODE_TABLET: "平板",
+			DEVICE_MODE_MOBILE: "手机",
 			LOAD_MODE_NORMAL: "等待模式(等待3秒自动加载 )",
 			LOAD_MODE_ALWAYS: "自动模式(无需等待)",
 			LOAD_MODE_NEVER: "手动模式(点击启动)",
@@ -1621,6 +1643,11 @@
 			THEME_HUE: "Farbton",
 			THEME_SHADE: "Schattierung",
 			DEFAULT_LOAD_MODE: "Standard-Lademodus",
+			DEVICE_MODE: "Gerätemodus",
+			DEVICE_MODE_AUTO: "Automatisch",
+			DEVICE_MODE_DESKTOP: "Desktop",
+			DEVICE_MODE_TABLET: "Tablet",
+			DEVICE_MODE_MOBILE: "Mobil",
 			LOAD_MODE_NORMAL: "Normal (3 Sek. warten)",
 			LOAD_MODE_ALWAYS: "Immer (sofort)",
 			LOAD_MODE_NEVER: "Nie (manuell)",
@@ -1756,6 +1783,11 @@
 			THEME_HUE: "Teinte de couleur",
 			THEME_SHADE: "Nuance de couleur",
 			DEFAULT_LOAD_MODE: "Mode de chargement par défaut",
+			DEVICE_MODE: "Mode d'appareil",
+			DEVICE_MODE_AUTO: "Automatique",
+			DEVICE_MODE_DESKTOP: "Bureau",
+			DEVICE_MODE_TABLET: "Tablette",
+			DEVICE_MODE_MOBILE: "Mobile",
 			LOAD_MODE_NORMAL: "Normal (attendre 3 s)",
 			LOAD_MODE_ALWAYS: "Toujours (immédiatement)",
 			LOAD_MODE_NEVER: "Jamais (manuellement)",
@@ -2091,7 +2123,7 @@
 		static finalizeStyles(s) {
 			const i = [];
 			if (Array.isArray(s)) {
-				const e = new Set(s.flat(Infinity).reverse());
+				const e = new Set(s.flat(1 / 0).reverse());
 				for (const s of e) i.unshift(c$1(s));
 			} else void 0 !== s && i.push(c$1(s));
 			return i;
@@ -2550,8 +2582,17 @@
 	//#region src/ui/icons/circle-x.svg
 	var circle_x_default = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-circle-x\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0\"/><path d=\"M10 10l4 4m0 -4l-4 4\"/></svg>";
 	//#endregion
+	//#region src/ui/icons/device-desktop.svg
+	var device_desktop_default = "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-device-desktop\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1z\"/><path d=\"M7 20h10\"/><path d=\"M9 16v4\"/><path d=\"M15 16v4\"/></svg>\r\n";
+	//#endregion
 	//#region src/ui/icons/device-floppy.svg
 	var device_floppy_default = "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-device-floppy\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2\"/><path d=\"M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0\"/><path d=\"M14 4l0 4l-6 0l0 -4\"/></svg>";
+	//#endregion
+	//#region src/ui/icons/device-mobile.svg
+	var device_mobile_default = "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-device-mobile\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z\"/><path d=\"M11 4h2\"/><path d=\"M12 17v.01\"/></svg>\r\n";
+	//#endregion
+	//#region src/ui/icons/device-tablet.svg
+	var device_tablet_default = "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-device-tablet\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"2\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M5 4a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v16a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z\"/><path d=\"M11 17a1 1 0 1 0 2 0a1 1 0 0 0 -2 0\"/></svg>\r\n";
 	//#endregion
 	//#region src/ui/icons/dots-vertical.svg
 	var dots_vertical_default = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/><path d=\"M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\"/><path d=\"M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\"/><path d=\"M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\"/></svg>";
@@ -2757,7 +2798,10 @@
 		IconComic2Flat: () => Comic2_SpecialFlat_default,
 		IconComic3: () => Comic3_SpecialLinealColor_default,
 		IconComic3Flat: () => Comic3_SpecialFlat_default,
+		IconDeviceDesktop: () => device_desktop_default,
 		IconDeviceFloppy: () => device_floppy_default,
+		IconDeviceMobile: () => device_mobile_default,
+		IconDeviceTablet: () => device_tablet_default,
 		IconDotsVertical: () => dots_vertical_default,
 		IconEReader1: () => E_reader1_KawaiiLinealColor_default,
 		IconEReader1Flat: () => E_reader1_KawaiiFlat_default,
@@ -2860,7 +2904,10 @@
 		IconComic2Flat: () => IconComic2Flat$1,
 		IconComic3: () => IconComic3$1,
 		IconComic3Flat: () => IconComic3Flat$1,
+		IconDeviceDesktop: () => IconDeviceDesktop$1,
 		IconDeviceFloppy: () => IconDeviceFloppy$1,
+		IconDeviceMobile: () => IconDeviceMobile$1,
+		IconDeviceTablet: () => IconDeviceTablet$1,
 		IconDotsVertical: () => IconDotsVertical$1,
 		IconEReader1: () => IconEReader1$1,
 		IconEReader1Flat: () => IconEReader1Flat$1,
@@ -2991,11 +3038,11 @@
 	* Use these when you need the SVG content directly, for example, in a CMS.
 	* @example svgToUrl(IconFileDownload)
 	*/
-	var { IconAdjustmentsHorizontal: IconAdjustmentsHorizontal$1, IconApiBook: IconApiBook$1, IconArrowsHorizontal: IconArrowsHorizontal$1, IconArrowsLeftRight: IconArrowsLeftRight$1, IconArrowAutofitDown: IconArrowAutofitDown$1, IconArrowAutofitHeight: IconArrowAutofitHeight$1, IconArrowAutofitLeft: IconArrowAutofitLeft$1, IconArrowAutofitRight: IconArrowAutofitRight$1, IconArrowAutofitWidth: IconArrowAutofitWidth$1, IconArrowBigLeft: IconArrowBigLeft$1, IconArrowBigRight: IconArrowBigRight$1, IconArrowsMove: IconArrowsMove$1, IconArrowsMoveVertical: IconArrowsMoveVertical$1, IconArrowsVertical: IconArrowsVertical$1, IconBook: IconBook$1, IconBookOff: IconBookOff$1, IconBookArrowLeft: IconBookArrowLeft$1, IconBookArrowRight: IconBookArrowRight$1, IconBooksReturn: IconBooksReturn$1, IconBookUpload: IconBookUpload$1, IconBookmark: IconBookmark$1, IconBookmarkOff: IconBookmarkOff$1, IconBookmarks: IconBookmarks$1, IconBoxAlignTop: IconBoxAlignTop$1, IconCategory: IconCategory$1, IconCheck: IconCheck$1, IconChevronLeft: IconChevronLeft$1, IconChevronRight: IconChevronRight$1, IconAlertCircle: IconAlertCircle$1, IconCircleCheck: IconCircleCheck$1, IconCircleX: IconCircleX$1, IconHelp: IconHelp$1, IconInfoCircle: IconInfoCircle$1, IconComic1: IconComic1$1, IconComic1Flat: IconComic1Flat$1, IconComic2: IconComic2$1, IconComic2Flat: IconComic2Flat$1, IconComic3: IconComic3$1, IconComic3Flat: IconComic3Flat$1, IconDeviceFloppy: IconDeviceFloppy$1, IconDotsVertical: IconDotsVertical$1, IconEReader1: IconEReader1$1, IconEReader1Flat: IconEReader1Flat$1, IconEReader2: IconEReader2$1, IconEReader2Flat: IconEReader2Flat$1, IconExternalLink: IconExternalLink$1, IconEye: IconEye$1, IconEyeOff: IconEyeOff$1, IconFileDownload: IconFileDownload$1, IconFilePercent: IconFilePercent$1, IconFolderOpen: IconFolderOpen$1, IconHandClick: IconHandClick$1, IconKeyboard: IconKeyboard$1, IconLayoutDashboard: IconLayoutDashboard$1, IconLayoutBottombar: IconLayoutBottombar$1, IconLayoutBottombarInactive: IconLayoutBottombarInactive$1, IconLayoutSidebar: IconLayoutSidebar$1, IconLayoutSidebarInactive: IconLayoutSidebarInactive$1, IconLayoutSidebarRight: IconLayoutSidebarRight$1, IconLayoutSidebarRightInactive: IconLayoutSidebarRightInactive$1, IconListNumbers: IconListNumbers$1, IconLoader2: IconLoader2$1, IconLocationCog: IconLocationCog$1, IconMenu2: IconMenu2$1, IconMenuDeep: IconMenuDeep$1, IconMessage: IconMessage$1, IconMoon: IconMoon$1, IconPage: IconPage$1, IconPageFlat: IconPageFlat$1, IconPalette: IconPalette$1, IconPencil: IconPencil$1, IconPencilCog: IconPencilCog$1, IconPhoto: IconPhoto$1, IconPhotoOff: IconPhotoOff$1, IconPin: IconPin$1, IconPlayerPause: IconPlayerPause$1, IconPlayerPlay: IconPlayerPlay$1, IconRefresh: IconRefresh$1, IconSettings: IconSettings$1, IconSettingsOff: IconSettingsOff$1, IconSpacingHorizontal: IconSpacingHorizontal$1, IconSpacingVertical: IconSpacingVertical$1, IconSun: IconSun$1, IconTrash: IconTrash$1, IconWorldCog: IconWorldCog$1, IconX: IconX$1, IconZoom: IconZoom$1, IconZoomCancel: IconZoomCancel$1, IconZoomIn: IconZoomIn$1, IconZoomInArea: IconZoomInArea$1, IconZoomOut: IconZoomOut$1, IconZoomOutArea: IconZoomOutArea$1, IconZoomPan: IconZoomPan$1 } = _.mapValues(svg_exports, (rawSvg, iconKey) => {
+	var { IconAdjustmentsHorizontal: IconAdjustmentsHorizontal$1, IconApiBook: IconApiBook$1, IconArrowsHorizontal: IconArrowsHorizontal$1, IconArrowsLeftRight: IconArrowsLeftRight$1, IconArrowAutofitDown: IconArrowAutofitDown$1, IconArrowAutofitHeight: IconArrowAutofitHeight$1, IconArrowAutofitLeft: IconArrowAutofitLeft$1, IconArrowAutofitRight: IconArrowAutofitRight$1, IconArrowAutofitWidth: IconArrowAutofitWidth$1, IconArrowBigLeft: IconArrowBigLeft$1, IconArrowBigRight: IconArrowBigRight$1, IconArrowsMove: IconArrowsMove$1, IconArrowsMoveVertical: IconArrowsMoveVertical$1, IconArrowsVertical: IconArrowsVertical$1, IconBook: IconBook$1, IconBookOff: IconBookOff$1, IconBookArrowLeft: IconBookArrowLeft$1, IconBookArrowRight: IconBookArrowRight$1, IconBooksReturn: IconBooksReturn$1, IconBookUpload: IconBookUpload$1, IconBookmark: IconBookmark$1, IconBookmarkOff: IconBookmarkOff$1, IconBookmarks: IconBookmarks$1, IconBoxAlignTop: IconBoxAlignTop$1, IconCategory: IconCategory$1, IconCheck: IconCheck$1, IconChevronLeft: IconChevronLeft$1, IconChevronRight: IconChevronRight$1, IconAlertCircle: IconAlertCircle$1, IconCircleCheck: IconCircleCheck$1, IconCircleX: IconCircleX$1, IconHelp: IconHelp$1, IconInfoCircle: IconInfoCircle$1, IconComic1: IconComic1$1, IconComic1Flat: IconComic1Flat$1, IconComic2: IconComic2$1, IconComic2Flat: IconComic2Flat$1, IconComic3: IconComic3$1, IconComic3Flat: IconComic3Flat$1, IconDeviceDesktop: IconDeviceDesktop$1, IconDeviceFloppy: IconDeviceFloppy$1, IconDeviceMobile: IconDeviceMobile$1, IconDeviceTablet: IconDeviceTablet$1, IconDotsVertical: IconDotsVertical$1, IconEReader1: IconEReader1$1, IconEReader1Flat: IconEReader1Flat$1, IconEReader2: IconEReader2$1, IconEReader2Flat: IconEReader2Flat$1, IconExternalLink: IconExternalLink$1, IconEye: IconEye$1, IconEyeOff: IconEyeOff$1, IconFileDownload: IconFileDownload$1, IconFilePercent: IconFilePercent$1, IconFolderOpen: IconFolderOpen$1, IconHandClick: IconHandClick$1, IconKeyboard: IconKeyboard$1, IconLayoutDashboard: IconLayoutDashboard$1, IconLayoutBottombar: IconLayoutBottombar$1, IconLayoutBottombarInactive: IconLayoutBottombarInactive$1, IconLayoutSidebar: IconLayoutSidebar$1, IconLayoutSidebarInactive: IconLayoutSidebarInactive$1, IconLayoutSidebarRight: IconLayoutSidebarRight$1, IconLayoutSidebarRightInactive: IconLayoutSidebarRightInactive$1, IconListNumbers: IconListNumbers$1, IconLoader2: IconLoader2$1, IconLocationCog: IconLocationCog$1, IconMenu2: IconMenu2$1, IconMenuDeep: IconMenuDeep$1, IconMessage: IconMessage$1, IconMoon: IconMoon$1, IconPage: IconPage$1, IconPageFlat: IconPageFlat$1, IconPalette: IconPalette$1, IconPencil: IconPencil$1, IconPencilCog: IconPencilCog$1, IconPhoto: IconPhoto$1, IconPhotoOff: IconPhotoOff$1, IconPin: IconPin$1, IconPlayerPause: IconPlayerPause$1, IconPlayerPlay: IconPlayerPlay$1, IconRefresh: IconRefresh$1, IconSettings: IconSettings$1, IconSettingsOff: IconSettingsOff$1, IconSpacingHorizontal: IconSpacingHorizontal$1, IconSpacingVertical: IconSpacingVertical$1, IconSun: IconSun$1, IconTrash: IconTrash$1, IconWorldCog: IconWorldCog$1, IconX: IconX$1, IconZoom: IconZoom$1, IconZoomCancel: IconZoomCancel$1, IconZoomIn: IconZoomIn$1, IconZoomInArea: IconZoomInArea$1, IconZoomOut: IconZoomOut$1, IconZoomOutArea: IconZoomOutArea$1, IconZoomPan: IconZoomPan$1 } = _.mapValues(svg_exports, (rawSvg, iconKey) => {
 		return applyColorsToSvg(rawSvg, `icon-tabler-${_.kebabCase(iconKey.replace(/^Icon/, ""))}`);
 	});
 	//#endregion
-	//#region \0@oxc-project+runtime@0.139.0/helpers/esm/decorate.js
+	//#region \0@oxc-project+runtime@0.143.0/helpers/esm/decorate.js
 	function __decorate(decorators, target, key, desc) {
 		var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 		if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3036,24 +3083,26 @@
 		}
 		updated(changedProperties) {
 			super.updated(changedProperties);
-			if (changedProperties.has("name")) if (StyledIcons_exports[toPascalCase(this.name)]) {
-				this.dispatchEvent(new CustomEvent("load", {
-					bubbles: true,
-					composed: true
-				}));
-				this.dispatchEvent(new CustomEvent("wa-load", {
-					bubbles: true,
-					composed: true
-				}));
-			} else {
-				this.dispatchEvent(new CustomEvent("error", {
-					bubbles: true,
-					composed: true
-				}));
-				this.dispatchEvent(new CustomEvent("wa-error", {
-					bubbles: true,
-					composed: true
-				}));
+			if (changedProperties.has("name")) {
+				if (StyledIcons_exports[toPascalCase(this.name)]) {
+					this.dispatchEvent(new CustomEvent("load", {
+						bubbles: true,
+						composed: true
+					}));
+					this.dispatchEvent(new CustomEvent("wa-load", {
+						bubbles: true,
+						composed: true
+					}));
+				} else {
+					this.dispatchEvent(new CustomEvent("error", {
+						bubbles: true,
+						composed: true
+					}));
+					this.dispatchEvent(new CustomEvent("wa-error", {
+						bubbles: true,
+						composed: true
+					}));
+				}
 			}
 		}
 		render() {
@@ -3357,8 +3406,10 @@
 	*/
 	var diffObj = (changed, original) => {
 		const changes = (object, base) => _.transform(object, (result, value, key) => {
-			if (!_.isEqual(value, base[key])) if (_.isObject(value) && _.isObject(base[key]) && !_.isArray(value)) result[key] = changes(value, base[key]);
-			else result[key] = value;
+			if (!_.isEqual(value, base[key])) {
+				if (_.isObject(value) && _.isObject(base[key]) && !_.isArray(value)) result[key] = changes(value, base[key]);
+				else result[key] = value;
+			}
 		});
 		return changes(changed, original);
 	};
@@ -3371,6 +3422,7 @@
 	var defaultSettings = {
 		bookmarks: [],
 		colorScheme: "dark",
+		deviceMode: "auto",
 		downloadZip: false,
 		enabled: false,
 		fitWidthIfOversize: true,
@@ -3582,6 +3634,16 @@
 	*/
 	var locale = /* @__PURE__ */ computed(settings, (current) => locales.find((l) => l.ID === current.locale) ?? locales[1]);
 	/**
+	* Computes the effective device type based on the `deviceMode` setting.
+	* If the setting is 'auto', the device is detected automatically; otherwise, the forced value is used.
+	* @param {DeviceMode} [mode] - The device mode setting. Defaults to the current setting value.
+	* @returns {Device} The effective device type.
+	*/
+	function getEffectiveDevice(mode = getSettingsValue("deviceMode")) {
+		if (mode === "auto") return getDevice();
+		return mode;
+	}
+	/**
 	* The reactive store for the application's volatile state, like current page, scroll state, etc.
 	* This state is not persisted.
 	* @type {import('nanostores').MapStore<IApp>}
@@ -3590,7 +3652,7 @@
 		autoScroll: false,
 		chapter: e$6(),
 		currentPage: 0,
-		device: getDevice(),
+		device: getEffectiveDevice(),
 		manga: void 0,
 		panel: "none",
 		scrollToPage: void 0
@@ -4695,7 +4757,7 @@
 	* Use these for direct rendering within a Lit template.
 	* @example html`${IconFileDownload}`
 	*/
-	var { IconAdjustmentsHorizontal, IconApiBook, IconArrowsHorizontal, IconArrowsLeftRight, IconArrowAutofitDown, IconArrowAutofitHeight, IconArrowAutofitLeft, IconArrowAutofitRight, IconArrowAutofitWidth, IconArrowBigLeft, IconArrowBigRight, IconArrowsMove, IconArrowsMoveVertical, IconArrowsVertical, IconBook, IconBookOff, IconBookArrowLeft, IconBookArrowRight, IconBooksReturn, IconBookUpload, IconBookmark, IconBookmarkOff, IconBookmarks, IconBoxAlignTop, IconCategory, IconCheck, IconChevronLeft, IconChevronRight, IconAlertCircle, IconCircleCheck, IconCircleX, IconHelp, IconInfoCircle, IconComic1, IconComic1Flat, IconComic2, IconComic2Flat, IconComic3, IconComic3Flat, IconDeviceFloppy, IconDotsVertical, IconEReader1, IconEReader1Flat, IconEReader2, IconEReader2Flat, IconExternalLink, IconEye, IconEyeOff, IconFileDownload, IconFilePercent, IconFolderOpen, IconHandClick, IconKeyboard, IconLayoutDashboard, IconLayoutBottombar, IconLayoutBottombarInactive, IconLayoutSidebar, IconLayoutSidebarInactive, IconLayoutSidebarRight, IconLayoutSidebarRightInactive, IconListNumbers, IconLoader2, IconLocationCog, IconMenu2, IconMenuDeep, IconMessage, IconMoon, IconPage, IconPageFlat, IconPalette, IconPencil, IconPencilCog, IconPhoto, IconPhotoOff, IconPin, IconPlayerPause, IconPlayerPlay, IconRefresh, IconSettings, IconSettingsOff, IconSpacingHorizontal, IconSpacingVertical, IconSun, IconTrash, IconWorldCog, IconX, IconZoom, IconZoomCancel, IconZoomIn, IconZoomInArea, IconZoomOut, IconZoomOutArea, IconZoomPan } = _.fromPairs(_.entries(StyledIcons_exports).map(([iconKey, icon]) => [iconKey, o$4(icon)]));
+	var { IconAdjustmentsHorizontal, IconApiBook, IconArrowsHorizontal, IconArrowsLeftRight, IconArrowAutofitDown, IconArrowAutofitHeight, IconArrowAutofitLeft, IconArrowAutofitRight, IconArrowAutofitWidth, IconArrowBigLeft, IconArrowBigRight, IconArrowsMove, IconArrowsMoveVertical, IconArrowsVertical, IconBook, IconBookOff, IconBookArrowLeft, IconBookArrowRight, IconBooksReturn, IconBookUpload, IconBookmark, IconBookmarkOff, IconBookmarks, IconBoxAlignTop, IconCategory, IconCheck, IconChevronLeft, IconChevronRight, IconAlertCircle, IconCircleCheck, IconCircleX, IconHelp, IconInfoCircle, IconComic1, IconComic1Flat, IconComic2, IconComic2Flat, IconComic3, IconComic3Flat, IconDeviceDesktop, IconDeviceFloppy, IconDeviceMobile, IconDeviceTablet, IconDotsVertical, IconEReader1, IconEReader1Flat, IconEReader2, IconEReader2Flat, IconExternalLink, IconEye, IconEyeOff, IconFileDownload, IconFilePercent, IconFolderOpen, IconHandClick, IconKeyboard, IconLayoutDashboard, IconLayoutBottombar, IconLayoutBottombarInactive, IconLayoutSidebar, IconLayoutSidebarInactive, IconLayoutSidebarRight, IconLayoutSidebarRightInactive, IconListNumbers, IconLoader2, IconLocationCog, IconMenu2, IconMenuDeep, IconMessage, IconMoon, IconPage, IconPageFlat, IconPalette, IconPencil, IconPencilCog, IconPhoto, IconPhotoOff, IconPin, IconPlayerPause, IconPlayerPlay, IconRefresh, IconSettings, IconSettingsOff, IconSpacingHorizontal, IconSpacingVertical, IconSun, IconTrash, IconWorldCog, IconX, IconZoom, IconZoomCancel, IconZoomIn, IconZoomInArea, IconZoomOut, IconZoomOutArea, IconZoomPan } = _.fromPairs(_.entries(StyledIcons_exports).map(([iconKey, icon]) => [iconKey, o$4(icon)]));
 	//#endregion
 	//#region src/ui/components/ColorSwatch.ts
 	var ColorSwatch = class ColorSwatch extends i$1 {
@@ -5500,8 +5562,10 @@
 			window.removeEventListener("click", this.handleClickOutside.bind(this));
 		}
 		updated(changedProperties) {
-			if (changedProperties.has("mode")) if (this.mode === "popup") window.addEventListener("click", this.handleClickOutside.bind(this));
-			else window.removeEventListener("click", this.handleClickOutside.bind(this));
+			if (changedProperties.has("mode")) {
+				if (this.mode === "popup") window.addEventListener("click", this.handleClickOutside.bind(this));
+				else window.removeEventListener("click", this.handleClickOutside.bind(this));
+			}
 		}
 		willUpdate(changedProperties) {
 			if (changedProperties.has("value")) this.updateStateFromValue(this.value);
@@ -5539,27 +5603,30 @@
 			}, 150);
 		}
 		togglePopup() {
-			if (this.mode === "popup") if (this.opened) this.hide();
-			else {
-				const triggerRect = this.getBoundingClientRect();
-				const pickerWidth = 250;
-				let containerRect;
-				const drawer = this.closest("mov-drawer");
-				if (drawer?.shadowRoot) {
-					const dialog = drawer.shadowRoot.querySelector("dialog");
-					if (dialog) containerRect = dialog.getBoundingClientRect();
-					else containerRect = {
+			if (this.mode === "popup") {
+				if (this.opened) this.hide();
+				else {
+					const triggerRect = this.getBoundingClientRect();
+					const pickerWidth = 250;
+					let containerRect;
+					const drawer = this.closest("mov-drawer");
+					if (drawer?.shadowRoot) {
+						const dialog = drawer.shadowRoot.querySelector("dialog");
+						if (dialog) containerRect = dialog.getBoundingClientRect();
+						else containerRect = {
+							left: 0,
+							right: window.innerWidth
+						};
+					} else containerRect = {
 						left: 0,
 						right: window.innerWidth
 					};
-				} else containerRect = {
-					left: 0,
-					right: window.innerWidth
-				};
-				if (triggerRect.left + pickerWidth > containerRect.right) if (triggerRect.right - pickerWidth > containerRect.left) this.popupDirection = "right";
-				else this.popupDirection = "left";
-				else this.popupDirection = "left";
-				this.show();
+					if (triggerRect.left + pickerWidth > containerRect.right) {
+						if (triggerRect.right - pickerWidth > containerRect.left) this.popupDirection = "right";
+						else this.popupDirection = "left";
+					} else this.popupDirection = "left";
+					this.show();
+				}
 			}
 		}
 		isSameColor(color1, color2) {
@@ -6842,8 +6909,10 @@
 		const url = element.getAttribute("value") ?? element.getAttribute("href");
 		if (event.button !== 1 && !event.ctrlKey) {
 			if (url && url !== "#") window.location.href = (0, import_dist.sanitizeUrl)(url);
-			else if (element.id === "series") if (isStandalone()) window.location.href = window.location.pathname;
-			else window.history.back();
+			else if (element.id === "series") {
+				if (isStandalone()) window.location.href = window.location.pathname;
+				else window.history.back();
+			}
 		}
 	}
 	//#endregion
@@ -7488,6 +7557,15 @@
 			return speed;
 		});
 	}
+	/**
+	* Event handler to change and save the device mode. Also updates the effective device in the app state.
+	* @param {Event} event - The change event from the device mode selector.
+	*/
+	function changeDeviceMode(event) {
+		const mode = event.currentTarget.value;
+		saveSettingsValue("deviceMode", mode);
+		setAppStateValue("device", getEffectiveDevice(mode));
+	}
 	//#endregion
 	//#region src/ui/events/zoom.ts
 	function getAvailableWidth() {
@@ -7695,8 +7773,10 @@
 	function redirectUrl(type) {
 		const url = getAppStateValue("manga")?.[type];
 		if (url && url !== "#") window.location.href = (0, import_dist.sanitizeUrl)(url);
-		else if (type === "series") if (isStandalone()) window.location.href = window.location.pathname;
-		else window.history.back();
+		else if (type === "series") {
+			if (isStandalone()) window.location.href = window.location.pathname;
+			else window.history.back();
+		}
 	}
 	/**
 	* A mapping of keybinding identifiers to their corresponding action functions.
@@ -10036,7 +10116,38 @@
     </select>
   </div>`;
 	}
-	var SettingsPanelGeneral_default = () => b$1`${settingsScope()} ${language()}`;
+	function deviceMode() {
+		const value = getSettingsValue("deviceMode");
+		return b$1` <div class="ControlLabel">
+    ${getLocaleString("DEVICE_MODE")}
+    <segmented-control
+      .value=${value}
+      @change=${changeDeviceMode}
+    >
+      <segmented-control-option
+        value="auto"
+        label=${getLocaleString("DEVICE_MODE_AUTO")}
+        icon="IconAdjustmentsHorizontal"
+      ></segmented-control-option>
+      <segmented-control-option
+        value="desktop"
+        label=${getLocaleString("DEVICE_MODE_DESKTOP")}
+        icon="IconDeviceDesktop"
+      ></segmented-control-option>
+      <segmented-control-option
+        value="tablet"
+        label=${getLocaleString("DEVICE_MODE_TABLET")}
+        icon="IconDeviceTablet"
+      ></segmented-control-option>
+      <segmented-control-option
+        value="mobile"
+        label=${getLocaleString("DEVICE_MODE_MOBILE")}
+        icon="IconDeviceMobile"
+      ></segmented-control-option>
+    </segmented-control>
+  </div>`;
+	}
+	var SettingsPanelGeneral_default = () => b$1`${settingsScope()} ${deviceMode()} ${language()}`;
 	//#endregion
 	//#region src/ui/SettingsPanelLoading.ts
 	function loadMode() {
@@ -10910,9 +11021,10 @@
 			if (!image) continue;
 			const rect = image?.getBoundingClientRect();
 			let edge;
-			if (isHorizontal) if (isRTL) edge = rect.right;
-			else edge = rect.left;
-			else edge = rect.top;
+			if (isHorizontal) {
+				if (isRTL) edge = rect.right;
+				else edge = rect.left;
+			} else edge = rect.top;
 			if (isHorizontal ? edge <= viewportCenterX : edge <= viewportCenterY) {
 				if (!best || edge > best.edge) best = {
 					index: parseInt(index, 10),
@@ -10963,7 +11075,7 @@
 	* It recalculates the zoom to ensure the content fits the new window dimensions.
 	*/
 	var updateOnResize = _.debounce(() => {
-		setAppStateValue("device", getDevice());
+		setAppStateValue("device", getEffectiveDevice());
 		applyZoom();
 	}, 200);
 	/**
@@ -11687,7 +11799,7 @@
 		elements?.forEach(removeAllEventListeners);
 	};
 	//#endregion
-	//#region \0@oxc-project+runtime@0.139.0/helpers/esm/taggedTemplateLiteral.js
+	//#region \0@oxc-project+runtime@0.143.0/helpers/esm/taggedTemplateLiteral.js
 	function _taggedTemplateLiteral(e, t) {
 		return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } }));
 	}
@@ -13266,6 +13378,33 @@
 		}
 	};
 	//#endregion
+	//#region src/main/qimanga.ts
+	var qimanga = {
+		name: "Qi Manga",
+		url: /https?:\/\/(www\.)?qimanga\.com\/series\/[^/]+\/chapter-.+/,
+		homepage: "https://qimanga.com/",
+		language: [Language.ENGLISH],
+		category: Category.MANGA,
+		waitEle: "img.r-page-img",
+		run() {
+			const images = [...document.querySelectorAll("img.r-page-img")];
+			const pageCounter = document.querySelector(".r-page-counter")?.textContent ?? "";
+			const total = Number.parseInt(pageCounter.split("/").pop()?.trim() ?? "", 10) || images.length;
+			const state = document.querySelector("#ng-state")?.textContent ?? "";
+			const nav = /"navigation":\{"prev":\{"slug":"([^"]+)"[\s\S]*?"next":\{"slug":"([^"]+)"/.exec(state);
+			const series = document.querySelector(".r-back")?.getAttribute("href");
+			const chapter = (slug) => series ? `${series}/${slug}` : void 0;
+			return {
+				title: document.querySelector("h1.sr-only")?.textContent?.trim(),
+				series,
+				pages: total,
+				prev: nav ? chapter(nav[1]) : void 0,
+				next: nav ? chapter(nav[2]) : void 0,
+				listImages: images.map((img) => img.getAttribute("src") ?? "")
+			};
+		}
+	};
+	//#endregion
 	//#region src/main/qimanhwa.ts
 	var qimanhwa = {
 		name: "QiManhwa",
@@ -13324,6 +13463,42 @@
 				prev: document.querySelector(".fa-chevron-left")?.closest("a")?.getAttribute("href"),
 				next: document.querySelector(".fa-chevron-right")?.closest("a")?.getAttribute("href"),
 				listImages: images.map((img) => (img.getAttribute("data-src") || img.getAttribute("src")) ?? "")
+			};
+		}
+	};
+	//#endregion
+	//#region src/main/reimanga.ts
+	var reimanga = {
+		name: "ReiManga",
+		url: /https?:\/\/(www\.)?reimanga\.com\/manga\/[^/]+-\d+\/\d+/,
+		homepage: "https://reimanga.com/",
+		language: [Language.ENGLISH],
+		category: Category.MANGA,
+		waitEle: "img",
+		run() {
+			const nextData = document.getElementById("__NEXT_DATA__");
+			const data = nextData ? JSON.parse(nextData.textContent ?? "{}")?.props?.pageProps ?? null : null;
+			const images = data?.chapter?.images ?? data?.chapter?.img ?? null;
+			const listImages = Array.isArray(images) ? images.map((img) => typeof img === "string" ? img : img?.url ?? img?.src ?? "") : [...document.querySelectorAll("img")].filter((img) => {
+				const src = img.getAttribute("src") ?? "";
+				return /\/(manga|chapter|uploads?|files?|images?)\//i.test(src) || /(cdn|media|img|static)/i.test(src);
+			}).map((img) => img.getAttribute("src") ?? "").filter((src) => src.startsWith("http"));
+			const pathParts = window.location.pathname.split("/").filter(Boolean);
+			const basePath = pathParts.length > 1 ? `/${pathParts.slice(0, 2).join("/")}` : void 0;
+			const series = data?.series?.slug !== void 0 ? `/manga/${data.series.slug}` : document.querySelector("a[href*=\"/manga/\"]")?.getAttribute("href") ?? basePath;
+			const select = document.querySelector("select[aria-label=\"Jump to chapter\"]");
+			const options = select ? [...select.options] : [];
+			const index = select?.selectedIndex ?? -1;
+			const prev = index + 1 < options.length ? options[index + 1]?.value : void 0;
+			const next = index - 1 >= 0 ? options[index - 1]?.value : void 0;
+			const chapterUrl = (id) => id && series ? `${series}/${id}` : void 0;
+			return {
+				title: data?.title ?? (`${data?.chapters?.[0]?.series_name ?? data?.manga?.name ?? data?.series?.name ?? ""} ${data?.chapters?.[0]?.name ?? data?.chapter?.name ?? data?.chapter?.number ?? ""}`.trim() || document.title.replace(/ –.*| -.*| \|.*/, "").trim()),
+				series,
+				pages: listImages.length,
+				prev: chapterUrl(prev),
+				next: chapterUrl(next),
+				listImages
 			};
 		}
 	};
@@ -13421,9 +13596,11 @@
 		mgeko,
 		nineanime,
 		olympus,
+		qimanga,
 		qimanhwa,
 		readcomicsonline,
 		reaperscans,
+		reimanga,
 		tmofans,
 		{
 			name: "WebNovel",
