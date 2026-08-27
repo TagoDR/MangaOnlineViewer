@@ -4,7 +4,7 @@ import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const threehentai: ISite = {
   name: ['3Hentai', 'HentaiVox'],
-  url: /https?:\/\/(www\.)?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/,
+  url: /https?:\/\/(www|es|fr|it|pt|ru)?\.?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/,
   homepage: ['https://3hentai.net/', 'https://hentaivox.com/'],
   language: [Language.ENGLISH],
   category: Category.HENTAI,
