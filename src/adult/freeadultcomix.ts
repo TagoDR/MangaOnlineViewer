@@ -9,7 +9,7 @@ const freeadultcomix: ISite = {
   category: Category.HENTAI,
   waitTime: 5000,
   run(): IManga {
-    const images = [...document.querySelectorAll('.foto img')];
+    const images = [...document.querySelectorAll('figure img')];
     return {
       title: document.querySelector('.post-conteudo h1')?.textContent?.trim(),
       pages: images.length,
