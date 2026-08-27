@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, HDoujin, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.08.09.build-0000
+// @version       2026.08.27.build-2151
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -734,7 +734,7 @@
 		category: Category.HENTAI,
 		waitTime: 5e3,
 		run() {
-			const images = [...document.querySelectorAll(".foto img")];
+			const images = [...document.querySelectorAll("figure img")];
 			return {
 				title: document.querySelector(".post-conteudo h1")?.textContent?.trim(),
 				pages: images.length,
@@ -1439,9 +1439,9 @@
 			homepage: ["https://vermangasporno.com/", "https://vercomicsporno.com/"],
 			language: [Language.SPANISH],
 			category: Category.HENTAI,
-			waitEle: "img[loading=\"lazy\"].size-full, .comicimg picture img, .wp-content img",
+			waitEle: ".pp-comic-content img",
 			run() {
-				const images = [...document.querySelectorAll("img[loading=\"lazy\"].size-full, .comicimg picture img, .wp-content img")];
+				const images = [...document.querySelectorAll(".pp-comic-content img")];
 				return {
 					title: document.querySelector("h1.titl, title")?.textContent?.trim(),
 					pages: images.length,
