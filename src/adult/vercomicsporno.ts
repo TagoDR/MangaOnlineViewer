@@ -7,13 +7,9 @@ const vercomicsporno: ISite = {
   homepage: ['https://vermangasporno.com/', 'https://vercomicsporno.com/'],
   language: [Language.SPANISH],
   category: Category.HENTAI,
-  waitEle: 'img[loading="lazy"].size-full, .comicimg picture img, .wp-content img',
+  waitEle: '.pp-comic-content img',
   run(): IManga {
-    const images = [
-      ...document.querySelectorAll(
-        'img[loading="lazy"].size-full, .comicimg picture img, .wp-content img',
-      ),
-    ];
+    const images = [...document.querySelectorAll('.pp-comic-content img')];
     return {
       title: document.querySelector('h1.titl, title')?.textContent?.trim(),
       pages: images.length,
