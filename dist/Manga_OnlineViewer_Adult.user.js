@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, HDoujin, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.08.27.build-2151
+// @version       2026.08.27.build-2202
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -58,7 +58,7 @@
 // @include       /https?:\/\/(www\.)?(niyaniya|shupogaki|hoshino).(moe|one)/
 // @include       /https?:\/\/(www\.)?simply-hentai.com\/.+\/page\/.+/
 // @include       /https?:\/\/(www\.)?tmohentai\.(com|app)\/(reader|library|view_uploads)\/.+/
-// @include       /https?:\/\/(www\.)?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/
+// @include       /https?:\/\/(www|es|fr|it|pt|ru)?\.?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/
 // @include       /https?:\/\/(www\.)?tsumino.com\/Read\/Index\/\d+(\?page=.+)?/
 // @include       /https?:\/\/(www\.)?(vermangasporno|vercomicsporno).com\/.+/
 // @include       /https?:\/\/(www\.)?wnacg.com\/photos-view-id-.+/
@@ -191,7 +191,7 @@
 	//#region src/adult/3hentai.ts
 	var threehentai = {
 		name: ["3Hentai", "HentaiVox"],
-		url: /https?:\/\/(www\.)?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/,
+		url: /https?:\/\/(www|es|fr|it|pt|ru)?\.?(3hentai|hentaivox).(net|com)\/(d|view)\/.+\/.+/,
 		homepage: ["https://3hentai.net/", "https://hentaivox.com/"],
 		language: [Language.ENGLISH],
 		category: Category.HENTAI,
