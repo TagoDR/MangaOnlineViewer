@@ -27,6 +27,8 @@ import madarawp from './madarawp.ts';
 import multporn from './multporn.ts';
 import myhentaigallery from './myhentaigallery.ts';
 import nhentainet from './nhentainet.ts';
+import nhentaito from './nhentaito.ts';
+import nhentaixxx from './nhentaixxx.ts';
 import porncomicshd from './porncomicshd.ts';
 import pururin from './pururin.ts';
 import schalenetwork from './schalenetwork.ts';
@@ -65,6 +67,8 @@ const sites: ISite[] = [
   multporn,
   myhentaigallery,
   nhentainet,
+  nhentaito,
+  nhentaixxx,
   ninehentai,
   porncomicshd,
   pururin,
