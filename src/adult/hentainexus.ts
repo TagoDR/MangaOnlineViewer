@@ -3,7 +3,7 @@ import { Category, type IManga, type ISite, Language } from '../types/index.ts';
 
 const hentainexus: ISite = {
   name: 'HentaiNexus',
-  url: /https?:\/\/((www\.)?hentainexus.com|nexus.fakku.cc)\/read\/.+/,
+  url: /https?:\/\/(www\.)?hentainexus.com\/read\/.+/,
   homepage: 'https://hentainexus.com/',
   language: [Language.ENGLISH],
   category: Category.HENTAI,
