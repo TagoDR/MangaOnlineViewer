@@ -5,8 +5,8 @@
 // @downloadURL   https://github.com/TagoDR/MangaOnlineViewer/raw/master/dist/Manga_OnlineViewer_Adult.user.js
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
-// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, HDoujin, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.08.27.build-2202
+// @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, HDoujin, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.to, nHentai.xxx, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
+// @version       2026.08.28.build-2003
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -22,8 +22,8 @@
 // @require       https://cdn.jsdelivr.net/npm/colorjs.io@0.7.1/dist/color.global.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/jszip/3.9.1/jszip.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js
-// @require       https://cdn.jsdelivr.net/npm/lodash@4.17.23/lodash.min.js
-// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@4.0.2/dist/hotkeys-js.min.js
+// @require       https://cdn.jsdelivr.net/npm/lodash@4.18.1/lodash.min.js
+// @require       https://cdn.jsdelivr.net/npm/hotkeys-js@4.0.7/dist/hotkeys-js.min.js
 // @require       https://cdn.jsdelivr.net/npm/bowser@2.14.1/bundled.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/blob-util/2.0.2/blob-util.min.js
 // @require       https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js
@@ -41,9 +41,9 @@
 // @include       /https?:\/\/(www\.)?hentaiera.com\/view\/.+\/\d+\/?/
 // @include       /https?:\/\/(www\.)?hentaiforce.net\/view\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?hentaifox.com\/g\/.+/
-// @include       /https?:\/\/(www\.)?(hentaihand|nhentai).com\/.+\/reader/
+// @include       /https?:\/\/(www\.)?(hentaihand|nhentai)\.com\/(?:[a-z]{2}\/)?(?:comic|reader)\/.+\/\d+/
 // @include       /https?:\/\/(www\.)?hentaihere.com\/.+\/.+\/.+/
-// @include       /https?:\/\/((www\.)?hentainexus.com|nexus.fakku.cc)\/read\/.+/
+// @include       /https?:\/\/(www\.)?hentainexus.com\/read\/.+/
 // @include       /https?:\/\/(www.)?hentalk.pw/
 // @include       /https?:\/\/hitomi.la\/reader\/.+/
 // @include       /https?:\/\/(www\.)?imhentai.xxx\/view\/.+\/.+\//
@@ -51,7 +51,9 @@
 // @include       /https?:\/\/(www\.)?luscious.net\/.+\/read\/.+/
 // @include       /https?:\/\/(www\.)?multporn.net\/(comics|hentai_manga)\/.+/
 // @include       /https?:\/\/(www\.)?myhentaigallery.com\/g\/.+\/\d+/
-// @include       /https?:\/\/(www\.)?(nhentai).(net|xxx|com|to)\/g\/.+/
+// @include       /https?:\/\/(www\.)?nhentai\.net\/g\/.+/
+// @include       /https?:\/\/(www\.)?nhentai\.to\/g\/\d+\/\d+/
+// @include       /https?:\/\/(www\.)?nhentai\.xxx\/g\/\d+\/\d+/
 // @include       /https?:\/\/(www\.)?9hentai.(so)\/g\/.+\/.+/
 // @include       /https?:\/\/(www\.)?porncomicshd.com\/es.*/
 // @include       /https?:\/\/(www\.)?pururin.me\/(view|read)\/.+\/.+\/.+/
