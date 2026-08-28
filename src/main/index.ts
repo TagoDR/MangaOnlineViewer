@@ -11,6 +11,7 @@ import foolslide from './foolslide.ts';
 import ikigai from './ikigai.ts';
 import kagane from './kagane.ts';
 import kumanga from './kumanga.ts';
+import lectorxd from './lectorxd.ts';
 import leercapitulo from './leercapitulo.ts';
 import lhtranslation from './lhtranslation.ts';
 import localhost from './localhost.ts';
@@ -59,6 +60,7 @@ const sites: ISite[] = [
   kagane,
   kumanga,
   leercapitulo,
+  lectorxd,
   lhtranslation,
   localhost,
   m440,
