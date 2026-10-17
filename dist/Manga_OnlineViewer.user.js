@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: Asura Scans, Batoto, BilibiliComics, Comick, Comix.to, DemonicScans, Dynasty-Scans, Flame Comics, Ikigai Mangas - EltaNews, Ikigai Mangas - Ajaco, Kagane, KuManga, LeerCapitulo, LectorXD, LHTranslation, Local Files, M440, MangaBuddy, MangaDex, MangaFox, MangaHere, Mangago, MangaHub, MangaKakalot, NeloManga, MangaNato, NatoManga, MangaBats, MangaBall, MangaOni, MangaPark, MangaReader, MangaToons, MangaTown, ManhwaWeb, MangaGeko.com, MangaGeko.cc, NineAnime, Olympus, Qi Manga, QiManhwa, ReadComicsOnline, ReaperScans, ReiManga, TuMangaOnline, WebNovel, WebToons, WeebCentral, WeebDex, Vortex Scans, ZeroScans, MangaStream WordPress Plugin, Realm Oasis, Voids-Scans, Luminous Scans, Shimada Scans, Night Scans, Manhwa-Freak, OzulScansEn, CypherScans, MangaGalaxy, LuaScans, Drake Scans, Rizzfables, NovatoScans, TresDaos, Lectormiau, NTRGod, Threedaos, FoOlSlide, Kireicake, Madara WordPress Plugin, MangaHaus, Isekai Scan, Comic Kiba, Zinmanga, mangatx, Toonily, Mngazuki, JaiminisBox, DisasterScans, ManhuaPlus, TopManhua, NovelMic, Reset-Scans, LeviatanScans, Dragon Tea, SetsuScans, ToonGod, Hades Scans
-// @version       2026.08.28.build-2003
+// @version       2026.10.17.build-2343
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/2281/2281832.png
 // @run-at        document-end
@@ -38,7 +38,7 @@
 // @include       /https?:\/\/(visorikigai|visualikigai).(ajaco|eltanews|foodib|jobswu).(com|net|site)\/capitulo\/\d+/
 // @include       /https:\/\/(www\.)?kagane\.org\/series\/.+\/reader\/.+/
 // @include       /https?:\/\/(www\.)?kumanga.com\/manga\/leer\/.+/
-// @include       /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/
+// @include       /https?:\/\/(www\.)?leercapitulo\.co\/leer\/.+/
 // @include       /https?:\/\/(www\.)?lectorxd\.com\/.+\/leer\/.+/
 // @include       /https?:\/\/(www\.)?lhtranslation.net\/read.+/
 // @include       /(file:\/\/\/.+(index)?.html)/
@@ -58,7 +58,7 @@
 // @include       /https?:\/\/(www\.)?manhwaweb.com\/leer\/.+/
 // @include       /https?:\/\/(www\.)?mgeko.(com|cc)?\/reader\/.*/
 // @include       /https?:\/\/(www\.)?nineanime.com\/chapter\/.+/
-// @include       /https?:\/\/(www\.)?olympusxyz.com\/capitulo\/\d+\/.+/
+// @include       /https?:\/\/(www\.)?olympusxyz\.com\/(series\/[^/]+\/)?capitulo\/.+/
 // @include       /https?:\/\/(www\.)?qimanga\.com\/series\/[^/]+\/chapter-.+/
 // @include       /https?:\/\/qimanhwa\.com\/series\/[^/]+\/chapter-.+/
 // @include       /https?:\/\/(www\.)?readcomicsonline.ru\/comic\/.*\/\d*/
@@ -80,7 +80,7 @@
 (function() {
 	//#region \0rolldown/runtime.js
 	var __defProp = Object.defineProperty;
-	var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
+	var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod, mod.exports), cb = null), mod.exports);
 	var __exportAll = (all, no_symbols) => {
 		let target = {};
 		for (var name in all) __defProp(target, name, {
@@ -462,12 +462,22 @@
 	var nanostoresGlobal = globalThis.nanostoresGlobal ||= { epoch: 0 };
 	var drainQueue = () => {
 		let thrown;
-		for (lqIndex = 0; lqIndex < listenerQueue.length; lqIndex += QUEUE_ITEMS_PER_LISTENER) try {
-			listenerQueue[lqIndex](listenerQueue[lqIndex + 1].value, listenerQueue[lqIndex + 2], listenerQueue[lqIndex + 3]);
-		} catch (e) {
-			thrown = e;
+		let i;
+		while (lqIndex < listenerQueue.length) {
+			i = lqIndex;
+			lqIndex += QUEUE_ITEMS_PER_LISTENER;
+			let pendingStores = batchSeen?.get(listenerQueue[i]);
+			if (pendingStores) {
+				if (!pendingStores.has(listenerQueue[i + 1])) continue;
+				pendingStores.clear();
+			}
+			try {
+				listenerQueue[i](listenerQueue[i + 1].value, listenerQueue[i + 2], listenerQueue[i + 3]);
+			} catch (e) {
+				thrown = e;
+			}
 		}
-		listenerQueue.length = 0;
+		listenerQueue.length = lqIndex = 0;
 		if (thrown) throw thrown;
 	};
 	var atom = /* @__NO_SIDE_EFFECTS__ */ (initialValue) => {
@@ -483,7 +493,8 @@
 			listen(listener) {
 				$atom.lc = listeners.push(listener);
 				return () => {
-					for (let i = lqIndex + QUEUE_ITEMS_PER_LISTENER; i < listenerQueue.length;) if (listenerQueue[i] === listener) listenerQueue.splice(i, QUEUE_ITEMS_PER_LISTENER);
+					batchSeen?.get(listener)?.delete($atom);
+					for (let i = lqIndex; i < listenerQueue.length;) if (listenerQueue[i] === listener && listenerQueue[i + 1] === $atom) listenerQueue.splice(i, QUEUE_ITEMS_PER_LISTENER);
 					else i += QUEUE_ITEMS_PER_LISTENER;
 					let index = listeners.indexOf(listener);
 					if (~index) {
@@ -496,8 +507,12 @@
 				nanostoresGlobal.epoch++;
 				let runListenerQueue = !listenerQueue.length && !batchSeen;
 				for (let listener of listeners) {
-					if (batchSeen?.has(listener)) continue;
-					batchSeen?.add(listener);
+					if (batchSeen) {
+						let pendingStores = batchSeen.get(listener);
+						if (!pendingStores) batchSeen.set(listener, pendingStores = /* @__PURE__ */ new Set());
+						if (pendingStores.has($atom)) continue;
+						pendingStores.add($atom);
+					}
 					listenerQueue.push(listener, $atom, oldValue, batchSeen ? void 0 : changedKey);
 				}
 				if (runListenerQueue) drainQueue();
@@ -537,11 +552,12 @@
 		return () => {
 			let currentListeners = object.events[eventKey];
 			let index = currentListeners.indexOf(listener);
-			currentListeners.splice(index, 1);
-			if (!currentListeners.length) {
-				delete object.events[eventKey];
-				object.events[eventKey + REVERT_MUTATION]();
-				delete object.events[eventKey + REVERT_MUTATION];
+			if (~index) {
+				currentListeners.splice(index, 1);
+				if (!currentListeners.length) {
+					object.events[eventKey + REVERT_MUTATION]();
+					delete object.events[eventKey + REVERT_MUTATION];
+				}
 			}
 		};
 	};
@@ -588,7 +604,7 @@
 			if (currentEpoch === nanostoresGlobal.epoch) return;
 			currentEpoch = nanostoresGlobal.epoch;
 			let args = stores.map(($store) => $store.get());
-			if (!previousArgs || args.some((arg, i) => arg !== previousArgs[i])) {
+			if (!previousArgs?.every((arg, i) => stores[i].eq(arg, args[i]))) {
 				previousArgs = args;
 				let value = cb(...args);
 				if (value && value.then && value.t) value.then((asyncValue) => {
@@ -600,7 +616,7 @@
 				}
 			}
 		};
-		let $computed = /* @__PURE__ */ atom(void 0);
+		let $computed = /* @__PURE__ */ atom();
 		let get = $computed.get;
 		$computed.get = () => {
 			set();
@@ -3051,7 +3067,7 @@
 		return applyColorsToSvg(rawSvg, `icon-tabler-${_.kebabCase(iconKey.replace(/^Icon/, ""))}`);
 	});
 	//#endregion
-	//#region \0@oxc-project+runtime@0.147.0/helpers/esm/decorate.js
+	//#region \0@oxc-project+runtime@0.154.0/helpers/esm/decorate.js
 	function __decorate(decorators, target, key, desc) {
 		var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 		if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11808,7 +11824,7 @@
 		elements?.forEach(removeAllEventListeners);
 	};
 	//#endregion
-	//#region \0@oxc-project+runtime@0.147.0/helpers/esm/taggedTemplateLiteral.js
+	//#region \0@oxc-project+runtime@0.154.0/helpers/esm/taggedTemplateLiteral.js
 	function _taggedTemplateLiteral(e, t) {
 		return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } }));
 	}
@@ -12760,20 +12776,25 @@
 	//#region src/main/leercapitulo.ts
 	var leercapitulo = {
 		name: "LeerCapitulo",
-		url: /https?:\/\/(www.)?leercapitulo.co\/leer\/.+/,
+		url: /https?:\/\/(www\.)?leercapitulo\.co\/leer\/.+/,
 		homepage: "https://www.leercapitulo.co/",
 		language: [Language.SPANISH],
 		category: Category.MANGA,
-		waitEle: "#page_select",
+		waitEle: "#lcPages img, #page_select",
 		run() {
-			const img = [...document.querySelectorAll("#page_select option")].map((el) => el.getAttribute("value") ?? "");
+			const select = document.querySelector("#chapterSelect");
+			const prevChapter = select && select.selectedIndex >= 0 && select.selectedIndex < select.options.length - 1 ? select.options[select.selectedIndex + 1]?.value : void 0;
+			const nextChapter = select && select.selectedIndex > 0 ? select.options[select.selectedIndex - 1]?.value : void 0;
+			const pageImages = [...document.querySelectorAll("#lcPages img, .lc-pages img")];
+			const pageOptions = [...document.querySelectorAll("#page_select option")];
+			const listImages = pageImages.length > 0 ? pageImages.map((img) => img.getAttribute("data-src") ?? img.getAttribute("src") ?? "") : pageOptions.map((el) => el.getAttribute("value") ?? "");
 			return {
-				title: document.querySelector("h1")?.textContent?.trim(),
-				series: document.querySelector(".chapter-title a")?.getAttribute("href"),
-				pages: img.length,
-				prev: document.querySelector(".pre")?.getAttribute("href"),
-				next: document.querySelector(".next")?.getAttribute("href"),
-				listImages: img
+				title: (document.querySelector("h1")?.textContent ?? document.querySelector("title")?.textContent)?.replace(/\|.+/, "").trim(),
+				series: document.querySelector("a.lc-rbtn--title, a[href*=\"/manga/\"], .chapter-title a")?.getAttribute("href") ?? void 0,
+				pages: listImages.length,
+				prev: prevChapter ?? document.querySelector(".pre")?.getAttribute("href") ?? void 0,
+				next: nextChapter ?? document.querySelector(".next")?.getAttribute("href") ?? void 0,
+				listImages
 			};
 		}
 	};
@@ -13398,19 +13419,20 @@
 	//#region src/main/olympus.ts
 	var olympus = {
 		name: "Olympus",
-		url: /https?:\/\/(www\.)?olympusxyz.com\/capitulo\/\d+\/.+/,
+		url: /https?:\/\/(www\.)?olympusxyz\.com\/(series\/[^/]+\/)?capitulo\/.+/,
 		homepage: "https://olympusxyz.com/",
 		language: [Language.SPANISH],
 		category: Category.MANGA,
+		waitEle: "main.strip img, section img.w-full.h-full",
 		run() {
-			const images = [...document.querySelectorAll("section img.w-full.h-full")];
+			const images = [...document.querySelectorAll("main.strip img, section img.w-full.h-full")];
 			return {
-				title: document.querySelector("title")?.textContent?.replace(/\|.+/, "").trim(),
-				series: document.querySelector("h1")?.closest("a")?.getAttribute("href"),
+				title: (document.querySelector("title")?.textContent ?? document.querySelector(".rback span")?.textContent)?.replace(/\|.+/, "").trim(),
+				series: document.querySelector("a.rback, .chnav a[href*=\"/series/\"]")?.getAttribute("href") ?? document.querySelector("h1")?.closest("a")?.getAttribute("href"),
 				pages: images.length,
-				prev: document.querySelector("a[name=\"capitulo anterior\"]")?.getAttribute("href"),
-				next: document.querySelector("a[name=\"capitulo siguiente\"]")?.getAttribute("href"),
-				listImages: images.map((img) => img.getAttribute("src") ?? "")
+				prev: document.querySelector(".chnav-main a.btn-ghost[href*=\"/capitulo/\"], a[name=\"capitulo anterior\"]")?.getAttribute("href") ?? void 0,
+				next: document.querySelector(".chnav-main a.btn-primary[href*=\"/capitulo/\"], a[name=\"capitulo siguiente\"]")?.getAttribute("href") ?? void 0,
+				listImages: images.map((img) => img.getAttribute("src") ?? img.getAttribute("data-src") ?? "")
 			};
 		}
 	};

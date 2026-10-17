@@ -6,7 +6,7 @@
 // @supportURL    https://github.com/TagoDR/MangaOnlineViewer/issues
 // @namespace     https://github.com/TagoDR
 // @description   Shows all pages at once in online view for these sites: AkumaMoe, BestPornComix, DoujinMoeNM, Dragon Translation, 8Muses.com, 8Muses.io, ExHentai, e-Hentai, FSIComics, FreeAdultComix, GNTAI.net, HDoujin, Hentai2Read, HentaiEra, HentaiForce, HentaiFox, HentaiHand, nHentai.com, HentaIHere, HentaiNexus, HenTalk, Hitomi, Imhentai, KingComix, Chochox, Comics18, Luscious, MultPorn, MyHentaiGallery, nHentai.net, nHentai.to, nHentai.xxx, 9Hentai, PornComicsHD, Pururin, SchaleNetwork, Simply-Hentai, TMOHentai, 3Hentai, HentaiVox, Tsumino, vermangasporno, vercomicsporno, wnacg, XlecxOne, xyzcomics, Yabai, Madara WordPress Plugin, AllPornComic, Manytoon, Manga District
-// @version       2026.08.28.build-2003
+// @version       2026.10.17.build-2343
 // @license       MIT
 // @icon          https://cdn-icons-png.flaticon.com/32/9824/9824312.png
 // @run-at        document-end
@@ -72,7 +72,7 @@
 (function() {
 	//#region \0rolldown/runtime.js
 	var __defProp = Object.defineProperty;
-	var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod), cb = null), mod.exports);
+	var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod, mod.exports), cb = null), mod.exports);
 	var __exportAll = (all, no_symbols) => {
 		let target = {};
 		for (var name in all) __defProp(target, name, {
@@ -1748,12 +1748,22 @@
 	var nanostoresGlobal = globalThis.nanostoresGlobal ||= { epoch: 0 };
 	var drainQueue = () => {
 		let thrown;
-		for (lqIndex = 0; lqIndex < listenerQueue.length; lqIndex += QUEUE_ITEMS_PER_LISTENER) try {
-			listenerQueue[lqIndex](listenerQueue[lqIndex + 1].value, listenerQueue[lqIndex + 2], listenerQueue[lqIndex + 3]);
-		} catch (e) {
-			thrown = e;
+		let i;
+		while (lqIndex < listenerQueue.length) {
+			i = lqIndex;
+			lqIndex += QUEUE_ITEMS_PER_LISTENER;
+			let pendingStores = batchSeen?.get(listenerQueue[i]);
+			if (pendingStores) {
+				if (!pendingStores.has(listenerQueue[i + 1])) continue;
+				pendingStores.clear();
+			}
+			try {
+				listenerQueue[i](listenerQueue[i + 1].value, listenerQueue[i + 2], listenerQueue[i + 3]);
+			} catch (e) {
+				thrown = e;
+			}
 		}
-		listenerQueue.length = 0;
+		listenerQueue.length = lqIndex = 0;
 		if (thrown) throw thrown;
 	};
 	var atom = /* @__NO_SIDE_EFFECTS__ */ (initialValue) => {
@@ -1769,7 +1779,8 @@
 			listen(listener) {
 				$atom.lc = listeners.push(listener);
 				return () => {
-					for (let i = lqIndex + QUEUE_ITEMS_PER_LISTENER; i < listenerQueue.length;) if (listenerQueue[i] === listener) listenerQueue.splice(i, QUEUE_ITEMS_PER_LISTENER);
+					batchSeen?.get(listener)?.delete($atom);
+					for (let i = lqIndex; i < listenerQueue.length;) if (listenerQueue[i] === listener && listenerQueue[i + 1] === $atom) listenerQueue.splice(i, QUEUE_ITEMS_PER_LISTENER);
 					else i += QUEUE_ITEMS_PER_LISTENER;
 					let index = listeners.indexOf(listener);
 					if (~index) {
@@ -1782,8 +1793,12 @@
 				nanostoresGlobal.epoch++;
 				let runListenerQueue = !listenerQueue.length && !batchSeen;
 				for (let listener of listeners) {
-					if (batchSeen?.has(listener)) continue;
-					batchSeen?.add(listener);
+					if (batchSeen) {
+						let pendingStores = batchSeen.get(listener);
+						if (!pendingStores) batchSeen.set(listener, pendingStores = /* @__PURE__ */ new Set());
+						if (pendingStores.has($atom)) continue;
+						pendingStores.add($atom);
+					}
 					listenerQueue.push(listener, $atom, oldValue, batchSeen ? void 0 : changedKey);
 				}
 				if (runListenerQueue) drainQueue();
@@ -1823,11 +1838,12 @@
 		return () => {
 			let currentListeners = object.events[eventKey];
 			let index = currentListeners.indexOf(listener);
-			currentListeners.splice(index, 1);
-			if (!currentListeners.length) {
-				delete object.events[eventKey];
-				object.events[eventKey + REVERT_MUTATION]();
-				delete object.events[eventKey + REVERT_MUTATION];
+			if (~index) {
+				currentListeners.splice(index, 1);
+				if (!currentListeners.length) {
+					object.events[eventKey + REVERT_MUTATION]();
+					delete object.events[eventKey + REVERT_MUTATION];
+				}
 			}
 		};
 	};
@@ -1874,7 +1890,7 @@
 			if (currentEpoch === nanostoresGlobal.epoch) return;
 			currentEpoch = nanostoresGlobal.epoch;
 			let args = stores.map(($store) => $store.get());
-			if (!previousArgs || args.some((arg, i) => arg !== previousArgs[i])) {
+			if (!previousArgs?.every((arg, i) => stores[i].eq(arg, args[i]))) {
 				previousArgs = args;
 				let value = cb(...args);
 				if (value && value.then && value.t) value.then((asyncValue) => {
@@ -1886,7 +1902,7 @@
 				}
 			}
 		};
-		let $computed = /* @__PURE__ */ atom(void 0);
+		let $computed = /* @__PURE__ */ atom();
 		let get = $computed.get;
 		$computed.get = () => {
 			set();
@@ -4276,7 +4292,7 @@
 		return applyColorsToSvg(rawSvg, `icon-tabler-${_.kebabCase(iconKey.replace(/^Icon/, ""))}`);
 	});
 	//#endregion
-	//#region \0@oxc-project+runtime@0.147.0/helpers/esm/decorate.js
+	//#region \0@oxc-project+runtime@0.154.0/helpers/esm/decorate.js
 	function __decorate(decorators, target, key, desc) {
 		var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 		if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12873,7 +12889,7 @@
 		elements?.forEach(removeAllEventListeners);
 	};
 	//#endregion
-	//#region \0@oxc-project+runtime@0.147.0/helpers/esm/taggedTemplateLiteral.js
+	//#region \0@oxc-project+runtime@0.154.0/helpers/esm/taggedTemplateLiteral.js
 	function _taggedTemplateLiteral(e, t) {
 		return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } }));
 	}
